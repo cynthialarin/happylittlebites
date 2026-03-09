@@ -261,7 +261,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'beets', name: 'Beets', emoji: '🫐', foodGroup: 'vegetables', allergens: [],
+    id: 'beets', name: 'Beets', emoji: '🟥', foodGroup: 'vegetables', allergens: [],
     chokingHazard: false, chokingNotes: 'Soft when cooked, low risk',
     servingByAge: { '6mo': 'Steamed and mashed or as soft sticks', '9mo': 'Soft cooked cubes', '12mo': 'Roasted cubes or sticks', '2yr': 'Any cooked preparation', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Folate', 'Manganese', 'Iron', 'Fiber'],
