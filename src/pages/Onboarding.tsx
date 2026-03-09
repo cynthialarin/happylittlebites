@@ -4,10 +4,16 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useApp } from '@/contexts/AppContext';
-import { FeedingApproach, Country } from '@/types';
+import { FeedingApproach, Country, Gender } from '@/types';
 import { Baby, Heart, ShieldCheck, Sparkles, ChevronRight } from 'lucide-react';
 
 const AVATARS = ['🐣', '🧸', '🌻', '🐰', '🦊', '🐝', '🍼', '🌈'];
+
+const GENDER_OPTIONS: { value: Gender; label: string; emoji: string }[] = [
+  { value: 'boy', label: 'Boy', emoji: '👦' },
+  { value: 'girl', label: 'Girl', emoji: '👧' },
+  { value: 'neutral', label: 'Prefer not to say', emoji: '🌟' },
+];
 
 export default function Onboarding() {
   const { addChild, completeOnboarding, setCountry } = useApp();
@@ -17,6 +23,7 @@ export default function Onboarding() {
   const [approach, setApproach] = useState<FeedingApproach>('combo');
   const [avatar, setAvatar] = useState('🐣');
   const [country, setCountryLocal] = useState<Country>('US');
+  const [gender, setGender] = useState<Gender>('neutral');
 
   const features = [
     { icon: Baby, title: '100+ Foods', desc: 'Age-appropriate safety guides for every food' },
@@ -35,6 +42,7 @@ export default function Onboarding() {
       knownAllergies: [],
       feedingApproach: approach,
       avatar,
+      gender,
     });
     completeOnboarding();
   };
@@ -163,6 +171,22 @@ export default function Onboarding() {
               <div>
                 <Label htmlFor="birthdate" className="text-base font-bold">Date of birth</Label>
                 <Input id="birthdate" type="date" value={birthdate} onChange={e => setBirthdate(e.target.value)} className="mt-1.5" max={new Date().toISOString().split('T')[0]} />
+              </div>
+
+              <div>
+                <Label className="text-base font-bold mb-2 block">Gender</Label>
+                <div className="grid grid-cols-3 gap-2">
+                  {GENDER_OPTIONS.map(opt => (
+                    <button
+                      key={opt.value}
+                      onClick={() => setGender(opt.value)}
+                      className={`p-4 rounded-xl border-2 transition-all text-center ${gender === opt.value ? 'border-primary bg-primary/15 ring-2 ring-primary/30' : 'border-border hover:border-primary/40'}`}
+                    >
+                      <div className="text-2xl mb-1">{opt.emoji}</div>
+                      <div className="text-sm font-bold">{opt.label}</div>
+                    </button>
+                  ))}
+                </div>
               </div>
 
               <div>

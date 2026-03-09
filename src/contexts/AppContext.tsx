@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState, useCallback, useRef } from 'react';
-import { ChildProfile, DiaryEntry, AllergenRecord, MealPlanEntry, ExposureRecord, AppSettings, MealType, Country } from '@/types';
+import { ChildProfile, DiaryEntry, AllergenRecord, MealPlanEntry, ExposureRecord, AppSettings, MealType, Country, Gender } from '@/types';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
@@ -104,6 +104,7 @@ export function AppProvider({ children: reactChildren }: { children: React.React
             knownAllergies: c.known_allergies || [],
             feedingApproach: c.feeding_approach as any,
             avatar: c.avatar,
+            gender: (c.gender as Gender) || 'neutral',
           })),
           diary: (diaryRes.data || []).map((d: any) => ({
             id: d.id,
@@ -185,7 +186,8 @@ export function AppProvider({ children: reactChildren }: { children: React.React
           localData.children.map(c => ({
             id: c.id, user_id: userId, name: c.name, birthdate: c.birthdate,
             known_allergies: c.knownAllergies, feeding_approach: c.feedingApproach, avatar: c.avatar,
-          }))
+            gender: c.gender || 'neutral',
+          } as any))
         );
       }
 
@@ -285,7 +287,8 @@ export function AppProvider({ children: reactChildren }: { children: React.React
         await supabase.from('children').insert({
           id: child.id, user_id: user.id, name: child.name, birthdate: child.birthdate,
           known_allergies: child.knownAllergies, feeding_approach: child.feedingApproach, avatar: child.avatar,
-        });
+          gender: child.gender || 'neutral',
+        } as any);
         await supabase.from('profiles').update({ active_child_id: child.id }).eq('user_id', user.id);
       }
     },
@@ -296,7 +299,8 @@ export function AppProvider({ children: reactChildren }: { children: React.React
         await supabase.from('children').update({
           name: child.name, birthdate: child.birthdate, known_allergies: child.knownAllergies,
           feeding_approach: child.feedingApproach, avatar: child.avatar,
-        }).eq('id', child.id).eq('user_id', user.id);
+          gender: child.gender || 'neutral',
+        } as any).eq('id', child.id).eq('user_id', user.id);
       }
     },
 
