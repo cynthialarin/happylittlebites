@@ -47,6 +47,7 @@ function AppRoutes() {
         <Route path="/more/milestones" element={<Milestones />} />
         <Route path="/more/profiles" element={<ChildProfiles />} />
         <Route path="/achievements" element={<Achievements />} />
+        <Route path="/meal-planner" element={<MealPlanner />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

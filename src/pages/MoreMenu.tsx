@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { ShieldCheck, Brain, Baby, Milestone, Users, Settings, CalendarDays } from 'lucide-react';
 
 const menuItems = [
+  { path: '/meal-planner', icon: CalendarDays, label: 'Meal Planner', desc: 'Plan weekly meals & shopping list', emoji: '📅', color: 'bg-primary/10' },
   { path: '/achievements', icon: ShieldCheck, label: 'Achievements', desc: 'Badges, XP & level progress', emoji: '🏆', color: 'bg-primary/10' },
   { path: '/tracker/allergens', icon: ShieldCheck, label: 'Allergen Tracker', desc: 'Top 9 allergen introduction guide', emoji: '🛡️', color: 'bg-sky/20' },
   { path: '/more/picky-eater', icon: Brain, label: 'Picky Eater Toolkit', desc: 'Evidence-based strategies', emoji: '🧠', color: 'bg-lavender/20' },
