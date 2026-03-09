@@ -1,6 +1,7 @@
 import { MealType } from '@/types';
 import { Plus, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import FoodImage from '@/components/FoodImage';
 
 const MEAL_INFO: Record<MealType, { emoji: string; label: string }> = {
   breakfast: { emoji: '🌅', label: 'Breakfast' },
