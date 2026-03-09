@@ -274,7 +274,7 @@ export default function Dashboard() {
           { label: 'Food Library', icon: UtensilsCrossed, path: '/foods', color: 'bg-sage/20' },
           { label: 'Recipes', icon: BookOpen, path: '/recipes', color: 'bg-peach/20' },
           { label: 'Food Diary', icon: TrendingUp, path: '/tracker', color: 'bg-sky/20' },
-          { label: 'AI Meal Ideas', icon: Sparkles, path: '/suggestions', color: 'bg-lavender/20' },
+          { label: 'First 100 Foods', icon: ListChecks, path: '/first-100-foods', color: 'bg-lavender/20' },
         ].map(action => (
           <button
             key={action.path}
