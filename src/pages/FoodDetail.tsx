@@ -40,6 +40,25 @@ const COUNTRY_SAFETY_NOTES: Record<string, { US: string; CA: string }> = {
   liver: {
     US: 'Limit to 1–2 servings per week due to high vitamin A (AAP).',
     CA: 'Health Canada advises limiting liver due to vitamin A. Max 75 g per week for young children.',
+  eggs: {
+    US: 'Introduce early and often — early egg introduction (around 6 months) may reduce egg allergy risk (AAP). Serve well-cooked; no runny yolks until 12 months+.',
+    CA: 'Health Canada recommends introducing cooked egg as one of the first complementary foods at 6 months. Offer frequently (2–3× per week) to maintain tolerance.',
+  },
+  'peanut-butter': {
+    US: 'AAP/NIAID: Introduce peanut-containing foods around 4–6 months for high-risk infants (severe eczema or egg allergy). Thin smooth peanut butter mixed into purees — never whole peanuts or chunks.',
+    CA: 'Health Canada recommends offering peanut butter (smooth, thinned) at 6 months as a priority allergen. Do not delay introduction. Never give whole or chopped peanuts to young children.',
+  },
+  peanuts: {
+    US: 'AAP/NIAID: Introduce peanut-containing foods around 4–6 months for high-risk infants (severe eczema or egg allergy). Thin smooth peanut butter mixed into purees — never whole peanuts or chunks.',
+    CA: 'Health Canada recommends offering peanut butter (smooth, thinned) at 6 months as a priority allergen. Do not delay introduction. Never give whole or chopped peanuts to young children.',
+  },
+  shrimp: {
+    US: 'Shellfish is a top-9 allergen (FDA). Introduce well-cooked, finely minced shrimp from 6 months. Watch for allergic reactions for 2–3 days.',
+    CA: 'Crustaceans and molluscs are priority allergens (Health Canada). Offer well-cooked, finely chopped shellfish from 6 months. Introduce separately from other new allergens.',
+  },
+  shellfish: {
+    US: 'Shellfish is a top-9 allergen (FDA). Introduce well-cooked, finely minced from 6 months. Watch for allergic reactions for 2–3 days.',
+    CA: 'Crustaceans and molluscs are priority allergens (Health Canada). Offer well-cooked, finely chopped shellfish from 6 months. Introduce separately from other new allergens.',
   },
 };
 
