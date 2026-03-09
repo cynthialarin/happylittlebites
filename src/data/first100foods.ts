@@ -8,6 +8,7 @@ export interface First100Food {
   category: string;
   ageRecommended: string;
   tip: string;
+  tipCA?: string;
   foodId?: string; // links to foods.ts entry if exists
 }
 
