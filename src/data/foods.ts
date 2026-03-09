@@ -383,7 +383,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'pork', name: 'Pork', emoji: '🥓', foodGroup: 'protein', allergens: [],
+    id: 'pork', name: 'Pork', emoji: '🐷', foodGroup: 'protein', allergens: [],
     chokingHazard: true, chokingNotes: 'Can be tough — slow cook or serve ground',
     servingByAge: { '6mo': 'Slow-cooked and shredded, or pureed', '9mo': 'Shredded or ground', '12mo': 'Shredded, ground, in meatballs', '2yr': 'Diced tender pieces', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Protein', 'Thiamine', 'Zinc', 'B12'],
