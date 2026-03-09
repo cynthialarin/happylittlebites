@@ -24,6 +24,9 @@ interface AppContextType extends AppState {
   toggleFavoriteRecipe: (id: string) => void;
   toggleTriedRecipe: (id: string) => void;
   addExposure: (foodName: string, childId: string, accepted: boolean) => void;
+  addMealPlanEntry: (entry: MealPlanEntry) => void;
+  removeMealPlanEntry: (id: string) => void;
+  clearWeekPlan: (childId: string, dates: string[]) => void;
   completeOnboarding: () => void;
   getChildAge: (child: ChildProfile) => { months: number; label: string };
 }
