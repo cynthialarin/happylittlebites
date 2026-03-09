@@ -9,6 +9,7 @@ import { foods } from '@/data/foods';
 import FoodImage from '@/components/FoodImage';
 import NutritionSummary from '@/components/NutritionSummary';
 import NutritionScorecard from '@/components/NutritionScorecard';
+import NutritionGoals from '@/components/NutritionGoals';
 import ReintroductionTracker from '@/components/ReintroductionTracker';
 import TextureProgression from '@/components/TextureProgression';
 import { FOOD_GROUP_COLORS } from '@/data/badges';
