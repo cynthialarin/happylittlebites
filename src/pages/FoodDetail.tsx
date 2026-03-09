@@ -108,7 +108,7 @@ export default function FoodDetail() {
             <p className="text-sm">{COUNTRY_SAFETY_NOTES[food.id][isCanada ? 'CA' : 'US']}</p>
           </CardContent>
         </Card>
-      )
+      )}
 
       {/* Safety Alert */}
       {food.chokingHazard && (
