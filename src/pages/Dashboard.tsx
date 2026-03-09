@@ -10,7 +10,7 @@ import FoodImage from '@/components/FoodImage';
 import NutritionSummary from '@/components/NutritionSummary';
 import { FOOD_GROUP_COLORS } from '@/data/badges';
 import { TOP_9_ALLERGENS, FoodGroup } from '@/types';
-import { UtensilsCrossed, ShieldCheck, TrendingUp, Lightbulb, BookOpen, ChevronRight, Trophy, Flame } from 'lucide-react';
+import { UtensilsCrossed, ShieldCheck, TrendingUp, Lightbulb, BookOpen, ChevronRight, Trophy, Flame, Sparkles } from 'lucide-react';
 
 const CORE_GROUPS: FoodGroup[] = ['fruits', 'vegetables', 'grains', 'protein', 'dairy', 'legumes'];
 
@@ -252,13 +252,29 @@ export default function Dashboard() {
         </div>
       </div>
 
+      {/* AI Suggestion CTA */}
+      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="mb-5">
+        <button onClick={() => navigate('/suggestions')} className="w-full">
+          <Card className="bg-gradient-to-r from-primary/10 to-accent/10 border-primary/20 hover:ring-2 ring-primary/30 transition-all">
+            <CardContent className="p-4 flex items-center gap-3">
+              <div className="h-10 w-10 rounded-xl bg-primary/20 flex items-center justify-center text-lg">✨</div>
+              <div className="flex-1 text-left">
+                <p className="text-sm font-bold">What should {activeChild.name} eat today?</p>
+                <p className="text-xs text-muted-foreground">AI-powered meal ideas personalized for {age?.label}</p>
+              </div>
+              <ChevronRight className="h-4 w-4 text-muted-foreground" />
+            </CardContent>
+          </Card>
+        </button>
+      </motion.div>
+
       {/* Quick Actions */}
       <div className="grid grid-cols-2 gap-2">
         {[
           { label: 'Food Library', icon: UtensilsCrossed, path: '/foods', color: 'bg-sage/20' },
           { label: 'Recipes', icon: BookOpen, path: '/recipes', color: 'bg-peach/20' },
           { label: 'Food Diary', icon: TrendingUp, path: '/tracker', color: 'bg-sky/20' },
-          { label: 'Achievements', icon: Trophy, path: '/achievements', color: 'bg-lavender/20' },
+          { label: 'AI Meal Ideas', icon: Sparkles, path: '/suggestions', color: 'bg-lavender/20' },
         ].map(action => (
           <button
             key={action.path}
