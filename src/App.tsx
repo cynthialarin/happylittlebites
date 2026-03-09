@@ -24,6 +24,7 @@ import Milestones from "@/pages/Milestones";
 import ChildProfiles from "@/pages/ChildProfiles";
 import Achievements from "@/pages/Achievements";
 import MealPlanner from "@/pages/MealPlanner";
+import MealSuggestions from "@/pages/MealSuggestions";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
