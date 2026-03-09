@@ -169,17 +169,18 @@ export default function Onboarding() {
                 <Label className="font-semibold mb-2 block">Feeding approach</Label>
                 <div className="grid grid-cols-3 gap-2">
                   {([
-                    { value: 'blw', label: 'Baby-Led', emoji: '🤚' },
-                    { value: 'purees', label: 'Purees', emoji: '🥣' },
-                    { value: 'combo', label: 'Combo', emoji: '✨' },
-                  ] as const).map(opt => (
+                    { value: 'blw' as const, label: 'Baby-Led', emoji: '🤚', desc: 'Baby self-feeds soft finger foods from the start' },
+                    { value: 'purees' as const, label: 'Purées', emoji: '🥣', desc: 'Spoon-fed smooth foods, gradually adding texture' },
+                    { value: 'combo' as const, label: 'Combo', emoji: '✨', desc: 'Mix of both — spoon-feeding & finger foods' },
+                  ]).map(opt => (
                     <button
                       key={opt.value}
                       onClick={() => setApproach(opt.value)}
-                      className={`p-3 rounded-xl border-2 transition-all text-center ${approach === opt.value ? 'border-primary bg-primary/10' : 'border-border hover:border-primary/40'}`}
+                      className={`p-4 rounded-xl border-2 transition-all text-center ${approach === opt.value ? 'border-primary bg-primary/10' : 'border-border hover:border-primary/40'}`}
                     >
                       <div className="text-xl mb-1">{opt.emoji}</div>
                       <div className="text-xs font-semibold">{opt.label}</div>
+                      <div className="text-[10px] text-muted-foreground mt-1 leading-tight">{opt.desc}</div>
                     </button>
                   ))}
                 </div>
