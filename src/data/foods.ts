@@ -75,7 +75,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'plum', name: 'Plum', emoji: '🫐', foodGroup: 'fruits', allergens: [],
+    id: 'plum', name: 'Plum', emoji: '🟣', foodGroup: 'fruits', allergens: [],
     chokingHazard: false, chokingNotes: 'Soft when ripe, remove pit',
     servingByAge: { '6mo': 'Ripe halved or mashed (remove skin if preferred)', '9mo': 'Diced pieces', '12mo': 'Sliced', '2yr': 'Whole with pit removed', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Vitamin C', 'Vitamin K', 'Fiber', 'Antioxidants'],
