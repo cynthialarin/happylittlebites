@@ -184,6 +184,14 @@ export default function Onboarding() {
                     </button>
                   ))}
                 </div>
+                <details className="mt-3 text-left">
+                  <summary className="text-xs text-primary cursor-pointer font-medium hover:underline">Not sure? Learn more ℹ️</summary>
+                  <div className="mt-2 space-y-2 text-xs text-muted-foreground bg-muted/50 rounded-xl p-3">
+                    <p><span className="font-semibold text-foreground">Baby-Led Weaning (BLW)</span> is a trending approach where babies skip purees entirely and self-feed soft, age-appropriate finger foods from around 6 months. It encourages independence, motor skills, and exploring real textures early.</p>
+                    <p><span className="font-semibold text-foreground">Purées</span> is the traditional approach — you spoon-feed smooth blended foods and gradually increase texture over weeks/months.</p>
+                    <p><span className="font-semibold text-foreground">Combo</span> blends both methods — offering purees alongside soft finger foods so baby gets the best of both worlds.</p>
+                  </div>
+                </details>
               </div>
             </div>
 
