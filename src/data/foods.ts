@@ -415,7 +415,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'sardines', name: 'Sardines', emoji: '🐟', foodGroup: 'protein', allergens: ['fish'],
+    id: 'sardines', name: 'Sardines', emoji: '🐡', foodGroup: 'protein', allergens: ['fish'],
     chokingHazard: false, chokingNotes: 'Very soft, low risk',
     servingByAge: { '6mo': 'Mashed sardines (boneless)', '9mo': 'Flaked or mashed', '12mo': 'Whole small sardines', '2yr': 'On toast, in pasta', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Omega-3', 'Calcium (with bones)', 'Vitamin D', 'B12'],
