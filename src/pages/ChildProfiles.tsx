@@ -7,34 +7,72 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
-import { ArrowLeft, Plus, Check, Trash2 } from 'lucide-react';
-import { FeedingApproach } from '@/types';
+import { ArrowLeft, Plus, Check, Trash2, Users } from 'lucide-react';
+import { FeedingApproach, Gender } from '@/types';
 
 const AVATARS = ['🐣', '🧸', '🌻', '🐰', '🦊', '🐝', '🍼', '🌈'];
+
+const GENDER_OPTIONS: { value: Gender; label: string; emoji: string }[] = [
+  { value: 'boy', label: 'Boy', emoji: '👦' },
+  { value: 'girl', label: 'Girl', emoji: '👧' },
+  { value: 'neutral', label: 'Neutral', emoji: '🌟' },
+];
+
+const GENDER_LABEL: Record<Gender, string> = {
+  boy: '👦 Boy',
+  girl: '👧 Girl',
+  neutral: '🌟',
+};
+
+interface ChildForm {
+  name: string;
+  birthdate: string;
+  approach: FeedingApproach;
+  avatar: string;
+  gender: Gender;
+}
+
+const emptyForm = (): ChildForm => ({
+  name: '',
+  birthdate: '',
+  approach: 'combo',
+  avatar: AVATARS[Math.floor(Math.random() * AVATARS.length)],
+  gender: 'neutral',
+});
 
 export default function ChildProfiles() {
   const { children, activeChild, setActiveChild, addChild, removeChild, getChildAge } = useApp();
   const navigate = useNavigate();
   const [showAdd, setShowAdd] = useState(false);
-  const [name, setName] = useState('');
-  const [birthdate, setBirthdate] = useState('');
-  const [approach, setApproach] = useState<FeedingApproach>('combo');
-  const [avatar, setAvatar] = useState('🐣');
+  const [forms, setForms] = useState<ChildForm[]>([emptyForm()]);
+
+  const updateForm = (index: number, updates: Partial<ChildForm>) => {
+    setForms(prev => prev.map((f, i) => i === index ? { ...f, ...updates } : f));
+  };
 
   const handleAdd = () => {
-    if (!name.trim() || !birthdate) return;
-    addChild({
-      id: crypto.randomUUID(),
-      name: name.trim(),
-      birthdate,
-      knownAllergies: [],
-      feedingApproach: approach,
-      avatar,
+    forms.forEach(form => {
+      if (!form.name.trim() || !form.birthdate) return;
+      addChild({
+        id: crypto.randomUUID(),
+        name: form.name.trim(),
+        birthdate: form.birthdate,
+        knownAllergies: [],
+        feedingApproach: form.approach,
+        avatar: form.avatar,
+        gender: form.gender,
+      });
     });
     setShowAdd(false);
-    setName('');
-    setBirthdate('');
+    setForms([emptyForm()]);
   };
+
+  const openMultiAdd = (count: number) => {
+    setForms(Array.from({ length: count }, emptyForm));
+    setShowAdd(true);
+  };
+
+  const allFormsValid = forms.every(f => f.name.trim() && f.birthdate);
 
   return (
     <div className="px-4 pt-4 pb-6 max-w-lg mx-auto">
@@ -44,8 +82,18 @@ export default function ChildProfiles() {
 
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-xl font-black">Child Profiles 👶</h1>
-        <Button size="sm" className="rounded-full gap-1" onClick={() => setShowAdd(true)}>
+        <Button size="sm" className="rounded-full gap-1" onClick={() => { setForms([emptyForm()]); setShowAdd(true); }}>
           <Plus className="h-4 w-4" /> Add Child
+        </Button>
+      </div>
+
+      {/* Quick-add twins/triplets */}
+      <div className="flex gap-2 mb-4">
+        <Button size="sm" variant="outline" className="rounded-full gap-1 text-xs" onClick={() => openMultiAdd(2)}>
+          <Users className="h-3.5 w-3.5" /> Add Twins
+        </Button>
+        <Button size="sm" variant="outline" className="rounded-full gap-1 text-xs" onClick={() => openMultiAdd(3)}>
+          <Users className="h-3.5 w-3.5" /> Add Triplets
         </Button>
       </div>
 
@@ -59,7 +107,9 @@ export default function ChildProfiles() {
                 <span className="text-3xl">{child.avatar}</span>
                 <div className="flex-1">
                   <p className="font-bold">{child.name}</p>
-                  <p className="text-xs text-muted-foreground">{age.label} • {child.feedingApproach}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {age.label} • {child.feedingApproach} {child.gender !== 'neutral' ? `• ${GENDER_LABEL[child.gender]}` : ''}
+                  </p>
                 </div>
                 <div className="flex gap-1">
                   {!isActive && (
@@ -99,30 +149,60 @@ export default function ChildProfiles() {
       </div>
 
       <Dialog open={showAdd} onOpenChange={setShowAdd}>
-        <DialogContent className="max-w-md mx-4">
+        <DialogContent className="max-w-md mx-4 max-h-[85vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Add Child</DialogTitle>
-            <DialogDescription>Add another child's profile</DialogDescription>
+            <DialogTitle>Add {forms.length > 1 ? `${forms.length} Children` : 'Child'}</DialogTitle>
+            <DialogDescription>
+              {forms.length > 1 ? `Add ${forms.length} children at once` : "Add another child's profile"}
+            </DialogDescription>
           </DialogHeader>
-          <div className="space-y-4">
-            <div>
-              <Label className="font-semibold">Avatar</Label>
-              <div className="flex gap-2 flex-wrap mt-1">
-                {AVATARS.map(a => (
-                  <button key={a} onClick={() => setAvatar(a)} className={`text-2xl p-2 rounded-xl ${avatar === a ? 'bg-primary/20 ring-2 ring-primary' : 'bg-muted'}`}>{a}</button>
-                ))}
+
+          {forms.map((form, idx) => (
+            <div key={idx} className="space-y-4 border-b border-border pb-4 last:border-0 last:pb-0">
+              {forms.length > 1 && (
+                <p className="text-sm font-bold text-primary">Child {idx + 1}</p>
+              )}
+
+              <div>
+                <Label className="font-semibold">Avatar</Label>
+                <div className="flex gap-2 flex-wrap mt-1">
+                  {AVATARS.map(a => (
+                    <button key={a} onClick={() => updateForm(idx, { avatar: a })} className={`text-2xl p-2 rounded-xl ${form.avatar === a ? 'bg-primary/20 ring-2 ring-primary' : 'bg-muted'}`}>{a}</button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <Label className="font-semibold">Name</Label>
+                <Input placeholder="e.g., Luna" value={form.name} onChange={e => updateForm(idx, { name: e.target.value })} className="mt-1" />
+              </div>
+
+              <div>
+                <Label className="font-semibold">Date of birth</Label>
+                <Input type="date" value={form.birthdate} onChange={e => updateForm(idx, { birthdate: e.target.value })} className="mt-1" max={new Date().toISOString().split('T')[0]} />
+              </div>
+
+              <div>
+                <Label className="font-semibold">Gender</Label>
+                <div className="flex gap-2 mt-1">
+                  {GENDER_OPTIONS.map(opt => (
+                    <button
+                      key={opt.value}
+                      onClick={() => updateForm(idx, { gender: opt.value })}
+                      className={`flex-1 p-3 rounded-xl border-2 text-center transition-all ${form.gender === opt.value ? 'border-primary bg-primary/15 ring-2 ring-primary/30' : 'border-border hover:border-primary/40'}`}
+                    >
+                      <div className="text-lg">{opt.emoji}</div>
+                      <div className="text-xs font-bold mt-0.5">{opt.label}</div>
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
-            <div>
-              <Label className="font-semibold">Name</Label>
-              <Input placeholder="e.g., Luna" value={name} onChange={e => setName(e.target.value)} className="mt-1" />
-            </div>
-            <div>
-              <Label className="font-semibold">Date of birth</Label>
-              <Input type="date" value={birthdate} onChange={e => setBirthdate(e.target.value)} className="mt-1" max={new Date().toISOString().split('T')[0]} />
-            </div>
-            <Button className="w-full rounded-full" onClick={handleAdd} disabled={!name.trim() || !birthdate}>Add Child</Button>
-          </div>
+          ))}
+
+          <Button className="w-full rounded-full" onClick={handleAdd} disabled={!allFormsValid}>
+            {forms.length > 1 ? `Add ${forms.length} Children` : 'Add Child'}
+          </Button>
         </DialogContent>
       </Dialog>
     </div>
