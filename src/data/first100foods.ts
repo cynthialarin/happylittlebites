@@ -88,13 +88,13 @@ export const FIRST_100_FOODS: First100Food[] = [
   { id: 'f100-pita', name: 'Pita Bread', emoji: '🫓', foodGroup: 'grains', category: 'Grains & Starches', ageRecommended: '9+ months', tip: 'Toast and cut into strips for dipping' },
 
   // === PROTEIN (20) ===
-  { id: 'f100-chicken', name: 'Chicken', emoji: '🍗', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Shred finely or serve drumstick for gnawing', foodId: 'chicken' },
-  { id: 'f100-beef', name: 'Beef', emoji: '🥩', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Iron-rich! Slow cook for easy shredding', foodId: 'beef' },
+  { id: 'f100-chicken', name: 'Chicken', emoji: '🍗', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Shred finely or serve drumstick for gnawing', tipCA: 'Iron-rich meat is recommended by Health Canada as one of the very first complementary foods at 6 months', foodId: 'chicken' },
+  { id: 'f100-beef', name: 'Beef', emoji: '🥩', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Iron-rich! Slow cook for easy shredding', tipCA: 'Iron-rich meat is recommended by Health Canada as one of the very first complementary foods at 6 months — slow cook for easy shredding', foodId: 'beef' },
   { id: 'f100-salmon', name: 'Salmon', emoji: '🐟', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Rich in omega-3s and DHA for brain development', foodId: 'salmon' },
   { id: 'f100-egg', name: 'Egg', emoji: '🥚', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Introduce early — both white and yolk. Top allergen.', foodId: 'egg' },
   { id: 'f100-tofu', name: 'Tofu', emoji: '🧈', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Use firm tofu, pan-fry for grip. Contains soy allergen.', foodId: 'tofu' },
-  { id: 'f100-turkey', name: 'Turkey', emoji: '🦃', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Ground turkey is easy to mix into meals', foodId: 'turkey' },
-  { id: 'f100-lamb', name: 'Lamb', emoji: '🐑', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Rich in iron and zinc, slow cook for tenderness' },
+  { id: 'f100-turkey', name: 'Turkey', emoji: '🦃', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Ground turkey is easy to mix into meals', tipCA: 'Iron-rich meat is recommended by Health Canada as one of the very first complementary foods — ground turkey is easy to mix into meals', foodId: 'turkey' },
+  { id: 'f100-lamb', name: 'Lamb', emoji: '🐑', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Rich in iron and zinc, slow cook for tenderness', tipCA: 'Iron-rich meat is recommended by Health Canada as a first food — rich in iron and zinc, slow cook for tenderness' },
   { id: 'f100-sardines', name: 'Sardines', emoji: '🐟', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Canned in water — mash bones in for calcium' },
   { id: 'f100-shrimp', name: 'Shrimp', emoji: '🦐', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Top allergen — introduce early, chop finely', foodId: 'shrimp' },
   { id: 'f100-cod', name: 'Cod', emoji: '🐟', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Mild white fish, flakes easily, check for bones' },
