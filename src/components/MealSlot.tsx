@@ -14,6 +14,7 @@ interface MealSlotProps {
   mealType: MealType;
   mealName?: string;
   mealEmoji?: string;
+  recipeId?: string;
   onAdd: () => void;
   onRemove?: () => void;
   className?: string;
