@@ -147,7 +147,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'dates', name: 'Dates', emoji: '🫐', foodGroup: 'fruits', allergens: [],
+    id: 'dates', name: 'Dates', emoji: '🫘', foodGroup: 'fruits', allergens: [],
     chokingHazard: true, chokingNotes: 'Sticky and dense — cut into small pieces, remove pit',
     servingByAge: { '6mo': 'Pureed or very finely minced', '9mo': 'Finely diced, pit removed', '12mo': 'Small pieces', '2yr': 'Halved, pit removed', '3yr+': 'Whole pitted' },
     nutritionHighlights: ['Iron', 'Fiber', 'Potassium', 'Natural sweetness'],
