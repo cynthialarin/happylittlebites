@@ -107,10 +107,10 @@ export const FIRST_100_FOODS: First100Food[] = [
   { id: 'f100-bison', name: 'Bison', emoji: '🦬', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Leaner than beef, very high in iron' },
   { id: 'f100-white-fish', name: 'Tilapia', emoji: '🐟', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Mild, flaky — great starter fish' },
   { id: 'f100-crab', name: 'Crab', emoji: '🦀', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Shellfish allergen — introduce early, shred finely' },
-  { id: 'f100-yogurt-protein', name: 'Greek Yogurt', emoji: '🥛', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Full-fat, plain — high in protein and probiotics' },
+  { id: 'f100-yogurt-protein', name: 'Greek Yogurt', emoji: '🥛', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Full-fat, plain — high in protein and probiotics', tipCA: 'Full-fat, plain — high in protein and probiotics. Cow milk as a drink can be introduced from 9-12 months per Health Canada (pasteurized, homogenized 3.25% M.F.)' },
 
   // === DAIRY (10) ===
-  { id: 'f100-yogurt', name: 'Yogurt', emoji: '🥛', foodGroup: 'dairy', category: 'Dairy', ageRecommended: '6+ months', tip: 'Choose full-fat, plain yogurt — no honey before 1', foodId: 'yogurt' },
+  { id: 'f100-yogurt', name: 'Yogurt', emoji: '🥛', foodGroup: 'dairy', category: 'Dairy', ageRecommended: '6+ months', tip: 'Full-fat plain yogurt — cow milk as a drink should wait until 12 months per AAP', tipCA: 'Full-fat plain yogurt from 6 months. Cow milk as a drink can be introduced from 9-12 months per Health Canada (use pasteurized, homogenized 3.25% M.F.)', foodId: 'yogurt' },
   { id: 'f100-cheese', name: 'Cheese', emoji: '🧀', foodGroup: 'dairy', category: 'Dairy', ageRecommended: '6+ months', tip: 'Soft cheeses are easier — avoid high-sodium varieties', foodId: 'cheese' },
   { id: 'f100-ricotta', name: 'Ricotta', emoji: '🧀', foodGroup: 'dairy', category: 'Dairy', ageRecommended: '6+ months', tip: 'Creamy and mild, great mixed into purees' },
   { id: 'f100-cottage-cheese', name: 'Cottage Cheese', emoji: '🧀', foodGroup: 'dairy', category: 'Dairy', ageRecommended: '6+ months', tip: 'Full-fat, great source of protein' },
@@ -119,7 +119,7 @@ export const FIRST_100_FOODS: First100Food[] = [
   { id: 'f100-mozzarella', name: 'Mozzarella', emoji: '🧀', foodGroup: 'dairy', category: 'Dairy', ageRecommended: '9+ months', tip: 'Shred or slice thinly, can be stringy' },
   { id: 'f100-parmesan', name: 'Parmesan', emoji: '🧀', foodGroup: 'dairy', category: 'Dairy', ageRecommended: '6+ months', tip: 'Grate over pasta or veggies for flavor boost' },
   { id: 'f100-goat-cheese', name: 'Goat Cheese', emoji: '🧀', foodGroup: 'dairy', category: 'Dairy', ageRecommended: '9+ months', tip: 'Tangy and soft, easier to digest than cow dairy for some' },
-  { id: 'f100-kefir', name: 'Kefir', emoji: '🥛', foodGroup: 'dairy', category: 'Dairy', ageRecommended: '6+ months', tip: 'Probiotic-rich fermented milk drink' },
+  { id: 'f100-kefir', name: 'Kefir', emoji: '🥛', foodGroup: 'dairy', category: 'Dairy', ageRecommended: '6+ months', tip: 'Probiotic-rich fermented milk drink', tipCA: 'Probiotic-rich fermented milk drink. Cow milk as a drink can be introduced from 9-12 months per Health Canada' },
 
   // === LEGUMES (10) ===
   { id: 'f100-lentils', name: 'Lentils', emoji: '🫘', foodGroup: 'legumes', category: 'Legumes', ageRecommended: '6+ months', tip: 'Red lentils cook soft and smooth — great for purees', foodId: 'lentils' },
