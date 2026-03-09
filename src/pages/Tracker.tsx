@@ -132,7 +132,7 @@ export default function Tracker() {
                     <span className="text-lg">{ACCEPTANCE_EMOJI[entry.acceptance]}</span>
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
-                        <button className="opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded hover:bg-destructive/10">
+                        <button className="opacity-40 hover:opacity-100 transition-opacity p-1 rounded hover:bg-destructive/10">
                           <Trash2 className="h-3.5 w-3.5 text-muted-foreground hover:text-destructive" />
                         </button>
                       </AlertDialogTrigger>
