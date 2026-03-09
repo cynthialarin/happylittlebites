@@ -317,7 +317,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'turnip', name: 'Turnip', emoji: '🫐', foodGroup: 'vegetables', allergens: [],
+    id: 'turnip', name: 'Turnip', emoji: '🥔', foodGroup: 'vegetables', allergens: [],
     chokingHazard: false, chokingNotes: 'Soft when cooked, low risk',
     servingByAge: { '6mo': 'Steamed and mashed', '9mo': 'Soft cooked cubes', '12mo': 'Roasted or mashed', '2yr': 'Any cooked preparation', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Vitamin C', 'Fiber', 'Potassium', 'Manganese'],
