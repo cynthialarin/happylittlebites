@@ -118,6 +118,7 @@ export function AppProvider({ children: reactChildren }: { children: React.React
             reaction: d.reaction,
             reactionSeverity: d.reaction_severity as any,
             notes: d.notes,
+            photoUrl: d.photo_url || undefined,
           })),
           allergenRecords: (allergenRes.data || []).map((a: any) => ({
             id: a.id,
