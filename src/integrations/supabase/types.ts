@@ -14,7 +14,222 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      allergen_records: {
+        Row: {
+          allergen: string
+          child_id: string
+          date_introduced: string
+          food: string
+          id: string
+          notes: string
+          onset_time: string
+          reaction_severity: string
+          symptoms: string[]
+          user_id: string
+        }
+        Insert: {
+          allergen: string
+          child_id: string
+          date_introduced: string
+          food?: string
+          id: string
+          notes?: string
+          onset_time?: string
+          reaction_severity?: string
+          symptoms?: string[]
+          user_id: string
+        }
+        Update: {
+          allergen?: string
+          child_id?: string
+          date_introduced?: string
+          food?: string
+          id?: string
+          notes?: string
+          onset_time?: string
+          reaction_severity?: string
+          symptoms?: string[]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      children: {
+        Row: {
+          avatar: string
+          birthdate: string
+          feeding_approach: string
+          id: string
+          known_allergies: string[]
+          name: string
+          user_id: string
+        }
+        Insert: {
+          avatar?: string
+          birthdate: string
+          feeding_approach?: string
+          id: string
+          known_allergies?: string[]
+          name: string
+          user_id: string
+        }
+        Update: {
+          avatar?: string
+          birthdate?: string
+          feeding_approach?: string
+          id?: string
+          known_allergies?: string[]
+          name?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      diary_entries: {
+        Row: {
+          acceptance: string
+          child_id: string
+          date: string
+          food_id: string
+          food_name: string
+          id: string
+          meal_type: string
+          notes: string
+          reaction: string
+          reaction_severity: string
+          texture_stage: string
+          user_id: string
+        }
+        Insert: {
+          acceptance?: string
+          child_id: string
+          date: string
+          food_id?: string
+          food_name?: string
+          id: string
+          meal_type?: string
+          notes?: string
+          reaction?: string
+          reaction_severity?: string
+          texture_stage?: string
+          user_id: string
+        }
+        Update: {
+          acceptance?: string
+          child_id?: string
+          date?: string
+          food_id?: string
+          food_name?: string
+          id?: string
+          meal_type?: string
+          notes?: string
+          reaction?: string
+          reaction_severity?: string
+          texture_stage?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      exposures: {
+        Row: {
+          child_id: string
+          exposure_data: Json
+          food_name: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          child_id: string
+          exposure_data?: Json
+          food_name: string
+          id: string
+          user_id: string
+        }
+        Update: {
+          child_id?: string
+          exposure_data?: Json
+          food_name?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      meal_plan_entries: {
+        Row: {
+          child_id: string
+          custom_meal: string | null
+          date: string
+          id: string
+          meal_type: string
+          recipe_id: string | null
+          user_id: string
+        }
+        Insert: {
+          child_id: string
+          custom_meal?: string | null
+          date: string
+          id: string
+          meal_type: string
+          recipe_id?: string | null
+          user_id: string
+        }
+        Update: {
+          child_id?: string
+          custom_meal?: string | null
+          date?: string
+          id?: string
+          meal_type?: string
+          recipe_id?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          active_child_id: string | null
+          created_at: string
+          id: string
+          onboarding_complete: boolean
+          user_id: string
+        }
+        Insert: {
+          active_child_id?: string | null
+          created_at?: string
+          id?: string
+          onboarding_complete?: boolean
+          user_id: string
+        }
+        Update: {
+          active_child_id?: string | null
+          created_at?: string
+          id?: string
+          onboarding_complete?: boolean
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_preferences: {
+        Row: {
+          favorite_recipes: string[]
+          food_preferences: Json
+          id: string
+          tried_recipes: string[]
+          user_id: string
+        }
+        Insert: {
+          favorite_recipes?: string[]
+          food_preferences?: Json
+          id?: string
+          tried_recipes?: string[]
+          user_id: string
+        }
+        Update: {
+          favorite_recipes?: string[]
+          food_preferences?: Json
+          id?: string
+          tried_recipes?: string[]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

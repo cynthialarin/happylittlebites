@@ -1,5 +1,8 @@
-import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
+import React, { createContext, useContext, useEffect, useState, useCallback, useRef } from 'react';
 import { ChildProfile, DiaryEntry, AllergenRecord, MealPlanEntry, ExposureRecord, AppSettings, MealType } from '@/types';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/hooks/use-toast';
 
 interface AppState {
   children: ChildProfile[];
@@ -32,6 +35,7 @@ interface AppContextType extends AppState {
   clearFoodPreferences: (childId: string) => void;
   completeOnboarding: () => void;
   getChildAge: (child: ChildProfile) => { months: number; label: string };
+  loading: boolean;
 }
 
 const defaultSettings: AppSettings = {
@@ -54,28 +58,197 @@ const defaultState: AppState = {
 
 const STORAGE_KEY = 'happy-little-bites';
 
-function loadState(): AppState {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) return { ...defaultState, ...JSON.parse(saved) };
-  } catch (e) { /* ignore */ }
-  return defaultState;
-}
-
-function saveState(state: AppState) {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) { /* ignore */ }
-}
-
 const AppContext = createContext<AppContextType | null>(null);
 
 export function AppProvider({ children: reactChildren }: { children: React.ReactNode }) {
-  const [state, setState] = useState<AppState>(loadState);
+  const { user } = useAuth();
+  const { toast } = useToast();
+  const [state, setState] = useState<AppState>(defaultState);
+  const [loading, setLoading] = useState(true);
+  const migrationDone = useRef(false);
 
-  useEffect(() => { saveState(state); }, [state]);
+  // Load all data from database when user is available
+  useEffect(() => {
+    if (!user) {
+      setState(defaultState);
+      setLoading(false);
+      return;
+    }
 
-  const update = useCallback((partial: Partial<AppState>) => {
-    setState(prev => ({ ...prev, ...partial }));
-  }, []);
+    const loadData = async () => {
+      setLoading(true);
+      try {
+        // Check for localStorage migration first
+        await migrateLocalStorage(user.id);
+
+        const [profileRes, childrenRes, diaryRes, allergenRes, mealPlanRes, exposuresRes, prefsRes] = await Promise.all([
+          supabase.from('profiles').select('*').eq('user_id', user.id).single(),
+          supabase.from('children').select('*').eq('user_id', user.id),
+          supabase.from('diary_entries').select('*').eq('user_id', user.id),
+          supabase.from('allergen_records').select('*').eq('user_id', user.id),
+          supabase.from('meal_plan_entries').select('*').eq('user_id', user.id),
+          supabase.from('exposures').select('*').eq('user_id', user.id),
+          supabase.from('user_preferences').select('*').eq('user_id', user.id).single(),
+        ]);
+
+        const profile = profileRes.data;
+        const prefs = prefsRes.data;
+
+        setState({
+          children: (childrenRes.data || []).map((c: any) => ({
+            id: c.id,
+            name: c.name,
+            birthdate: c.birthdate,
+            knownAllergies: c.known_allergies || [],
+            feedingApproach: c.feeding_approach as any,
+            avatar: c.avatar,
+          })),
+          diary: (diaryRes.data || []).map((d: any) => ({
+            id: d.id,
+            childId: d.child_id,
+            date: d.date,
+            foodId: d.food_id,
+            foodName: d.food_name,
+            mealType: d.meal_type as MealType,
+            textureStage: d.texture_stage as any,
+            acceptance: d.acceptance as any,
+            reaction: d.reaction,
+            reactionSeverity: d.reaction_severity as any,
+            notes: d.notes,
+          })),
+          allergenRecords: (allergenRes.data || []).map((a: any) => ({
+            id: a.id,
+            childId: a.child_id,
+            allergen: a.allergen as any,
+            dateIntroduced: a.date_introduced,
+            food: a.food,
+            reactionSeverity: a.reaction_severity as any,
+            symptoms: a.symptoms || [],
+            onsetTime: a.onset_time,
+            notes: a.notes,
+          })),
+          mealPlan: (mealPlanRes.data || []).map((m: any) => ({
+            id: m.id,
+            childId: m.child_id,
+            date: m.date,
+            mealType: m.meal_type as MealType,
+            recipeId: m.recipe_id,
+            customMeal: m.custom_meal,
+          })),
+          exposures: (exposuresRes.data || []).map((e: any) => ({
+            id: e.id,
+            childId: e.child_id,
+            foodName: e.food_name,
+            exposures: (e.exposure_data as any[]) || [],
+          })),
+          favoriteRecipes: prefs?.favorite_recipes || [],
+          triedRecipes: prefs?.tried_recipes || [],
+          foodPreferences: (prefs?.food_preferences as any) || {},
+          settings: {
+            onboardingComplete: profile?.onboarding_complete || false,
+            activeChildId: profile?.active_child_id || null,
+            theme: 'system',
+          },
+        });
+      } catch (e) {
+        console.error('Failed to load data:', e);
+      }
+      setLoading(false);
+    };
+
+    loadData();
+  }, [user]);
+
+  const migrateLocalStorage = async (userId: string) => {
+    if (migrationDone.current) return;
+    migrationDone.current = true;
+
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (!saved) return;
+
+      const localData: AppState = { ...defaultState, ...JSON.parse(saved) };
+
+      // Check if DB is empty
+      const { data: existingChildren } = await supabase.from('children').select('id').eq('user_id', userId).limit(1);
+      if (existingChildren && existingChildren.length > 0) {
+        localStorage.removeItem(STORAGE_KEY);
+        return;
+      }
+
+      // Migrate children
+      if (localData.children.length > 0) {
+        await supabase.from('children').insert(
+          localData.children.map(c => ({
+            id: c.id, user_id: userId, name: c.name, birthdate: c.birthdate,
+            known_allergies: c.knownAllergies, feeding_approach: c.feedingApproach, avatar: c.avatar,
+          }))
+        );
+      }
+
+      // Migrate diary
+      if (localData.diary.length > 0) {
+        await supabase.from('diary_entries').insert(
+          localData.diary.map(d => ({
+            id: d.id, user_id: userId, child_id: d.childId, date: d.date,
+            food_id: d.foodId, food_name: d.foodName, meal_type: d.mealType,
+            texture_stage: d.textureStage, acceptance: d.acceptance,
+            reaction: d.reaction, reaction_severity: d.reactionSeverity, notes: d.notes,
+          }))
+        );
+      }
+
+      // Migrate allergen records
+      if (localData.allergenRecords.length > 0) {
+        await supabase.from('allergen_records').insert(
+          localData.allergenRecords.map(a => ({
+            id: a.id, user_id: userId, child_id: a.childId, allergen: a.allergen,
+            date_introduced: a.dateIntroduced, food: a.food,
+            reaction_severity: a.reactionSeverity, symptoms: a.symptoms,
+            onset_time: a.onsetTime, notes: a.notes,
+          }))
+        );
+      }
+
+      // Migrate meal plan
+      if (localData.mealPlan.length > 0) {
+        await supabase.from('meal_plan_entries').insert(
+          localData.mealPlan.map(m => ({
+            id: m.id, user_id: userId, child_id: m.childId, date: m.date,
+            meal_type: m.mealType, recipe_id: m.recipeId, custom_meal: m.customMeal,
+          }))
+        );
+      }
+
+      // Migrate exposures
+      if (localData.exposures.length > 0) {
+        await supabase.from('exposures').insert(
+          localData.exposures.map(e => ({
+            id: e.id, user_id: userId, child_id: e.childId,
+            food_name: e.foodName, exposure_data: e.exposures,
+          }))
+        );
+      }
+
+      // Migrate preferences
+      await supabase.from('user_preferences').update({
+        favorite_recipes: localData.favoriteRecipes,
+        tried_recipes: localData.triedRecipes,
+        food_preferences: localData.foodPreferences,
+      }).eq('user_id', userId);
+
+      // Migrate profile settings
+      await supabase.from('profiles').update({
+        onboarding_complete: localData.settings.onboardingComplete,
+        active_child_id: localData.settings.activeChildId,
+      }).eq('user_id', userId);
+
+      localStorage.removeItem(STORAGE_KEY);
+      toast({ title: '✨ Data synced!', description: 'Your existing data has been saved to the cloud.' });
+    } catch (e) {
+      console.error('Migration failed:', e);
+    }
+  };
 
   const activeChild = state.children.find(c => c.id === state.settings.activeChildId) || state.children[0] || null;
 
@@ -96,74 +269,197 @@ export function AppProvider({ children: reactChildren }: { children: React.React
   const value: AppContextType = {
     ...state,
     activeChild,
-    addChild: (child) => {
-      const newChildren = [...state.children, child];
-      update({
-        children: newChildren,
-        settings: { ...state.settings, activeChildId: child.id }
+    loading,
+    getChildAge,
+
+    addChild: async (child) => {
+      setState(prev => ({
+        ...prev,
+        children: [...prev.children, child],
+        settings: { ...prev.settings, activeChildId: child.id },
+      }));
+      if (user) {
+        await supabase.from('children').insert({
+          id: child.id, user_id: user.id, name: child.name, birthdate: child.birthdate,
+          known_allergies: child.knownAllergies, feeding_approach: child.feedingApproach, avatar: child.avatar,
+        });
+        await supabase.from('profiles').update({ active_child_id: child.id }).eq('user_id', user.id);
+      }
+    },
+
+    updateChild: async (child) => {
+      setState(prev => ({ ...prev, children: prev.children.map(c => c.id === child.id ? child : c) }));
+      if (user) {
+        await supabase.from('children').update({
+          name: child.name, birthdate: child.birthdate, known_allergies: child.knownAllergies,
+          feeding_approach: child.feedingApproach, avatar: child.avatar,
+        }).eq('id', child.id).eq('user_id', user.id);
+      }
+    },
+
+    removeChild: async (id) => {
+      setState(prev => ({
+        ...prev,
+        children: prev.children.filter(c => c.id !== id),
+        settings: { ...prev.settings, activeChildId: prev.settings.activeChildId === id ? null : prev.settings.activeChildId },
+      }));
+      if (user) {
+        await supabase.from('children').delete().eq('id', id).eq('user_id', user.id);
+      }
+    },
+
+    setActiveChild: async (id) => {
+      setState(prev => ({ ...prev, settings: { ...prev.settings, activeChildId: id } }));
+      if (user) {
+        await supabase.from('profiles').update({ active_child_id: id }).eq('user_id', user.id);
+      }
+    },
+
+    addDiaryEntry: async (entry) => {
+      setState(prev => ({ ...prev, diary: [entry, ...prev.diary] }));
+      if (user) {
+        await supabase.from('diary_entries').insert({
+          id: entry.id, user_id: user.id, child_id: entry.childId, date: entry.date,
+          food_id: entry.foodId, food_name: entry.foodName, meal_type: entry.mealType,
+          texture_stage: entry.textureStage, acceptance: entry.acceptance,
+          reaction: entry.reaction, reaction_severity: entry.reactionSeverity, notes: entry.notes,
+        });
+      }
+    },
+
+    removeDiaryEntry: async (id) => {
+      setState(prev => ({ ...prev, diary: prev.diary.filter(e => e.id !== id) }));
+      if (user) {
+        await supabase.from('diary_entries').delete().eq('id', id).eq('user_id', user.id);
+      }
+    },
+
+    addAllergenRecord: async (record) => {
+      setState(prev => ({ ...prev, allergenRecords: [...prev.allergenRecords, record] }));
+      if (user) {
+        await supabase.from('allergen_records').insert({
+          id: record.id, user_id: user.id, child_id: record.childId, allergen: record.allergen,
+          date_introduced: record.dateIntroduced, food: record.food,
+          reaction_severity: record.reactionSeverity, symptoms: record.symptoms,
+          onset_time: record.onsetTime, notes: record.notes,
+        });
+      }
+    },
+
+    toggleFavoriteRecipe: async (id) => {
+      setState(prev => {
+        const newFavs = prev.favoriteRecipes.includes(id)
+          ? prev.favoriteRecipes.filter(r => r !== id)
+          : [...prev.favoriteRecipes, id];
+        if (user) {
+          supabase.from('user_preferences').update({ favorite_recipes: newFavs }).eq('user_id', user.id);
+        }
+        return { ...prev, favoriteRecipes: newFavs };
       });
     },
-    updateChild: (child) => update({ children: state.children.map(c => c.id === child.id ? child : c) }),
-    removeChild: (id) => update({
-      children: state.children.filter(c => c.id !== id),
-      settings: { ...state.settings, activeChildId: state.settings.activeChildId === id ? null : state.settings.activeChildId }
-    }),
-    setActiveChild: (id) => update({ settings: { ...state.settings, activeChildId: id } }),
-    addDiaryEntry: (entry) => update({ diary: [entry, ...state.diary] }),
-    removeDiaryEntry: (id) => update({ diary: state.diary.filter(e => e.id !== id) }),
-    addAllergenRecord: (record) => update({ allergenRecords: [...state.allergenRecords, record] }),
-    toggleFavoriteRecipe: (id) => update({
-      favoriteRecipes: state.favoriteRecipes.includes(id)
-        ? state.favoriteRecipes.filter(r => r !== id)
-        : [...state.favoriteRecipes, id]
-    }),
-    toggleTriedRecipe: (id) => update({
-      triedRecipes: state.triedRecipes.includes(id)
-        ? state.triedRecipes.filter(r => r !== id)
-        : [...state.triedRecipes, id]
-    }),
-    addExposure: (foodName, childId, accepted) => {
-      const existing = state.exposures.find(e => e.foodName === foodName && e.childId === childId);
-      if (existing) {
-        update({
-          exposures: state.exposures.map(e =>
+
+    toggleTriedRecipe: async (id) => {
+      setState(prev => {
+        const newTried = prev.triedRecipes.includes(id)
+          ? prev.triedRecipes.filter(r => r !== id)
+          : [...prev.triedRecipes, id];
+        if (user) {
+          supabase.from('user_preferences').update({ tried_recipes: newTried }).eq('user_id', user.id);
+        }
+        return { ...prev, triedRecipes: newTried };
+      });
+    },
+
+    addExposure: async (foodName, childId, accepted) => {
+      setState(prev => {
+        const existing = prev.exposures.find(e => e.foodName === foodName && e.childId === childId);
+        if (existing) {
+          const updated = prev.exposures.map(e =>
             e.id === existing.id
               ? { ...e, exposures: [...e.exposures, { date: new Date().toISOString(), accepted }] }
               : e
-          )
-        });
-      } else {
-        update({
-          exposures: [...state.exposures, {
+          );
+          if (user) {
+            const updatedExp = updated.find(e => e.id === existing.id)!;
+            supabase.from('exposures').update({ exposure_data: updatedExp.exposures }).eq('id', existing.id).eq('user_id', user.id);
+          }
+          return { ...prev, exposures: updated };
+        } else {
+          const newExp = {
             id: crypto.randomUUID(),
             childId,
             foodName,
-            exposures: [{ date: new Date().toISOString(), accepted }]
-          }]
+            exposures: [{ date: new Date().toISOString(), accepted }],
+          };
+          if (user) {
+            supabase.from('exposures').insert({
+              id: newExp.id, user_id: user.id, child_id: childId,
+              food_name: foodName, exposure_data: newExp.exposures,
+            });
+          }
+          return { ...prev, exposures: [...prev.exposures, newExp] };
+        }
+      });
+    },
+
+    addMealPlanEntry: async (entry) => {
+      setState(prev => ({ ...prev, mealPlan: [...prev.mealPlan, entry] }));
+      if (user) {
+        await supabase.from('meal_plan_entries').insert({
+          id: entry.id, user_id: user.id, child_id: entry.childId, date: entry.date,
+          meal_type: entry.mealType, recipe_id: entry.recipeId, custom_meal: entry.customMeal,
         });
       }
     },
-    addMealPlanEntry: (entry) => update({ mealPlan: [...state.mealPlan, entry] }),
-    removeMealPlanEntry: (id) => update({ mealPlan: state.mealPlan.filter(e => e.id !== id) }),
-    clearWeekPlan: (childId, dates) => update({
-      mealPlan: state.mealPlan.filter(e => !(e.childId === childId && dates.includes(e.date)))
-    }),
-    setFoodPreference: (childId, foodName, pref) => {
-      const childPrefs = { ...(state.foodPreferences[childId] || {}) };
-      if (pref === null) {
-        delete childPrefs[foodName];
-      } else {
-        childPrefs[foodName] = pref;
+
+    removeMealPlanEntry: async (id) => {
+      setState(prev => ({ ...prev, mealPlan: prev.mealPlan.filter(e => e.id !== id) }));
+      if (user) {
+        await supabase.from('meal_plan_entries').delete().eq('id', id).eq('user_id', user.id);
       }
-      update({ foodPreferences: { ...state.foodPreferences, [childId]: childPrefs } });
     },
-    clearFoodPreferences: (childId) => {
-      const updated = { ...state.foodPreferences };
-      delete updated[childId];
-      update({ foodPreferences: updated });
+
+    clearWeekPlan: async (childId, dates) => {
+      setState(prev => ({
+        ...prev,
+        mealPlan: prev.mealPlan.filter(e => !(e.childId === childId && dates.includes(e.date))),
+      }));
+      if (user) {
+        await supabase.from('meal_plan_entries').delete()
+          .eq('user_id', user.id).eq('child_id', childId).in('date', dates);
+      }
     },
-    completeOnboarding: () => update({ settings: { ...state.settings, onboardingComplete: true } }),
-    getChildAge,
+
+    setFoodPreference: async (childId, foodName, pref) => {
+      setState(prev => {
+        const childPrefs = { ...(prev.foodPreferences[childId] || {}) };
+        if (pref === null) delete childPrefs[foodName];
+        else childPrefs[foodName] = pref;
+        const newFoodPrefs = { ...prev.foodPreferences, [childId]: childPrefs };
+        if (user) {
+          supabase.from('user_preferences').update({ food_preferences: newFoodPrefs }).eq('user_id', user.id);
+        }
+        return { ...prev, foodPreferences: newFoodPrefs };
+      });
+    },
+
+    clearFoodPreferences: async (childId) => {
+      setState(prev => {
+        const updated = { ...prev.foodPreferences };
+        delete updated[childId];
+        if (user) {
+          supabase.from('user_preferences').update({ food_preferences: updated }).eq('user_id', user.id);
+        }
+        return { ...prev, foodPreferences: updated };
+      });
+    },
+
+    completeOnboarding: async () => {
+      setState(prev => ({ ...prev, settings: { ...prev.settings, onboardingComplete: true } }));
+      if (user) {
+        await supabase.from('profiles').update({ onboarding_complete: true }).eq('user_id', user.id);
+      }
+    },
   };
 
   return <AppContext.Provider value={value}>{reactChildren}</AppContext.Provider>;

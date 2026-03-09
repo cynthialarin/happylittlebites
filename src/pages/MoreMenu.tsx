@@ -1,7 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '@/contexts/AppContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent } from '@/components/ui/card';
-import { ShieldCheck, Brain, Baby, Milestone, Users, Settings, CalendarDays } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { ShieldCheck, Brain, Baby, Milestone, Users, Settings, CalendarDays, LogOut } from 'lucide-react';
 
 const menuItems = [
   { path: '/meal-planner', icon: CalendarDays, label: 'Meal Planner', desc: 'Plan weekly meals & shopping list', emoji: '📅', color: 'bg-primary/10' },
@@ -16,6 +18,7 @@ const menuItems = [
 export default function MoreMenu() {
   const navigate = useNavigate();
   const { activeChild, children: allChildren } = useApp();
+  const { signOut } = useAuth();
 
   return (
     <div className="px-4 pt-6 pb-4 max-w-lg mx-auto">
@@ -48,6 +51,15 @@ export default function MoreMenu() {
           </button>
         ))}
       </div>
+
+      <Button
+        variant="outline"
+        className="w-full mt-6 text-destructive hover:text-destructive"
+        onClick={signOut}
+      >
+        <LogOut className="w-4 h-4 mr-2" />
+        Sign Out
+      </Button>
     </div>
   );
 }
