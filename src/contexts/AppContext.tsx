@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
-import { ChildProfile, DiaryEntry, AllergenRecord, MealPlanEntry, ExposureRecord, AppSettings } from '@/types';
+import { ChildProfile, DiaryEntry, AllergenRecord, MealPlanEntry, ExposureRecord, AppSettings, MealType } from '@/types';
 
 interface AppState {
   children: ChildProfile[];
