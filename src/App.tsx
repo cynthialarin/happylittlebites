@@ -15,6 +15,7 @@ import Tracker from "@/pages/Tracker";
 import AllergenTracker from "@/pages/AllergenTracker";
 import MoreMenu from "@/pages/MoreMenu";
 import PickyEater from "@/pages/PickyEater";
+import PickyRecipes from "@/pages/PickyRecipes";
 import Safety from "@/pages/Safety";
 import Milestones from "@/pages/Milestones";
 import ChildProfiles from "@/pages/ChildProfiles";
