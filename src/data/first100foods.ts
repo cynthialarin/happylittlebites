@@ -71,7 +71,7 @@ export const FIRST_100_FOODS: First100Food[] = [
   { id: 'f100-turnip', name: 'Turnip', emoji: '⬜', foodGroup: 'vegetables', category: 'Vegetables', ageRecommended: '6+ months', tip: 'Mild flavor, boil or roast until tender' },
 
   // === GRAINS & STARCHES (15) ===
-  { id: 'f100-oats', name: 'Oats', emoji: '🥣', foodGroup: 'grains', category: 'Grains & Starches', ageRecommended: '6+ months', tip: 'Iron-fortified oatmeal is a great first food', foodId: 'oats' },
+  { id: 'f100-oats', name: 'Oats', emoji: '🥣', foodGroup: 'grains', category: 'Grains & Starches', ageRecommended: '6+ months', tip: 'Iron-fortified oatmeal is a great first food', tipCA: 'Iron-fortified cereal is recommended by Health Canada as one of the very first complementary foods alongside iron-rich meat', foodId: 'oats' },
   { id: 'f100-rice', name: 'Rice', emoji: '🍚', foodGroup: 'grains', category: 'Grains & Starches', ageRecommended: '6+ months', tip: 'Offer variety — limit to avoid arsenic concerns', foodId: 'rice' },
   { id: 'f100-pasta', name: 'Pasta', emoji: '🍝', foodGroup: 'grains', category: 'Grains & Starches', ageRecommended: '6+ months', tip: 'Fusilli is great for little hands to grip', foodId: 'pasta' },
   { id: 'f100-bread', name: 'Bread', emoji: '🍞', foodGroup: 'grains', category: 'Grains & Starches', ageRecommended: '6+ months', tip: 'Toast lightly for easier gripping, avoid honey before 1', foodId: 'bread' },
