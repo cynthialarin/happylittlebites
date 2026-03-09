@@ -106,4 +106,5 @@ export interface AppSettings {
   onboardingComplete: boolean;
   activeChildId: string | null;
   theme: 'light' | 'dark' | 'system';
+  country: Country;
 }
