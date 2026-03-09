@@ -51,6 +51,21 @@ export default function First100Foods() {
     return FIRST_100_MILESTONES.find(m => completedCount < m.count) || null;
   }, [completedCount]);
 
+  // Auto-trigger confetti when a new milestone is reached
+  useEffect(() => {
+    if (prevCountRef.current !== null && prevCountRef.current < completedCount) {
+      const justCrossed = FIRST_100_MILESTONES.find(
+        m => prevCountRef.current! < m.count && completedCount >= m.count
+      );
+      if (justCrossed) {
+        setCelebratingMilestone(justCrossed.title);
+        setShowConfetti(true);
+        setTimeout(() => setShowConfetti(false), 3000);
+      }
+    }
+    prevCountRef.current = completedCount;
+  }, [completedCount]);
+
   const filteredFoods = useMemo(() => {
     let result = FIRST_100_FOODS;
     if (selectedCategory) result = result.filter(f => f.category === selectedCategory);
