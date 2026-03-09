@@ -274,7 +274,7 @@ export default function First100Foods() {
                     </span>
                     {isChecked && <span className="text-xs text-primary">✓</span>}
                   </div>
-                  <p className="text-[10px] text-muted-foreground truncate">{food.tip}</p>
+                  <p className="text-[10px] text-muted-foreground truncate">{isCanada && food.tipCA ? food.tipCA : food.tip}</p>
                   <div className="flex gap-1 mt-0.5">
                     <Badge variant="outline" className="text-[9px] px-1.5 py-0 h-4">{food.ageRecommended}</Badge>
                   </div>

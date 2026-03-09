@@ -72,6 +72,7 @@ export default function MealSuggestions() {
           recentFoods,
           triedFoods,
           availableRecipes: recipes.map(r => r.id),
+          country: settings.country,
         },
       });
 

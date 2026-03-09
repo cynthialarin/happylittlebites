@@ -94,9 +94,32 @@ export const allergenInfo: AllergenInfo[] = [
     signsOfReaction: ['Hives', 'Facial swelling', 'Vomiting', 'Coughing', 'Abdominal pain'],
     recommendedFirstFood: 'Tahini mixed into oatmeal or yogurt',
     waitTime: '3-5 days before introducing next new allergen'
+  },
+  // === CANADA-ONLY ALLERGENS ===
+  {
+    id: 'mustard' as AllergenCA, name: 'Mustard', emoji: '🟡', countryOnly: 'CA',
+    description: 'A priority allergen in Canada. Found in many condiments, sauces, and processed foods. Can cause severe allergic reactions.',
+    commonFoods: ['Mustard condiment', 'Salad dressings', 'Marinades', 'Sausages', 'Pickles'],
+    introductionTips: ['Start with a tiny amount of mild yellow mustard mixed into food', 'Mustard allergy is more commonly recognized in Canada and Europe', 'Check labels — mustard is in many unexpected foods'],
+    signsOfReaction: ['Hives', 'Facial swelling', 'Vomiting', 'Abdominal pain', 'Breathing difficulty'],
+    recommendedFirstFood: 'Small amount of mild yellow mustard mixed into a familiar food',
+    waitTime: '3-5 days before introducing next new allergen'
+  },
+  {
+    id: 'sulphites' as AllergenCA, name: 'Sulphites', emoji: '⚗️', countryOnly: 'CA',
+    description: 'A priority allergen in Canada. Sulphites are preservatives found in dried fruits, wine, and processed foods. Sensitivity is more common in people with asthma.',
+    commonFoods: ['Dried fruits', 'Fruit juices', 'Wine/vinegar', 'Pickled foods', 'Some medications'],
+    introductionTips: ['Sulphites are preservatives, not a protein allergen like others', 'Most relevant for children with asthma', 'Check labels for sulphur dioxide and sodium sulphite', 'Fresh fruits and vegetables are sulphite-free'],
+    signsOfReaction: ['Wheezing', 'Coughing', 'Chest tightness', 'Hives', 'Stomach cramps'],
+    recommendedFirstFood: 'Small portion of dried apricots (commonly preserved with sulphites)',
+    waitTime: '3-5 days before introducing next new allergen'
   }
 ];
 
 export const introductionOrder: Allergen[] = [
   'peanuts', 'eggs', 'milk', 'sesame', 'tree-nuts', 'soy', 'wheat', 'fish', 'shellfish'
+];
+
+export const introductionOrderCA: (Allergen | AllergenCA)[] = [
+  'peanuts', 'eggs', 'milk', 'sesame', 'tree-nuts', 'soy', 'wheat', 'fish', 'shellfish', 'mustard' as AllergenCA, 'sulphites' as AllergenCA
 ];
