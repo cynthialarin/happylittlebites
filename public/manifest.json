@@ -1,0 +1,16 @@
+{
+  "name": "Happy Little Bites",
+  "short_name": "HLB",
+  "description": "Baby & toddler feeding guide with allergen tracking, meal planning & AI suggestions",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#4CAF50",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64",
+      "type": "image/x-icon"
+    }
+  ]
+}

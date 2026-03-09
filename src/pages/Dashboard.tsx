@@ -9,13 +9,13 @@ import { foods } from '@/data/foods';
 import FoodImage from '@/components/FoodImage';
 import NutritionSummary from '@/components/NutritionSummary';
 import { FOOD_GROUP_COLORS } from '@/data/badges';
-import { TOP_9_ALLERGENS, FoodGroup } from '@/types';
+import { TOP_9_ALLERGENS, CA_EXTRA_ALLERGENS, FoodGroup } from '@/types';
 import { UtensilsCrossed, ShieldCheck, TrendingUp, Lightbulb, BookOpen, ChevronRight, Trophy, Flame, Sparkles, ListChecks } from 'lucide-react';
 
 const CORE_GROUPS: FoodGroup[] = ['fruits', 'vegetables', 'grains', 'protein', 'dairy', 'legumes'];
 
 export default function Dashboard() {
-  const { activeChild, diary, allergenRecords, getChildAge } = useApp();
+  const { activeChild, diary, allergenRecords, getChildAge, settings } = useApp();
   const navigate = useNavigate();
   const gamification = useGamification();
 
@@ -40,7 +40,8 @@ export default function Dashboard() {
     return { foodsTried: uniqueFoods.size, allergensIntro: uniqueAllergens.size, streak };
   }, [activeChild, diary, allergenRecords]);
 
-  const allergenProgress = (stats.allergensIntro / TOP_9_ALLERGENS.length) * 100;
+  const totalAllergens = settings.country === 'CA' ? TOP_9_ALLERGENS.length + CA_EXTRA_ALLERGENS.length : TOP_9_ALLERGENS.length;
+  const allergenProgress = (stats.allergensIntro / totalAllergens) * 100;
 
   const suggestions = useMemo(() => {
     if (!age) return [];
@@ -115,7 +116,7 @@ export default function Dashboard() {
       <div className="grid grid-cols-3 gap-2 mb-5">
         {[
           { label: 'Foods Tried', value: stats.foodsTried, icon: '🥕', color: 'bg-sage/30' },
-          { label: 'Allergens', value: `${stats.allergensIntro}/9`, icon: '🛡️', color: 'bg-sky/30' },
+          { label: 'Allergens', value: `${stats.allergensIntro}/${totalAllergens}`, icon: '🛡️', color: 'bg-sky/30' },
           { label: 'Day Streak', value: stats.streak, icon: '🔥', color: 'bg-peach/30' },
         ].map((stat, i) => (
           <motion.div
@@ -207,7 +208,7 @@ export default function Dashboard() {
               <ShieldCheck className="h-4 w-4 text-primary" />
               <span className="text-sm font-bold">Allergen Introduction</span>
             </div>
-            <span className="text-xs text-muted-foreground">{stats.allergensIntro} of 9</span>
+            <span className="text-xs text-muted-foreground">{stats.allergensIntro} of {totalAllergens}</span>
           </div>
           <Progress value={allergenProgress} className="h-2.5" />
           <button

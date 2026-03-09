@@ -7,12 +7,12 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft, Download, Copy, Check, AlertTriangle, ShieldCheck, UtensilsCrossed, Calendar } from 'lucide-react';
 import { foods } from '@/data/foods';
 import { recipes } from '@/data/recipes';
-import { TOP_9_ALLERGENS } from '@/types';
+import { TOP_9_ALLERGENS, CA_EXTRA_ALLERGENS } from '@/types';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 
 export default function CaregiverShare() {
-  const { activeChild, diary, allergenRecords, mealPlan, getChildAge } = useApp();
+  const { activeChild, diary, allergenRecords, mealPlan, getChildAge, settings } = useApp();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);
@@ -83,6 +83,7 @@ export default function CaregiverShare() {
     const lines = [
       `🍽️ CAREGIVER GUIDE FOR ${activeChild.name.toUpperCase()}`,
       `${activeChild.avatar} ${age.label}`,
+      `Guidelines: ${settings.country === 'CA' ? '🇨🇦 Health Canada' : '🇺🇸 AAP/CDC'}`,
       `Generated: ${new Date().toLocaleDateString()}`,
       '',
       '⚠️ ALLERGIES & RESTRICTIONS',

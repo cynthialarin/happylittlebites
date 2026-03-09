@@ -3,7 +3,8 @@ import { useApp } from '@/contexts/AppContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ShieldCheck, Brain, Baby, Milestone, Users, Settings, CalendarDays, LogOut, Sparkles, Share2, ListChecks } from 'lucide-react';
+import { ShieldCheck, Brain, Baby, Milestone, Users, Settings, CalendarDays, LogOut, Sparkles, Share2, ListChecks, Globe } from 'lucide-react';
+import { Country } from '@/types';
 
 const menuItems = [
   { path: '/first-100-foods', icon: ListChecks, label: 'First 100 Foods', desc: 'Guided journey through essential foods', emoji: '🗺️', color: 'bg-sage/10' },
@@ -20,7 +21,7 @@ const menuItems = [
 
 export default function MoreMenu() {
   const navigate = useNavigate();
-  const { activeChild, children: allChildren } = useApp();
+  const { activeChild, children: allChildren, settings, setCountry } = useApp();
   const { signOut } = useAuth();
 
   return (
@@ -55,9 +56,36 @@ export default function MoreMenu() {
         ))}
       </div>
 
+      {/* Country Toggle */}
+      <Card className="mt-5 mb-2">
+        <CardContent className="p-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Globe className="h-4 w-4 text-muted-foreground" />
+              <span className="text-sm font-bold">Guidelines</span>
+            </div>
+            <div className="flex gap-1">
+              {([{ code: 'US' as Country, flag: '🇺🇸', label: 'US (AAP)' }, { code: 'CA' as Country, flag: '🇨🇦', label: 'Canada' }]).map(c => (
+                <button
+                  key={c.code}
+                  onClick={() => setCountry(c.code)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                    settings.country === c.code
+                      ? 'bg-primary text-primary-foreground'
+                      : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                  }`}
+                >
+                  {c.flag} {c.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       <Button
         variant="outline"
-        className="w-full mt-6 text-destructive hover:text-destructive"
+        className="w-full mt-4 text-destructive hover:text-destructive"
         onClick={signOut}
       >
         <LogOut className="w-4 h-4 mr-2" />
