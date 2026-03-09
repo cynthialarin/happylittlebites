@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { foods } from '@/data/foods';
 import { AcceptanceLevel, MealType, TextureStage, ReactionSeverity } from '@/types';
 import { Plus, Calendar } from 'lucide-react';
+import { toast } from '@/components/ui/sonner';
 
 const ACCEPTANCE_EMOJI: Record<AcceptanceLevel, string> = { loved: '😍', okay: '😐', refused: '😤' };
 const MEAL_EMOJI: Record<MealType, string> = { breakfast: '🌅', lunch: '☀️', dinner: '🌙', snack: '🍪' };
