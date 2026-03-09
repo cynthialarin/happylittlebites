@@ -9,6 +9,7 @@ interface AppState {
   exposures: ExposureRecord[];
   favoriteRecipes: string[];
   triedRecipes: string[];
+  foodPreferences: Record<string, Record<string, 'loves' | 'refuses'>>;
   settings: AppSettings;
 }
 
