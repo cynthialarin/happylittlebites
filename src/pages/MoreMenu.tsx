@@ -1,7 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '@/contexts/AppContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent } from '@/components/ui/card';
-import { ShieldCheck, Brain, Baby, Milestone, Users, Settings, CalendarDays } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { ShieldCheck, Brain, Baby, Milestone, Users, Settings, CalendarDays, LogOut } from 'lucide-react';
 
 const menuItems = [
   { path: '/meal-planner', icon: CalendarDays, label: 'Meal Planner', desc: 'Plan weekly meals & shopping list', emoji: '📅', color: 'bg-primary/10' },
