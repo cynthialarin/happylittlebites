@@ -35,6 +35,7 @@ import GrowthTracker from "@/pages/GrowthTracker";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import TermsOfService from "@/pages/TermsOfService";
 import DataManagementPage from "@/pages/DataManagementPage";
+import SavedRecipes from "@/pages/SavedRecipes";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
