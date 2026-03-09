@@ -2,3 +2,6 @@ project_id = "fdnujkfrcqdnpcojpwhl"
 
 [functions.generate-food-image]
 verify_jwt = false
+
+[functions.suggest-meals]
+verify_jwt = false
