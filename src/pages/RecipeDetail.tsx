@@ -4,6 +4,7 @@ import { useApp } from '@/contexts/AppContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowLeft, Heart, Clock, Snowflake, Users, ShieldCheck } from 'lucide-react';
+import FoodImage from '@/components/FoodImage';
 
 export default function RecipeDetail() {
   const { id } = useParams();
