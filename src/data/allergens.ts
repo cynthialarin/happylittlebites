@@ -1,4 +1,4 @@
-import { Allergen } from '@/types';
+import { Allergen, AllergenCA } from '@/types';
 
 export interface AllergenInfo {
   id: Allergen;
