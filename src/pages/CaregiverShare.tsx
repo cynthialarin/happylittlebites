@@ -351,6 +351,64 @@ export default function CaregiverShare() {
         )}
       </div>
 
+      {/* Invite Caregiver */}
+      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+        <Card className="mb-4">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <Mail className="h-4 w-4 text-primary" />
+              <span className="text-sm font-bold">Invite a Caregiver</span>
+            </div>
+            <div className="space-y-3">
+              <div>
+                <Label className="text-xs font-semibold">Email address</Label>
+                <Input
+                  type="email"
+                  placeholder="grandma@email.com"
+                  value={inviteEmail}
+                  onChange={e => setInviteEmail(e.target.value)}
+                  className="mt-1"
+                />
+              </div>
+              <div>
+                <Label className="text-xs font-semibold">Message (optional)</Label>
+                <Input
+                  placeholder="Here's the food guide for..."
+                  value={inviteMessage}
+                  onChange={e => setInviteMessage(e.target.value)}
+                  className="mt-1"
+                />
+              </div>
+              <Button
+                onClick={async () => {
+                  if (!inviteEmail || !activeChild || !user) return;
+                  setSendingInvite(true);
+                  try {
+                    const { data, error } = await supabase.functions.invoke('invite-caregiver', {
+                      body: { email: inviteEmail, childName: activeChild.name, message: inviteMessage },
+                    });
+                    if (error) throw error;
+                    toast({ title: '📤 Invite created!', description: `Invite sent for ${activeChild.name}'s guide.` });
+                    setInviteEmail('');
+                    setInviteMessage('');
+                  } catch (e: any) {
+                    toast({ title: 'Could not send invite', description: e.message, variant: 'destructive' });
+                  } finally {
+                    setSendingInvite(false);
+                  }
+                }}
+                disabled={!inviteEmail || sendingInvite}
+                className="w-full gap-2"
+                size="sm"
+              >
+                <Send className="h-3.5 w-3.5" />
+                {sendingInvite ? 'Sending...' : 'Send Invite'}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </motion.div>
+
       {/* Actions */}
       <div className="grid grid-cols-2 gap-2">
         <Button onClick={handleCopyToClipboard} variant="outline" className="gap-2">
