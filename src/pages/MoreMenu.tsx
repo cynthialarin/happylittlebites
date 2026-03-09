@@ -3,7 +3,7 @@ import { useApp } from '@/contexts/AppContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ShieldCheck, Brain, Baby, Milestone, Users, Settings, CalendarDays, LogOut, Sparkles, Share2, ListChecks, Globe, ShoppingCart, TrendingUp, Database, FileText } from 'lucide-react';
+import { ShieldCheck, Brain, Baby, Milestone, Users, Settings, CalendarDays, LogOut, Sparkles, Share2, ListChecks, Globe, ShoppingCart, TrendingUp, Database, FileText, Bookmark } from 'lucide-react';
 import { Country } from '@/types';
 
 const getMenuItems = (isCanada: boolean) => [
