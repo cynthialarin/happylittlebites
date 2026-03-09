@@ -213,7 +213,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'cauliflower', name: 'Cauliflower', emoji: '🥦', foodGroup: 'vegetables', allergens: [],
+    id: 'cauliflower', name: 'Cauliflower', emoji: '🤍', foodGroup: 'vegetables', allergens: [],
     chokingHazard: false, chokingNotes: 'Cook until very soft — raw is too hard',
     servingByAge: { '6mo': 'Steamed soft florets', '9mo': 'Soft cooked pieces', '12mo': 'Roasted florets, cauliflower mash', '2yr': 'Roasted, in mac and cheese', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Vitamin C', 'Vitamin K', 'Folate', 'Fiber'],
