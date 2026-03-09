@@ -176,11 +176,11 @@ export default function Onboarding() {
                     <button
                       key={opt.value}
                       onClick={() => setApproach(opt.value)}
-                      className={`p-4 rounded-xl border-2 transition-all text-center ${approach === opt.value ? 'border-primary bg-primary/10' : 'border-border hover:border-primary/40'}`}
+                      className={`p-5 rounded-xl border-2 transition-all text-center ${approach === opt.value ? 'border-primary bg-primary/15 ring-2 ring-primary/30' : 'border-border hover:border-primary/40'}`}
                     >
-                      <div className="text-xl mb-1">{opt.emoji}</div>
-                      <div className="text-xs font-semibold">{opt.label}</div>
-                      <div className="text-[10px] text-muted-foreground mt-1 leading-tight">{opt.desc}</div>
+                      <div className="text-2xl mb-1">{opt.emoji}</div>
+                      <div className="text-sm font-bold">{opt.label}</div>
+                      <div className="text-xs text-foreground/70 mt-1 leading-tight">{opt.desc}</div>
                     </button>
                   ))}
                 </div>
