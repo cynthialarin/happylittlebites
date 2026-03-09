@@ -645,7 +645,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'hummus', name: 'Hummus', emoji: '🫕', foodGroup: 'legumes', allergens: ['sesame'],
+    id: 'hummus', name: 'Hummus', emoji: '🥣', foodGroup: 'legumes', allergens: ['sesame'],
     chokingHazard: false, chokingNotes: 'Smooth paste, very safe',
     servingByAge: { '6mo': 'Spread thin on toast or on preloaded spoon', '9mo': 'As a dip with soft veggies', '12mo': 'As a spread or dip', '2yr': 'Any preparation', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Protein', 'Iron', 'Fiber', 'Healthy fats'],
