@@ -7,6 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { foods } from '@/data/foods';
 import FoodImage from '@/components/FoodImage';
+import NutritionSummary from '@/components/NutritionSummary';
 import { FOOD_GROUP_COLORS } from '@/data/badges';
 import { TOP_9_ALLERGENS, FoodGroup } from '@/types';
 import { UtensilsCrossed, ShieldCheck, TrendingUp, Lightbulb, BookOpen, ChevronRight, Trophy, Flame } from 'lucide-react';
