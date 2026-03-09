@@ -116,6 +116,14 @@ export default function First100Foods() {
         <div className="text-3xl">{currentMilestone?.emoji || '🥄'}</div>
       </div>
 
+      {/* Country Guidelines Banner */}
+      <div className={`flex items-center gap-2 px-3 py-2 rounded-xl mb-4 text-xs font-semibold ${
+        isCanada ? 'bg-destructive/5 text-destructive' : 'bg-sky/20 text-foreground'
+      }`}>
+        <span>{isCanada ? '🇨🇦' : '🇺🇸'}</span>
+        <span>Showing {isCanada ? 'Health Canada (CPS)' : 'AAP / CDC'} guidelines</span>
+      </div>
+
       {/* Progress Card */}
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
         <Card className="mb-5 bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">
