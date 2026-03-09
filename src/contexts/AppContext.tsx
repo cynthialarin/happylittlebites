@@ -331,7 +331,8 @@ export function AppProvider({ children: reactChildren }: { children: React.React
           food_id: entry.foodId, food_name: entry.foodName, meal_type: entry.mealType,
           texture_stage: entry.textureStage, acceptance: entry.acceptance,
           reaction: entry.reaction, reaction_severity: entry.reactionSeverity, notes: entry.notes,
-        });
+          photo_url: entry.photoUrl || null,
+        } as any);
       }
     },
 
