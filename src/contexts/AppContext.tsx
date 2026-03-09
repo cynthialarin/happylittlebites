@@ -43,6 +43,7 @@ const defaultSettings: AppSettings = {
   onboardingComplete: false,
   activeChildId: null,
   theme: 'system',
+  country: 'US',
 };
 
 const defaultState: AppState = {
