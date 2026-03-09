@@ -161,7 +161,7 @@ export default function Onboarding() {
               </div>
 
               <div>
-                <Label htmlFor="birthdate" className="font-semibold">Date of birth</Label>
+                <Label htmlFor="birthdate" className="text-base font-bold">Date of birth</Label>
                 <Input id="birthdate" type="date" value={birthdate} onChange={e => setBirthdate(e.target.value)} className="mt-1.5" max={new Date().toISOString().split('T')[0]} />
               </div>
 
