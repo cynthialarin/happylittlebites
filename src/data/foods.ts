@@ -407,7 +407,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'tuna', name: 'Tuna', emoji: '🐟', foodGroup: 'protein', allergens: ['fish'],
+    id: 'tuna', name: 'Tuna', emoji: '🐠', foodGroup: 'protein', allergens: ['fish'],
     chokingHazard: false, chokingNotes: 'Canned tuna is soft, low risk',
     servingByAge: { '6mo': 'Mashed canned light tuna', '9mo': 'Flaked tuna', '12mo': 'In tuna salad, patties', '2yr': 'Any preparation', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Protein', 'Omega-3', 'Vitamin D', 'Selenium'],
