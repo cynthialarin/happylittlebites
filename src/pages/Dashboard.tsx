@@ -9,13 +9,14 @@ import { foods } from '@/data/foods';
 import FoodImage from '@/components/FoodImage';
 import NutritionSummary from '@/components/NutritionSummary';
 import NutritionScorecard from '@/components/NutritionScorecard';
+import NutritionGoals from '@/components/NutritionGoals';
 import ReintroductionTracker from '@/components/ReintroductionTracker';
 import TextureProgression from '@/components/TextureProgression';
 import { FOOD_GROUP_COLORS } from '@/data/badges';
 import { TOP_9_ALLERGENS, CA_EXTRA_ALLERGENS, FoodGroup } from '@/types';
 import { UtensilsCrossed, ShieldCheck, TrendingUp, Lightbulb, BookOpen, ChevronRight, Trophy, Flame, Sparkles, ListChecks, ShoppingCart } from 'lucide-react';
 
-const CORE_GROUPS: FoodGroup[] = ['fruits', 'vegetables', 'grains', 'protein', 'dairy', 'legumes'];
+
 
 export default function Dashboard() {
   const { activeChild, diary, allergenRecords, getChildAge, settings } = useApp();
@@ -78,7 +79,6 @@ export default function Dashboard() {
     );
   }
 
-  const todayGroupCount = gamification.todayGroups.size;
   const { level, levelProgress, nextLevel, xp, weeklyChallenge, challengeProgress, unlockedBadges } = gamification;
 
   return (
@@ -139,48 +139,9 @@ export default function Dashboard() {
         ))}
       </div>
 
-      {/* Daily Nutrition Rainbow */}
-      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-        <Card className="mb-5">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <span className="text-base">🌈</span>
-                <span className="text-sm font-bold">Today's Rainbow</span>
-              </div>
-              <span className={`text-xs font-bold ${todayGroupCount >= 6 ? 'text-primary' : 'text-muted-foreground'}`}>
-                {todayGroupCount} of 6 groups
-              </span>
-            </div>
-            <div className="grid grid-cols-6 gap-1.5">
-              {CORE_GROUPS.map(group => {
-                const info = FOOD_GROUP_COLORS[group];
-                const hit = gamification.todayGroups.has(group);
-                return (
-                  <div key={group} className="text-center">
-                    <div
-                      className={`w-full aspect-square rounded-xl flex items-center justify-center text-lg transition-all ${
-                        hit ? info.bg + ' scale-100' : 'bg-muted/50 scale-90 grayscale opacity-50'
-                      }`}
-                    >
-                      {info.emoji}
-                    </div>
-                    <p className="text-[8px] font-semibold mt-1 text-muted-foreground">{info.label}</p>
-                  </div>
-                );
-              })}
-            </div>
-            {todayGroupCount >= 6 && (
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="text-xs text-center font-bold text-primary mt-2"
-              >
-                🎉 Rainbow Plate Complete! +50 XP
-              </motion.p>
-            )}
-          </CardContent>
-        </Card>
+      {/* Nutrition Goals */}
+      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="mb-5">
+        <NutritionGoals />
       </motion.div>
 
       {/* Weekly Challenge */}

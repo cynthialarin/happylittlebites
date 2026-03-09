@@ -4,6 +4,7 @@ import { foods } from '@/data/foods';
 import { BADGES, LEVELS } from '@/data/badges';
 import { getWeeklyChallenge } from '@/data/challenges';
 import { FoodGroup, TOP_9_ALLERGENS } from '@/types';
+import { getTargetsForChild, isBalancedDay, isPerfectDay, NUTRITION_GROUPS } from '@/data/nutritionGoals';
 
 const FOOD_GROUPS_CORE: FoodGroup[] = ['fruits', 'vegetables', 'grains', 'protein', 'dairy', 'legumes'];
 
@@ -11,12 +12,22 @@ export function useGamification() {
   const { activeChild, diary, allergenRecords } = useApp();
 
   return useMemo(() => {
+    const emptyGoals = {
+      dailyGoals: null as null | { counts: Record<string, number>; targets: Record<string, number> },
+      balancedDaysThisWeek: 0,
+      weeklyBalanceScore: 0,
+      balancedDaysThisMonth: 0,
+      weeklyBalancedDays: [false, false, false, false, false, false, false] as boolean[],
+      groupTargetStreaks: {} as Record<string, number>,
+    };
+
     if (!activeChild) {
       return {
         xp: 0, level: LEVELS[0], levelProgress: 0, nextLevel: LEVELS[1],
         unlockedBadges: [], todayGroups: new Set<FoodGroup>(),
         streak: 0, weeklyChallenge: getWeeklyChallenge(), challengeProgress: 0,
         foodGroupStreaks: {} as Record<string, number>,
+        ...emptyGoals,
       };
     }
 
@@ -29,16 +40,21 @@ export function useGamification() {
     let xp = 0;
     const seenFoods = new Set<string>();
     const dayFoodGroups: Record<string, Set<FoodGroup>> = {};
+    const dayGroupCounts: Record<string, Record<string, number>> = {};
 
     childDiary.forEach(entry => {
-      xp += 10; // log food
+      xp += 10;
       if (!seenFoods.has(entry.foodId)) {
-        xp += 25; // new food
+        xp += 25;
         seenFoods.add(entry.foodId);
       }
       if (!dayFoodGroups[entry.date]) dayFoodGroups[entry.date] = new Set();
+      if (!dayGroupCounts[entry.date]) dayGroupCounts[entry.date] = {};
       const food = foods.find(f => f.id === entry.foodId);
-      if (food) dayFoodGroups[entry.date].add(food.foodGroup);
+      if (food) {
+        dayFoodGroups[entry.date].add(food.foodGroup);
+        dayGroupCounts[entry.date][food.foodGroup] = (dayGroupCounts[entry.date][food.foodGroup] || 0) + 1;
+      }
     });
 
     // Rainbow plate bonus
@@ -73,6 +89,66 @@ export function useGamification() {
         else break;
       }
       foodGroupStreaks[group] = s;
+    });
+
+    // === Nutrition Goals ===
+    const targets = getTargetsForChild(activeChild.birthdate);
+    const todayCounts: Record<string, number> = dayGroupCounts[today] || {};
+    const dailyGoals = { counts: todayCounts, targets };
+
+    // Weekly balanced days (Mon-Sun of current week)
+    const weekStart = new Date(now);
+    const dayOfWeek = weekStart.getDay();
+    const mondayOffset = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+    weekStart.setDate(weekStart.getDate() + mondayOffset);
+    weekStart.setHours(0, 0, 0, 0);
+
+    const weeklyBalancedDays: boolean[] = [];
+    let balancedDaysThisWeek = 0;
+    let weeklyTargetSlots = 0;
+    let weeklyMetSlots = 0;
+
+    for (let i = 0; i < 7; i++) {
+      const d = new Date(weekStart);
+      d.setDate(d.getDate() + i);
+      const dateStr = d.toISOString().split('T')[0];
+      const counts = dayGroupCounts[dateStr] || {};
+      const balanced = isBalancedDay(counts, targets);
+      weeklyBalancedDays.push(balanced);
+      if (balanced) balancedDaysThisWeek++;
+
+      // Weekly balance score: count target slots met
+      NUTRITION_GROUPS.forEach(g => {
+        if (targets[g] > 0) {
+          weeklyTargetSlots++;
+          if ((counts[g] || 0) >= targets[g]) weeklyMetSlots++;
+        }
+      });
+    }
+    const weeklyBalanceScore = weeklyTargetSlots > 0 ? (weeklyMetSlots / weeklyTargetSlots) * 100 : 0;
+
+    // Monthly balanced days
+    const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+    let balancedDaysThisMonth = 0;
+    for (let d = new Date(monthStart); d <= now; d.setDate(d.getDate() + 1)) {
+      const dateStr = d.toISOString().split('T')[0];
+      const counts = dayGroupCounts[dateStr] || {};
+      if (isBalancedDay(counts, targets)) balancedDaysThisMonth++;
+    }
+
+    // Group target streaks (consecutive days each group target was met)
+    const groupTargetStreaks: Record<string, number> = {};
+    NUTRITION_GROUPS.forEach(group => {
+      if (targets[group] === 0) { groupTargetStreaks[group] = 0; return; }
+      let s = 0;
+      for (let i = 0; i < 365; i++) {
+        const d = new Date(now);
+        d.setDate(d.getDate() - i);
+        const dateStr = d.toISOString().split('T')[0];
+        if ((dayGroupCounts[dateStr]?.[group] || 0) >= targets[group]) s++;
+        else break;
+      }
+      groupTargetStreaks[group] = s;
     });
 
     // === Badges ===
@@ -116,6 +192,19 @@ export function useGamification() {
     const retriedRefused = childDiary.some(d => refusedFoods.has(d.foodId) && d.acceptance !== 'refused');
     if (retriedRefused) unlockedBadges.push('brave-taster');
 
+    // === Nutrition Goal Badges ===
+    // Check if any day ever was balanced
+    const anyBalancedDay = Object.entries(dayGroupCounts).some(([, counts]) => isBalancedDay(counts, targets));
+    if (anyBalancedDay) unlockedBadges.push('balanced-day-1');
+
+    if (balancedDaysThisWeek >= 5) unlockedBadges.push('balanced-week');
+    if (balancedDaysThisMonth >= 20) unlockedBadges.push('balanced-month');
+    if (groupTargetStreaks['vegetables'] >= 7) unlockedBadges.push('veggie-streak-7');
+    if (groupTargetStreaks['protein'] >= 7) unlockedBadges.push('protein-streak-7');
+
+    const anyPerfectDay = Object.entries(dayGroupCounts).some(([, counts]) => isPerfectDay(counts, targets));
+    if (anyPerfectDay) unlockedBadges.push('perfect-day');
+
     // Badge XP
     xp += unlockedBadges.length * 100;
 
@@ -128,8 +217,6 @@ export function useGamification() {
 
     // === Weekly Challenge ===
     const challenge = getWeeklyChallenge();
-    const weekStart = new Date(now);
-    weekStart.setDate(weekStart.getDate() - weekStart.getDay());
     const weekStartStr = weekStart.toISOString().split('T')[0];
     const thisWeekDiary = childDiary.filter(d => d.date >= weekStartStr);
 
@@ -160,6 +247,8 @@ export function useGamification() {
       unlockedBadges, todayGroups, streak,
       weeklyChallenge: challenge, challengeProgress,
       foodGroupStreaks,
+      dailyGoals, balancedDaysThisWeek, weeklyBalanceScore,
+      balancedDaysThisMonth, weeklyBalancedDays, groupTargetStreaks,
     };
   }, [activeChild, diary, allergenRecords]);
 }
