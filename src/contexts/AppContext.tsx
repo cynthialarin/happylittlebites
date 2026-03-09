@@ -104,6 +104,7 @@ export function AppProvider({ children: reactChildren }: { children: React.React
             knownAllergies: c.known_allergies || [],
             feedingApproach: c.feeding_approach as any,
             avatar: c.avatar,
+            gender: (c.gender as Gender) || 'neutral',
           })),
           diary: (diaryRes.data || []).map((d: any) => ({
             id: d.id,
