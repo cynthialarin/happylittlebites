@@ -53,6 +53,39 @@ export type Database = {
         }
         Relationships: []
       }
+      caregiver_invites: {
+        Row: {
+          child_name: string
+          created_at: string
+          id: string
+          invitee_email: string
+          inviter_id: string
+          message: string
+          share_token: string
+          status: string
+        }
+        Insert: {
+          child_name: string
+          created_at?: string
+          id?: string
+          invitee_email: string
+          inviter_id: string
+          message?: string
+          share_token: string
+          status?: string
+        }
+        Update: {
+          child_name?: string
+          created_at?: string
+          id?: string
+          invitee_email?: string
+          inviter_id?: string
+          message?: string
+          share_token?: string
+          status?: string
+        }
+        Relationships: []
+      }
       children: {
         Row: {
           avatar: string
@@ -235,6 +268,45 @@ export type Database = {
           created_at?: string
           id?: string
           onboarding_complete?: boolean
+          user_id?: string
+        }
+        Relationships: []
+      }
+      saved_recipes: {
+        Row: {
+          created_at: string
+          description: string
+          emoji: string
+          id: string
+          ingredients: string[]
+          instructions: string[]
+          meal_type: string
+          source: string
+          title: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string
+          emoji?: string
+          id?: string
+          ingredients?: string[]
+          instructions?: string[]
+          meal_type?: string
+          source?: string
+          title: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          emoji?: string
+          id?: string
+          ingredients?: string[]
+          instructions?: string[]
+          meal_type?: string
+          source?: string
+          title?: string
           user_id?: string
         }
         Relationships: []

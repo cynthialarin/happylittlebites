@@ -1,21 +1,28 @@
-import { useMemo, useRef } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useApp } from '@/contexts/AppContext';
+import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Download, Copy, Check, AlertTriangle, ShieldCheck, UtensilsCrossed, Calendar } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { ArrowLeft, Download, Copy, Check, AlertTriangle, ShieldCheck, UtensilsCrossed, Calendar, Send, Mail } from 'lucide-react';
 import { foods } from '@/data/foods';
 import { recipes } from '@/data/recipes';
 import { TOP_9_ALLERGENS, CA_EXTRA_ALLERGENS } from '@/types';
-import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 
 export default function CaregiverShare() {
   const { activeChild, diary, allergenRecords, mealPlan, getChildAge, settings } = useApp();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);
+  const [inviteEmail, setInviteEmail] = useState('');
+  const [inviteMessage, setInviteMessage] = useState('');
+  const [sendingInvite, setSendingInvite] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
   const age = activeChild ? getChildAge(activeChild) : null;
@@ -343,6 +350,64 @@ export default function CaregiverShare() {
           </motion.div>
         )}
       </div>
+
+      {/* Invite Caregiver */}
+      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+        <Card className="mb-4">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <Mail className="h-4 w-4 text-primary" />
+              <span className="text-sm font-bold">Invite a Caregiver</span>
+            </div>
+            <div className="space-y-3">
+              <div>
+                <Label className="text-xs font-semibold">Email address</Label>
+                <Input
+                  type="email"
+                  placeholder="grandma@email.com"
+                  value={inviteEmail}
+                  onChange={e => setInviteEmail(e.target.value)}
+                  className="mt-1"
+                />
+              </div>
+              <div>
+                <Label className="text-xs font-semibold">Message (optional)</Label>
+                <Input
+                  placeholder="Here's the food guide for..."
+                  value={inviteMessage}
+                  onChange={e => setInviteMessage(e.target.value)}
+                  className="mt-1"
+                />
+              </div>
+              <Button
+                onClick={async () => {
+                  if (!inviteEmail || !activeChild || !user) return;
+                  setSendingInvite(true);
+                  try {
+                    const { data, error } = await supabase.functions.invoke('invite-caregiver', {
+                      body: { email: inviteEmail, childName: activeChild.name, message: inviteMessage },
+                    });
+                    if (error) throw error;
+                    toast({ title: '📤 Invite created!', description: `Invite sent for ${activeChild.name}'s guide.` });
+                    setInviteEmail('');
+                    setInviteMessage('');
+                  } catch (e: any) {
+                    toast({ title: 'Could not send invite', description: e.message, variant: 'destructive' });
+                  } finally {
+                    setSendingInvite(false);
+                  }
+                }}
+                disabled={!inviteEmail || sendingInvite}
+                className="w-full gap-2"
+                size="sm"
+              >
+                <Send className="h-3.5 w-3.5" />
+                {sendingInvite ? 'Sending...' : 'Send Invite'}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </motion.div>
 
       {/* Actions */}
       <div className="grid grid-cols-2 gap-2">

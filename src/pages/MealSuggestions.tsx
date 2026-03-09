@@ -3,11 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useApp } from '@/contexts/AppContext';
 import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
 import { recipes } from '@/data/recipes';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Sparkles, ChevronRight, RefreshCw, Lightbulb, Star } from 'lucide-react';
+import { Sparkles, ChevronRight, RefreshCw, Lightbulb, Star, Bookmark, Check } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface MealSuggestion {
@@ -40,16 +41,20 @@ const MEAL_LABELS: Record<string, string> = {
 
 export default function MealSuggestions() {
   const { activeChild, diary, getChildAge, settings } = useApp();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<SuggestionsResponse | null>(null);
+  const [savedMeals, setSavedMeals] = useState<Set<string>>(new Set());
+  const [savingMeal, setSavingMeal] = useState<string | null>(null);
 
   const fetchSuggestions = async () => {
     if (!activeChild) return;
 
     setLoading(true);
     setResult(null);
+    setSavedMeals(new Set());
 
     try {
       const age = getChildAge(activeChild);
@@ -89,6 +94,32 @@ export default function MealSuggestions() {
       });
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleSaveRecipe = async (meal: MealSuggestion) => {
+    if (!user || savedMeals.has(meal.title)) return;
+    setSavingMeal(meal.title);
+
+    try {
+      const { error } = await supabase.from('saved_recipes').insert({
+        user_id: user.id,
+        title: meal.title,
+        description: meal.description,
+        meal_type: meal.mealType,
+        emoji: meal.emoji,
+        source: 'ai',
+      });
+
+      if (error) throw error;
+
+      setSavedMeals(prev => new Set([...prev, meal.title]));
+      toast({ title: '📌 Recipe saved!', description: `"${meal.title}" added to your saved recipes.` });
+    } catch (e: any) {
+      console.error('Save error:', e);
+      toast({ title: 'Could not save', description: e.message, variant: 'destructive' });
+    } finally {
+      setSavingMeal(null);
     }
   };
 
@@ -166,6 +197,8 @@ export default function MealSuggestions() {
           >
             {result.suggestions.map((meal, i) => {
               const matchingRecipe = meal.recipeId ? recipes.find(r => r.id === meal.recipeId) : null;
+              const isSaved = savedMeals.has(meal.title);
+              const isSaving = savingMeal === meal.title;
 
               return (
                 <motion.div
@@ -185,7 +218,7 @@ export default function MealSuggestions() {
                           <p className="text-sm font-bold mt-0.5">{meal.title}</p>
                           <p className="text-xs text-muted-foreground mt-1">{meal.description}</p>
 
-                          <div className="flex items-center gap-2 mt-2">
+                          <div className="flex items-center gap-2 mt-2 flex-wrap">
                             {meal.newFood && (
                               <span className="inline-flex items-center gap-1 text-[10px] font-bold text-primary bg-primary/10 rounded-full px-2 py-0.5">
                                 <Star className="h-2.5 w-2.5" /> New food!
@@ -199,6 +232,23 @@ export default function MealSuggestions() {
                                 View Recipe <ChevronRight className="h-2.5 w-2.5" />
                               </button>
                             )}
+                            <button
+                              onClick={() => handleSaveRecipe(meal)}
+                              disabled={isSaved || isSaving}
+                              className={`inline-flex items-center gap-1 text-[10px] font-bold rounded-full px-2 py-0.5 transition-colors ${
+                                isSaved
+                                  ? 'text-primary bg-primary/10'
+                                  : 'text-muted-foreground bg-muted hover:bg-muted/80'
+                              }`}
+                            >
+                              {isSaved ? (
+                                <><Check className="h-2.5 w-2.5" /> Saved</>
+                              ) : isSaving ? (
+                                'Saving...'
+                              ) : (
+                                <><Bookmark className="h-2.5 w-2.5" /> Save</>
+                              )}
+                            </button>
                           </div>
                         </div>
                       </div>

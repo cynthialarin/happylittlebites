@@ -35,6 +35,7 @@ import GrowthTracker from "@/pages/GrowthTracker";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import TermsOfService from "@/pages/TermsOfService";
 import DataManagementPage from "@/pages/DataManagementPage";
+import SavedRecipes from "@/pages/SavedRecipes";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -81,6 +82,7 @@ function AppRoutes() {
         <Route path="/first-100-foods" element={<First100Foods />} />
         <Route path="/grocery-list" element={<GroceryList />} />
         <Route path="/growth" element={<GrowthTracker />} />
+        <Route path="/saved-recipes" element={<SavedRecipes />} />
       </Route>
       <Route path="/privacy" element={<PrivacyPolicy />} />
       <Route path="/terms" element={<TermsOfService />} />
