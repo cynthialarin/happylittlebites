@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '@/contexts/AppContext';
 import { Card, CardContent } from '@/components/ui/card';
-import { ShieldCheck, Brain, Baby, Milestone, Users, Settings } from 'lucide-react';
+import { ShieldCheck, Brain, Baby, Milestone, Users, Settings, CalendarDays } from 'lucide-react';
 
 const menuItems = [
   { path: '/achievements', icon: ShieldCheck, label: 'Achievements', desc: 'Badges, XP & level progress', emoji: '🏆', color: 'bg-primary/10' },
