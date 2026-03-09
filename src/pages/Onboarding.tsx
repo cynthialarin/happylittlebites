@@ -166,7 +166,7 @@ export default function Onboarding() {
               </div>
 
               <div>
-                <Label className="font-semibold mb-2 block">Feeding approach</Label>
+                <Label className="text-base font-bold mb-2 block">Feeding approach</Label>
                 <div className="grid grid-cols-3 gap-2">
                   {([
                     { value: 'blw' as const, label: 'Baby-Led', emoji: '🤚', desc: 'Baby self-feeds soft finger foods from the start' },
