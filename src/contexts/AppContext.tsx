@@ -298,7 +298,8 @@ export function AppProvider({ children: reactChildren }: { children: React.React
         await supabase.from('children').update({
           name: child.name, birthdate: child.birthdate, known_allergies: child.knownAllergies,
           feeding_approach: child.feedingApproach, avatar: child.avatar,
-        }).eq('id', child.id).eq('user_id', user.id);
+          gender: child.gender || 'neutral',
+        } as any).eq('id', child.id).eq('user_id', user.id);
       }
     },
 
