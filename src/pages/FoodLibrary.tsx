@@ -78,6 +78,7 @@ export default function FoodLibrary() {
                 name={food.name}
                 fallbackEmoji={food.emoji}
                 className="w-full h-20 rounded-lg"
+                cacheOnly
               />
             </div>
             <div className="flex items-center gap-2 mb-1">
