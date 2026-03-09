@@ -229,10 +229,18 @@ export default function Dashboard() {
             <button
               key={food.id}
               onClick={() => navigate(`/foods/${food.id}`)}
-              className="flex-shrink-0 p-3 rounded-xl bg-card border border-border hover:border-primary/40 transition-colors min-w-[100px] text-center"
+              className="flex-shrink-0 rounded-xl bg-card border border-border hover:border-primary/40 transition-colors min-w-[100px] text-center overflow-hidden"
             >
-              <div className="text-2xl mb-1">{food.emoji}</div>
-              <div className="text-xs font-semibold">{food.name}</div>
+              <FoodImage
+                type="food"
+                id={food.id}
+                name={food.name}
+                fallbackEmoji={food.emoji}
+                className="w-full h-16 rounded-t-xl"
+              />
+              <div className="p-2">
+                <div className="text-xs font-semibold">{food.name}</div>
+              </div>
             </button>
           ))}
         </div>

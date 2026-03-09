@@ -31,7 +31,15 @@ export default function FoodDetail() {
       </button>
 
       <div className="text-center mb-5">
-        <div className="text-6xl mb-2">{food.emoji}</div>
+        <div className="mx-auto w-40 h-40 mb-3">
+          <FoodImage
+            type="food"
+            id={food.id}
+            name={food.name}
+            fallbackEmoji={food.emoji}
+            className="w-full h-full rounded-2xl"
+          />
+        </div>
         <h1 className="text-2xl font-black">{food.name}</h1>
         <p className="text-sm text-muted-foreground capitalize">Safe from {AGE_LABELS[food.safeFromAge]}</p>
       </div>

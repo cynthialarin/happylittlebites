@@ -64,11 +64,20 @@ export default function Recipes() {
           >
             <div className="flex items-start justify-between">
               <button onClick={() => navigate(`/recipes/${recipe.id}`)} className="text-left flex-1">
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="text-xl">{recipe.emoji}</span>
-                  <span className="font-bold text-sm">{recipe.title}</span>
+                <div className="flex gap-3 mb-2">
+                  <FoodImage
+                    type="recipe"
+                    id={recipe.id}
+                    name={recipe.title}
+                    description={recipe.description}
+                    fallbackEmoji={recipe.emoji}
+                    className="w-16 h-16 rounded-lg flex-shrink-0"
+                  />
+                  <div className="min-w-0">
+                    <span className="font-bold text-sm">{recipe.title}</span>
+                    <p className="text-xs text-muted-foreground line-clamp-1">{recipe.description}</p>
+                  </div>
                 </div>
-                <p className="text-xs text-muted-foreground line-clamp-1 mb-2">{recipe.description}</p>
                 <div className="flex gap-2 flex-wrap">
                   <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-muted font-medium flex items-center gap-0.5">
                     <Clock className="h-2.5 w-2.5" /> {recipe.prepTime + recipe.cookTime}min
