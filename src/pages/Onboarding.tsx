@@ -141,7 +141,7 @@ export default function Onboarding() {
 
             <div className="space-y-5">
               <div>
-                <Label className="mb-2 block font-semibold">Choose an avatar</Label>
+                <Label className="mb-2 block text-base font-bold">Choose an avatar</Label>
                 <div className="flex gap-2 flex-wrap">
                   {AVATARS.map(a => (
                     <button
