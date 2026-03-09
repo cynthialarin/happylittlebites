@@ -7,8 +7,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Allergen, AllergenCA, ReactionSeverity } from '@/types';
-import { ArrowLeft, Check, AlertTriangle, Info } from 'lucide-react';
+import { ArrowLeft, Check, AlertTriangle, Info, FileText } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import AllergenExport from '@/components/AllergenExport';
 
 const SEVERITY_COLORS: Record<ReactionSeverity, string> = {
   none: 'bg-sage/20 text-sage-foreground',
