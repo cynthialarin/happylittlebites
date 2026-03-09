@@ -48,6 +48,7 @@ const defaultState: AppState = {
   exposures: [],
   favoriteRecipes: [],
   triedRecipes: [],
+  foodPreferences: {},
   settings: defaultSettings,
 };
 
