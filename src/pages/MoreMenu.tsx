@@ -6,12 +6,12 @@ import { Button } from '@/components/ui/button';
 import { ShieldCheck, Brain, Baby, Milestone, Users, Settings, CalendarDays, LogOut, Sparkles, Share2, ListChecks, Globe } from 'lucide-react';
 import { Country } from '@/types';
 
-const menuItems = [
+const getMenuItems = (isCanada: boolean) => [
   { path: '/first-100-foods', icon: ListChecks, label: 'First 100 Foods', desc: 'Guided journey through essential foods', emoji: '🗺️', color: 'bg-sage/10' },
   { path: '/suggestions', icon: Sparkles, label: 'AI Meal Ideas', desc: 'Personalized daily meal suggestions', emoji: '✨', color: 'bg-primary/10' },
   { path: '/meal-planner', icon: CalendarDays, label: 'Meal Planner', desc: 'Plan weekly meals & shopping list', emoji: '📅', color: 'bg-peach/10' },
   { path: '/achievements', icon: ShieldCheck, label: 'Achievements', desc: 'Badges, XP & level progress', emoji: '🏆', color: 'bg-primary/10' },
-  { path: '/tracker/allergens', icon: ShieldCheck, label: 'Allergen Tracker', desc: 'Top 9 allergen introduction guide', emoji: '🛡️', color: 'bg-sky/20' },
+  { path: '/tracker/allergens', icon: ShieldCheck, label: 'Allergen Tracker', desc: isCanada ? 'Top 11 allergen introduction guide' : 'Top 9 allergen introduction guide', emoji: '🛡️', color: 'bg-sky/20' },
   { path: '/more/picky-eater', icon: Brain, label: 'Picky Eater Toolkit', desc: 'Evidence-based strategies', emoji: '🧠', color: 'bg-lavender/20' },
   { path: '/more/safety', icon: ShieldCheck, label: 'Safety Reference', desc: 'Choking, gagging & first aid', emoji: '🚨', color: 'bg-destructive/10' },
   { path: '/more/milestones', icon: Milestone, label: 'Milestones', desc: 'Feeding milestones by age', emoji: '📈', color: 'bg-sage/20' },
@@ -41,7 +41,7 @@ export default function MoreMenu() {
       )}
 
       <div className="space-y-2">
-        {menuItems.map(item => (
+        {getMenuItems(settings.country === 'CA').map(item => (
           <button
             key={item.path}
             onClick={() => navigate(item.path)}
