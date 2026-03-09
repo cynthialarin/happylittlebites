@@ -367,7 +367,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'tofu', name: 'Tofu', emoji: '🫘', foodGroup: 'protein', allergens: ['soy'],
+    id: 'tofu', name: 'Tofu', emoji: '🧊', foodGroup: 'protein', allergens: ['soy'],
     chokingHazard: false, chokingNotes: 'Soft texture, very safe',
     servingByAge: { '6mo': 'Strips of firm tofu, pan-fried for grip', '9mo': 'Cubed or crumbled', '12mo': 'Cubed, in stir-fry, scrambled', '2yr': 'Any preparation', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Plant protein', 'Calcium', 'Iron', 'Isoflavones'],
