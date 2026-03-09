@@ -95,6 +95,21 @@ export default function FoodDetail() {
         </Card>
       )}
 
+      {/* Country-Specific Guideline */}
+      {COUNTRY_SAFETY_NOTES[food.id] && (
+        <Card className={`mb-4 ${isCanada ? 'bg-destructive/5 border-destructive/20' : 'bg-sky-50 dark:bg-sky-950/20 border-sky-200 dark:border-sky-800'}`}>
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-base">{isCanada ? '🇨🇦' : '🇺🇸'}</span>
+              <span className="font-bold text-sm">
+                {isCanada ? 'Health Canada Guideline' : 'AAP / FDA Guideline'}
+              </span>
+            </div>
+            <p className="text-sm">{COUNTRY_SAFETY_NOTES[food.id][isCanada ? 'CA' : 'US']}</p>
+          </CardContent>
+        </Card>
+      )
+
       {/* Safety Alert */}
       {food.chokingHazard && (
         <Card className="mb-4 bg-destructive/5 border-destructive/20">
