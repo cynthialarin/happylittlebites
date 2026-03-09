@@ -23,6 +23,7 @@ export default function AllergenTracker() {
   const navigate = useNavigate();
   const [selectedAllergen, setSelectedAllergen] = useState<string | null>(null);
   const [showLog, setShowLog] = useState(false);
+  const [showExport, setShowExport] = useState(false);
   const [logFood, setLogFood] = useState('');
   const [logSeverity, setLogSeverity] = useState<ReactionSeverity>('none');
   const [logSymptoms, setLogSymptoms] = useState('');
