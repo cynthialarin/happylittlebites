@@ -83,8 +83,8 @@ export default function GrowthTracker() {
     return data;
   }, [sorted]);
 
-  const latestWeight = sorted.findLast(m => m.weightKg !== null);
-  const latestHeight = sorted.findLast(m => m.heightCm !== null);
+  const latestWeight = [...sorted].reverse().find(m => m.weightKg !== null);
+  const latestHeight = [...sorted].reverse().find(m => m.heightCm !== null);
 
   const percentile = useMemo(() => {
     if (!age || !latestWeight?.weightKg) return null;

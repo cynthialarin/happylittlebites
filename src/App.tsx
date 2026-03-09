@@ -5,6 +5,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { AppProvider, useApp } from "@/contexts/AppContext";
+import ErrorBoundary from "@/components/ErrorBoundary";
+import OfflineFallback from "@/components/OfflineFallback";
+import ConsentBanner from "@/components/ConsentBanner";
 import Layout from "@/components/Layout";
 import Auth from "@/pages/Auth";
 import ResetPassword from "@/pages/ResetPassword";
@@ -27,6 +30,11 @@ import MealPlanner from "@/pages/MealPlanner";
 import MealSuggestions from "@/pages/MealSuggestions";
 import CaregiverShare from "@/pages/CaregiverShare";
 import First100Foods from "@/pages/First100Foods";
+import GroceryList from "@/pages/GroceryList";
+import GrowthTracker from "@/pages/GrowthTracker";
+import PrivacyPolicy from "@/pages/PrivacyPolicy";
+import TermsOfService from "@/pages/TermsOfService";
+import DataManagementPage from "@/pages/DataManagementPage";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -65,12 +73,17 @@ function AppRoutes() {
         <Route path="/more/safety" element={<Safety />} />
         <Route path="/more/milestones" element={<Milestones />} />
         <Route path="/more/profiles" element={<ChildProfiles />} />
+        <Route path="/more/data" element={<DataManagementPage />} />
         <Route path="/achievements" element={<Achievements />} />
         <Route path="/meal-planner" element={<MealPlanner />} />
         <Route path="/suggestions" element={<MealSuggestions />} />
         <Route path="/caregiver-share" element={<CaregiverShare />} />
         <Route path="/first-100-foods" element={<First100Foods />} />
+        <Route path="/grocery-list" element={<GroceryList />} />
+        <Route path="/growth" element={<GrowthTracker />} />
       </Route>
+      <Route path="/privacy" element={<PrivacyPolicy />} />
+      <Route path="/terms" element={<TermsOfService />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
@@ -94,6 +107,8 @@ function AuthenticatedApp() {
     return (
       <Routes>
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<TermsOfService />} />
         <Route path="*" element={<Auth />} />
       </Routes>
     );
@@ -101,6 +116,7 @@ function AuthenticatedApp() {
 
   return (
     <AppProvider>
+      <ConsentBanner />
       <AppRoutes />
     </AppProvider>
   );
@@ -111,11 +127,14 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <AuthProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <AuthenticatedApp />
-          </BrowserRouter>
+          <ErrorBoundary>
+            <Toaster />
+            <Sonner />
+            <OfflineFallback />
+            <BrowserRouter>
+              <AuthenticatedApp />
+            </BrowserRouter>
+          </ErrorBoundary>
         </AuthProvider>
       </TooltipProvider>
     </QueryClientProvider>
