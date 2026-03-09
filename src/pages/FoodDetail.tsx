@@ -8,6 +8,41 @@ import FoodImage from '@/components/FoodImage';
 
 const AGE_LABELS = { '6mo': '6 months', '9mo': '9 months', '12mo': '12 months', '2yr': '2 years', '3yr+': '3+ years' };
 
+const COUNTRY_SAFETY_NOTES: Record<string, { US: string; CA: string }> = {
+  yogurt: {
+    US: 'Cow milk as a drink: wait until 12 months (AAP). Yogurt and cheese are OK from 6 months.',
+    CA: 'Cow milk as a drink can be introduced at 9–12 months (Health Canada). Use pasteurized, homogenized 3.25% M.F.',
+  },
+  cheese: {
+    US: 'Cow milk as a drink: 12 months+ (AAP). Cheese in cooking or on foods is OK from 6 months.',
+    CA: 'Pasteurized cow milk as a drink is OK from 9–12 months per Health Canada.',
+  },
+  kefir: {
+    US: 'Cow milk as a drink: wait until 12 months (AAP). Kefir is OK from 6 months.',
+    CA: 'Cow milk as a drink can be introduced at 9–12 months (Health Canada). Use pasteurized, homogenized 3.25% M.F.',
+  },
+  beef: {
+    US: 'Iron-rich foods are encouraged as early foods alongside iron-fortified cereals (AAP).',
+    CA: 'Iron-rich meat is recommended as one of the very first complementary foods at 6 months (Health Canada). Prioritize alongside iron-fortified cereal.',
+  },
+  chicken: {
+    US: 'Iron-rich foods are encouraged as early foods alongside iron-fortified cereals (AAP).',
+    CA: 'Iron-rich meat is recommended as one of the very first complementary foods at 6 months (Health Canada). Prioritize alongside iron-fortified cereal.',
+  },
+  tuna: {
+    US: 'Choose "light" tuna (skipjack). FDA Best Choices: 2–3 servings/week for children. Avoid king mackerel, swordfish, shark, and tilefish.',
+    CA: 'Choose light tuna. Health Canada limits fresh/frozen tuna, shark, swordfish, and marlin to max 75 g per month for young children.',
+  },
+  salmon: {
+    US: 'FDA "Best Choice" fish — 2–3 servings/week recommended. Low mercury.',
+    CA: 'Health Canada recommends fish 2× per week. Salmon is low-mercury — no monthly limit.',
+  },
+  liver: {
+    US: 'Limit to 1–2 servings per week due to high vitamin A (AAP).',
+    CA: 'Health Canada advises limiting liver due to vitamin A. Max 75 g per week for young children.',
+  },
+};
+
 export default function FoodDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
