@@ -75,7 +75,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'plum', name: 'Plum', emoji: '🫐', foodGroup: 'fruits', allergens: [],
+    id: 'plum', name: 'Plum', emoji: '🟣', foodGroup: 'fruits', allergens: [],
     chokingHazard: false, chokingNotes: 'Soft when ripe, remove pit',
     servingByAge: { '6mo': 'Ripe halved or mashed (remove skin if preferred)', '9mo': 'Diced pieces', '12mo': 'Sliced', '2yr': 'Whole with pit removed', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Vitamin C', 'Vitamin K', 'Fiber', 'Antioxidants'],
@@ -115,7 +115,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'papaya', name: 'Papaya', emoji: '🥭', foodGroup: 'fruits', allergens: [],
+    id: 'papaya', name: 'Papaya', emoji: '🍈', foodGroup: 'fruits', allergens: [],
     chokingHazard: false, chokingNotes: 'Very soft when ripe, low risk',
     servingByAge: { '6mo': 'Mashed or as soft spears', '9mo': 'Diced', '12mo': 'Cubed', '2yr': 'Sliced', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Vitamin C', 'Vitamin A', 'Folate', 'Digestive enzymes'],
@@ -123,7 +123,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'raspberry', name: 'Raspberry', emoji: '🫐', foodGroup: 'fruits', allergens: [],
+    id: 'raspberry', name: 'Raspberry', emoji: '🔴', foodGroup: 'fruits', allergens: [],
     chokingHazard: false, chokingNotes: 'Soft and easily squished, low risk',
     servingByAge: { '6mo': 'Lightly mashed or whole (they dissolve easily)', '9mo': 'Whole raspberries', '12mo': 'Whole', '2yr': 'Whole', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Fiber', 'Vitamin C', 'Manganese', 'Antioxidants'],
@@ -139,7 +139,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'fig', name: 'Fig', emoji: '🫐', foodGroup: 'fruits', allergens: [],
+    id: 'fig', name: 'Fig', emoji: '🟤', foodGroup: 'fruits', allergens: [],
     chokingHazard: false, chokingNotes: 'Soft when ripe, low risk',
     servingByAge: { '6mo': 'Mashed or quartered ripe fig', '9mo': 'Diced or quartered', '12mo': 'Halved or whole ripe', '2yr': 'Any preparation', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Calcium', 'Fiber', 'Potassium', 'Iron'],
@@ -147,7 +147,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'dates', name: 'Dates', emoji: '🫐', foodGroup: 'fruits', allergens: [],
+    id: 'dates', name: 'Dates', emoji: '🫘', foodGroup: 'fruits', allergens: [],
     chokingHazard: true, chokingNotes: 'Sticky and dense — cut into small pieces, remove pit',
     servingByAge: { '6mo': 'Pureed or very finely minced', '9mo': 'Finely diced, pit removed', '12mo': 'Small pieces', '2yr': 'Halved, pit removed', '3yr+': 'Whole pitted' },
     nutritionHighlights: ['Iron', 'Fiber', 'Potassium', 'Natural sweetness'],
@@ -205,7 +205,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'zucchini', name: 'Zucchini', emoji: '🥒', foodGroup: 'vegetables', allergens: [],
+    id: 'zucchini', name: 'Zucchini', emoji: '🫛', foodGroup: 'vegetables', allergens: [],
     chokingHazard: false, chokingNotes: 'Soft when cooked, low risk',
     servingByAge: { '6mo': 'Steamed spears', '9mo': 'Soft cooked sticks or diced', '12mo': 'Roasted sticks, in fritters', '2yr': 'Spiralized, in baked goods', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Vitamin C', 'Potassium', 'Manganese', 'Low calorie'],
@@ -213,7 +213,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'cauliflower', name: 'Cauliflower', emoji: '🥦', foodGroup: 'vegetables', allergens: [],
+    id: 'cauliflower', name: 'Cauliflower', emoji: '🤍', foodGroup: 'vegetables', allergens: [],
     chokingHazard: false, chokingNotes: 'Cook until very soft — raw is too hard',
     servingByAge: { '6mo': 'Steamed soft florets', '9mo': 'Soft cooked pieces', '12mo': 'Roasted florets, cauliflower mash', '2yr': 'Roasted, in mac and cheese', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Vitamin C', 'Vitamin K', 'Folate', 'Fiber'],
@@ -261,7 +261,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'beets', name: 'Beets', emoji: '🫐', foodGroup: 'vegetables', allergens: [],
+    id: 'beets', name: 'Beets', emoji: '🟥', foodGroup: 'vegetables', allergens: [],
     chokingHazard: false, chokingNotes: 'Soft when cooked, low risk',
     servingByAge: { '6mo': 'Steamed and mashed or as soft sticks', '9mo': 'Soft cooked cubes', '12mo': 'Roasted cubes or sticks', '2yr': 'Any cooked preparation', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Folate', 'Manganese', 'Iron', 'Fiber'],
@@ -309,7 +309,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'celery', name: 'Celery', emoji: '🌿', foodGroup: 'vegetables', allergens: [],
+    id: 'celery', name: 'Celery', emoji: '🥬', foodGroup: 'vegetables', allergens: [],
     chokingHazard: true, chokingNotes: '⚠️ Raw celery is fibrous and hard — cook for young children',
     servingByAge: { '6mo': 'Cooked very soft and pureed', '9mo': 'Cooked very soft sticks', '12mo': 'Well-cooked pieces', '2yr': 'Cooked or thin raw sticks with close supervision', '3yr+': 'Raw with dip, supervised' },
     nutritionHighlights: ['Vitamin K', 'Potassium', 'Folate', 'Low calorie'],
@@ -317,7 +317,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'turnip', name: 'Turnip', emoji: '🫐', foodGroup: 'vegetables', allergens: [],
+    id: 'turnip', name: 'Turnip', emoji: '🥔', foodGroup: 'vegetables', allergens: [],
     chokingHazard: false, chokingNotes: 'Soft when cooked, low risk',
     servingByAge: { '6mo': 'Steamed and mashed', '9mo': 'Soft cooked cubes', '12mo': 'Roasted or mashed', '2yr': 'Any cooked preparation', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Vitamin C', 'Fiber', 'Potassium', 'Manganese'],
@@ -367,7 +367,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'tofu', name: 'Tofu', emoji: '🫘', foodGroup: 'protein', allergens: ['soy'],
+    id: 'tofu', name: 'Tofu', emoji: '🧊', foodGroup: 'protein', allergens: ['soy'],
     chokingHazard: false, chokingNotes: 'Soft texture, very safe',
     servingByAge: { '6mo': 'Strips of firm tofu, pan-fried for grip', '9mo': 'Cubed or crumbled', '12mo': 'Cubed, in stir-fry, scrambled', '2yr': 'Any preparation', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Plant protein', 'Calcium', 'Iron', 'Isoflavones'],
@@ -383,7 +383,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'pork', name: 'Pork', emoji: '🥓', foodGroup: 'protein', allergens: [],
+    id: 'pork', name: 'Pork', emoji: '🐷', foodGroup: 'protein', allergens: [],
     chokingHazard: true, chokingNotes: 'Can be tough — slow cook or serve ground',
     servingByAge: { '6mo': 'Slow-cooked and shredded, or pureed', '9mo': 'Shredded or ground', '12mo': 'Shredded, ground, in meatballs', '2yr': 'Diced tender pieces', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Protein', 'Thiamine', 'Zinc', 'B12'],
@@ -407,7 +407,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'tuna', name: 'Tuna', emoji: '🐟', foodGroup: 'protein', allergens: ['fish'],
+    id: 'tuna', name: 'Tuna', emoji: '🐠', foodGroup: 'protein', allergens: ['fish'],
     chokingHazard: false, chokingNotes: 'Canned tuna is soft, low risk',
     servingByAge: { '6mo': 'Mashed canned light tuna', '9mo': 'Flaked tuna', '12mo': 'In tuna salad, patties', '2yr': 'Any preparation', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Protein', 'Omega-3', 'Vitamin D', 'Selenium'],
@@ -415,7 +415,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'sardines', name: 'Sardines', emoji: '🐟', foodGroup: 'protein', allergens: ['fish'],
+    id: 'sardines', name: 'Sardines', emoji: '🐡', foodGroup: 'protein', allergens: ['fish'],
     chokingHazard: false, chokingNotes: 'Very soft, low risk',
     servingByAge: { '6mo': 'Mashed sardines (boneless)', '9mo': 'Flaked or mashed', '12mo': 'Whole small sardines', '2yr': 'On toast, in pasta', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Omega-3', 'Calcium (with bones)', 'Vitamin D', 'B12'],
@@ -423,7 +423,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'liver', name: 'Liver', emoji: '🫀', foodGroup: 'protein', allergens: [],
+    id: 'liver', name: 'Liver', emoji: '🥩', foodGroup: 'protein', allergens: [],
     chokingHazard: false, chokingNotes: 'Soft when cooked, low risk',
     servingByAge: { '6mo': 'Pureed chicken liver', '9mo': 'Finely minced or in pâté', '12mo': 'Small pieces in dishes', '2yr': 'In pâté, liver bites', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Iron (extremely high)', 'Vitamin A', 'B12', 'Folate'],
@@ -431,7 +431,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'cod', name: 'Cod', emoji: '🐟', foodGroup: 'protein', allergens: ['fish'],
+    id: 'cod', name: 'Cod', emoji: '🎏', foodGroup: 'protein', allergens: ['fish'],
     chokingHazard: false, chokingNotes: 'Flakes easily, low risk when deboned',
     servingByAge: { '6mo': 'Flaked and mashed', '9mo': 'Soft flaked pieces', '12mo': 'Fish cakes, flaked', '2yr': 'Any preparation', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Protein', 'B12', 'Phosphorus', 'Selenium'],
@@ -645,7 +645,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'hummus', name: 'Hummus', emoji: '🫕', foodGroup: 'legumes', allergens: ['sesame'],
+    id: 'hummus', name: 'Hummus', emoji: '🥣', foodGroup: 'legumes', allergens: ['sesame'],
     chokingHazard: false, chokingNotes: 'Smooth paste, very safe',
     servingByAge: { '6mo': 'Spread thin on toast or on preloaded spoon', '9mo': 'As a dip with soft veggies', '12mo': 'As a spread or dip', '2yr': 'Any preparation', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Protein', 'Iron', 'Fiber', 'Healthy fats'],
