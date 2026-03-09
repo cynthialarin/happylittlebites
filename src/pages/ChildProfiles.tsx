@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '@/contexts/AppContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -9,6 +10,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { ArrowLeft, Plus, Check, Trash2, Users } from 'lucide-react';
 import { FeedingApproach, Gender } from '@/types';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/components/ui/sonner';
+import ChildAvatar from '@/components/ChildAvatar';
 
 const AVATARS = ['🐣', '🧸', '🌻', '🐰', '🦊', '🐝', '🍼', '🌈'];
 
@@ -41,10 +45,12 @@ const emptyForm = (): ChildForm => ({
 });
 
 export default function ChildProfiles() {
-  const { children, activeChild, setActiveChild, addChild, removeChild, getChildAge } = useApp();
+  const { children, activeChild, setActiveChild, addChild, removeChild, updateChild, getChildAge } = useApp();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [showAdd, setShowAdd] = useState(false);
   const [forms, setForms] = useState<ChildForm[]>([emptyForm()]);
+  const [uploading, setUploading] = useState<string | null>(null);
 
   const updateForm = (index: number, updates: Partial<ChildForm>) => {
     setForms(prev => prev.map((f, i) => i === index ? { ...f, ...updates } : f));
@@ -72,6 +78,30 @@ export default function ChildProfiles() {
     setShowAdd(true);
   };
 
+  const handlePhotoUpload = async (childId: string, file: File) => {
+    if (!user) return;
+    setUploading(childId);
+    try {
+      const ext = file.name.split('.').pop() || 'jpg';
+      const path = `${user.id}/${childId}.${ext}`;
+      const { error } = await supabase.storage
+        .from('child-photos')
+        .upload(path, file, { contentType: file.type, upsert: true });
+      if (error) throw error;
+      const { data: urlData } = supabase.storage.from('child-photos').getPublicUrl(path);
+      const photoUrl = `${urlData.publicUrl}?t=${Date.now()}`;
+      const child = children.find(c => c.id === childId);
+      if (child) {
+        updateChild({ ...child, photoUrl });
+      }
+      toast('📸 Photo updated!');
+    } catch (e) {
+      console.error('Photo upload failed:', e);
+      toast('Failed to upload photo');
+    }
+    setUploading(null);
+  };
+
   const allFormsValid = forms.every(f => f.name.trim() && f.birthdate);
 
   return (
@@ -87,7 +117,6 @@ export default function ChildProfiles() {
         </Button>
       </div>
 
-      {/* Quick-add twins/triplets */}
       <div className="flex gap-2 mb-4">
         <Button size="sm" variant="outline" className="rounded-full gap-1 text-xs" onClick={() => openMultiAdd(2)}>
           <Users className="h-3.5 w-3.5" /> Add Twins
@@ -104,12 +133,22 @@ export default function ChildProfiles() {
           return (
             <Card key={child.id} className={isActive ? 'ring-2 ring-primary' : ''}>
               <CardContent className="p-4 flex items-center gap-3">
-                <span className="text-3xl">{child.avatar}</span>
+                <ChildAvatar
+                  photoUrl={child.photoUrl}
+                  emoji={child.avatar}
+                  name={child.name}
+                  size="lg"
+                  editable
+                  onPhotoSelect={(file) => handlePhotoUpload(child.id, file)}
+                />
                 <div className="flex-1">
                   <p className="font-bold">{child.name}</p>
                   <p className="text-xs text-muted-foreground">
                     {age.label} • {child.feedingApproach} {child.gender !== 'neutral' ? `• ${GENDER_LABEL[child.gender]}` : ''}
                   </p>
+                  {uploading === child.id && (
+                    <p className="text-[10px] text-primary font-semibold mt-0.5">Uploading photo…</p>
+                  )}
                 </div>
                 <div className="flex gap-1">
                   {!isActive && (
@@ -170,6 +209,7 @@ export default function ChildProfiles() {
                     <button key={a} onClick={() => updateForm(idx, { avatar: a })} className={`text-2xl p-2 rounded-xl ${form.avatar === a ? 'bg-primary/20 ring-2 ring-primary' : 'bg-muted'}`}>{a}</button>
                   ))}
                 </div>
+                <p className="text-[10px] text-muted-foreground mt-1">You can upload a real photo after adding the profile</p>
               </div>
 
               <div>
