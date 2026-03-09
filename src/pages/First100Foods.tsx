@@ -158,7 +158,7 @@ export default function First100Foods() {
                 return (
                   <button
                     key={milestone.count}
-                    onClick={() => unlocked ? setCelebratingMilestone(milestone.title) : null}
+                    onClick={() => handleMilestoneClick(milestone, unlocked)}
                     className={`flex-shrink-0 rounded-xl p-2.5 min-w-[80px] text-center transition-all ${
                       unlocked
                         ? 'bg-primary/15 border border-primary/30'

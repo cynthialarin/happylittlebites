@@ -27,6 +27,7 @@ export default function Achievements() {
 
   return (
     <div className="px-4 pt-6 pb-4 max-w-lg mx-auto">
+      <Confetti active={showConfetti} />
       <h1 className="text-xl font-black mb-4">Achievements</h1>
 
       {/* Level Card */}
