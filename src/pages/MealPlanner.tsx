@@ -197,15 +197,16 @@ export default function MealPlanner() {
                 {MEAL_TYPES.map((mealType) => {
                   const entry = getEntry(date, mealType);
                   const recipe = entry?.recipeId ? recipes.find((r) => r.id === entry.recipeId) : undefined;
-                  return (
-                    <MealSlot
-                      key={mealType}
-                      mealType={mealType}
-                      mealName={entry?.customMeal}
-                      mealEmoji={recipe?.emoji}
-                      onAdd={() => handleAddSlot(date, mealType)}
-                      onRemove={entry ? () => removeMealPlanEntry(entry.id) : undefined}
-                    />
+                    return (
+                      <MealSlot
+                        key={mealType}
+                        mealType={mealType}
+                        mealName={entry?.customMeal}
+                        mealEmoji={recipe?.emoji}
+                        recipeId={entry?.recipeId}
+                        onAdd={() => handleAddSlot(date, mealType)}
+                        onRemove={entry ? () => removeMealPlanEntry(entry.id) : undefined}
+                      />
                   );
                 })}
               </div>
