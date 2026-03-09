@@ -1,12 +1,12 @@
 import { useState, useMemo } from 'react';
 import { useApp } from '@/contexts/AppContext';
-import { allergenInfo, introductionOrder } from '@/data/allergens';
+import { allergenInfo, introductionOrder, introductionOrderCA } from '@/data/allergens';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
-import { Allergen, ReactionSeverity } from '@/types';
+import { Allergen, AllergenCA, ReactionSeverity } from '@/types';
 import { ArrowLeft, Check, AlertTriangle, Info } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -18,27 +18,32 @@ const SEVERITY_COLORS: Record<ReactionSeverity, string> = {
 };
 
 export default function AllergenTracker() {
-  const { activeChild, allergenRecords, addAllergenRecord } = useApp();
+  const { activeChild, allergenRecords, addAllergenRecord, settings } = useApp();
   const navigate = useNavigate();
-  const [selectedAllergen, setSelectedAllergen] = useState<Allergen | null>(null);
+  const [selectedAllergen, setSelectedAllergen] = useState<string | null>(null);
   const [showLog, setShowLog] = useState(false);
   const [logFood, setLogFood] = useState('');
   const [logSeverity, setLogSeverity] = useState<ReactionSeverity>('none');
   const [logSymptoms, setLogSymptoms] = useState('');
 
+  const isCanada = settings.country === 'CA';
+  const order = isCanada ? introductionOrderCA : introductionOrder;
+  const visibleAllergens = allergenInfo.filter(a => !a.countryOnly || a.countryOnly === settings.country);
+  const totalAllergens = order.length;
+
   const introduced = useMemo(() => {
-    if (!activeChild) return new Set<Allergen>();
+    if (!activeChild) return new Set<string>();
     return new Set(allergenRecords.filter(a => a.childId === activeChild.id).map(a => a.allergen));
   }, [activeChild, allergenRecords]);
 
-  const info = selectedAllergen ? allergenInfo.find(a => a.id === selectedAllergen) : null;
+  const info = selectedAllergen ? visibleAllergens.find(a => a.id === selectedAllergen) : null;
 
   const handleLog = () => {
     if (!activeChild || !selectedAllergen) return;
     addAllergenRecord({
       id: crypto.randomUUID(),
       childId: activeChild.id,
-      allergen: selectedAllergen,
+      allergen: selectedAllergen as Allergen,
       dateIntroduced: new Date().toISOString().split('T')[0],
       food: logFood,
       reactionSeverity: logSeverity,
@@ -63,14 +68,18 @@ export default function AllergenTracker() {
       </button>
 
       <h1 className="text-xl font-black mb-1">Allergen Tracker</h1>
-      <p className="text-sm text-muted-foreground mb-4">
-        {introduced.size} of 9 allergens introduced • Recommended order shown below
+      <p className="text-sm text-muted-foreground mb-1">
+        {introduced.size} of {totalAllergens} allergens introduced • Recommended order shown below
+      </p>
+      <p className="text-xs text-muted-foreground mb-4 flex items-center gap-1">
+        {isCanada ? '🇨🇦 Health Canada priority allergens' : '🇺🇸 FDA Top 9 allergens'}
       </p>
 
       {/* Allergen Checklist */}
       <div className="space-y-2 mb-6">
-        {introductionOrder.map((allergenId, i) => {
-          const aInfo = allergenInfo.find(a => a.id === allergenId)!;
+        {order.map((allergenId, i) => {
+          const aInfo = visibleAllergens.find(a => a.id === allergenId)!;
+          if (!aInfo) return null;
           const isDone = introduced.has(allergenId);
           const childRecords = allergenRecords.filter(r => r.childId === activeChild.id && r.allergen === allergenId);
 
@@ -91,9 +100,12 @@ export default function AllergenTracker() {
                 <div className="flex items-center gap-1.5">
                   <span className="text-base">{aInfo.emoji}</span>
                   <span className="font-bold text-sm">{aInfo.name}</span>
+                  {aInfo.countryOnly === 'CA' && (
+                    <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-primary/10 font-semibold">🇨🇦 CA</span>
+                  )}
                 </div>
                 {isDone && childRecords.length > 0 && (
-                  <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-semibold mt-0.5 inline-block ${SEVERITY_COLORS[childRecords[childRecords.length - 1].reactionSeverity]}`}>
+                  <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-semibold mt-0.5 inline-block ${SEVERITY_COLORS[childRecords[childRecords.length - 1].reactionSeverity as ReactionSeverity]}`}>
                     {childRecords[childRecords.length - 1].reactionSeverity === 'none' ? '✅ No reaction' : `⚠️ ${childRecords[childRecords.length - 1].reactionSeverity} reaction`}
                   </span>
                 )}

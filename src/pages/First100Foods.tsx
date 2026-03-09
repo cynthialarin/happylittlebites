@@ -13,7 +13,8 @@ import Confetti from '@/components/Confetti';
 
 export default function First100Foods() {
   const navigate = useNavigate();
-  const { activeChild, diary } = useApp();
+  const { activeChild, diary, settings } = useApp();
+  const isCanada = settings.country === 'CA';
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [showCompleted, setShowCompleted] = useState(true);
   const [celebratingMilestone, setCelebratingMilestone] = useState<string | null>(null);
@@ -273,7 +274,7 @@ export default function First100Foods() {
                     </span>
                     {isChecked && <span className="text-xs text-primary">✓</span>}
                   </div>
-                  <p className="text-[10px] text-muted-foreground truncate">{food.tip}</p>
+                  <p className="text-[10px] text-muted-foreground truncate">{isCanada && food.tipCA ? food.tipCA : food.tip}</p>
                   <div className="flex gap-1 mt-0.5">
                     <Badge variant="outline" className="text-[9px] px-1.5 py-0 h-4">{food.ageRecommended}</Badge>
                   </div>

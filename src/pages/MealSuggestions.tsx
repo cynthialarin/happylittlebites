@@ -39,7 +39,7 @@ const MEAL_LABELS: Record<string, string> = {
 };
 
 export default function MealSuggestions() {
-  const { activeChild, diary, getChildAge } = useApp();
+  const { activeChild, diary, getChildAge, settings } = useApp();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
@@ -72,6 +72,7 @@ export default function MealSuggestions() {
           recentFoods,
           triedFoods,
           availableRecipes: recipes.map(r => r.id),
+          country: settings.country,
         },
       });
 

@@ -8,6 +8,7 @@ export interface First100Food {
   category: string;
   ageRecommended: string;
   tip: string;
+  tipCA?: string;
   foodId?: string; // links to foods.ts entry if exists
 }
 
@@ -70,7 +71,7 @@ export const FIRST_100_FOODS: First100Food[] = [
   { id: 'f100-turnip', name: 'Turnip', emoji: '⬜', foodGroup: 'vegetables', category: 'Vegetables', ageRecommended: '6+ months', tip: 'Mild flavor, boil or roast until tender' },
 
   // === GRAINS & STARCHES (15) ===
-  { id: 'f100-oats', name: 'Oats', emoji: '🥣', foodGroup: 'grains', category: 'Grains & Starches', ageRecommended: '6+ months', tip: 'Iron-fortified oatmeal is a great first food', foodId: 'oats' },
+  { id: 'f100-oats', name: 'Oats', emoji: '🥣', foodGroup: 'grains', category: 'Grains & Starches', ageRecommended: '6+ months', tip: 'Iron-fortified oatmeal is a great first food', tipCA: 'Iron-fortified cereal is recommended by Health Canada as one of the very first complementary foods alongside iron-rich meat', foodId: 'oats' },
   { id: 'f100-rice', name: 'Rice', emoji: '🍚', foodGroup: 'grains', category: 'Grains & Starches', ageRecommended: '6+ months', tip: 'Offer variety — limit to avoid arsenic concerns', foodId: 'rice' },
   { id: 'f100-pasta', name: 'Pasta', emoji: '🍝', foodGroup: 'grains', category: 'Grains & Starches', ageRecommended: '6+ months', tip: 'Fusilli is great for little hands to grip', foodId: 'pasta' },
   { id: 'f100-bread', name: 'Bread', emoji: '🍞', foodGroup: 'grains', category: 'Grains & Starches', ageRecommended: '6+ months', tip: 'Toast lightly for easier gripping, avoid honey before 1', foodId: 'bread' },
@@ -87,29 +88,29 @@ export const FIRST_100_FOODS: First100Food[] = [
   { id: 'f100-pita', name: 'Pita Bread', emoji: '🫓', foodGroup: 'grains', category: 'Grains & Starches', ageRecommended: '9+ months', tip: 'Toast and cut into strips for dipping' },
 
   // === PROTEIN (20) ===
-  { id: 'f100-chicken', name: 'Chicken', emoji: '🍗', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Shred finely or serve drumstick for gnawing', foodId: 'chicken' },
-  { id: 'f100-beef', name: 'Beef', emoji: '🥩', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Iron-rich! Slow cook for easy shredding', foodId: 'beef' },
+  { id: 'f100-chicken', name: 'Chicken', emoji: '🍗', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Shred finely or serve drumstick for gnawing', tipCA: 'Iron-rich meat is recommended by Health Canada as one of the very first complementary foods at 6 months', foodId: 'chicken' },
+  { id: 'f100-beef', name: 'Beef', emoji: '🥩', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Iron-rich! Slow cook for easy shredding', tipCA: 'Iron-rich meat is recommended by Health Canada as one of the very first complementary foods at 6 months — slow cook for easy shredding', foodId: 'beef' },
   { id: 'f100-salmon', name: 'Salmon', emoji: '🐟', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Rich in omega-3s and DHA for brain development', foodId: 'salmon' },
   { id: 'f100-egg', name: 'Egg', emoji: '🥚', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Introduce early — both white and yolk. Top allergen.', foodId: 'egg' },
   { id: 'f100-tofu', name: 'Tofu', emoji: '🧈', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Use firm tofu, pan-fry for grip. Contains soy allergen.', foodId: 'tofu' },
-  { id: 'f100-turkey', name: 'Turkey', emoji: '🦃', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Ground turkey is easy to mix into meals', foodId: 'turkey' },
-  { id: 'f100-lamb', name: 'Lamb', emoji: '🐑', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Rich in iron and zinc, slow cook for tenderness' },
+  { id: 'f100-turkey', name: 'Turkey', emoji: '🦃', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Ground turkey is easy to mix into meals', tipCA: 'Iron-rich meat is recommended by Health Canada as one of the very first complementary foods — ground turkey is easy to mix into meals', foodId: 'turkey' },
+  { id: 'f100-lamb', name: 'Lamb', emoji: '🐑', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Rich in iron and zinc, slow cook for tenderness', tipCA: 'Iron-rich meat is recommended by Health Canada as a first food — rich in iron and zinc, slow cook for tenderness' },
   { id: 'f100-sardines', name: 'Sardines', emoji: '🐟', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Canned in water — mash bones in for calcium' },
   { id: 'f100-shrimp', name: 'Shrimp', emoji: '🦐', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Top allergen — introduce early, chop finely', foodId: 'shrimp' },
   { id: 'f100-cod', name: 'Cod', emoji: '🐟', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Mild white fish, flakes easily, check for bones' },
   { id: 'f100-pork', name: 'Pork', emoji: '🥓', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Slow cook for tender, shreddable texture' },
-  { id: 'f100-liver', name: 'Liver', emoji: '🫀', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Incredibly iron-rich — blend into meatballs. Limit to once per week due to high vitamin A content' },
+  { id: 'f100-liver', name: 'Liver', emoji: '🫀', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Incredibly iron-rich — blend into meatballs. Limit to once per week due to high vitamin A content', tipCA: 'Incredibly iron-rich — Health Canada recommends iron-rich meat as a first food. Blend into meatballs. Limit to once per week due to high vitamin A content' },
   { id: 'f100-tempeh', name: 'Tempeh', emoji: '🫘', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Fermented soy — easier to digest than tofu' },
-  { id: 'f100-ground-beef', name: 'Ground Meat', emoji: '🥩', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Shape into mini meatballs or flat patties' },
-  { id: 'f100-tuna', name: 'Tuna', emoji: '🐟', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Choose light/skipjack only (lowest mercury). Limit to 1-2 oz per week for babies. Avoid albacore/white tuna' },
+  { id: 'f100-ground-beef', name: 'Ground Meat', emoji: '🥩', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Shape into mini meatballs or flat patties', tipCA: 'Iron-rich meat is recommended by Health Canada as a first food — shape into mini meatballs or flat patties' },
+  { id: 'f100-tuna', name: 'Tuna', emoji: '🐟', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Choose light/skipjack only (lowest mercury). Limit to 1-2 oz per week for babies. Avoid albacore/white tuna', tipCA: 'Choose light tuna. Health Canada recommends limiting fresh/frozen tuna, shark, swordfish, and marlin to max 75g per month for young children' },
   { id: 'f100-duck', name: 'Duck', emoji: '🦆', foodGroup: 'protein', category: 'Protein', ageRecommended: '9+ months', tip: 'Rich flavor, shred finely' },
   { id: 'f100-bison', name: 'Bison', emoji: '🦬', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Leaner than beef, very high in iron' },
   { id: 'f100-white-fish', name: 'Tilapia', emoji: '🐟', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Mild, flaky — great starter fish' },
   { id: 'f100-crab', name: 'Crab', emoji: '🦀', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Shellfish allergen — introduce early, shred finely' },
-  { id: 'f100-yogurt-protein', name: 'Greek Yogurt', emoji: '🥛', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Full-fat, plain — high in protein and probiotics' },
+  { id: 'f100-yogurt-protein', name: 'Greek Yogurt', emoji: '🥛', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Full-fat, plain — high in protein and probiotics', tipCA: 'Full-fat, plain — high in protein and probiotics. Cow milk as a drink can be introduced from 9-12 months per Health Canada (pasteurized, homogenized 3.25% M.F.)' },
 
   // === DAIRY (10) ===
-  { id: 'f100-yogurt', name: 'Yogurt', emoji: '🥛', foodGroup: 'dairy', category: 'Dairy', ageRecommended: '6+ months', tip: 'Choose full-fat, plain yogurt — no honey before 1', foodId: 'yogurt' },
+  { id: 'f100-yogurt', name: 'Yogurt', emoji: '🥛', foodGroup: 'dairy', category: 'Dairy', ageRecommended: '6+ months', tip: 'Full-fat plain yogurt — cow milk as a drink should wait until 12 months per AAP', tipCA: 'Full-fat plain yogurt from 6 months. Cow milk as a drink can be introduced from 9-12 months per Health Canada (use pasteurized, homogenized 3.25% M.F.)', foodId: 'yogurt' },
   { id: 'f100-cheese', name: 'Cheese', emoji: '🧀', foodGroup: 'dairy', category: 'Dairy', ageRecommended: '6+ months', tip: 'Soft cheeses are easier — avoid high-sodium varieties', foodId: 'cheese' },
   { id: 'f100-ricotta', name: 'Ricotta', emoji: '🧀', foodGroup: 'dairy', category: 'Dairy', ageRecommended: '6+ months', tip: 'Creamy and mild, great mixed into purees' },
   { id: 'f100-cottage-cheese', name: 'Cottage Cheese', emoji: '🧀', foodGroup: 'dairy', category: 'Dairy', ageRecommended: '6+ months', tip: 'Full-fat, great source of protein' },
@@ -118,7 +119,7 @@ export const FIRST_100_FOODS: First100Food[] = [
   { id: 'f100-mozzarella', name: 'Mozzarella', emoji: '🧀', foodGroup: 'dairy', category: 'Dairy', ageRecommended: '9+ months', tip: 'Shred or slice thinly, can be stringy' },
   { id: 'f100-parmesan', name: 'Parmesan', emoji: '🧀', foodGroup: 'dairy', category: 'Dairy', ageRecommended: '6+ months', tip: 'Grate over pasta or veggies for flavor boost' },
   { id: 'f100-goat-cheese', name: 'Goat Cheese', emoji: '🧀', foodGroup: 'dairy', category: 'Dairy', ageRecommended: '9+ months', tip: 'Tangy and soft, easier to digest than cow dairy for some' },
-  { id: 'f100-kefir', name: 'Kefir', emoji: '🥛', foodGroup: 'dairy', category: 'Dairy', ageRecommended: '6+ months', tip: 'Probiotic-rich fermented milk drink' },
+  { id: 'f100-kefir', name: 'Kefir', emoji: '🥛', foodGroup: 'dairy', category: 'Dairy', ageRecommended: '6+ months', tip: 'Probiotic-rich fermented milk drink', tipCA: 'Probiotic-rich fermented milk drink. Cow milk as a drink can be introduced from 9-12 months per Health Canada' },
 
   // === LEGUMES (10) ===
   { id: 'f100-lentils', name: 'Lentils', emoji: '🫘', foodGroup: 'legumes', category: 'Legumes', ageRecommended: '6+ months', tip: 'Red lentils cook soft and smooth — great for purees', foodId: 'lentils' },

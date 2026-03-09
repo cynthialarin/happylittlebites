@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState, useCallback, useRef } from 'react';
-import { ChildProfile, DiaryEntry, AllergenRecord, MealPlanEntry, ExposureRecord, AppSettings, MealType } from '@/types';
+import { ChildProfile, DiaryEntry, AllergenRecord, MealPlanEntry, ExposureRecord, AppSettings, MealType, Country } from '@/types';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
@@ -33,6 +33,7 @@ interface AppContextType extends AppState {
   clearWeekPlan: (childId: string, dates: string[]) => void;
   setFoodPreference: (childId: string, foodName: string, pref: 'loves' | 'refuses' | null) => void;
   clearFoodPreferences: (childId: string) => void;
+  setCountry: (country: Country) => void;
   completeOnboarding: () => void;
   getChildAge: (child: ChildProfile) => { months: number; label: string };
   loading: boolean;
@@ -42,6 +43,7 @@ const defaultSettings: AppSettings = {
   onboardingComplete: false,
   activeChildId: null,
   theme: 'system',
+  country: 'US',
 };
 
 const defaultState: AppState = {
@@ -148,6 +150,7 @@ export function AppProvider({ children: reactChildren }: { children: React.React
             onboardingComplete: profile?.onboarding_complete || false,
             activeChildId: profile?.active_child_id || null,
             theme: 'system',
+            country: (localStorage.getItem('hlb-country') as Country) || 'US',
           },
         });
       } catch (e) {
@@ -459,6 +462,11 @@ export function AppProvider({ children: reactChildren }: { children: React.React
       if (user) {
         await supabase.from('profiles').update({ onboarding_complete: true }).eq('user_id', user.id);
       }
+    },
+
+    setCountry: (country: Country) => {
+      setState(prev => ({ ...prev, settings: { ...prev.settings, country } }));
+      localStorage.setItem('hlb-country', country);
     },
   };
 

@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { foods } from '@/data/foods';
+import { useApp } from '@/contexts/AppContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowLeft, AlertTriangle, ShieldCheck, Apple, ChefHat } from 'lucide-react';
@@ -10,6 +11,8 @@ const AGE_LABELS = { '6mo': '6 months', '9mo': '9 months', '12mo': '12 months', 
 export default function FoodDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { settings } = useApp();
+  const isCanada = settings.country === 'CA';
   const food = foods.find(f => f.id === id);
 
   if (!food) {
