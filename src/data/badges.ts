@@ -22,6 +22,12 @@ export const BADGES: BadgeDefinition[] = [
   { id: 'fruit-fan', title: 'Fruit Fan', emoji: '🍓', description: 'Try 10 different fruits', category: 'nutrition' },
   { id: 'texture-master', title: 'Texture Master', emoji: '🎨', description: 'Log all 5 texture stages', category: 'bravery' },
   { id: 'brave-taster', title: 'Brave Taster', emoji: '🦁', description: 'Re-try a previously refused food', category: 'bravery' },
+  { id: 'balanced-day-1', title: 'First Balanced Day', emoji: '⭐', description: 'Hit ≥4 food group targets in one day', category: 'nutrition' },
+  { id: 'balanced-week', title: 'Balanced Week', emoji: '📅', description: '5+ balanced days in a week', category: 'nutrition' },
+  { id: 'balanced-month', title: 'Nutrition Master', emoji: '🏅', description: '20+ balanced days in a month', category: 'nutrition' },
+  { id: 'veggie-streak-7', title: 'Veggie Week', emoji: '🥬', description: 'Vegetables target met 7 days straight', category: 'nutrition' },
+  { id: 'protein-streak-7', title: 'Protein Week', emoji: '🥩', description: 'Protein target met 7 days straight', category: 'nutrition' },
+  { id: 'perfect-day', title: 'Perfect Plate', emoji: '🍽️', description: 'Hit ALL 6 food group targets in one day', category: 'nutrition' },
 ];
 
 export const FOOD_GROUP_COLORS: Record<FoodGroup, { bg: string; label: string; emoji: string }> = {
