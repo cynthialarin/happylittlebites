@@ -40,7 +40,8 @@ export default function Dashboard() {
     return { foodsTried: uniqueFoods.size, allergensIntro: uniqueAllergens.size, streak };
   }, [activeChild, diary, allergenRecords]);
 
-  const allergenProgress = (stats.allergensIntro / TOP_9_ALLERGENS.length) * 100;
+  const totalAllergens = settings.country === 'CA' ? TOP_9_ALLERGENS.length + CA_EXTRA_ALLERGENS.length : TOP_9_ALLERGENS.length;
+  const allergenProgress = (stats.allergensIntro / totalAllergens) * 100;
 
   const suggestions = useMemo(() => {
     if (!age) return [];
