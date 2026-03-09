@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { foods } from '@/data/foods';
+import { useApp } from '@/contexts/AppContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowLeft, AlertTriangle, ShieldCheck, Apple, ChefHat } from 'lucide-react';
