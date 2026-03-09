@@ -116,7 +116,7 @@ export default function Dashboard() {
       <div className="grid grid-cols-3 gap-2 mb-5">
         {[
           { label: 'Foods Tried', value: stats.foodsTried, icon: '🥕', color: 'bg-sage/30' },
-          { label: 'Allergens', value: `${stats.allergensIntro}/9`, icon: '🛡️', color: 'bg-sky/30' },
+          { label: 'Allergens', value: `${stats.allergensIntro}/${totalAllergens}`, icon: '🛡️', color: 'bg-sky/30' },
           { label: 'Day Streak', value: stats.streak, icon: '🔥', color: 'bg-peach/30' },
         ].map((stat, i) => (
           <motion.div
