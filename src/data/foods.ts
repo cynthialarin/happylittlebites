@@ -423,7 +423,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'liver', name: 'Liver', emoji: '🫀', foodGroup: 'protein', allergens: [],
+    id: 'liver', name: 'Liver', emoji: '🥩', foodGroup: 'protein', allergens: [],
     chokingHazard: false, chokingNotes: 'Soft when cooked, low risk',
     servingByAge: { '6mo': 'Pureed chicken liver', '9mo': 'Finely minced or in pâté', '12mo': 'Small pieces in dishes', '2yr': 'In pâté, liver bites', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Iron (extremely high)', 'Vitamin A', 'B12', 'Folate'],
