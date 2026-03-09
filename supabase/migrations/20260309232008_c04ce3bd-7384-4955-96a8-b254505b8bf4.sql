@@ -1,0 +1,1 @@
+ALTER TABLE public.children ADD COLUMN gender text NOT NULL DEFAULT 'neutral';
