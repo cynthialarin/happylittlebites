@@ -54,9 +54,15 @@ export default function Tracker() {
       reactionSeverity: formSeverity,
       notes: '',
     });
+    const isNew = !childDiary.some(d => d.foodId === (matchedFood?.id || formFood.toLowerCase().replace(/\s+/g, '-')));
     setFormFood('');
     setFormReaction('');
     setShowAdd(false);
+    if (isNew) {
+      toast('🎉 New food! +25 XP', { description: `${formFood} added to the diary` });
+    } else {
+      toast('📝 Food logged! +10 XP');
+    }
   };
 
   if (!activeChild) {
