@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useApp } from '@/contexts/AppContext';
@@ -9,6 +9,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { FIRST_100_FOODS, FIRST_100_MILESTONES, FOOD_CATEGORIES } from '@/data/first100foods';
 import { foods } from '@/data/foods';
 import { ChevronLeft, Trophy, Filter, ChevronRight, Sparkles, Info } from 'lucide-react';
+import Confetti from '@/components/Confetti';
 
 export default function First100Foods() {
   const navigate = useNavigate();
@@ -16,6 +17,8 @@ export default function First100Foods() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [showCompleted, setShowCompleted] = useState(true);
   const [celebratingMilestone, setCelebratingMilestone] = useState<string | null>(null);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const prevCountRef = useRef<number | null>(null);
 
   const triedFoodNames = useMemo(() => {
     if (!activeChild) return new Set<string>();
