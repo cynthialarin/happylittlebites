@@ -136,12 +136,12 @@ export default function Onboarding() {
             exit={{ opacity: 0, y: -20 }}
             className="flex-1 flex flex-col px-6 py-12 max-w-md mx-auto w-full"
           >
-            <h2 className="text-2xl font-black mb-1">Add your little one 🍼</h2>
-            <p className="text-muted-foreground mb-6">Tell us about your child to personalize their experience</p>
+            <h2 className="text-3xl font-black mb-2">Add your little one 🍼</h2>
+            <p className="text-base text-foreground/60 mb-6">Tell us about your child to personalize their experience</p>
 
             <div className="space-y-5">
               <div>
-                <Label className="mb-2 block font-semibold">Choose an avatar</Label>
+                <Label className="mb-2 block text-base font-bold">Choose an avatar</Label>
                 <div className="flex gap-2 flex-wrap">
                   {AVATARS.map(a => (
                     <button
@@ -156,17 +156,17 @@ export default function Onboarding() {
               </div>
 
               <div>
-                <Label htmlFor="name" className="font-semibold">Child's name</Label>
+                <Label htmlFor="name" className="text-base font-bold">Child's name</Label>
                 <Input id="name" placeholder="e.g., Luna" value={name} onChange={e => setName(e.target.value)} className="mt-1.5" />
               </div>
 
               <div>
-                <Label htmlFor="birthdate" className="font-semibold">Date of birth</Label>
+                <Label htmlFor="birthdate" className="text-base font-bold">Date of birth</Label>
                 <Input id="birthdate" type="date" value={birthdate} onChange={e => setBirthdate(e.target.value)} className="mt-1.5" max={new Date().toISOString().split('T')[0]} />
               </div>
 
               <div>
-                <Label className="font-semibold mb-2 block">Feeding approach</Label>
+                <Label className="text-base font-bold mb-2 block">Feeding approach</Label>
                 <div className="grid grid-cols-3 gap-2">
                   {([
                     { value: 'blw' as const, label: 'Baby-Led', emoji: '🤚', desc: 'Baby self-feeds soft finger foods from the start' },
@@ -176,17 +176,17 @@ export default function Onboarding() {
                     <button
                       key={opt.value}
                       onClick={() => setApproach(opt.value)}
-                      className={`p-4 rounded-xl border-2 transition-all text-center ${approach === opt.value ? 'border-primary bg-primary/10' : 'border-border hover:border-primary/40'}`}
+                      className={`p-5 rounded-xl border-2 transition-all text-center ${approach === opt.value ? 'border-primary bg-primary/15 ring-2 ring-primary/30' : 'border-border hover:border-primary/40'}`}
                     >
-                      <div className="text-xl mb-1">{opt.emoji}</div>
-                      <div className="text-xs font-semibold">{opt.label}</div>
-                      <div className="text-[10px] text-muted-foreground mt-1 leading-tight">{opt.desc}</div>
+                      <div className="text-2xl mb-1">{opt.emoji}</div>
+                      <div className="text-sm font-bold">{opt.label}</div>
+                      <div className="text-xs text-foreground/70 mt-1 leading-tight">{opt.desc}</div>
                     </button>
                   ))}
                 </div>
                 <details className="mt-3 text-left">
-                  <summary className="text-xs text-primary cursor-pointer font-medium hover:underline">Not sure? Learn more ℹ️</summary>
-                  <div className="mt-2 space-y-2 text-xs text-muted-foreground bg-muted/50 rounded-xl p-3">
+                  <summary className="text-sm text-primary cursor-pointer font-medium hover:underline">Not sure? Learn more ℹ️</summary>
+                  <div className="mt-2 space-y-2 text-sm text-foreground/70 bg-muted/50 rounded-xl p-4">
                     <p><span className="font-semibold text-foreground">Baby-Led Weaning (BLW)</span> is a trending approach where babies skip purees entirely and self-feed soft, age-appropriate finger foods from around 6 months. It encourages independence, motor skills, and exploring real textures early.</p>
                     <p><span className="font-semibold text-foreground">Purées</span> is the traditional approach — you spoon-feed smooth blended foods and gradually increase texture over weeks/months.</p>
                     <p><span className="font-semibold text-foreground">Combo</span> blends both methods — offering purees alongside soft finger foods so baby gets the best of both worlds.</p>
