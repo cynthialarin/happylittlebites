@@ -309,7 +309,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'celery', name: 'Celery', emoji: '🌿', foodGroup: 'vegetables', allergens: [],
+    id: 'celery', name: 'Celery', emoji: '🥬', foodGroup: 'vegetables', allergens: [],
     chokingHazard: true, chokingNotes: '⚠️ Raw celery is fibrous and hard — cook for young children',
     servingByAge: { '6mo': 'Cooked very soft and pureed', '9mo': 'Cooked very soft sticks', '12mo': 'Well-cooked pieces', '2yr': 'Cooked or thin raw sticks with close supervision', '3yr+': 'Raw with dip, supervised' },
     nutritionHighlights: ['Vitamin K', 'Potassium', 'Folate', 'Low calorie'],
