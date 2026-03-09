@@ -8,9 +8,12 @@ import { Progress } from '@/components/ui/progress';
 import { foods } from '@/data/foods';
 import FoodImage from '@/components/FoodImage';
 import NutritionSummary from '@/components/NutritionSummary';
+import NutritionScorecard from '@/components/NutritionScorecard';
+import ReintroductionTracker from '@/components/ReintroductionTracker';
+import TextureProgression from '@/components/TextureProgression';
 import { FOOD_GROUP_COLORS } from '@/data/badges';
 import { TOP_9_ALLERGENS, CA_EXTRA_ALLERGENS, FoodGroup } from '@/types';
-import { UtensilsCrossed, ShieldCheck, TrendingUp, Lightbulb, BookOpen, ChevronRight, Trophy, Flame, Sparkles, ListChecks } from 'lucide-react';
+import { UtensilsCrossed, ShieldCheck, TrendingUp, Lightbulb, BookOpen, ChevronRight, Trophy, Flame, Sparkles, ListChecks, ShoppingCart } from 'lucide-react';
 
 const CORE_GROUPS: FoodGroup[] = ['fruits', 'vegetables', 'grains', 'protein', 'dairy', 'legumes'];
 
@@ -220,9 +223,24 @@ export default function Dashboard() {
         </CardContent>
       </Card>
 
+      {/* Nutrition Scorecard */}
+      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.42 }} className="mb-5">
+        <NutritionScorecard childId={activeChild.id} days={7} compact />
+      </motion.div>
+
       {/* Nutrition Summary */}
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45 }} className="mb-5">
         <NutritionSummary childId={activeChild.id} days={7} />
+      </motion.div>
+
+      {/* Texture Progression */}
+      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.47 }} className="mb-5">
+        <TextureProgression />
+      </motion.div>
+
+      {/* Reintroduction Tracker */}
+      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.49 }} className="mb-5">
+        <ReintroductionTracker />
       </motion.div>
 
       <div className="mb-5">
@@ -270,12 +288,14 @@ export default function Dashboard() {
       </motion.div>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-3 gap-2">
         {[
           { label: 'Food Library', icon: UtensilsCrossed, path: '/foods', color: 'bg-sage/20' },
           { label: 'Recipes', icon: BookOpen, path: '/recipes', color: 'bg-peach/20' },
           { label: 'Food Diary', icon: TrendingUp, path: '/tracker', color: 'bg-sky/20' },
-          { label: 'First 100 Foods', icon: ListChecks, path: '/first-100-foods', color: 'bg-lavender/20' },
+          { label: 'First 100', icon: ListChecks, path: '/first-100-foods', color: 'bg-lavender/20' },
+          { label: 'Groceries', icon: ShoppingCart, path: '/grocery-list', color: 'bg-sage/10' },
+          { label: 'Growth', icon: TrendingUp, path: '/growth', color: 'bg-primary/10' },
         ].map(action => (
           <button
             key={action.path}
@@ -283,7 +303,7 @@ export default function Dashboard() {
             className={`${action.color} p-4 rounded-xl text-left hover:ring-2 ring-primary/30 transition-all`}
           >
             <action.icon className="h-5 w-5 mb-2 text-foreground" />
-            <span className="text-sm font-bold">{action.label}</span>
+            <span className="text-xs font-bold">{action.label}</span>
           </button>
         ))}
       </div>

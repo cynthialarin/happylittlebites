@@ -7,8 +7,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Allergen, AllergenCA, ReactionSeverity } from '@/types';
-import { ArrowLeft, Check, AlertTriangle, Info } from 'lucide-react';
+import { ArrowLeft, Check, AlertTriangle, Info, FileText } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import AllergenExport from '@/components/AllergenExport';
 
 const SEVERITY_COLORS: Record<ReactionSeverity, string> = {
   none: 'bg-sage/20 text-sage-foreground',
@@ -22,6 +23,7 @@ export default function AllergenTracker() {
   const navigate = useNavigate();
   const [selectedAllergen, setSelectedAllergen] = useState<string | null>(null);
   const [showLog, setShowLog] = useState(false);
+  const [showExport, setShowExport] = useState(false);
   const [logFood, setLogFood] = useState('');
   const [logSeverity, setLogSeverity] = useState<ReactionSeverity>('none');
   const [logSymptoms, setLogSymptoms] = useState('');
@@ -67,13 +69,20 @@ export default function AllergenTracker() {
         <ArrowLeft className="h-4 w-4" /> Back
       </button>
 
-      <h1 className="text-xl font-black mb-1">Allergen Tracker</h1>
+      <div className="flex items-center justify-between mb-1">
+        <h1 className="text-xl font-black">Allergen Tracker</h1>
+        <Button variant="outline" size="sm" className="rounded-full text-xs gap-1" onClick={() => setShowExport(true)}>
+          <FileText className="h-3.5 w-3.5" /> Export
+        </Button>
+      </div>
       <p className="text-sm text-muted-foreground mb-1">
         {introduced.size} of {totalAllergens} allergens introduced • Recommended order shown below
       </p>
       <p className="text-xs text-muted-foreground mb-4 flex items-center gap-1">
         {isCanada ? '🇨🇦 Health Canada priority allergens' : '🇺🇸 FDA Top 9 allergens'}
       </p>
+
+      <AllergenExport open={showExport} onOpenChange={setShowExport} />
 
       {/* Allergen Checklist */}
       <div className="space-y-2 mb-6">
