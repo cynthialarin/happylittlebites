@@ -5,6 +5,7 @@ import { useApp } from '@/contexts/AppContext';
 import { Input } from '@/components/ui/input';
 import { Search, Heart, Clock, Snowflake, Users } from 'lucide-react';
 import { RecipeCategory } from '@/types';
+import FoodImage from '@/components/FoodImage';
 
 const CATEGORIES: { value: RecipeCategory | 'all' | 'favorites'; label: string }[] = [
   { value: 'all', label: '🍽️ All' },
