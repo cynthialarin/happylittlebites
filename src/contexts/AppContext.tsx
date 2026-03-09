@@ -148,6 +148,20 @@ export function AppProvider({ children: reactChildren }: { children: React.React
     clearWeekPlan: (childId, dates) => update({
       mealPlan: state.mealPlan.filter(e => !(e.childId === childId && dates.includes(e.date)))
     }),
+    setFoodPreference: (childId, foodName, pref) => {
+      const childPrefs = { ...(state.foodPreferences[childId] || {}) };
+      if (pref === null) {
+        delete childPrefs[foodName];
+      } else {
+        childPrefs[foodName] = pref;
+      }
+      update({ foodPreferences: { ...state.foodPreferences, [childId]: childPrefs } });
+    },
+    clearFoodPreferences: (childId) => {
+      const updated = { ...state.foodPreferences };
+      delete updated[childId];
+      update({ foodPreferences: updated });
+    },
     completeOnboarding: () => update({ settings: { ...state.settings, onboardingComplete: true } }),
     getChildAge,
   };
