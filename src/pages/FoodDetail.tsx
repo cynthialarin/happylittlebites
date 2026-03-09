@@ -44,6 +44,19 @@ export default function FoodDetail() {
         <p className="text-sm text-muted-foreground capitalize">Safe from {AGE_LABELS[food.safeFromAge]}</p>
       </div>
 
+      {/* Honey / Botulism Warning */}
+      {food.id === 'honey' && (
+        <Card className="mb-4 bg-destructive/10 border-destructive/30">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-1">
+              <AlertTriangle className="h-5 w-5 text-destructive" />
+              <span className="font-black text-sm text-destructive">⚠️ NEVER Give to Babies Under 12 Months</span>
+            </div>
+            <p className="text-sm font-medium">Honey can contain <strong>Clostridium botulinum</strong> spores that cause <strong>infant botulism</strong> — a rare but potentially life-threatening illness. A baby's immature digestive system cannot fight these spores. This includes raw honey, cooked honey, and foods containing honey.</p>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Safety Alert */}
       {food.chokingHazard && (
         <Card className="mb-4 bg-destructive/5 border-destructive/20">

@@ -15,6 +15,7 @@ const FOOD_GROUPS: { value: FoodGroup | 'all'; label: string; emoji: string }[] 
   { value: 'dairy', label: 'Dairy', emoji: '🥛' },
   { value: 'legumes', label: 'Legumes', emoji: '🫘' },
   { value: 'nuts-seeds', label: 'Nuts/Seeds', emoji: '🥜' },
+  { value: 'other', label: 'Other', emoji: '🧂' },
 ];
 
 export default function FoodLibrary() {
