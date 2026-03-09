@@ -33,6 +33,7 @@ interface AppContextType extends AppState {
   clearWeekPlan: (childId: string, dates: string[]) => void;
   setFoodPreference: (childId: string, foodName: string, pref: 'loves' | 'refuses' | null) => void;
   clearFoodPreferences: (childId: string) => void;
+  setCountry: (country: Country) => void;
   completeOnboarding: () => void;
   getChildAge: (child: ChildProfile) => { months: number; label: string };
   loading: boolean;
