@@ -8,9 +8,12 @@ import { Progress } from '@/components/ui/progress';
 import { foods } from '@/data/foods';
 import FoodImage from '@/components/FoodImage';
 import NutritionSummary from '@/components/NutritionSummary';
+import NutritionScorecard from '@/components/NutritionScorecard';
+import ReintroductionTracker from '@/components/ReintroductionTracker';
+import TextureProgression from '@/components/TextureProgression';
 import { FOOD_GROUP_COLORS } from '@/data/badges';
 import { TOP_9_ALLERGENS, CA_EXTRA_ALLERGENS, FoodGroup } from '@/types';
-import { UtensilsCrossed, ShieldCheck, TrendingUp, Lightbulb, BookOpen, ChevronRight, Trophy, Flame, Sparkles, ListChecks } from 'lucide-react';
+import { UtensilsCrossed, ShieldCheck, TrendingUp, Lightbulb, BookOpen, ChevronRight, Trophy, Flame, Sparkles, ListChecks, ShoppingCart } from 'lucide-react';
 
 const CORE_GROUPS: FoodGroup[] = ['fruits', 'vegetables', 'grains', 'protein', 'dairy', 'legumes'];
 
