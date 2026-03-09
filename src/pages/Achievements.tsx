@@ -1,15 +1,33 @@
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useGamification } from '@/hooks/useGamification';
 import { BADGES, LEVELS } from '@/data/badges';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Trophy } from 'lucide-react';
+import Confetti from '@/components/Confetti';
 
 export default function Achievements() {
   const { xp, level, levelProgress, nextLevel, unlockedBadges } = useGamification();
+  const [showConfetti, setShowConfetti] = useState(false);
+  const prevBadgeCount = useRef<number | null>(null);
+  const prevLevel = useRef<number | null>(null);
+
+  // Confetti on new badge unlock or level up
+  useEffect(() => {
+    const newBadge = prevBadgeCount.current !== null && unlockedBadges.length > prevBadgeCount.current;
+    const newLevel = prevLevel.current !== null && level.level > prevLevel.current;
+    if (newBadge || newLevel) {
+      setShowConfetti(true);
+      setTimeout(() => setShowConfetti(false), 3000);
+    }
+    prevBadgeCount.current = unlockedBadges.length;
+    prevLevel.current = level.level;
+  }, [unlockedBadges.length, level.level]);
 
   return (
     <div className="px-4 pt-6 pb-4 max-w-lg mx-auto">
+      <Confetti active={showConfetti} />
       <h1 className="text-xl font-black mb-4">Achievements</h1>
 
       {/* Level Card */}

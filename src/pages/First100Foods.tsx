@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useApp } from '@/contexts/AppContext';
@@ -9,6 +9,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { FIRST_100_FOODS, FIRST_100_MILESTONES, FOOD_CATEGORIES } from '@/data/first100foods';
 import { foods } from '@/data/foods';
 import { ChevronLeft, Trophy, Filter, ChevronRight, Sparkles, Info } from 'lucide-react';
+import Confetti from '@/components/Confetti';
 
 export default function First100Foods() {
   const navigate = useNavigate();
@@ -16,6 +17,8 @@ export default function First100Foods() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [showCompleted, setShowCompleted] = useState(true);
   const [celebratingMilestone, setCelebratingMilestone] = useState<string | null>(null);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const prevCountRef = useRef<number | null>(null);
 
   const triedFoodNames = useMemo(() => {
     if (!activeChild) return new Set<string>();
@@ -48,6 +51,21 @@ export default function First100Foods() {
     return FIRST_100_MILESTONES.find(m => completedCount < m.count) || null;
   }, [completedCount]);
 
+  // Auto-trigger confetti when a new milestone is reached
+  useEffect(() => {
+    if (prevCountRef.current !== null && prevCountRef.current < completedCount) {
+      const justCrossed = FIRST_100_MILESTONES.find(
+        m => prevCountRef.current! < m.count && completedCount >= m.count
+      );
+      if (justCrossed) {
+        setCelebratingMilestone(justCrossed.title);
+        setShowConfetti(true);
+        setTimeout(() => setShowConfetti(false), 3000);
+      }
+    }
+    prevCountRef.current = completedCount;
+  }, [completedCount]);
+
   const filteredFoods = useMemo(() => {
     let result = FIRST_100_FOODS;
     if (selectedCategory) result = result.filter(f => f.category === selectedCategory);
@@ -75,8 +93,16 @@ export default function First100Foods() {
     );
   }
 
+  const handleMilestoneClick = (milestone: typeof FIRST_100_MILESTONES[0], unlocked: boolean) => {
+    if (!unlocked) return;
+    setCelebratingMilestone(milestone.title);
+    setShowConfetti(true);
+    setTimeout(() => setShowConfetti(false), 3000);
+  };
+
   return (
     <div className="px-4 pt-6 pb-4 max-w-lg mx-auto">
+      <Confetti active={showConfetti} />
       {/* Header */}
       <div className="flex items-center gap-2 mb-4">
         <button onClick={() => navigate(-1)} className="p-1.5 rounded-lg hover:bg-muted">
@@ -132,7 +158,7 @@ export default function First100Foods() {
                 return (
                   <button
                     key={milestone.count}
-                    onClick={() => unlocked ? setCelebratingMilestone(milestone.title) : null}
+                    onClick={() => handleMilestoneClick(milestone, unlocked)}
                     className={`flex-shrink-0 rounded-xl p-2.5 min-w-[80px] text-center transition-all ${
                       unlocked
                         ? 'bg-primary/15 border border-primary/30'
