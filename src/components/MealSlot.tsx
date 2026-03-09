@@ -27,7 +27,7 @@ export default function MealSlot({ mealType, mealName, mealEmoji, recipeId, onAd
     return (
       <div className={cn("p-2.5 rounded-lg bg-card border border-border flex items-center gap-2 group", className)}>
         {recipeId ? (
-          <FoodImage type="recipe" id={recipeId} name={mealName} fallbackEmoji={mealEmoji || info.emoji} className="w-8 h-8 rounded-md flex-shrink-0" />
+          <FoodImage type="recipe" id={recipeId} name={mealName} fallbackEmoji={mealEmoji || info.emoji} className="w-8 h-8 rounded-md flex-shrink-0" cacheOnly />
         ) : (
           <span className="text-base">{mealEmoji || info.emoji}</span>
         )}
