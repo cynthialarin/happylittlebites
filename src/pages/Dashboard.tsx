@@ -79,7 +79,6 @@ export default function Dashboard() {
     );
   }
 
-  const todayGroupCount = gamification.todayGroups.size;
   const { level, levelProgress, nextLevel, xp, weeklyChallenge, challengeProgress, unlockedBadges } = gamification;
 
   return (
