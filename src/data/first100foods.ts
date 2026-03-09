@@ -101,7 +101,7 @@ export const FIRST_100_FOODS: First100Food[] = [
   { id: 'f100-liver', name: 'Liver', emoji: '🫀', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Incredibly iron-rich — blend into meatballs. Limit to once per week due to high vitamin A content' },
   { id: 'f100-tempeh', name: 'Tempeh', emoji: '🫘', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Fermented soy — easier to digest than tofu' },
   { id: 'f100-ground-beef', name: 'Ground Meat', emoji: '🥩', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Shape into mini meatballs or flat patties' },
-  { id: 'f100-tuna', name: 'Tuna', emoji: '🐟', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Choose light tuna, limit due to mercury' },
+  { id: 'f100-tuna', name: 'Tuna', emoji: '🐟', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Choose light/skipjack only (lowest mercury). Limit to 1-2 oz per week for babies. Avoid albacore/white tuna' },
   { id: 'f100-duck', name: 'Duck', emoji: '🦆', foodGroup: 'protein', category: 'Protein', ageRecommended: '9+ months', tip: 'Rich flavor, shred finely' },
   { id: 'f100-bison', name: 'Bison', emoji: '🦬', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Leaner than beef, very high in iron' },
   { id: 'f100-white-fish', name: 'Tilapia', emoji: '🐟', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Mild, flaky — great starter fish' },
