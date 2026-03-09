@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { foods } from '@/data/foods';
 import { AcceptanceLevel, MealType, TextureStage, ReactionSeverity } from '@/types';
 import { Plus, Calendar } from 'lucide-react';
+import { toast } from '@/components/ui/sonner';
 
 const ACCEPTANCE_EMOJI: Record<AcceptanceLevel, string> = { loved: '😍', okay: '😐', refused: '😤' };
 const MEAL_EMOJI: Record<MealType, string> = { breakfast: '🌅', lunch: '☀️', dinner: '🌙', snack: '🍪' };
@@ -53,9 +54,15 @@ export default function Tracker() {
       reactionSeverity: formSeverity,
       notes: '',
     });
+    const isNew = !childDiary.some(d => d.foodId === (matchedFood?.id || formFood.toLowerCase().replace(/\s+/g, '-')));
     setFormFood('');
     setFormReaction('');
     setShowAdd(false);
+    if (isNew) {
+      toast('🎉 New food! +25 XP', { description: `${formFood} added to the diary` });
+    } else {
+      toast('📝 Food logged! +10 XP');
+    }
   };
 
   if (!activeChild) {

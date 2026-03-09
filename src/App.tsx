@@ -18,6 +18,7 @@ import PickyEater from "@/pages/PickyEater";
 import Safety from "@/pages/Safety";
 import Milestones from "@/pages/Milestones";
 import ChildProfiles from "@/pages/ChildProfiles";
+import Achievements from "@/pages/Achievements";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -44,6 +45,7 @@ function AppRoutes() {
         <Route path="/more/safety" element={<Safety />} />
         <Route path="/more/milestones" element={<Milestones />} />
         <Route path="/more/profiles" element={<ChildProfiles />} />
+        <Route path="/achievements" element={<Achievements />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

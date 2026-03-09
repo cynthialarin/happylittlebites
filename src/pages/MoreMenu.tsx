@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { ShieldCheck, Brain, Baby, Milestone, Users, Settings } from 'lucide-react';
 
 const menuItems = [
+  { path: '/achievements', icon: ShieldCheck, label: 'Achievements', desc: 'Badges, XP & level progress', emoji: '🏆', color: 'bg-primary/10' },
   { path: '/tracker/allergens', icon: ShieldCheck, label: 'Allergen Tracker', desc: 'Top 9 allergen introduction guide', emoji: '🛡️', color: 'bg-sky/20' },
   { path: '/more/picky-eater', icon: Brain, label: 'Picky Eater Toolkit', desc: 'Evidence-based strategies', emoji: '🧠', color: 'bg-lavender/20' },
   { path: '/more/safety', icon: ShieldCheck, label: 'Safety Reference', desc: 'Choking, gagging & first aid', emoji: '🚨', color: 'bg-destructive/10' },
