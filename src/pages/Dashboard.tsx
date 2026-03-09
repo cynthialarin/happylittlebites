@@ -15,7 +15,7 @@ import { UtensilsCrossed, ShieldCheck, TrendingUp, Lightbulb, BookOpen, ChevronR
 const CORE_GROUPS: FoodGroup[] = ['fruits', 'vegetables', 'grains', 'protein', 'dairy', 'legumes'];
 
 export default function Dashboard() {
-  const { activeChild, diary, allergenRecords, getChildAge } = useApp();
+  const { activeChild, diary, allergenRecords, getChildAge, settings } = useApp();
   const navigate = useNavigate();
   const gamification = useGamification();
 
