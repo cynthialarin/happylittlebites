@@ -93,8 +93,16 @@ export default function First100Foods() {
     );
   }
 
+  const handleMilestoneClick = (milestone: typeof FIRST_100_MILESTONES[0], unlocked: boolean) => {
+    if (!unlocked) return;
+    setCelebratingMilestone(milestone.title);
+    setShowConfetti(true);
+    setTimeout(() => setShowConfetti(false), 3000);
+  };
+
   return (
     <div className="px-4 pt-6 pb-4 max-w-lg mx-auto">
+      <Confetti active={showConfetti} />
       {/* Header */}
       <div className="flex items-center gap-2 mb-4">
         <button onClick={() => navigate(-1)} className="p-1.5 rounded-lg hover:bg-muted">
