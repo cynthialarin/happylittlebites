@@ -30,13 +30,12 @@ serve(async (req) => {
 
     const filePath = `${type}/${id}.png`;
 
-    // Check if image already exists in storage
+    // Check if image already exists using signed URL (reliable existence check)
     const { data: existingFile } = await supabase.storage
       .from("food-images")
       .createSignedUrl(filePath, 60);
 
     if (existingFile?.signedUrl) {
-      // File exists, return public URL
       const { data: publicUrlData } = supabase.storage
         .from("food-images")
         .getPublicUrl(filePath);
@@ -56,12 +55,12 @@ serve(async (req) => {
     // Generate image prompt based on type
     let prompt: string;
     if (type === "food") {
-      prompt = `Professional food photography of ${name} prepared for a baby or toddler. Soft natural lighting, clean white ceramic plate or bowl, overhead shot, appetizing and realistic. The food should look freshly prepared, age-appropriate portions, warm inviting colors. No text, no watermarks, no hands. On a clean light background.`;
+      prompt = `Overhead professional food photography of ${name} prepared for a baby or toddler, served in age-appropriate portions on a clean white ceramic plate. The food is freshly prepared with visible texture appropriate for infant feeding. Soft, warm natural lighting, shallow depth of field, clean light wooden table surface. No text, no watermarks, no hands, no utensils, no branding. Photorealistic, appetizing, warm color palette.`;
     } else {
-      prompt = `Professional food photography of a homemade ${name}${description ? `: ${description}` : ""}. Home-cooked style, warm natural lighting, appetizing plating on a clean white plate, realistic photo. Family-friendly presentation, no text, no watermarks, no hands. On a clean light background.`;
+      prompt = `Professional overhead food photography of homemade ${name}${description ? ` — ${description}` : ""}. Served family-style on a clean white plate, home-cooked and inviting. Warm natural lighting, clean light wooden table, shallow depth of field. Show the complete dish with visible ingredients and textures. No text, no watermarks, no hands, no branding. Photorealistic, appetizing.`;
     }
 
-    // Call Gemini image model
+    // Call Gemini image model (upgraded to pro for better quality)
     const aiResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -69,7 +68,7 @@ serve(async (req) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-2.5-flash-image",
+        model: "google/gemini-3.1-flash-image-preview",
         messages: [{ role: "user", content: prompt }],
         modalities: ["image", "text"],
       }),

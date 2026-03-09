@@ -15,6 +15,7 @@ const FOOD_GROUPS: { value: FoodGroup | 'all'; label: string; emoji: string }[] 
   { value: 'dairy', label: 'Dairy', emoji: '🥛' },
   { value: 'legumes', label: 'Legumes', emoji: '🫘' },
   { value: 'nuts-seeds', label: 'Nuts/Seeds', emoji: '🥜' },
+  { value: 'other', label: 'Other', emoji: '🧂' },
 ];
 
 export default function FoodLibrary() {
@@ -78,6 +79,7 @@ export default function FoodLibrary() {
                 name={food.name}
                 fallbackEmoji={food.emoji}
                 className="w-full h-20 rounded-lg"
+                cacheOnly
               />
             </div>
             <div className="flex items-center gap-2 mb-1">

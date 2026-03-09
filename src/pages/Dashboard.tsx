@@ -237,6 +237,7 @@ export default function Dashboard() {
                 name={food.name}
                 fallbackEmoji={food.emoji}
                 className="w-full h-16 rounded-t-xl"
+                cacheOnly
               />
               <div className="p-2">
                 <div className="text-xs font-semibold">{food.name}</div>

@@ -72,6 +72,7 @@ export default function Recipes() {
                     description={recipe.description}
                     fallbackEmoji={recipe.emoji}
                     className="w-16 h-16 rounded-lg flex-shrink-0"
+                    cacheOnly
                   />
                   <div className="min-w-0">
                     <span className="font-bold text-sm">{recipe.title}</span>

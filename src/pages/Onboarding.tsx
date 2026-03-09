@@ -18,7 +18,7 @@ export default function Onboarding() {
   const [avatar, setAvatar] = useState('🐣');
 
   const features = [
-    { icon: Baby, title: '500+ Foods', desc: 'Age-appropriate safety guides for every food' },
+    { icon: Baby, title: '100+ Foods', desc: 'Age-appropriate safety guides for every food' },
     { icon: ShieldCheck, title: 'Allergen Tracker', desc: 'Guided top-9 allergen introduction' },
     { icon: Heart, title: 'Picky Eater Help', desc: 'Evidence-based strategies that work' },
     { icon: Sparkles, title: '100% Free', desc: 'No subscriptions, no paywalls, ever' },
