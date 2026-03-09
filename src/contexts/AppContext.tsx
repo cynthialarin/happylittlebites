@@ -463,6 +463,11 @@ export function AppProvider({ children: reactChildren }: { children: React.React
         await supabase.from('profiles').update({ onboarding_complete: true }).eq('user_id', user.id);
       }
     },
+
+    setCountry: (country: Country) => {
+      setState(prev => ({ ...prev, settings: { ...prev.settings, country } }));
+      localStorage.setItem('hlb-country', country);
+    },
   };
 
   return <AppContext.Provider value={value}>{reactChildren}</AppContext.Provider>;
