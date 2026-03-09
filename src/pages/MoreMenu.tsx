@@ -18,6 +18,7 @@ const menuItems = [
 export default function MoreMenu() {
   const navigate = useNavigate();
   const { activeChild, children: allChildren } = useApp();
+  const { signOut } = useAuth();
 
   return (
     <div className="px-4 pt-6 pb-4 max-w-lg mx-auto">
