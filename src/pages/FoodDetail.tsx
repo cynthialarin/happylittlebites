@@ -3,6 +3,7 @@ import { foods } from '@/data/foods';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowLeft, AlertTriangle, ShieldCheck, Apple, ChefHat } from 'lucide-react';
+import FoodImage from '@/components/FoodImage';
 
 const AGE_LABELS = { '6mo': '6 months', '9mo': '9 months', '12mo': '12 months', '2yr': '2 years', '3yr+': '3+ years' };
 
