@@ -41,7 +41,7 @@ export default function MoreMenu() {
       )}
 
       <div className="space-y-2">
-        {menuItems.map(item => (
+        {getMenuItems(settings.country === 'CA').map(item => (
           <button
             key={item.path}
             onClick={() => navigate(item.path)}
