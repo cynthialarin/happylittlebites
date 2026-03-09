@@ -18,6 +18,7 @@ import PickyEater from "@/pages/PickyEater";
 import Safety from "@/pages/Safety";
 import Milestones from "@/pages/Milestones";
 import ChildProfiles from "@/pages/ChildProfiles";
+import Achievements from "@/pages/Achievements";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
