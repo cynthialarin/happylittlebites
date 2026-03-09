@@ -78,6 +78,23 @@ export default function PickyEater() {
         <p className="text-sm text-muted-foreground">Evidence-based strategies that actually work</p>
       </div>
 
+      {/* CTA — Picky Recipes Tool */}
+      <Card className="mb-5 bg-accent/10 border-accent/30">
+        <CardContent className="p-4 flex items-center gap-3">
+          <div className="flex-1">
+            <h2 className="font-bold text-sm flex items-center gap-1">
+              <Sparkles className="h-4 w-4 text-accent-foreground" /> Recipe Recommender
+            </h2>
+            <p className="text-xs text-muted-foreground mt-1">
+              Tag what your child loves & won't eat — we'll find recipes that work
+            </p>
+          </div>
+          <Link to="/more/picky-recipes">
+            <Button size="sm" className="text-xs">Try it</Button>
+          </Link>
+        </CardContent>
+      </Card>
+
       {/* Age Expectations */}
       <Card className="mb-5 bg-primary/5 border-primary/20">
         <CardContent className="p-4">
