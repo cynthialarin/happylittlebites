@@ -139,7 +139,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'fig', name: 'Fig', emoji: '🫐', foodGroup: 'fruits', allergens: [],
+    id: 'fig', name: 'Fig', emoji: '🟤', foodGroup: 'fruits', allergens: [],
     chokingHazard: false, chokingNotes: 'Soft when ripe, low risk',
     servingByAge: { '6mo': 'Mashed or quartered ripe fig', '9mo': 'Diced or quartered', '12mo': 'Halved or whole ripe', '2yr': 'Any preparation', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Calcium', 'Fiber', 'Potassium', 'Iron'],
