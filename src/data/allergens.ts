@@ -1,7 +1,7 @@
 import { Allergen, AllergenCA } from '@/types';
 
 export interface AllergenInfo {
-  id: Allergen;
+  id: Allergen | AllergenCA;
   name: string;
   emoji: string;
   description: string;
@@ -10,6 +10,7 @@ export interface AllergenInfo {
   signsOfReaction: string[];
   recommendedFirstFood: string;
   waitTime: string;
+  countryOnly?: 'CA'; // if set, only show for this country
 }
 
 export const allergenInfo: AllergenInfo[] = [
