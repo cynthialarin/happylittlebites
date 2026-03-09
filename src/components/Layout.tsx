@@ -87,7 +87,7 @@ export default function Layout() {
                 size="sm"
                 variant="ghost"
                 className="rounded-full gap-1 text-xs h-8"
-                onClick={() => navigate('/child-profiles')}
+                onClick={() => navigate('/more/profiles')}
               >
                 <Plus className="h-3.5 w-3.5" /> Add
               </Button>
