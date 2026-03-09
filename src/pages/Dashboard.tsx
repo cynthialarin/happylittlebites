@@ -223,9 +223,24 @@ export default function Dashboard() {
         </CardContent>
       </Card>
 
+      {/* Nutrition Scorecard */}
+      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.42 }} className="mb-5">
+        <NutritionScorecard childId={activeChild.id} days={7} compact />
+      </motion.div>
+
       {/* Nutrition Summary */}
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45 }} className="mb-5">
         <NutritionSummary childId={activeChild.id} days={7} />
+      </motion.div>
+
+      {/* Texture Progression */}
+      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.47 }} className="mb-5">
+        <TextureProgression />
+      </motion.div>
+
+      {/* Reintroduction Tracker */}
+      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.49 }} className="mb-5">
+        <ReintroductionTracker />
       </motion.div>
 
       <div className="mb-5">
