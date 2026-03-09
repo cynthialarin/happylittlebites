@@ -9,6 +9,7 @@ interface AppState {
   exposures: ExposureRecord[];
   favoriteRecipes: string[];
   triedRecipes: string[];
+  foodPreferences: Record<string, Record<string, 'loves' | 'refuses'>>;
   settings: AppSettings;
 }
 
@@ -27,6 +28,8 @@ interface AppContextType extends AppState {
   addMealPlanEntry: (entry: MealPlanEntry) => void;
   removeMealPlanEntry: (id: string) => void;
   clearWeekPlan: (childId: string, dates: string[]) => void;
+  setFoodPreference: (childId: string, foodName: string, pref: 'loves' | 'refuses' | null) => void;
+  clearFoodPreferences: (childId: string) => void;
   completeOnboarding: () => void;
   getChildAge: (child: ChildProfile) => { months: number; label: string };
 }
@@ -45,6 +48,7 @@ const defaultState: AppState = {
   exposures: [],
   favoriteRecipes: [],
   triedRecipes: [],
+  foodPreferences: {},
   settings: defaultSettings,
 };
 
@@ -144,6 +148,20 @@ export function AppProvider({ children: reactChildren }: { children: React.React
     clearWeekPlan: (childId, dates) => update({
       mealPlan: state.mealPlan.filter(e => !(e.childId === childId && dates.includes(e.date)))
     }),
+    setFoodPreference: (childId, foodName, pref) => {
+      const childPrefs = { ...(state.foodPreferences[childId] || {}) };
+      if (pref === null) {
+        delete childPrefs[foodName];
+      } else {
+        childPrefs[foodName] = pref;
+      }
+      update({ foodPreferences: { ...state.foodPreferences, [childId]: childPrefs } });
+    },
+    clearFoodPreferences: (childId) => {
+      const updated = { ...state.foodPreferences };
+      delete updated[childId];
+      update({ foodPreferences: updated });
+    },
     completeOnboarding: () => update({ settings: { ...state.settings, onboardingComplete: true } }),
     getChildAge,
   };

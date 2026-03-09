@@ -15,6 +15,7 @@ import Tracker from "@/pages/Tracker";
 import AllergenTracker from "@/pages/AllergenTracker";
 import MoreMenu from "@/pages/MoreMenu";
 import PickyEater from "@/pages/PickyEater";
+import PickyRecipes from "@/pages/PickyRecipes";
 import Safety from "@/pages/Safety";
 import Milestones from "@/pages/Milestones";
 import ChildProfiles from "@/pages/ChildProfiles";
@@ -43,6 +44,7 @@ function AppRoutes() {
         <Route path="/tracker/allergens" element={<AllergenTracker />} />
         <Route path="/more" element={<MoreMenu />} />
         <Route path="/more/picky-eater" element={<PickyEater />} />
+        <Route path="/more/picky-recipes" element={<PickyRecipes />} />
         <Route path="/more/safety" element={<Safety />} />
         <Route path="/more/milestones" element={<Milestones />} />
         <Route path="/more/profiles" element={<ChildProfiles />} />
