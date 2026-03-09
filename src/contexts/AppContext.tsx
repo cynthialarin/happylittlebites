@@ -150,6 +150,7 @@ export function AppProvider({ children: reactChildren }: { children: React.React
             onboardingComplete: profile?.onboarding_complete || false,
             activeChildId: profile?.active_child_id || null,
             theme: 'system',
+            country: (localStorage.getItem('hlb-country') as Country) || 'US',
           },
         });
       } catch (e) {
