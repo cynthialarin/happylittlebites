@@ -105,6 +105,7 @@ export function AppProvider({ children: reactChildren }: { children: React.React
             feedingApproach: c.feeding_approach as any,
             avatar: c.avatar,
             gender: (c.gender as Gender) || 'neutral',
+            photoUrl: c.photo_url || undefined,
           })),
           diary: (diaryRes.data || []).map((d: any) => ({
             id: d.id,
@@ -288,7 +289,7 @@ export function AppProvider({ children: reactChildren }: { children: React.React
         await supabase.from('children').insert({
           id: child.id, user_id: user.id, name: child.name, birthdate: child.birthdate,
           known_allergies: child.knownAllergies, feeding_approach: child.feedingApproach, avatar: child.avatar,
-          gender: child.gender || 'neutral',
+          gender: child.gender || 'neutral', photo_url: child.photoUrl || null,
         } as any);
         await supabase.from('profiles').update({ active_child_id: child.id }).eq('user_id', user.id);
       }
@@ -300,7 +301,7 @@ export function AppProvider({ children: reactChildren }: { children: React.React
         await supabase.from('children').update({
           name: child.name, birthdate: child.birthdate, known_allergies: child.knownAllergies,
           feeding_approach: child.feedingApproach, avatar: child.avatar,
-          gender: child.gender || 'neutral',
+          gender: child.gender || 'neutral', photo_url: child.photoUrl || null,
         } as any).eq('id', child.id).eq('user_id', user.id);
       }
     },

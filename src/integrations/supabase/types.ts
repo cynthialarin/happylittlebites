@@ -95,6 +95,7 @@ export type Database = {
           id: string
           known_allergies: string[]
           name: string
+          photo_url: string | null
           user_id: string
         }
         Insert: {
@@ -105,6 +106,7 @@ export type Database = {
           id: string
           known_allergies?: string[]
           name: string
+          photo_url?: string | null
           user_id: string
         }
         Update: {
@@ -115,6 +117,7 @@ export type Database = {
           id?: string
           known_allergies?: string[]
           name?: string
+          photo_url?: string | null
           user_id?: string
         }
         Relationships: []

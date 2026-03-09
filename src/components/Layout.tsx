@@ -5,6 +5,7 @@ import SafetyButton from './SafetyButton';
 import { useApp } from '@/contexts/AppContext';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Button } from '@/components/ui/button';
+import ChildAvatar from './ChildAvatar';
 import { useState } from 'react';
 
 const navItems = [
@@ -23,22 +24,24 @@ export default function Layout() {
 
   const age = activeChild ? getChildAge(activeChild) : null;
 
-  // Determine gender theme class
   const genderTheme = activeChild?.gender === 'boy' ? 'theme-boy' : activeChild?.gender === 'girl' ? 'theme-girl' : '';
 
-  // Only show child bar if onboarding is complete
   const showChildBar = settings.onboardingComplete && activeChild;
 
   return (
     <div className={cn("min-h-screen bg-background flex flex-col", genderTheme)}>
-      {/* Top child switcher bar */}
       {showChildBar && (
         <div className="sticky top-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border px-4 py-2">
           <div className="flex items-center justify-between max-w-lg mx-auto">
             <Popover open={switcherOpen} onOpenChange={setSwitcherOpen}>
               <PopoverTrigger asChild>
-                <button className="flex items-center gap-2 hover:bg-muted/50 rounded-xl px-2 py-1.5 transition-colors">
-                  <span className="text-2xl">{activeChild.avatar}</span>
+                <button className="flex items-center gap-2.5 hover:bg-muted/50 rounded-xl px-2 py-1.5 transition-colors">
+                  <ChildAvatar
+                    photoUrl={activeChild.photoUrl}
+                    emoji={activeChild.avatar}
+                    name={activeChild.name}
+                    size="md"
+                  />
                   <div className="text-left">
                     <p className="text-sm font-bold leading-tight">{activeChild.name}</p>
                     <p className="text-[10px] text-muted-foreground">{age?.label}</p>
@@ -47,7 +50,7 @@ export default function Layout() {
                 </button>
               </PopoverTrigger>
               {children.length > 1 && (
-                <PopoverContent className="w-60 p-2" align="start">
+                <PopoverContent className="w-64 p-2" align="start">
                   <p className="text-xs font-semibold text-muted-foreground px-2 pb-1.5">Switch child</p>
                   {children.map(child => {
                     const childAge = getChildAge(child);
@@ -61,7 +64,12 @@ export default function Layout() {
                           isActive ? "bg-primary/10" : "hover:bg-muted"
                         )}
                       >
-                        <span className="text-xl">{child.avatar}</span>
+                        <ChildAvatar
+                          photoUrl={child.photoUrl}
+                          emoji={child.avatar}
+                          name={child.name}
+                          size="sm"
+                        />
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-semibold truncate">{child.name}</p>
                           <p className="text-[10px] text-muted-foreground">{childAge.label}</p>

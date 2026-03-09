@@ -27,6 +27,7 @@ export interface ChildProfile {
   feedingApproach: FeedingApproach;
   avatar: string;
   gender: Gender;
+  photoUrl?: string;
 }
 
 export interface FoodEntry {
