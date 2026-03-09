@@ -44,7 +44,7 @@ export const FIRST_100_FOODS: First100Food[] = [
   { id: 'f100-plum', name: 'Plum', emoji: '🟣', foodGroup: 'fruits', category: 'Fruits', ageRecommended: '6+ months', tip: 'Great source of fiber, helps digestion' },
   { id: 'f100-melon', name: 'Cantaloupe', emoji: '🍈', foodGroup: 'fruits', category: 'Fruits', ageRecommended: '6+ months', tip: 'Soft and sweet, cut into thin strips' },
   { id: 'f100-papaya', name: 'Papaya', emoji: '🧡', foodGroup: 'fruits', category: 'Fruits', ageRecommended: '6+ months', tip: 'Very soft when ripe, contains digestive enzymes' },
-  { id: 'f100-grape', name: 'Grapes', emoji: '🍇', foodGroup: 'fruits', category: 'Fruits', ageRecommended: '6+ months', tip: 'ALWAYS cut lengthwise — never serve whole', foodId: 'grapes' },
+  { id: 'f100-grape', name: 'Grapes', emoji: '🍇', foodGroup: 'fruits', category: 'Fruits', ageRecommended: '6+ months', tip: 'ALWAYS quarter lengthwise — #1 choking hazard. Never serve whole or in rounds until age 4+', foodId: 'grapes' },
   { id: 'f100-cherry', name: 'Cherries', emoji: '🍒', foodGroup: 'fruits', category: 'Fruits', ageRecommended: '9+ months', tip: 'Remove pits, cut in halves or quarters' },
 
   // === VEGETABLES (20) ===
