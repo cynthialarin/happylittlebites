@@ -205,7 +205,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'zucchini', name: 'Zucchini', emoji: '🥒', foodGroup: 'vegetables', allergens: [],
+    id: 'zucchini', name: 'Zucchini', emoji: '🫛', foodGroup: 'vegetables', allergens: [],
     chokingHazard: false, chokingNotes: 'Soft when cooked, low risk',
     servingByAge: { '6mo': 'Steamed spears', '9mo': 'Soft cooked sticks or diced', '12mo': 'Roasted sticks, in fritters', '2yr': 'Spiralized, in baked goods', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Vitamin C', 'Potassium', 'Manganese', 'Low calorie'],
