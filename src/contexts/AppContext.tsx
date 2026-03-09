@@ -139,6 +139,11 @@ export function AppProvider({ children: reactChildren }: { children: React.React
         });
       }
     },
+    addMealPlanEntry: (entry) => update({ mealPlan: [...state.mealPlan, entry] }),
+    removeMealPlanEntry: (id) => update({ mealPlan: state.mealPlan.filter(e => e.id !== id) }),
+    clearWeekPlan: (childId, dates) => update({
+      mealPlan: state.mealPlan.filter(e => !(e.childId === childId && dates.includes(e.date)))
+    }),
     completeOnboarding: () => update({ settings: { ...state.settings, onboardingComplete: true } }),
     getChildAge,
   };
