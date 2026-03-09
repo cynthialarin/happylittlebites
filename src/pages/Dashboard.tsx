@@ -219,7 +219,11 @@ export default function Dashboard() {
         </CardContent>
       </Card>
 
-      {/* Today's Suggestions */}
+      {/* Nutrition Summary */}
+      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45 }} className="mb-5">
+        <NutritionSummary childId={activeChild.id} days={7} />
+      </motion.div>
+
       <div className="mb-5">
         <div className="flex items-center gap-2 mb-3">
           <Lightbulb className="h-4 w-4 text-primary" />
