@@ -7,6 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { foods } from '@/data/foods';
 import FoodImage from '@/components/FoodImage';
+import NutritionSummary from '@/components/NutritionSummary';
 import { FOOD_GROUP_COLORS } from '@/data/badges';
 import { TOP_9_ALLERGENS, FoodGroup } from '@/types';
 import { UtensilsCrossed, ShieldCheck, TrendingUp, Lightbulb, BookOpen, ChevronRight, Trophy, Flame } from 'lucide-react';
@@ -218,7 +219,11 @@ export default function Dashboard() {
         </CardContent>
       </Card>
 
-      {/* Today's Suggestions */}
+      {/* Nutrition Summary */}
+      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45 }} className="mb-5">
+        <NutritionSummary childId={activeChild.id} days={7} />
+      </motion.div>
+
       <div className="mb-5">
         <div className="flex items-center gap-2 mb-3">
           <Lightbulb className="h-4 w-4 text-primary" />
