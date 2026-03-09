@@ -83,6 +83,7 @@ export default function CaregiverShare() {
     const lines = [
       `🍽️ CAREGIVER GUIDE FOR ${activeChild.name.toUpperCase()}`,
       `${activeChild.avatar} ${age.label}`,
+      `Guidelines: ${settings.country === 'CA' ? '🇨🇦 Health Canada' : '🇺🇸 AAP/CDC'}`,
       `Generated: ${new Date().toLocaleDateString()}`,
       '',
       '⚠️ ALLERGIES & RESTRICTIONS',

@@ -208,7 +208,7 @@ export default function Dashboard() {
               <ShieldCheck className="h-4 w-4 text-primary" />
               <span className="text-sm font-bold">Allergen Introduction</span>
             </div>
-            <span className="text-xs text-muted-foreground">{stats.allergensIntro} of 9</span>
+            <span className="text-xs text-muted-foreground">{stats.allergensIntro} of {totalAllergens}</span>
           </div>
           <Progress value={allergenProgress} className="h-2.5" />
           <button

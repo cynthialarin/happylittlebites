@@ -148,6 +148,10 @@ export default function FoodDetail() {
           <p className="text-sm">{food.prepTips}</p>
         </CardContent>
       </Card>
+
+      <p className="text-[10px] text-muted-foreground text-center mt-5 px-4">
+        For informational purposes only. Not a substitute for professional medical advice. Always consult your pediatrician.
+      </p>
     </div>
   );
 }

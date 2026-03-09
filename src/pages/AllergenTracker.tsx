@@ -172,6 +172,10 @@ export default function AllergenTracker() {
         </DialogContent>
       </Dialog>
 
+      <p className="text-[10px] text-muted-foreground text-center px-4 -mt-2 mb-4">
+        For informational purposes only. Not a substitute for professional medical advice. Always consult your pediatrician.
+      </p>
+
       {/* Log Introduction Dialog */}
       <Dialog open={showLog} onOpenChange={setShowLog}>
         <DialogContent className="max-w-md mx-4">

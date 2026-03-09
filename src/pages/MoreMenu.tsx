@@ -21,7 +21,7 @@ const menuItems = [
 
 export default function MoreMenu() {
   const navigate = useNavigate();
-  const { activeChild, children: allChildren } = useApp();
+  const { activeChild, children: allChildren, settings, setCountry } = useApp();
   const { signOut } = useAuth();
 
   return (

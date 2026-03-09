@@ -310,6 +310,10 @@ export default function First100Foods() {
           </p>
         </CardContent>
       </Card>
+
+      <p className="text-[10px] text-muted-foreground text-center mt-4 px-4">
+        For informational purposes only. Not a substitute for professional medical advice. Always consult your pediatrician.
+      </p>
     </div>
   );
 }
