@@ -25,6 +25,7 @@ import ChildProfiles from "@/pages/ChildProfiles";
 import Achievements from "@/pages/Achievements";
 import MealPlanner from "@/pages/MealPlanner";
 import MealSuggestions from "@/pages/MealSuggestions";
+import CaregiverShare from "@/pages/CaregiverShare";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -66,6 +67,7 @@ function AppRoutes() {
         <Route path="/achievements" element={<Achievements />} />
         <Route path="/meal-planner" element={<MealPlanner />} />
         <Route path="/suggestions" element={<MealSuggestions />} />
+        <Route path="/caregiver-share" element={<CaregiverShare />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
