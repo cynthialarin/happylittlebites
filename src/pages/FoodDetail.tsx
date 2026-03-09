@@ -40,6 +40,7 @@ const COUNTRY_SAFETY_NOTES: Record<string, { US: string; CA: string }> = {
   liver: {
     US: 'Limit to 1–2 servings per week due to high vitamin A (AAP).',
     CA: 'Health Canada advises limiting liver due to vitamin A. Max 75 g per week for young children.',
+  },
   eggs: {
     US: 'Introduce early and often — early egg introduction (around 6 months) may reduce egg allergy risk (AAP). Serve well-cooked; no runny yolks until 12 months+.',
     CA: 'Health Canada recommends introducing cooked egg as one of the first complementary foods at 6 months. Offer frequently (2–3× per week) to maintain tolerance.',
