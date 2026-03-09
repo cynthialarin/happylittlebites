@@ -186,7 +186,8 @@ export function AppProvider({ children: reactChildren }: { children: React.React
           localData.children.map(c => ({
             id: c.id, user_id: userId, name: c.name, birthdate: c.birthdate,
             known_allergies: c.knownAllergies, feeding_approach: c.feedingApproach, avatar: c.avatar,
-          }))
+            gender: c.gender || 'neutral',
+          } as any))
         );
       }
 

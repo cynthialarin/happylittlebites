@@ -17,6 +17,8 @@ export const CA_EXTRA_ALLERGENS = ['mustard', 'sulphites'] as const;
 export type Allergen = typeof TOP_9_ALLERGENS[number];
 export type AllergenCA = Allergen | typeof CA_EXTRA_ALLERGENS[number];
 
+export type Gender = 'boy' | 'girl' | 'neutral';
+
 export interface ChildProfile {
   id: string;
   name: string;
@@ -24,6 +26,7 @@ export interface ChildProfile {
   knownAllergies: string[];
   feedingApproach: FeedingApproach;
   avatar: string;
+  gender: Gender;
 }
 
 export interface FoodEntry {
