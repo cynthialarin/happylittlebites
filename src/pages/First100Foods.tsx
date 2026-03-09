@@ -13,7 +13,8 @@ import Confetti from '@/components/Confetti';
 
 export default function First100Foods() {
   const navigate = useNavigate();
-  const { activeChild, diary } = useApp();
+  const { activeChild, diary, settings } = useApp();
+  const isCanada = settings.country === 'CA';
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [showCompleted, setShowCompleted] = useState(true);
   const [celebratingMilestone, setCelebratingMilestone] = useState<string | null>(null);
