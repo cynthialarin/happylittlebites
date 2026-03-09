@@ -2,7 +2,6 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Sparkles } from 'lucide-react';
-import { ArrowLeft } from 'lucide-react';
 
 const strategies = [
   {
