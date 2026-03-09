@@ -69,6 +69,7 @@ function AppRoutes() {
         <Route path="/meal-planner" element={<MealPlanner />} />
         <Route path="/suggestions" element={<MealSuggestions />} />
         <Route path="/caregiver-share" element={<CaregiverShare />} />
+        <Route path="/first-100-foods" element={<First100Foods />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
