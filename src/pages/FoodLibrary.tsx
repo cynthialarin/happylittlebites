@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import FoodImage from '@/components/FoodImage';
 import { foods } from '@/data/foods';
 import { Input } from '@/components/ui/input';
 import { Search, Filter } from 'lucide-react';
