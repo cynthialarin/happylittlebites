@@ -3,13 +3,15 @@ import { useApp } from '@/contexts/AppContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ShieldCheck, Brain, Baby, Milestone, Users, Settings, CalendarDays, LogOut, Sparkles, Share2, ListChecks, Globe } from 'lucide-react';
+import { ShieldCheck, Brain, Baby, Milestone, Users, Settings, CalendarDays, LogOut, Sparkles, Share2, ListChecks, Globe, ShoppingCart, TrendingUp, Database, FileText } from 'lucide-react';
 import { Country } from '@/types';
 
 const getMenuItems = (isCanada: boolean) => [
   { path: '/first-100-foods', icon: ListChecks, label: 'First 100 Foods', desc: 'Guided journey through essential foods', emoji: '🗺️', color: 'bg-sage/10' },
   { path: '/suggestions', icon: Sparkles, label: 'AI Meal Ideas', desc: 'Personalized daily meal suggestions', emoji: '✨', color: 'bg-primary/10' },
   { path: '/meal-planner', icon: CalendarDays, label: 'Meal Planner', desc: 'Plan weekly meals & shopping list', emoji: '📅', color: 'bg-peach/10' },
+  { path: '/grocery-list', icon: ShoppingCart, label: 'Grocery List', desc: 'Track ingredients to buy', emoji: '🛒', color: 'bg-sage/20' },
+  { path: '/growth', icon: TrendingUp, label: 'Growth Tracker', desc: 'Weight, height & percentiles', emoji: '📏', color: 'bg-sky/10' },
   { path: '/achievements', icon: ShieldCheck, label: 'Achievements', desc: 'Badges, XP & level progress', emoji: '🏆', color: 'bg-primary/10' },
   { path: '/tracker/allergens', icon: ShieldCheck, label: 'Allergen Tracker', desc: isCanada ? 'Top 11 allergen introduction guide' : 'Top 9 allergen introduction guide', emoji: '🛡️', color: 'bg-sky/20' },
   { path: '/more/picky-eater', icon: Brain, label: 'Picky Eater Toolkit', desc: 'Evidence-based strategies', emoji: '🧠', color: 'bg-lavender/20' },
@@ -17,6 +19,7 @@ const getMenuItems = (isCanada: boolean) => [
   { path: '/more/milestones', icon: Milestone, label: 'Milestones', desc: 'Feeding milestones by age', emoji: '📈', color: 'bg-sage/20' },
   { path: '/caregiver-share', icon: Share2, label: 'Caregiver Share', desc: 'Share food guide with daycare & family', emoji: '📤', color: 'bg-sage/10' },
   { path: '/more/profiles', icon: Users, label: 'Child Profiles', desc: 'Manage your children', emoji: '👶', color: 'bg-peach/20' },
+  { path: '/more/data', icon: Database, label: 'Data & Privacy', desc: 'Export data, manage account', emoji: '🔐', color: 'bg-muted' },
 ];
 
 export default function MoreMenu() {
@@ -83,9 +86,19 @@ export default function MoreMenu() {
         </CardContent>
       </Card>
 
+      {/* Legal Links */}
+      <div className="flex gap-2 mt-3 mb-4">
+        <button onClick={() => navigate('/privacy')} className="flex-1 text-xs text-muted-foreground hover:text-foreground text-center py-2 bg-muted/50 rounded-lg">
+          <FileText className="h-3 w-3 mx-auto mb-0.5" /> Privacy Policy
+        </button>
+        <button onClick={() => navigate('/terms')} className="flex-1 text-xs text-muted-foreground hover:text-foreground text-center py-2 bg-muted/50 rounded-lg">
+          <FileText className="h-3 w-3 mx-auto mb-0.5" /> Terms of Service
+        </button>
+      </div>
+
       <Button
         variant="outline"
-        className="w-full mt-4 text-destructive hover:text-destructive"
+        className="w-full mt-2 text-destructive hover:text-destructive"
         onClick={signOut}
       >
         <LogOut className="w-4 h-4 mr-2" />
