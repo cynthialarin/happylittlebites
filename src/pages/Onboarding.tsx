@@ -156,7 +156,7 @@ export default function Onboarding() {
               </div>
 
               <div>
-                <Label htmlFor="name" className="font-semibold">Child's name</Label>
+                <Label htmlFor="name" className="text-base font-bold">Child's name</Label>
                 <Input id="name" placeholder="e.g., Luna" value={name} onChange={e => setName(e.target.value)} className="mt-1.5" />
               </div>
 
