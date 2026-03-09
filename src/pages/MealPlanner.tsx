@@ -3,16 +3,27 @@ import { useApp } from '@/contexts/AppContext';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import MealSlot from '@/components/MealSlot';
 import { recipes } from '@/data/recipes';
-import { foods } from '@/data/foods';
-import { MealType, MealPlanEntry } from '@/types';
+import { MealType, MealPlanEntry, AgeGroup } from '@/types';
 import { Sparkles, Trash2, ShoppingCart, ChevronLeft, ChevronRight } from 'lucide-react';
 import { toast } from '@/components/ui/sonner';
 
 const MEAL_TYPES: MealType[] = ['breakfast', 'lunch', 'dinner', 'snack'];
+
+const AGE_GROUP_ORDER: AgeGroup[] = ['6mo', '9mo', '12mo', '2yr', '3yr+'];
+
+function getAgeGroupsForChild(ageMonths: number): AgeGroup[] {
+  if (ageMonths < 9) return ['6mo'];
+  if (ageMonths < 12) return ['6mo', '9mo'];
+  if (ageMonths < 24) return ['6mo', '9mo', '12mo'];
+  if (ageMonths < 36) return ['6mo', '9mo', '12mo', '2yr'];
+  return AGE_GROUP_ORDER;
+}
 
 function getWeekDates(offset: number): { date: string; label: string; dayName: string }[] {
   const today = new Date();
@@ -31,15 +42,22 @@ function getWeekDates(offset: number): { date: string; label: string; dayName: s
 }
 
 export default function MealPlanner() {
-  const { activeChild, mealPlan, addMealPlanEntry, removeMealPlanEntry, clearWeekPlan } = useApp();
+  const { activeChild, mealPlan, addMealPlanEntry, removeMealPlanEntry, clearWeekPlan, getChildAge } = useApp();
   const [weekOffset, setWeekOffset] = useState(0);
   const [showAdd, setShowAdd] = useState(false);
   const [addTarget, setAddTarget] = useState<{ date: string; mealType: MealType } | null>(null);
   const [customMeal, setCustomMeal] = useState('');
   const [showShoppingList, setShowShoppingList] = useState(false);
+  const [checkedItems, setCheckedItems] = useState<Set<string>>(new Set());
 
   const weekDates = useMemo(() => getWeekDates(weekOffset), [weekOffset]);
   const today = new Date().toISOString().split('T')[0];
+
+  const childAgeGroups = useMemo(() => {
+    if (!activeChild) return AGE_GROUP_ORDER;
+    const { months } = getChildAge(activeChild);
+    return getAgeGroupsForChild(months);
+  }, [activeChild, getChildAge]);
 
   const getEntry = useCallback(
     (date: string, mealType: MealType): MealPlanEntry | undefined => {
@@ -98,7 +116,9 @@ export default function MealPlanner() {
       MEAL_TYPES.forEach((mealType) => {
         if (getEntry(date, mealType)) return;
         const categories = mealCategoryMap[mealType];
-        const options = recipes.filter((r) => categories.includes(r.category));
+        const options = recipes.filter(
+          (r) => categories.includes(r.category) && childAgeGroups.includes(r.ageGroup)
+        );
         if (options.length === 0) return;
         const recipe = options[Math.floor(Math.random() * options.length)];
         addMealPlanEntry({
@@ -133,6 +153,15 @@ export default function MealPlanner() {
     return Array.from(ingredientSet.keys()).sort();
   }, [activeChild, mealPlan, weekDates]);
 
+  const toggleChecked = (item: string) => {
+    setCheckedItems(prev => {
+      const next = new Set(prev);
+      if (next.has(item)) next.delete(item);
+      else next.add(item);
+      return next;
+    });
+  };
+
   const handleClearWeek = () => {
     if (!activeChild) return;
     const weekDateStrs = weekDates.map((d) => d.date);
@@ -150,10 +179,13 @@ export default function MealPlanner() {
 
   const filteredRecipes = addTarget
     ? recipes.filter((r) => {
-        if (addTarget.mealType === 'breakfast') return ['breakfast', 'smoothies'].includes(r.category);
-        if (addTarget.mealType === 'lunch') return ['lunch', 'batch-cooking'].includes(r.category);
-        if (addTarget.mealType === 'dinner') return ['dinner', 'batch-cooking'].includes(r.category);
-        return ['snacks', 'smoothies'].includes(r.category);
+        const categoryMatch = (() => {
+          if (addTarget.mealType === 'breakfast') return ['breakfast', 'smoothies'].includes(r.category);
+          if (addTarget.mealType === 'lunch') return ['lunch', 'batch-cooking'].includes(r.category);
+          if (addTarget.mealType === 'dinner') return ['dinner', 'batch-cooking'].includes(r.category);
+          return ['snacks', 'smoothies'].includes(r.category);
+        })();
+        return categoryMatch && childAgeGroups.includes(r.ageGroup);
       })
     : [];
 
@@ -218,12 +250,30 @@ export default function MealPlanner() {
 
       {/* Action Buttons */}
       <div className="flex gap-2 mb-4">
-        <Button variant="outline" size="sm" className="rounded-full gap-1 text-xs flex-1" onClick={() => setShowShoppingList(true)}>
+        <Button variant="outline" size="sm" className="rounded-full gap-1 text-xs flex-1" onClick={() => { setCheckedItems(new Set()); setShowShoppingList(true); }}>
           <ShoppingCart className="h-3.5 w-3.5" /> Shopping List
         </Button>
-        <Button variant="outline" size="sm" className="rounded-full gap-1 text-xs text-destructive hover:text-destructive" onClick={handleClearWeek}>
-          <Trash2 className="h-3.5 w-3.5" /> Clear Week
-        </Button>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button variant="outline" size="sm" className="rounded-full gap-1 text-xs text-destructive hover:text-destructive">
+              <Trash2 className="h-3.5 w-3.5" /> Clear Week
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Clear this week?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This will remove all planned meals for this week. This can't be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={handleClearWeek} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                Clear Week
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
 
       {/* Add Meal Dialog */}
@@ -287,10 +337,15 @@ export default function MealPlanner() {
           ) : (
             <div className="space-y-1.5 max-h-80 overflow-y-auto">
               {shoppingList.map((ingredient, i) => (
-                <div key={i} className="flex items-center gap-2 p-2 rounded-lg bg-muted/30">
-                  <div className="h-4 w-4 rounded border border-border flex-shrink-0" />
-                  <span className="text-sm">{ingredient}</span>
-                </div>
+                <label key={i} className="flex items-center gap-2 p-2 rounded-lg bg-muted/30 cursor-pointer">
+                  <Checkbox
+                    checked={checkedItems.has(ingredient)}
+                    onCheckedChange={() => toggleChecked(ingredient)}
+                  />
+                  <span className={`text-sm ${checkedItems.has(ingredient) ? 'line-through text-muted-foreground' : ''}`}>
+                    {ingredient}
+                  </span>
+                </label>
               ))}
             </div>
           )}

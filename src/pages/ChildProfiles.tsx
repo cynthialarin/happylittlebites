@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { ArrowLeft, Plus, Check, Trash2 } from 'lucide-react';
 import { FeedingApproach } from '@/types';
 
@@ -68,9 +69,27 @@ export default function ChildProfiles() {
                   )}
                   {isActive && <span className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary font-semibold">Active</span>}
                   {children.length > 1 && (
-                    <Button size="icon" variant="ghost" className="h-8 w-8 text-muted-foreground" onClick={() => removeChild(child.id)}>
-                      <Trash2 className="h-3.5 w-3.5" />
-                    </Button>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button size="icon" variant="ghost" className="h-8 w-8 text-muted-foreground">
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Delete {child.name}'s profile?</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This will permanently remove {child.name}'s profile and all associated data. This can't be undone.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction onClick={() => removeChild(child.id)} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                            Delete
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                   )}
                 </div>
               </CardContent>
