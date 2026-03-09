@@ -129,6 +129,7 @@ export type Database = {
           id: string
           meal_type: string
           notes: string
+          photo_url: string | null
           reaction: string
           reaction_severity: string
           texture_stage: string
@@ -143,6 +144,7 @@ export type Database = {
           id: string
           meal_type?: string
           notes?: string
+          photo_url?: string | null
           reaction?: string
           reaction_severity?: string
           texture_stage?: string
@@ -157,6 +159,7 @@ export type Database = {
           id?: string
           meal_type?: string
           notes?: string
+          photo_url?: string | null
           reaction?: string
           reaction_severity?: string
           texture_stage?: string

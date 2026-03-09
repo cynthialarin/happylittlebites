@@ -56,6 +56,7 @@ export interface DiaryEntry {
   reaction: string;
   reactionSeverity: ReactionSeverity;
   notes: string;
+  photoUrl?: string;
 }
 
 export interface AllergenRecord {

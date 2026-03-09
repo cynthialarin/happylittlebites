@@ -1,5 +1,6 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef } from 'react';
 import { useApp } from '@/contexts/AppContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -9,8 +10,10 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { foods } from '@/data/foods';
 import { AcceptanceLevel, MealType, TextureStage, ReactionSeverity } from '@/types';
-import { Plus, Calendar, Trash2 } from 'lucide-react';
+import { Plus, Calendar, Trash2, Camera, X, Image as ImageIcon } from 'lucide-react';
 import { toast } from '@/components/ui/sonner';
+import { supabase } from '@/integrations/supabase/client';
+import PhotoLightbox from '@/components/PhotoLightbox';
 
 const ACCEPTANCE_EMOJI: Record<AcceptanceLevel, string> = { loved: '😍', okay: '😐', refused: '😤' };
 const MEAL_EMOJI: Record<MealType, string> = { breakfast: '🌅', lunch: '☀️', dinner: '🌙', snack: '🍪' };
@@ -24,6 +27,7 @@ const TEXTURE_LABELS: Record<TextureStage, string> = {
 
 export default function Tracker() {
   const { activeChild, diary, addDiaryEntry, removeDiaryEntry } = useApp();
+  const { user } = useAuth();
   const [showAdd, setShowAdd] = useState(false);
   const [formFood, setFormFood] = useState('');
   const [formMeal, setFormMeal] = useState<MealType>('lunch');
@@ -31,6 +35,14 @@ export default function Tracker() {
   const [formTexture, setFormTexture] = useState<TextureStage>('purees');
   const [formReaction, setFormReaction] = useState('');
   const [formSeverity, setFormSeverity] = useState<ReactionSeverity>('none');
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Lightbox state
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
 
   const childDiary = useMemo(() => {
     if (!activeChild) return [];
@@ -46,11 +58,61 @@ export default function Tracker() {
     return Object.entries(groups).sort(([a], [b]) => b.localeCompare(a));
   }, [childDiary]);
 
-  const handleAdd = () => {
+  // Collect all photos for the lightbox
+  const allPhotos = useMemo(() => {
+    return childDiary
+      .filter(e => e.photoUrl)
+      .map(e => ({ url: e.photoUrl!, alt: `${e.foodName} — ${new Date(e.date + 'T12:00:00').toLocaleDateString()}` }));
+  }, [childDiary]);
+
+  const handlePhotoSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+      toast('Photo too large', { description: 'Please choose an image under 5MB' });
+      return;
+    }
+    setPhotoFile(file);
+    setPhotoPreview(URL.createObjectURL(file));
+  };
+
+  const clearPhoto = () => {
+    setPhotoFile(null);
+    if (photoPreview) URL.revokeObjectURL(photoPreview);
+    setPhotoPreview(null);
+    if (fileInputRef.current) fileInputRef.current.value = '';
+  };
+
+  const uploadPhoto = async (entryId: string): Promise<string | null> => {
+    if (!photoFile || !user) return null;
+    const ext = photoFile.name.split('.').pop() || 'jpg';
+    const path = `${user.id}/${entryId}.${ext}`;
+    const { error } = await supabase.storage
+      .from('diary-photos')
+      .upload(path, photoFile, { contentType: photoFile.type, upsert: true });
+    if (error) {
+      console.error('Photo upload failed:', error);
+      return null;
+    }
+    const { data: urlData } = supabase.storage.from('diary-photos').getPublicUrl(path);
+    return urlData.publicUrl;
+  };
+
+  const handleAdd = async () => {
     if (!activeChild || !formFood.trim()) return;
+    setUploading(true);
+
+    const entryId = crypto.randomUUID();
     const matchedFood = foods.find(f => f.name.toLowerCase() === formFood.toLowerCase());
+
+    let photoUrl: string | undefined;
+    if (photoFile) {
+      const url = await uploadPhoto(entryId);
+      if (url) photoUrl = url;
+    }
+
     addDiaryEntry({
-      id: crypto.randomUUID(),
+      id: entryId,
       childId: activeChild.id,
       date: new Date().toISOString().split('T')[0],
       foodId: matchedFood?.id || formFood.toLowerCase().replace(/\s+/g, '-'),
@@ -61,11 +123,14 @@ export default function Tracker() {
       reaction: formReaction,
       reactionSeverity: formSeverity,
       notes: '',
+      photoUrl,
     });
     const isNew = !childDiary.some(d => d.foodId === (matchedFood?.id || formFood.toLowerCase().replace(/\s+/g, '-')));
     setFormFood('');
     setFormReaction('');
+    clearPhoto();
     setShowAdd(false);
+    setUploading(false);
     if (isNew) {
       toast('🎉 New food! +25 XP', { description: `${formFood} added to the diary` });
     } else {
@@ -76,6 +141,13 @@ export default function Tracker() {
   const handleDelete = (id: string) => {
     removeDiaryEntry(id);
     toast('🗑️ Entry removed');
+  };
+
+  const openLightboxForEntry = (entry: typeof childDiary[0]) => {
+    if (!entry.photoUrl) return;
+    const idx = allPhotos.findIndex(p => p.url === entry.photoUrl);
+    setLightboxIndex(idx >= 0 ? idx : 0);
+    setLightboxOpen(true);
   };
 
   if (!activeChild) {
@@ -122,7 +194,16 @@ export default function Tracker() {
               <div className="space-y-1.5">
                 {entries.map(entry => (
                   <div key={entry.id} className="p-2.5 rounded-lg bg-card border border-border flex items-center gap-2 group">
-                    <span className="text-lg">{MEAL_EMOJI[entry.mealType]}</span>
+                    {entry.photoUrl ? (
+                      <button
+                        onClick={() => openLightboxForEntry(entry)}
+                        className="w-10 h-10 rounded-lg overflow-hidden shrink-0 ring-1 ring-border hover:ring-primary transition-all"
+                      >
+                        <img src={entry.photoUrl} alt={entry.foodName} className="w-full h-full object-cover" />
+                      </button>
+                    ) : (
+                      <span className="text-lg">{MEAL_EMOJI[entry.mealType]}</span>
+                    )}
                     <div className="flex-1 min-w-0">
                       <span className="text-sm font-semibold">{entry.foodName}</span>
                       {entry.reaction && (
@@ -159,8 +240,16 @@ export default function Tracker() {
         </div>
       )}
 
+      {/* Lightbox */}
+      <PhotoLightbox
+        images={allPhotos}
+        initialIndex={lightboxIndex}
+        open={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+      />
+
       {/* Add Dialog */}
-      <Dialog open={showAdd} onOpenChange={setShowAdd}>
+      <Dialog open={showAdd} onOpenChange={(open) => { setShowAdd(open); if (!open) clearPhoto(); }}>
         <DialogContent className="max-w-md mx-4">
           <DialogHeader>
             <DialogTitle>Log a Food</DialogTitle>
@@ -174,6 +263,58 @@ export default function Tracker() {
                 {foods.map(f => <option key={f.id} value={f.name} />)}
               </datalist>
             </div>
+
+            {/* Photo upload */}
+            <div>
+              <Label className="font-semibold">Photo (optional)</Label>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                capture="environment"
+                onChange={handlePhotoSelect}
+                className="hidden"
+              />
+              {photoPreview ? (
+                <div className="mt-1.5 relative inline-block">
+                  <img src={photoPreview} alt="Preview" className="w-24 h-24 object-cover rounded-xl border border-border" />
+                  <button
+                    onClick={clearPhoto}
+                    className="absolute -top-1.5 -right-1.5 p-0.5 rounded-full bg-destructive text-destructive-foreground"
+                  >
+                    <X className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+              ) : (
+                <div className="flex gap-2 mt-1.5">
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="outline"
+                    className="rounded-full gap-1"
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    <Camera className="h-4 w-4" /> Take Photo
+                  </Button>
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="outline"
+                    className="rounded-full gap-1"
+                    onClick={() => {
+                      if (fileInputRef.current) {
+                        fileInputRef.current.removeAttribute('capture');
+                        fileInputRef.current.click();
+                        fileInputRef.current.setAttribute('capture', 'environment');
+                      }
+                    }}
+                  >
+                    <ImageIcon className="h-4 w-4" /> Choose
+                  </Button>
+                </div>
+              )}
+            </div>
+
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <Label className="font-semibold">Meal</Label>
@@ -219,8 +360,8 @@ export default function Tracker() {
               <Label className="font-semibold">Any reaction?</Label>
               <Input placeholder="e.g., mild rash around mouth" value={formReaction} onChange={e => setFormReaction(e.target.value)} className="mt-1" />
             </div>
-            <Button className="w-full rounded-full" onClick={handleAdd} disabled={!formFood.trim()}>
-              Save Entry
+            <Button className="w-full rounded-full" onClick={handleAdd} disabled={!formFood.trim() || uploading}>
+              {uploading ? 'Uploading…' : 'Save Entry'}
             </Button>
           </div>
         </DialogContent>
