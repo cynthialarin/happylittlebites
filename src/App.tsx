@@ -26,6 +26,7 @@ import Achievements from "@/pages/Achievements";
 import MealPlanner from "@/pages/MealPlanner";
 import MealSuggestions from "@/pages/MealSuggestions";
 import CaregiverShare from "@/pages/CaregiverShare";
+import First100Foods from "@/pages/First100Foods";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
