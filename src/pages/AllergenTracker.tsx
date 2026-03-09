@@ -69,13 +69,20 @@ export default function AllergenTracker() {
         <ArrowLeft className="h-4 w-4" /> Back
       </button>
 
-      <h1 className="text-xl font-black mb-1">Allergen Tracker</h1>
+      <div className="flex items-center justify-between mb-1">
+        <h1 className="text-xl font-black">Allergen Tracker</h1>
+        <Button variant="outline" size="sm" className="rounded-full text-xs gap-1" onClick={() => setShowExport(true)}>
+          <FileText className="h-3.5 w-3.5" /> Export
+        </Button>
+      </div>
       <p className="text-sm text-muted-foreground mb-1">
         {introduced.size} of {totalAllergens} allergens introduced • Recommended order shown below
       </p>
       <p className="text-xs text-muted-foreground mb-4 flex items-center gap-1">
         {isCanada ? '🇨🇦 Health Canada priority allergens' : '🇺🇸 FDA Top 9 allergens'}
       </p>
+
+      <AllergenExport open={showExport} onOpenChange={setShowExport} />
 
       {/* Allergen Checklist */}
       <div className="space-y-2 mb-6">
