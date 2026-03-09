@@ -288,12 +288,14 @@ export default function Dashboard() {
       </motion.div>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-3 gap-2">
         {[
           { label: 'Food Library', icon: UtensilsCrossed, path: '/foods', color: 'bg-sage/20' },
           { label: 'Recipes', icon: BookOpen, path: '/recipes', color: 'bg-peach/20' },
           { label: 'Food Diary', icon: TrendingUp, path: '/tracker', color: 'bg-sky/20' },
-          { label: 'First 100 Foods', icon: ListChecks, path: '/first-100-foods', color: 'bg-lavender/20' },
+          { label: 'First 100', icon: ListChecks, path: '/first-100-foods', color: 'bg-lavender/20' },
+          { label: 'Groceries', icon: ShoppingCart, path: '/grocery-list', color: 'bg-sage/10' },
+          { label: 'Growth', icon: TrendingUp, path: '/growth', color: 'bg-primary/10' },
         ].map(action => (
           <button
             key={action.path}
@@ -301,7 +303,7 @@ export default function Dashboard() {
             className={`${action.color} p-4 rounded-xl text-left hover:ring-2 ring-primary/30 transition-all`}
           >
             <action.icon className="h-5 w-5 mb-2 text-foreground" />
-            <span className="text-sm font-bold">{action.label}</span>
+            <span className="text-xs font-bold">{action.label}</span>
           </button>
         ))}
       </div>
