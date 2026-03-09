@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft, Download, Copy, Check, AlertTriangle, ShieldCheck, UtensilsCrossed, Calendar } from 'lucide-react';
 import { foods } from '@/data/foods';
 import { recipes } from '@/data/recipes';
-import { TOP_9_ALLERGENS } from '@/types';
+import { TOP_9_ALLERGENS, CA_EXTRA_ALLERGENS } from '@/types';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 
