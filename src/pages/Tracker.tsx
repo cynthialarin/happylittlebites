@@ -6,16 +6,24 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { foods } from '@/data/foods';
 import { AcceptanceLevel, MealType, TextureStage, ReactionSeverity } from '@/types';
-import { Plus, Calendar } from 'lucide-react';
+import { Plus, Calendar, Trash2 } from 'lucide-react';
 import { toast } from '@/components/ui/sonner';
 
 const ACCEPTANCE_EMOJI: Record<AcceptanceLevel, string> = { loved: '😍', okay: '😐', refused: '😤' };
 const MEAL_EMOJI: Record<MealType, string> = { breakfast: '🌅', lunch: '☀️', dinner: '🌙', snack: '🍪' };
+const TEXTURE_LABELS: Record<TextureStage, string> = {
+  purees: '🥣 Purees',
+  mashed: '🥄 Mashed',
+  'soft-chunks': '🧊 Soft Chunks',
+  'finger-foods': '🤏 Finger Foods',
+  regular: '🍽️ Regular',
+};
 
 export default function Tracker() {
-  const { activeChild, diary, addDiaryEntry } = useApp();
+  const { activeChild, diary, addDiaryEntry, removeDiaryEntry } = useApp();
   const [showAdd, setShowAdd] = useState(false);
   const [formFood, setFormFood] = useState('');
   const [formMeal, setFormMeal] = useState<MealType>('lunch');
@@ -65,6 +73,11 @@ export default function Tracker() {
     }
   };
 
+  const handleDelete = (id: string) => {
+    removeDiaryEntry(id);
+    toast('🗑️ Entry removed');
+  };
+
   if (!activeChild) {
     return <div className="flex items-center justify-center min-h-screen text-muted-foreground">Add a child profile first</div>;
   }
@@ -108,7 +121,7 @@ export default function Tracker() {
               </div>
               <div className="space-y-1.5">
                 {entries.map(entry => (
-                  <div key={entry.id} className="p-2.5 rounded-lg bg-card border border-border flex items-center gap-2">
+                  <div key={entry.id} className="p-2.5 rounded-lg bg-card border border-border flex items-center gap-2 group">
                     <span className="text-lg">{MEAL_EMOJI[entry.mealType]}</span>
                     <div className="flex-1 min-w-0">
                       <span className="text-sm font-semibold">{entry.foodName}</span>
@@ -117,6 +130,27 @@ export default function Tracker() {
                       )}
                     </div>
                     <span className="text-lg">{ACCEPTANCE_EMOJI[entry.acceptance]}</span>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <button className="opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded hover:bg-destructive/10">
+                          <Trash2 className="h-3.5 w-3.5 text-muted-foreground hover:text-destructive" />
+                        </button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Delete entry?</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            Remove "{entry.foodName}" from the diary. This can't be undone.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction onClick={() => handleDelete(entry.id)} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                            Delete
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                   </div>
                 ))}
               </div>
@@ -165,6 +199,20 @@ export default function Tracker() {
                     </button>
                   ))}
                 </div>
+              </div>
+            </div>
+            <div>
+              <Label className="font-semibold">Texture</Label>
+              <div className="flex gap-1 mt-1 flex-wrap">
+                {(Object.keys(TEXTURE_LABELS) as TextureStage[]).map(stage => (
+                  <button
+                    key={stage}
+                    onClick={() => setFormTexture(stage)}
+                    className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${formTexture === stage ? 'bg-primary/10 ring-2 ring-primary' : 'bg-muted'}`}
+                  >
+                    {TEXTURE_LABELS[stage]}
+                  </button>
+                ))}
               </div>
             </div>
             <div>
