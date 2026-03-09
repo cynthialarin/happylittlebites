@@ -98,7 +98,7 @@ export const FIRST_100_FOODS: First100Food[] = [
   { id: 'f100-shrimp', name: 'Shrimp', emoji: '🦐', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Top allergen — introduce early, chop finely', foodId: 'shrimp' },
   { id: 'f100-cod', name: 'Cod', emoji: '🐟', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Mild white fish, flakes easily, check for bones' },
   { id: 'f100-pork', name: 'Pork', emoji: '🥓', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Slow cook for tender, shreddable texture' },
-  { id: 'f100-liver', name: 'Liver', emoji: '🫀', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Incredibly iron-rich — blend into meatballs' },
+  { id: 'f100-liver', name: 'Liver', emoji: '🫀', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Incredibly iron-rich — blend into meatballs. Limit to once per week due to high vitamin A content' },
   { id: 'f100-tempeh', name: 'Tempeh', emoji: '🫘', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Fermented soy — easier to digest than tofu' },
   { id: 'f100-ground-beef', name: 'Ground Meat', emoji: '🥩', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Shape into mini meatballs or flat patties' },
   { id: 'f100-tuna', name: 'Tuna', emoji: '🐟', foodGroup: 'protein', category: 'Protein', ageRecommended: '6+ months', tip: 'Choose light tuna, limit due to mercury' },
