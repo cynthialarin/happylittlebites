@@ -431,7 +431,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'cod', name: 'Cod', emoji: '🐟', foodGroup: 'protein', allergens: ['fish'],
+    id: 'cod', name: 'Cod', emoji: '🎏', foodGroup: 'protein', allergens: ['fish'],
     chokingHazard: false, chokingNotes: 'Flakes easily, low risk when deboned',
     servingByAge: { '6mo': 'Flaked and mashed', '9mo': 'Soft flaked pieces', '12mo': 'Fish cakes, flaked', '2yr': 'Any preparation', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Protein', 'B12', 'Phosphorus', 'Selenium'],
