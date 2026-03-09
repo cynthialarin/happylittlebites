@@ -136,8 +136,8 @@ export default function Onboarding() {
             exit={{ opacity: 0, y: -20 }}
             className="flex-1 flex flex-col px-6 py-12 max-w-md mx-auto w-full"
           >
-            <h2 className="text-2xl font-black mb-1">Add your little one 🍼</h2>
-            <p className="text-muted-foreground mb-6">Tell us about your child to personalize their experience</p>
+            <h2 className="text-3xl font-black mb-2">Add your little one 🍼</h2>
+            <p className="text-base text-foreground/60 mb-6">Tell us about your child to personalize their experience</p>
 
             <div className="space-y-5">
               <div>
