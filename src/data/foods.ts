@@ -123,7 +123,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'raspberry', name: 'Raspberry', emoji: '🫐', foodGroup: 'fruits', allergens: [],
+    id: 'raspberry', name: 'Raspberry', emoji: '🔴', foodGroup: 'fruits', allergens: [],
     chokingHazard: false, chokingNotes: 'Soft and easily squished, low risk',
     servingByAge: { '6mo': 'Lightly mashed or whole (they dissolve easily)', '9mo': 'Whole raspberries', '12mo': 'Whole', '2yr': 'Whole', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Fiber', 'Vitamin C', 'Manganese', 'Antioxidants'],
