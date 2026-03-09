@@ -4,6 +4,7 @@ import { useApp } from '@/contexts/AppContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowLeft, Heart, Clock, Snowflake, Users, ShieldCheck } from 'lucide-react';
+import FoodImage from '@/components/FoodImage';
 
 export default function RecipeDetail() {
   const { id } = useParams();
@@ -33,7 +34,16 @@ export default function RecipeDetail() {
       </button>
 
       <div className="text-center mb-5">
-        <div className="text-5xl mb-2">{recipe.emoji}</div>
+        <div className="mx-auto w-48 h-48 mb-3">
+          <FoodImage
+            type="recipe"
+            id={recipe.id}
+            name={recipe.title}
+            description={recipe.description}
+            fallbackEmoji={recipe.emoji}
+            className="w-full h-full rounded-2xl"
+          />
+        </div>
         <h1 className="text-2xl font-black">{recipe.title}</h1>
         <p className="text-sm text-muted-foreground mt-1">{recipe.description}</p>
       </div>

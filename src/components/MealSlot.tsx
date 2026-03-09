@@ -1,6 +1,7 @@
 import { MealType } from '@/types';
 import { Plus, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import FoodImage from '@/components/FoodImage';
 
 const MEAL_INFO: Record<MealType, { emoji: string; label: string }> = {
   breakfast: { emoji: '🌅', label: 'Breakfast' },
@@ -13,18 +14,23 @@ interface MealSlotProps {
   mealType: MealType;
   mealName?: string;
   mealEmoji?: string;
+  recipeId?: string;
   onAdd: () => void;
   onRemove?: () => void;
   className?: string;
 }
 
-export default function MealSlot({ mealType, mealName, mealEmoji, onAdd, onRemove, className }: MealSlotProps) {
+export default function MealSlot({ mealType, mealName, mealEmoji, recipeId, onAdd, onRemove, className }: MealSlotProps) {
   const info = MEAL_INFO[mealType];
 
   if (mealName) {
     return (
       <div className={cn("p-2.5 rounded-lg bg-card border border-border flex items-center gap-2 group", className)}>
-        <span className="text-base">{mealEmoji || info.emoji}</span>
+        {recipeId ? (
+          <FoodImage type="recipe" id={recipeId} name={mealName} fallbackEmoji={mealEmoji || info.emoji} className="w-8 h-8 rounded-md flex-shrink-0" />
+        ) : (
+          <span className="text-base">{mealEmoji || info.emoji}</span>
+        )}
         <div className="flex-1 min-w-0">
           <p className="text-[10px] text-muted-foreground font-semibold">{info.label}</p>
           <p className="text-xs font-bold truncate">{mealName}</p>

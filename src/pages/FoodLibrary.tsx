@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import FoodImage from '@/components/FoodImage';
 import { foods } from '@/data/foods';
 import { Input } from '@/components/ui/input';
 import { Search, Filter } from 'lucide-react';
@@ -70,8 +71,16 @@ export default function FoodLibrary() {
             onClick={() => navigate(`/foods/${food.id}`)}
             className="p-3 rounded-xl bg-card border border-border hover:border-primary/40 hover:shadow-sm transition-all text-left"
           >
+            <div className="mb-2">
+              <FoodImage
+                type="food"
+                id={food.id}
+                name={food.name}
+                fallbackEmoji={food.emoji}
+                className="w-full h-20 rounded-lg"
+              />
+            </div>
             <div className="flex items-center gap-2 mb-1">
-              <span className="text-2xl">{food.emoji}</span>
               <span className="font-bold text-sm">{food.name}</span>
             </div>
             <div className="flex flex-wrap gap-1">
