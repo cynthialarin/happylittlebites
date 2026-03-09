@@ -115,7 +115,7 @@ export const foods: FoodEntry[] = [
     safeFromAge: '6mo'
   },
   {
-    id: 'papaya', name: 'Papaya', emoji: '🥭', foodGroup: 'fruits', allergens: [],
+    id: 'papaya', name: 'Papaya', emoji: '🍈', foodGroup: 'fruits', allergens: [],
     chokingHazard: false, chokingNotes: 'Very soft when ripe, low risk',
     servingByAge: { '6mo': 'Mashed or as soft spears', '9mo': 'Diced', '12mo': 'Cubed', '2yr': 'Sliced', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Vitamin C', 'Vitamin A', 'Folate', 'Digestive enzymes'],
