@@ -16,9 +16,13 @@ import { useToast } from '@/hooks/use-toast';
 
 export default function CaregiverShare() {
   const { activeChild, diary, allergenRecords, mealPlan, getChildAge, settings } = useApp();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);
+  const [inviteEmail, setInviteEmail] = useState('');
+  const [inviteMessage, setInviteMessage] = useState('');
+  const [sendingInvite, setSendingInvite] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
   const age = activeChild ? getChildAge(activeChild) : null;
