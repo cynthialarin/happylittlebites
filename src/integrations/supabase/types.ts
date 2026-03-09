@@ -152,6 +152,39 @@ export type Database = {
         }
         Relationships: []
       }
+      grocery_list_items: {
+        Row: {
+          amount: string | null
+          checked: boolean
+          created_at: string
+          id: string
+          name: string
+          source: string | null
+          unit: string | null
+          user_id: string
+        }
+        Insert: {
+          amount?: string | null
+          checked?: boolean
+          created_at?: string
+          id?: string
+          name: string
+          source?: string | null
+          unit?: string | null
+          user_id: string
+        }
+        Update: {
+          amount?: string | null
+          checked?: boolean
+          created_at?: string
+          id?: string
+          name?: string
+          source?: string | null
+          unit?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       meal_plan_entries: {
         Row: {
           child_id: string
