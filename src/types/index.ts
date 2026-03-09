@@ -6,11 +6,16 @@ export type FoodGroup = 'fruits' | 'vegetables' | 'grains' | 'protein' | 'dairy'
 export type MealType = 'breakfast' | 'lunch' | 'dinner' | 'snack';
 export type RecipeCategory = 'breakfast' | 'lunch' | 'dinner' | 'snacks' | 'smoothies' | 'batch-cooking';
 export type ReactionSeverity = 'none' | 'mild' | 'moderate' | 'severe';
+export type Country = 'US' | 'CA';
 
 export const TOP_9_ALLERGENS = [
   'milk', 'eggs', 'peanuts', 'tree-nuts', 'wheat', 'soy', 'fish', 'shellfish', 'sesame'
 ] as const;
+
+export const CA_EXTRA_ALLERGENS = ['mustard', 'sulphites'] as const;
+
 export type Allergen = typeof TOP_9_ALLERGENS[number];
+export type AllergenCA = Allergen | typeof CA_EXTRA_ALLERGENS[number];
 
 export interface ChildProfile {
   id: string;
