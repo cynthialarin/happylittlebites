@@ -23,6 +23,7 @@ const menuSections = (isCanada: boolean) => [
       { path: '/achievements', label: 'Achievements', desc: 'Badges, XP & level progress', emoji: '🏆', color: 'bg-primary/10' },
       { path: '/tracker/allergens', label: 'Allergen Tracker', desc: isCanada ? 'Top 11 allergen introduction guide' : 'Top 9 allergen introduction guide', emoji: '🛡️', color: 'bg-sky/20' },
       { path: '/saved-recipes', label: 'Saved Recipes', desc: 'AI-generated meal ideas you saved', emoji: '📌', color: 'bg-primary/5' },
+      { path: '/weekly-report', label: 'Weekly Report', desc: 'Summary to share with your pediatrician', emoji: '📋', color: 'bg-sage/10' },
     ],
   },
   {
