@@ -20,7 +20,7 @@ export default function PrivacyPolicy() {
           {/* 1. Introduction */}
           <section>
             <h2 className="text-2xl font-semibold mb-4">1. Introduction</h2>
-            <p className="leading-relaxed">This Privacy Policy describes how Happy Little Bites ("we," "us," "the App") collects, uses, stores, and protects your information. We are deeply committed to protecting your family's privacy, especially when it comes to information about your children. Please also review our <Link to="/terms" className="text-primary underline">Terms of Service</Link>.</p>
+            <p className="leading-relaxed">This Privacy Policy describes how Happy Little Bites ("we," "us," "the App") collects, uses, stores, and protects your information. We are deeply committed to protecting your family's privacy, especially when it comes to information about your children. The App is currently in Beta and offers a free trial period; see our <Link to="/terms" className="text-primary underline">Terms of Service</Link> for subscription details.</p>
           </section>
 
           {/* 2. Information We Collect */}
