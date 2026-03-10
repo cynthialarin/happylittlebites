@@ -144,9 +144,14 @@ export default function GrowthTracker() {
   return (
     <div className="px-4 pt-6 pb-4 max-w-lg mx-auto">
       <div className="flex items-center justify-between mb-4">
-        <div>
-          <h1 className="text-xl font-black">Growth Tracker</h1>
-          <p className="text-sm text-muted-foreground">{activeChild.name} • {age?.label}</p>
+        <div className="flex items-center gap-2">
+          <button onClick={() => navigate(-1)} className="p-1.5 rounded-lg hover:bg-muted">
+            <ArrowLeft className="h-5 w-5" />
+          </button>
+          <div>
+            <h1 className="text-xl font-black">Growth Tracker</h1>
+            <p className="text-sm text-muted-foreground">{activeChild.name} • {age?.label}</p>
+          </div>
         </div>
         <Button size="sm" className="rounded-full gap-1 h-10 px-4" onClick={() => setShowAdd(true)}>
           <Plus className="h-4 w-4" /> Add

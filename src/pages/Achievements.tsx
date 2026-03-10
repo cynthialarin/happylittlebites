@@ -30,7 +30,12 @@ export default function Achievements() {
   return (
     <div className="px-4 pt-6 pb-4 max-w-lg mx-auto">
       <Confetti active={showConfetti} />
-      <h1 className="text-xl font-black mb-4">Achievements</h1>
+      <div className="flex items-center gap-2 mb-4">
+        <button onClick={() => navigate(-1)} className="p-1.5 rounded-lg hover:bg-muted">
+          <ArrowLeft className="h-5 w-5" />
+        </button>
+        <h1 className="text-xl font-black">Achievements</h1>
+      </div>
 
       {/* Level Card */}
       <Card className="mb-5 bg-primary/10 border-primary/20">

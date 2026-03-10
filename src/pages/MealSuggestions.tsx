@@ -138,6 +138,9 @@ export default function MealSuggestions() {
     <div className="px-4 pt-6 pb-4 max-w-lg mx-auto">
       <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
         <div className="flex items-center gap-2 mb-1">
+          <button onClick={() => navigate(-1)} className="p-1.5 rounded-lg hover:bg-muted">
+            <ArrowLeft className="h-5 w-5" />
+          </button>
           <Sparkles className="h-5 w-5 text-primary" />
           <h1 className="text-xl font-black">AI Meal Ideas</h1>
         </div>
