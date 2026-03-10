@@ -101,8 +101,20 @@ export default function DailyTimeline() {
       });
     });
 
+    milestoneEntries.forEach(m => {
+      items.push({
+        id: `milestone-${m.id}`,
+        time: '12:00',
+        type: 'feeding' as const,
+        emoji: '🎉',
+        label: `Milestone: ${m.milestone_key.replace(/^[^-]+-/, '').replace(/-/g, ' ')}`,
+        details: m.notes || 'Achievement unlocked!',
+        color: 'bg-peach/20 border-peach/30',
+      });
+    });
+
     return items.sort((a, b) => a.time.localeCompare(b.time));
-  }, [feedingEntries, sleepEntries, diaperEntries]);
+  }, [feedingEntries, sleepEntries, diaperEntries, milestoneEntries]);
 
   const totals = useMemo(() => {
     const totalFeeds = feedingEntries.length;
