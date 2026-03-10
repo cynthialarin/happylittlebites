@@ -1,15 +1,15 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { recipes } from '@/data/recipes';
 import { useApp } from '@/contexts/AppContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, Heart, Clock, Snowflake, Users, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, Heart, Clock, Snowflake, Users, ShieldCheck, AlertTriangle } from 'lucide-react';
 import FoodImage from '@/components/FoodImage';
 
 export default function RecipeDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { favoriteRecipes, toggleFavoriteRecipe, triedRecipes, toggleTriedRecipe } = useApp();
+  const { favoriteRecipes, toggleFavoriteRecipe, triedRecipes, toggleTriedRecipe, activeChild, diary } = useApp();
   const recipe = recipes.find(r => r.id === id);
 
   if (!recipe) {
@@ -26,6 +26,34 @@ export default function RecipeDetail() {
 
   const isFav = favoriteRecipes.includes(recipe.id);
   const isTried = triedRecipes.includes(recipe.id);
+
+  // Determine which allergens in this recipe the active child hasn't tried individually
+  const untriedAllergens: string[] = [];
+  if (activeChild && recipe.allergens.length > 0) {
+    const childDiary = diary.filter(d => d.childId === activeChild.id);
+    const triedFoodNames = new Set(childDiary.map(d => d.foodName.toLowerCase()));
+
+    // Map allergen categories to common food names a child would have tried
+    const allergenFoodMap: Record<string, string[]> = {
+      'eggs': ['egg', 'eggs', 'scrambled eggs', 'hard boiled egg', 'omelette'],
+      'milk': ['milk', 'whole milk', 'cow milk', 'yogurt', 'cheese'],
+      'wheat': ['wheat', 'bread', 'pasta', 'cereal', 'oatmeal'],
+      'peanuts': ['peanut', 'peanuts', 'peanut butter'],
+      'tree-nuts': ['almond', 'almonds', 'cashew', 'walnut', 'walnuts', 'pecan', 'tree nuts'],
+      'soy': ['soy', 'soybean', 'tofu', 'edamame'],
+      'fish': ['fish', 'salmon', 'cod', 'tilapia', 'tuna'],
+      'shellfish': ['shellfish', 'shrimp', 'crab', 'lobster'],
+      'sesame': ['sesame', 'sesame seeds', 'tahini'],
+    };
+
+    for (const allergen of recipe.allergens) {
+      const possibleNames = allergenFoodMap[allergen] || [allergen.replace('-', ' ')];
+      const hasTried = possibleNames.some(name => triedFoodNames.has(name));
+      if (!hasTried) {
+        untriedAllergens.push(allergen.replace('-', ' '));
+      }
+    }
+  }
 
   return (
     <div className="px-4 pt-4 pb-6 max-w-lg mx-auto">
@@ -89,6 +117,32 @@ export default function RecipeDetail() {
               {recipe.allergens.map(a => (
                 <span key={a} className="text-[10px] px-2 py-0.5 rounded-full bg-accent/20 font-semibold capitalize">{a.replace('-', ' ')}</span>
               ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Untried Allergen Warning */}
+      {untriedAllergens.length > 0 && activeChild && (
+        <Card className="mb-4 bg-destructive/10 border-destructive/20">
+          <CardContent className="p-4">
+            <div className="flex items-start gap-2.5">
+              <AlertTriangle className="h-5 w-5 text-destructive flex-shrink-0 mt-0.5" />
+              <div className="space-y-2">
+                <h3 className="text-sm font-bold text-destructive">⚠️ Allergy Safety Notice</h3>
+                <p className="text-sm leading-relaxed">
+                  This recipe contains <strong>{untriedAllergens.join(', ')}</strong> which <strong>{activeChild.name}</strong> hasn't tried individually yet.
+                </p>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  We recommend introducing each new allergen one at a time, waiting 2–3 days between introductions, so you can identify the source of any reaction. This follows AAP and Health Canada guidelines for safe allergen introduction.
+                </p>
+                <Link
+                  to="/allergen-tracker"
+                  className="inline-flex items-center text-xs font-semibold text-primary hover:underline mt-1"
+                >
+                  Go to Allergen Tracker →
+                </Link>
+              </div>
             </div>
           </CardContent>
         </Card>
