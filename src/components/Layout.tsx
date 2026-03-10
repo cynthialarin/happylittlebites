@@ -22,6 +22,7 @@ export default function Layout() {
   const location = useLocation();
   const navigate = useNavigate();
   const { activeChild, children, setActiveChild, getChildAge, settings } = useApp();
+  const { signOut } = useAuth();
   const [switcherOpen, setSwitcherOpen] = useState(false);
 
   const age = activeChild ? getChildAge(activeChild) : null;
