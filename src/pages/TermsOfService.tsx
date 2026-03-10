@@ -39,6 +39,18 @@ export default function TermsOfService() {
             <p className="leading-relaxed">By accessing or using the Happy Little Bites application ("the App"), you agree to be bound by these Terms of Service and our <Link to="/privacy" className="text-primary underline">Privacy Policy</Link>. If you do not agree, please discontinue use immediately.</p>
           </section>
 
+          {/* 1b. Beta & Pricing */}
+          <section>
+            <h2 className="text-2xl font-semibold mb-4">1b. Beta Program & Subscription</h2>
+            <div className="space-y-3 text-sm leading-relaxed">
+              <p>Happy Little Bites is currently in <strong>Beta</strong>. During the Beta period, all features are available at no cost. When the Beta period ends, the App will transition to a paid subscription model.</p>
+              <p><strong>Free Trial:</strong> New users receive a 1-month free trial with full access to all features. No credit card is required to start the trial.</p>
+              <p><strong>Beta Early Adopter Discount:</strong> Users who create an account during the Beta period will receive 50% off their subscription for the first 3 months after the official launch.</p>
+              <p><strong>Pre-Charge Notification:</strong> We will always send you an email notification before your free trial ends or before any subscription charges begin. You may cancel at any time from your account settings.</p>
+              <p><strong>Cancellation:</strong> You may cancel your subscription at any time. Upon cancellation, you will retain access through the end of your current billing period. No refunds are provided for partial billing periods.</p>
+            </div>
+          </section>
+
           {/* 2. Description of Service */}
           <section>
             <h2 className="text-2xl font-semibold mb-4">2. Description of Service</h2>

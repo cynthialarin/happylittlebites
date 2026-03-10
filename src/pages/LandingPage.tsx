@@ -2,40 +2,21 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import {
   Apple, Brain, ShieldAlert, Baby, Utensils, FileText,
-  TrendingUp, Users, ShoppingCart, Smartphone, Lock, Sparkles,
-  Heart, ChevronRight, Star, HelpCircle
+  TrendingUp, Users, ShoppingCart, Lock, Sparkles,
+  ChevronRight, Star, HelpCircle, CreditCard, Clock,
+  Zap, Check, ArrowRight, BookOpen, BarChart3
 } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import AppWalkthrough from '@/components/landing/AppWalkthrough';
-
-const faqs = [
-  {
-    q: 'Is Happy Little Bites really free?',
-    a: 'Yes — 100% free, forever. No paywalls, no premium tiers, no ads. Every feature is available to every family.',
-  },
-  {
-    q: 'Is my baby\'s data safe?',
-    a: 'Absolutely. All data is encrypted in transit and at rest. We never sell or share your information with third parties for marketing. We comply with GDPR and COPPA regulations to protect your family\'s privacy.',
-  },
-  {
-    q: 'Which food safety guidelines do you follow?',
-    a: 'We follow the American Academy of Pediatrics (AAP) and CDC guidelines for US families, and Health Canada / Canadian Paediatric Society (CPS) guidelines for Canadian families. The app adapts automatically based on your selected country — including allergen lists (Top 9 for US, Top 11 for Canada).',
-  },
-  {
-    q: 'Do I need to download an app from the App Store?',
-    a: 'No! Happy Little Bites is a Progressive Web App (PWA). Just visit the website on any phone, tablet, or computer and tap "Add to Home Screen" to install it. It works offline too.',
-  },
-  {
-    q: 'Can I share with my partner, grandparents, or daycare?',
-    a: 'Yes! Use the Caregiver Sharing feature to invite trusted family members or care providers via email. They\'ll get their own account with access to your child\'s data. You can revoke access at any time.',
-  },
-  {
-    q: 'Are the AI meal suggestions safe to follow?',
-    a: 'AI suggestions are personalized based on your child\'s age, food history, and allergies — but they are for inspiration only and do not constitute medical advice. Always verify suggestions with your pediatrician, especially for allergen introduction.',
-  },
-];
+import LandingHero from '@/components/landing/LandingHero';
+import LandingFeatures from '@/components/landing/LandingFeatures';
+import LandingBetaOffer from '@/components/landing/LandingBetaOffer';
+import LandingDifferentiators from '@/components/landing/LandingDifferentiators';
+import LandingFAQ from '@/components/landing/LandingFAQ';
+import LandingStats from '@/components/landing/LandingStats';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
@@ -45,26 +26,6 @@ const fadeUp = {
 const stagger = {
   visible: { transition: { staggerChildren: 0.08 } },
 };
-
-const features = [
-  { icon: Apple, title: 'First 100 Foods Guide', desc: 'Track every new food with a visual checklist designed by nutrition experts.', color: 'bg-sage/20 text-sage-foreground' },
-  { icon: Brain, title: 'AI Meal Suggestions', desc: 'Get personalized meal ideas based on age, preferences, and what\'s in season.', color: 'bg-lavender/20 text-lavender-foreground' },
-  { icon: ShieldAlert, title: 'Allergen Tracker', desc: 'Monitor top allergen introductions with reaction logging and timelines.', color: 'bg-destructive/10 text-destructive' },
-  { icon: Baby, title: 'Feeding, Sleep & Diapers', desc: 'All-in-one daily tracking with smart summaries and pattern detection.', color: 'bg-sky/20 text-sky-foreground' },
-  { icon: Utensils, title: 'Picky Eater Toolkit', desc: 'Evidence-based strategies and recipes to expand adventurous eating.', color: 'bg-peach/20 text-peach-foreground' },
-  { icon: FileText, title: 'Weekly Reports', desc: 'Shareable summaries for pediatrician visits — feeding, sleep, and milestones.', color: 'bg-cream/40 text-cream-foreground' },
-  { icon: TrendingUp, title: 'Growth & Milestones', desc: 'Visual growth charts and developmental milestone tracking in one place.', color: 'bg-sage/20 text-sage-foreground' },
-  { icon: Users, title: 'Multi-Child Profiles', desc: 'Manage multiple children with individual themes, data, and preferences.', color: 'bg-lavender/20 text-lavender-foreground' },
-  { icon: ShoppingCart, title: 'Grocery & Meal Planner', desc: 'Plan weekly meals and auto-generate grocery lists from recipes.', color: 'bg-sky/20 text-sky-foreground' },
-];
-
-const differentiators = [
-  { icon: Sparkles, title: 'All-in-One', desc: 'Food diary, sleep log, diaper tracker, meal planner, and growth charts — no more juggling five different apps.' },
-  { icon: Heart, title: '100% Free, Forever', desc: 'No paywalls, no premium tiers, no ads. Every feature is available to every family.' },
-  { icon: Smartphone, title: 'Works Everywhere', desc: 'Use it on any phone, tablet, or computer. Install it like an app — no App Store needed.' },
-  { icon: Brain, title: 'AI-Powered', desc: 'Smart meal suggestions and food pairing ideas that learn from your baby\'s journey.' },
-  { icon: Lock, title: 'Privacy First', desc: 'Your family\'s data stays yours. No selling, no sharing, no third-party tracking.' },
-];
 
 const steps = [
   { num: '1', emoji: '👶', title: 'Create a Profile', desc: 'Add your baby\'s details in under a minute.' },
@@ -76,34 +37,7 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       {/* Hero */}
-      <section className="relative px-5 pt-14 pb-16 md:pt-24 md:pb-28 text-center max-w-5xl mx-auto">
-        <motion.div initial="hidden" animate="visible" variants={stagger}>
-          <motion.div variants={fadeUp} className="flex justify-center gap-3 text-3xl mb-6">
-            <span className="animate-bounce-gentle inline-block" style={{ animationDelay: '0s' }}>🥦</span>
-            <span className="animate-bounce-gentle inline-block" style={{ animationDelay: '0.3s' }}>🍌</span>
-            <span className="animate-bounce-gentle inline-block" style={{ animationDelay: '0.6s' }}>🥕</span>
-            <span className="animate-bounce-gentle inline-block" style={{ animationDelay: '0.9s' }}>🍓</span>
-          </motion.div>
-
-          <motion.h1 variants={fadeUp} className="font-heading text-4xl md:text-6xl font-900 leading-tight tracking-tight mb-4">
-            Your baby's food journey,{' '}
-            <span className="text-primary">joyfully tracked</span>
-          </motion.h1>
-
-          <motion.p variants={fadeUp} className="font-body text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
-            The stress-free way to track weaning, spot allergies early, celebrate milestones, and keep your pediatrician in the loop — completely free.
-          </motion.p>
-
-          <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Button asChild size="lg" className="text-base px-8 py-6 rounded-full shadow-lg">
-              <Link to="/signup">Get Started Free <ChevronRight className="ml-1" size={18} /></Link>
-            </Button>
-            <Button asChild variant="outline" size="lg" className="text-base px-8 py-6 rounded-full">
-              <Link to="/login">Sign In</Link>
-            </Button>
-          </motion.div>
-        </motion.div>
-      </section>
+      <LandingHero />
 
       {/* Trust Bar */}
       <motion.section
@@ -111,78 +45,33 @@ export default function LandingPage() {
         className="bg-sage/10 border-y border-border py-5"
       >
         <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm font-heading font-bold tracking-wide text-foreground/80">
-          <span className="flex items-center gap-1.5"><Star size={14} className="text-primary fill-primary" /> 100% Free</span>
-          <span className="flex items-center gap-1.5"><Star size={14} className="text-primary fill-primary" /> No Ads</span>
-          <span className="flex items-center gap-1.5"><Star size={14} className="text-primary fill-primary" /> No Paywalls</span>
-          <span className="flex items-center gap-1.5"><Star size={14} className="text-primary fill-primary" /> No Data Selling</span>
+          <span className="flex items-center gap-1.5"><CreditCard size={14} className="text-primary" /> No Card Required</span>
+          <span className="flex items-center gap-1.5"><Clock size={14} className="text-primary" /> Cancel Anytime</span>
+          <span className="flex items-center gap-1.5"><Sparkles size={14} className="text-primary" /> Beta Early Access</span>
+          <span className="flex items-center gap-1.5"><Lock size={14} className="text-primary" /> Privacy First</span>
         </div>
       </motion.section>
 
-      {/* Video Demo */}
+      {/* Feature Showcase — immediately visible */}
+      <LandingFeatures />
+
+      {/* Stats/Social Proof */}
+      <LandingStats />
+
+      {/* Video Demo / Walkthrough */}
       <motion.section
         initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }} variants={fadeUp}
         className="px-5 py-16 md:py-24 max-w-4xl mx-auto"
       >
-        <h2 className="font-heading text-2xl md:text-3xl font-800 text-center mb-8">See It in Action</h2>
+        <h2 className="font-heading text-2xl md:text-3xl font-800 text-center mb-3">See It in Action</h2>
+        <p className="text-muted-foreground text-center max-w-lg mx-auto mb-8">Watch how easy it is to track your baby's entire day — meals, sleep, diapers, and milestones.</p>
         <AppWalkthrough />
       </motion.section>
-
-      {/* Feature Grid */}
-      <section className="px-5 py-16 md:py-24 max-w-6xl mx-auto">
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }} variants={fadeUp}>
-          <h2 className="font-heading text-2xl md:text-3xl font-800 text-center mb-3">Everything You Need in One Place</h2>
-          <p className="text-muted-foreground text-center max-w-xl mx-auto mb-12">From first bites to toddler meals — track, plan, and celebrate every step.</p>
-        </motion.div>
-
-        <motion.div
-          initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }} variants={stagger}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
-        >
-          {features.map((f) => (
-            <motion.div key={f.title} variants={fadeUp}>
-              <Card className="h-full border-border/60 hover:shadow-md transition-shadow">
-                <CardContent className="p-5">
-                  <div className={`w-10 h-10 rounded-xl ${f.color} flex items-center justify-center mb-3`}>
-                    <f.icon size={20} />
-                  </div>
-                  <h3 className="font-heading font-bold text-base mb-1">{f.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </motion.div>
-      </section>
-
-      {/* What Makes Us Different */}
-      <section className="px-5 py-16 md:py-24 bg-cream/30">
-        <div className="max-w-5xl mx-auto">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }} variants={fadeUp}>
-            <h2 className="font-heading text-2xl md:text-3xl font-800 text-center mb-3">Built Different, on Purpose</h2>
-            <p className="text-muted-foreground text-center max-w-lg mx-auto mb-12">We believe every family deserves great tools — without compromise.</p>
-          </motion.div>
-
-          <motion.div
-            initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }} variants={stagger}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
-          >
-            {differentiators.map((d, i) => (
-              <motion.div key={d.title} variants={fadeUp}
-                className={`rounded-2xl p-6 bg-card border border-border/50 ${i === 0 ? 'sm:col-span-2 lg:col-span-1' : ''}`}
-              >
-                <d.icon size={24} className="text-primary mb-3" />
-                <h3 className="font-heading font-bold text-base mb-1">{d.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{d.desc}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
 
       {/* How It Works */}
       <section className="px-5 py-16 md:py-24 max-w-4xl mx-auto">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }} variants={fadeUp}>
-          <h2 className="font-heading text-2xl md:text-3xl font-800 text-center mb-12">Get Started in 3 Steps</h2>
+          <h2 className="font-heading text-2xl md:text-3xl font-800 text-center mb-12">Get Started in 3 Easy Steps</h2>
         </motion.div>
 
         <motion.div
@@ -200,7 +89,13 @@ export default function LandingPage() {
         </motion.div>
       </section>
 
-      {/* Testimonial Placeholder */}
+      {/* Beta Offer CTA */}
+      <LandingBetaOffer />
+
+      {/* What Makes Us Different */}
+      <LandingDifferentiators />
+
+      {/* Testimonial */}
       <motion.section
         initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }} variants={fadeUp}
         className="px-5 py-16 md:py-20 bg-sage/10"
@@ -210,46 +105,38 @@ export default function LandingPage() {
           <blockquote className="font-heading text-xl md:text-2xl font-700 italic leading-relaxed text-foreground/85 mb-4">
             "Finally, one app that does it all. I used to have three different trackers — now Happy Little Bites is the only one I need."
           </blockquote>
-          <p className="text-sm text-muted-foreground font-heading font-bold">— A happy parent</p>
+          <p className="text-sm text-muted-foreground font-heading font-bold">— A happy beta tester</p>
         </div>
       </motion.section>
 
-      {/* FAQ Section */}
-      <section className="px-5 py-16 md:py-24 max-w-3xl mx-auto">
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }} variants={fadeUp}>
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <HelpCircle className="h-5 w-5 text-primary" />
-            <h2 className="font-heading text-2xl md:text-3xl font-800 text-center">Frequently Asked Questions</h2>
-          </div>
-          <p className="text-center text-muted-foreground mb-8 text-sm">Everything you need to know before getting started.</p>
-        </motion.div>
-
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }} variants={fadeUp}>
-          <Accordion type="single" collapsible className="w-full">
-            {faqs.map((faq, i) => (
-              <AccordionItem key={i} value={`faq-${i}`}>
-                <AccordionTrigger className="text-left text-sm font-semibold">{faq.q}</AccordionTrigger>
-                <AccordionContent className="text-sm text-muted-foreground leading-relaxed">{faq.a}</AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </motion.div>
-      </section>
+      {/* FAQ */}
+      <LandingFAQ />
 
       {/* Final CTA */}
       <motion.section
         initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }} variants={fadeUp}
         className="px-5 py-20 md:py-28 text-center"
       >
+        <Badge className="mb-4 bg-primary/10 text-primary border-primary/20 hover:bg-primary/15">
+          <Sparkles size={12} className="mr-1" /> Limited Beta Access
+        </Badge>
         <h2 className="font-heading text-3xl md:text-4xl font-900 mb-4">
-          Start your baby's food journey today
+          Start your free month today
         </h2>
-        <p className="text-muted-foreground mb-8 max-w-md mx-auto">
-          Join thousands of families tracking smarter, stressing less, and celebrating every bite.
+        <p className="text-muted-foreground mb-3 max-w-md mx-auto">
+          No credit card needed. Full access to every feature. Cancel anytime.
         </p>
-        <Button asChild size="lg" className="text-base px-10 py-6 rounded-full shadow-lg">
-          <Link to="/signup">Create Free Account <ChevronRight className="ml-1" size={18} /></Link>
-        </Button>
+        <p className="text-sm text-primary font-heading font-bold mb-8">
+          Beta users get 50% off their first 3 months when we launch 🎉
+        </p>
+        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <Button asChild size="lg" className="text-base px-10 py-6 rounded-full shadow-lg">
+            <Link to="/signup">Start Free Trial <ArrowRight className="ml-1" size={18} /></Link>
+          </Button>
+          <Button asChild variant="outline" size="lg" className="text-base px-8 py-6 rounded-full">
+            <Link to="/login">Sign In</Link>
+          </Button>
+        </div>
       </motion.section>
 
       {/* Footer */}
