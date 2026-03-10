@@ -71,6 +71,7 @@ export default function ChildProfiles() {
         name: form.name.trim(),
         birthdate: form.birthdate,
         knownAllergies: [],
+        fussyFoods: [],
         feedingApproach: form.approach,
         avatar: form.avatar,
         gender: form.gender,
