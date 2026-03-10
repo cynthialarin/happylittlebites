@@ -217,6 +217,8 @@ export default function PickyRecipes() {
                   className={`relative flex flex-col items-center gap-1 p-3 rounded-xl border-2 transition-all ${
                     pref === 'loves'
                       ? 'border-secondary bg-secondary/15'
+                      : pref === 'meh'
+                      ? 'border-accent bg-accent/15'
                       : pref === 'refuses'
                       ? 'border-destructive bg-destructive/10'
                       : 'border-border bg-card hover:border-muted-foreground/30'
@@ -225,10 +227,13 @@ export default function PickyRecipes() {
                   <span className="text-2xl">{food.emoji}</span>
                   <span className="text-[10px] font-medium leading-tight text-center">{food.name}</span>
                   {pref === 'loves' && (
-                    <Heart className="absolute top-1 right-1 h-3.5 w-3.5 text-secondary-foreground fill-secondary-foreground" />
+                    <span className="absolute top-0.5 right-1 text-sm">😋</span>
+                  )}
+                  {pref === 'meh' && (
+                    <span className="absolute top-0.5 right-1 text-sm">😐</span>
                   )}
                   {pref === 'refuses' && (
-                    <X className="absolute top-1 right-1 h-3.5 w-3.5 text-destructive" />
+                    <span className="absolute top-0.5 right-1 text-sm">🤢</span>
                   )}
                 </button>
               );

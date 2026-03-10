@@ -31,7 +31,7 @@ interface AppContextType extends AppState {
   addMealPlanEntry: (entry: MealPlanEntry) => void;
   removeMealPlanEntry: (id: string) => void;
   clearWeekPlan: (childId: string, dates: string[]) => void;
-  setFoodPreference: (childId: string, foodName: string, pref: 'loves' | 'refuses' | null) => void;
+  setFoodPreference: (childId: string, foodName: string, pref: 'loves' | 'meh' | 'refuses' | null) => void;
   clearFoodPreferences: (childId: string) => void;
   setCountry: (country: Country) => void;
   completeOnboarding: () => void;
