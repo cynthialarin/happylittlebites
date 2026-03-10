@@ -138,6 +138,8 @@ export default function ChildProfiles() {
 
   const allFormsValid = forms.every(f => f.name.trim() && f.birthdate);
   const editFormValid = editForm.name.trim() && editForm.birthdate;
+
+  return (
     <div className="px-4 pt-4 pb-6 max-w-lg mx-auto">
       <button onClick={() => navigate(-1)} className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-4">
         <ArrowLeft className="h-4 w-4" /> Back
