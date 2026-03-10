@@ -403,6 +403,39 @@ export default function CaregiverShare() {
           </motion.div>
         )}
 
+        {/* Sleep Log */}
+        {sleepEntries.length > 0 && (
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.26 }}>
+            <Card>
+              <CardContent className="p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <Moon className="h-4 w-4 text-primary" />
+                  <span className="text-sm font-bold">Today's Sleep Log</span>
+                </div>
+                <div className="space-y-1.5">
+                  {sleepEntries.map((s: any, i: number) => {
+                    const typeLabel = s.sleep_type === 'nap' ? '😴 Nap' : '🌙 Night';
+                    const [sh, sm] = s.start_time.split(':').map(Number);
+                    const [eh, em] = s.end_time.split(':').map(Number);
+                    let startMin = sh * 60 + sm;
+                    let endMin = eh * 60 + em;
+                    if (endMin <= startMin) endMin += 24 * 60;
+                    const hours = Math.round(((endMin - startMin) / 60) * 10) / 10;
+                    return (
+                      <div key={i} className="flex items-center gap-2 text-xs">
+                        <span className="font-semibold">{s.start_time}–{s.end_time}</span>
+                        <span>{typeLabel}</span>
+                        <span className="text-muted-foreground">{hours}h</span>
+                        <span className="text-muted-foreground capitalize">{s.quality}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
         {/* Choking Hazards */}
         {childData.chokingFoods.length > 0 && (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
