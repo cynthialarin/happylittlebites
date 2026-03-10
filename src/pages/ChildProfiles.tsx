@@ -8,13 +8,18 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
-import { ArrowLeft, Plus, Check, Trash2, Users } from 'lucide-react';
-import { FeedingApproach, Gender } from '@/types';
+import { ArrowLeft, Plus, Check, Trash2, Users, Pencil } from 'lucide-react';
+import { FeedingApproach, Gender, TOP_9_ALLERGENS, ChildProfile } from '@/types';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/components/ui/sonner';
 import ChildAvatar from '@/components/ChildAvatar';
 
 const AVATARS = ['🐣', '🧸', '🌻', '🐰', '🦊', '🐝', '🍼', '🌈'];
+const APPROACH_OPTIONS: { value: FeedingApproach; label: string; emoji: string }[] = [
+  { value: 'blw', label: 'Baby-Led', emoji: '🥦' },
+  { value: 'purees', label: 'Purées', emoji: '🥣' },
+  { value: 'combo', label: 'Combo', emoji: '🍽️' },
+];
 
 const GENDER_OPTIONS: { value: Gender; label: string; emoji: string }[] = [
   { value: 'boy', label: 'Boy', emoji: '👦' },
@@ -51,6 +56,8 @@ export default function ChildProfiles() {
   const [showAdd, setShowAdd] = useState(false);
   const [forms, setForms] = useState<ChildForm[]>([emptyForm()]);
   const [uploading, setUploading] = useState<string | null>(null);
+  const [editChild, setEditChild] = useState<ChildProfile | null>(null);
+  const [editForm, setEditForm] = useState<ChildForm & { knownAllergies: string[] }>({ ...emptyForm(), knownAllergies: [] });
 
   const updateForm = (index: number, updates: Partial<ChildForm>) => {
     setForms(prev => prev.map((f, i) => i === index ? { ...f, ...updates } : f));
@@ -102,7 +109,35 @@ export default function ChildProfiles() {
     setUploading(null);
   };
 
+  const openEdit = (child: ChildProfile) => {
+    setEditChild(child);
+    setEditForm({
+      name: child.name,
+      birthdate: child.birthdate,
+      approach: child.feedingApproach,
+      avatar: child.avatar,
+      gender: child.gender,
+      knownAllergies: child.knownAllergies || [],
+    });
+  };
+
+  const handleSaveEdit = () => {
+    if (!editChild || !editForm.name.trim() || !editForm.birthdate) return;
+    updateChild({
+      ...editChild,
+      name: editForm.name.trim(),
+      birthdate: editForm.birthdate,
+      feedingApproach: editForm.approach,
+      avatar: editForm.avatar,
+      gender: editForm.gender,
+      knownAllergies: editForm.knownAllergies,
+    });
+    toast('✅ Profile updated!');
+    setEditChild(null);
+  };
+
   const allFormsValid = forms.every(f => f.name.trim() && f.birthdate);
+  const editFormValid = editForm.name.trim() && editForm.birthdate;
 
   return (
     <div className="px-4 pt-4 pb-6 max-w-lg mx-auto">
@@ -150,7 +185,10 @@ export default function ChildProfiles() {
                     <p className="text-[10px] text-primary font-semibold mt-0.5">Uploading photo…</p>
                   )}
                 </div>
-                <div className="flex gap-1">
+                <div className="flex gap-1 items-center">
+                  <Button size="icon" variant="ghost" className="h-8 w-8 text-muted-foreground" onClick={() => openEdit(child)}>
+                    <Pencil className="h-3.5 w-3.5" />
+                  </Button>
                   {!isActive && (
                     <Button size="sm" variant="outline" className="rounded-full text-xs" onClick={() => setActiveChild(child.id)}>
                       <Check className="h-3 w-3 mr-1" /> Set Active
@@ -242,6 +280,97 @@ export default function ChildProfiles() {
 
           <Button className="w-full rounded-full" onClick={handleAdd} disabled={!allFormsValid}>
             {forms.length > 1 ? `Add ${forms.length} Children` : 'Add Child'}
+          </Button>
+        </DialogContent>
+      </Dialog>
+
+      {/* Edit Child Dialog */}
+      <Dialog open={!!editChild} onOpenChange={(open) => !open && setEditChild(null)}>
+        <DialogContent className="max-w-md mx-4 max-h-[85vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Edit {editChild?.name}'s Profile</DialogTitle>
+            <DialogDescription>Update your child's information</DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4">
+            <div>
+              <Label className="font-semibold">Avatar</Label>
+              <div className="flex gap-2 flex-wrap mt-1">
+                {AVATARS.map(a => (
+                  <button key={a} onClick={() => setEditForm(prev => ({ ...prev, avatar: a }))} className={`text-2xl p-2 rounded-xl ${editForm.avatar === a ? 'bg-primary/20 ring-2 ring-primary' : 'bg-muted'}`}>{a}</button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <Label className="font-semibold">Name</Label>
+              <Input placeholder="e.g., Luna" value={editForm.name} onChange={e => setEditForm(prev => ({ ...prev, name: e.target.value }))} className="mt-1" />
+            </div>
+
+            <div>
+              <Label className="font-semibold">Date of birth</Label>
+              <Input type="date" value={editForm.birthdate} onChange={e => setEditForm(prev => ({ ...prev, birthdate: e.target.value }))} className="mt-1" max={new Date().toISOString().split('T')[0]} />
+            </div>
+
+            <div>
+              <Label className="font-semibold">Gender</Label>
+              <div className="flex gap-2 mt-1">
+                {GENDER_OPTIONS.map(opt => (
+                  <button
+                    key={opt.value}
+                    onClick={() => setEditForm(prev => ({ ...prev, gender: opt.value }))}
+                    className={`flex-1 p-3 rounded-xl border-2 text-center transition-all ${editForm.gender === opt.value ? 'border-primary bg-primary/15 ring-2 ring-primary/30' : 'border-border hover:border-primary/40'}`}
+                  >
+                    <div className="text-lg">{opt.emoji}</div>
+                    <div className="text-xs font-bold mt-0.5">{opt.label}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <Label className="font-semibold">Feeding Approach</Label>
+              <div className="flex gap-2 mt-1">
+                {APPROACH_OPTIONS.map(opt => (
+                  <button
+                    key={opt.value}
+                    onClick={() => setEditForm(prev => ({ ...prev, approach: opt.value }))}
+                    className={`flex-1 p-3 rounded-xl border-2 text-center transition-all ${editForm.approach === opt.value ? 'border-primary bg-primary/15 ring-2 ring-primary/30' : 'border-border hover:border-primary/40'}`}
+                  >
+                    <div className="text-lg">{opt.emoji}</div>
+                    <div className="text-xs font-bold mt-0.5">{opt.label}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <Label className="font-semibold">Known Allergies</Label>
+              <div className="flex gap-2 flex-wrap mt-2">
+                {TOP_9_ALLERGENS.map(allergen => {
+                  const selected = editForm.knownAllergies.includes(allergen);
+                  return (
+                    <button
+                      key={allergen}
+                      onClick={() => setEditForm(prev => ({
+                        ...prev,
+                        knownAllergies: selected
+                          ? prev.knownAllergies.filter(a => a !== allergen)
+                          : [...prev.knownAllergies, allergen],
+                      }))}
+                      className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-all ${selected ? 'border-destructive bg-destructive/10 text-destructive' : 'border-border text-muted-foreground hover:border-primary/40'}`}
+                    >
+                      {allergen}
+                    </button>
+                  );
+                })}
+              </div>
+              <p className="text-[10px] text-muted-foreground mt-1">Tap to toggle. These help filter safety warnings.</p>
+            </div>
+          </div>
+
+          <Button className="w-full rounded-full mt-2" onClick={handleSaveEdit} disabled={!editFormValid}>
+            Save Changes
           </Button>
         </DialogContent>
       </Dialog>
