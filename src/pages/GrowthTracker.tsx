@@ -214,10 +214,13 @@ export default function GrowthTracker() {
 
       {/* Measurement History */}
       {sorted.length === 0 ? (
-        <div className="text-center py-12 text-muted-foreground">
-          <div className="text-4xl mb-2">📊</div>
-          <p className="font-semibold">No measurements yet</p>
-          <p className="text-sm">Tap "Add" to log your first measurement</p>
+        <div className="text-center py-12">
+          <div className="text-5xl mb-3">📊</div>
+          <p className="font-bold text-foreground mb-1">No measurements yet</p>
+          <p className="text-sm text-muted-foreground mb-4">Track your baby's growth by logging weight, height, or head circumference after each checkup.</p>
+          <Button className="rounded-full gap-2 h-11" onClick={() => setShowAdd(true)}>
+            <Plus className="h-4 w-4" /> Add First Measurement
+          </Button>
         </div>
       ) : (
         <div className="space-y-2">
