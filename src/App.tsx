@@ -10,6 +10,7 @@ import OfflineFallback from "@/components/OfflineFallback";
 import ConsentBanner from "@/components/ConsentBanner";
 import Layout from "@/components/Layout";
 import Auth from "@/pages/Auth";
+import LandingPage from "@/pages/LandingPage";
 import ResetPassword from "@/pages/ResetPassword";
 import Onboarding from "@/pages/Onboarding";
 import Dashboard from "@/pages/Dashboard";
