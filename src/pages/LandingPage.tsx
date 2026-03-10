@@ -5,9 +5,37 @@ import { Card, CardContent } from '@/components/ui/card';
 import {
   Apple, Brain, ShieldAlert, Baby, Utensils, FileText,
   TrendingUp, Users, ShoppingCart, Smartphone, Lock, Sparkles,
-  Heart, ChevronRight, Star
+  Heart, ChevronRight, Star, HelpCircle
 } from 'lucide-react';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import AppWalkthrough from '@/components/landing/AppWalkthrough';
+
+const faqs = [
+  {
+    q: 'Is Happy Little Bites really free?',
+    a: 'Yes — 100% free, forever. No paywalls, no premium tiers, no ads. Every feature is available to every family.',
+  },
+  {
+    q: 'Is my baby\'s data safe?',
+    a: 'Absolutely. All data is encrypted in transit and at rest. We never sell or share your information with third parties for marketing. We comply with GDPR and COPPA regulations to protect your family\'s privacy.',
+  },
+  {
+    q: 'Which food safety guidelines do you follow?',
+    a: 'We follow the American Academy of Pediatrics (AAP) and CDC guidelines for US families, and Health Canada / Canadian Paediatric Society (CPS) guidelines for Canadian families. The app adapts automatically based on your selected country — including allergen lists (Top 9 for US, Top 11 for Canada).',
+  },
+  {
+    q: 'Do I need to download an app from the App Store?',
+    a: 'No! Happy Little Bites is a Progressive Web App (PWA). Just visit the website on any phone, tablet, or computer and tap "Add to Home Screen" to install it. It works offline too.',
+  },
+  {
+    q: 'Can I share with my partner, grandparents, or daycare?',
+    a: 'Yes! Use the Caregiver Sharing feature to invite trusted family members or care providers via email. They\'ll get their own account with access to your child\'s data. You can revoke access at any time.',
+  },
+  {
+    q: 'Are the AI meal suggestions safe to follow?',
+    a: 'AI suggestions are personalized based on your child\'s age, food history, and allergies — but they are for inspiration only and do not constitute medical advice. Always verify suggestions with your pediatrician, especially for allergen introduction.',
+  },
+];
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
