@@ -185,7 +185,10 @@ export default function ChildProfiles() {
                     <p className="text-[10px] text-primary font-semibold mt-0.5">Uploading photo…</p>
                   )}
                 </div>
-                <div className="flex gap-1">
+                <div className="flex gap-1 items-center">
+                  <Button size="icon" variant="ghost" className="h-8 w-8 text-muted-foreground" onClick={() => openEdit(child)}>
+                    <Pencil className="h-3.5 w-3.5" />
+                  </Button>
                   {!isActive && (
                     <Button size="sm" variant="outline" className="rounded-full text-xs" onClick={() => setActiveChild(child.id)}>
                       <Check className="h-3 w-3 mr-1" /> Set Active
