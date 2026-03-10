@@ -5,8 +5,9 @@ import { Card, CardContent } from '@/components/ui/card';
 import {
   Apple, Brain, ShieldAlert, Baby, Utensils, FileText,
   TrendingUp, Users, ShoppingCart, Smartphone, Lock, Sparkles,
-  Heart, Play, ChevronRight, Star
+  Heart, ChevronRight, Star
 } from 'lucide-react';
+import AppWalkthrough from '@/components/landing/AppWalkthrough';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
