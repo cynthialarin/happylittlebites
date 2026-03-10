@@ -5,8 +5,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
 import { useApp } from '@/contexts/AppContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { FeedingApproach, Country, Gender } from '@/types';
-import { Baby, Heart, ShieldCheck, Sparkles, ChevronRight, ChevronLeft } from 'lucide-react';
+import { Baby, Heart, ShieldCheck, Sparkles, ChevronRight, ChevronLeft, LogOut } from 'lucide-react';
 
 const AVATARS = ['🐣', '🧸', '🌻', '🐰', '🦊', '🐝', '🍼', '🌈'];
 
@@ -20,6 +21,7 @@ const TOTAL_STEPS = 3;
 
 export default function Onboarding() {
   const { addChild, completeOnboarding, setCountry } = useApp();
+  const { signOut } = useAuth();
   const [step, setStep] = useState(0);
   const [name, setName] = useState('');
   const [birthdate, setBirthdate] = useState('');
@@ -55,6 +57,15 @@ export default function Onboarding() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
+      {/* Persistent header */}
+      <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border px-4 py-2.5">
+        <div className="flex items-center justify-between max-w-md mx-auto">
+          <span className="text-base font-black tracking-tight">🥦 Happy Little Bites</span>
+          <Button variant="ghost" size="sm" className="text-muted-foreground gap-1.5 text-xs" onClick={signOut}>
+            <LogOut className="h-3.5 w-3.5" /> Sign Out
+          </Button>
+        </div>
+      </header>
       {/* Progress bar — visible on steps 1+ */}
       {step > 0 && (
         <div className="px-6 pt-4 max-w-md mx-auto w-full">

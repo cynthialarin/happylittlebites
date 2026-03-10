@@ -1,8 +1,9 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { Home, UtensilsCrossed, BookOpen, ClipboardList, Menu, Plus, ChevronDown, Check } from 'lucide-react';
+import { Home, UtensilsCrossed, BookOpen, ClipboardList, Menu, Plus, ChevronDown, Check, LogOut } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import SafetyButton from './SafetyButton';
 import { useApp } from '@/contexts/AppContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Button } from '@/components/ui/button';
 import ChildAvatar from './ChildAvatar';
@@ -21,6 +22,7 @@ export default function Layout() {
   const location = useLocation();
   const navigate = useNavigate();
   const { activeChild, children, setActiveChild, getChildAge, settings } = useApp();
+  const { signOut } = useAuth();
   const [switcherOpen, setSwitcherOpen] = useState(false);
 
   const age = activeChild ? getChildAge(activeChild) : null;
@@ -34,6 +36,7 @@ export default function Layout() {
       {showChildBar && (
         <div className="sticky top-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border px-4 py-2">
           <div className="flex items-center justify-between max-w-lg mx-auto">
+            <span className="text-sm font-black tracking-tight">🥦 Happy Little Bites</span>
             <Popover open={switcherOpen} onOpenChange={setSwitcherOpen}>
               <PopoverTrigger asChild>
                 <button className="flex items-center gap-2.5 hover:bg-muted/50 rounded-xl px-2 py-1.5 transition-colors">
@@ -91,16 +94,21 @@ export default function Layout() {
               )}
             </Popover>
 
-            {children.length <= 1 && (
-              <Button
-                size="sm"
-                variant="ghost"
-                className="rounded-full gap-1 text-xs h-8"
-                onClick={() => navigate('/more/profiles')}
-              >
-                <Plus className="h-3.5 w-3.5" /> Add
+            <div className="flex items-center gap-1">
+              {children.length <= 1 && (
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="rounded-full gap-1 text-xs h-8"
+                  onClick={() => navigate('/more/profiles')}
+                >
+                  <Plus className="h-3.5 w-3.5" /> Add
+                </Button>
+              )}
+              <Button variant="ghost" size="sm" className="text-muted-foreground h-8 w-8 p-0" onClick={signOut} title="Sign Out">
+                <LogOut className="h-3.5 w-3.5" />
               </Button>
-            )}
+            </div>
           </div>
         </div>
       )}
