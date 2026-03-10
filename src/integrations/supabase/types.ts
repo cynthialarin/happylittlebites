@@ -125,6 +125,42 @@ export type Database = {
         }
         Relationships: []
       }
+      diaper_entries: {
+        Row: {
+          child_id: string
+          color: string
+          created_at: string
+          date: string
+          diaper_type: string
+          id: string
+          notes: string
+          time: string
+          user_id: string
+        }
+        Insert: {
+          child_id: string
+          color?: string
+          created_at?: string
+          date: string
+          diaper_type?: string
+          id?: string
+          notes?: string
+          time: string
+          user_id: string
+        }
+        Update: {
+          child_id?: string
+          color?: string
+          created_at?: string
+          date?: string
+          diaper_type?: string
+          id?: string
+          notes?: string
+          time?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       diary_entries: {
         Row: {
           acceptance: string

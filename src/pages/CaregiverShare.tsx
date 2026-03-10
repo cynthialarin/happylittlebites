@@ -8,7 +8,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { ArrowLeft, Download, Copy, Check, AlertTriangle, ShieldCheck, UtensilsCrossed, Calendar, Send, Mail, Baby, Moon } from 'lucide-react';
+import { ArrowLeft, Download, Copy, Check, AlertTriangle, ShieldCheck, UtensilsCrossed, Calendar, Send, Mail, Baby, Moon, Droplets } from 'lucide-react';
 import { foods } from '@/data/foods';
 import { recipes } from '@/data/recipes';
 import { TOP_9_ALLERGENS, CA_EXTRA_ALLERGENS } from '@/types';
@@ -25,6 +25,7 @@ export default function CaregiverShare() {
   const [sendingInvite, setSendingInvite] = useState(false);
   const [feedingEntries, setFeedingEntries] = useState<any[]>([]);
   const [sleepEntries, setSleepEntries] = useState<any[]>([]);
+  const [diaperEntries, setDiaperEntries] = useState<any[]>([]);
   const contentRef = useRef<HTMLDivElement>(null);
 
   const age = activeChild ? getChildAge(activeChild) : null;
@@ -49,6 +50,14 @@ export default function CaregiverShare() {
       .eq('date', today)
       .order('start_time', { ascending: true })
       .then(({ data }) => setSleepEntries(data || []));
+    supabase
+      .from('diaper_entries')
+      .select('*')
+      .eq('user_id', user.id)
+      .eq('child_id', activeChild.id)
+      .eq('date', today)
+      .order('time', { ascending: true })
+      .then(({ data }) => setDiaperEntries(data || []));
   }, [user, activeChild, today]);
 
   const childData = useMemo(() => {
@@ -192,6 +201,16 @@ export default function CaregiverShare() {
         if (endMin <= startMin) endMin += 24 * 60;
         const hours = Math.round(((endMin - startMin) / 60) * 10) / 10;
         lines.push(`  ${typeLabel}: ${s.start_time}–${s.end_time} (${hours}h) — ${s.quality}`);
+      });
+      lines.push('');
+    }
+
+    if (diaperEntries.length > 0) {
+      lines.push(`🧷 TODAY'S DIAPER LOG (${today})`);
+      diaperEntries.forEach((d: any) => {
+        const emoji = d.diaper_type === 'wet' ? '💧' : d.diaper_type === 'dirty' ? '💩' : d.diaper_type === 'both' ? '💧💩' : '✨';
+        const details = [d.time, d.diaper_type, d.color].filter(Boolean).join(', ');
+        lines.push(`  ${emoji} ${details}`);
       });
       lines.push('');
     }
@@ -427,6 +446,32 @@ export default function CaregiverShare() {
                         <span>{typeLabel}</span>
                         <span className="text-muted-foreground">{hours}h</span>
                         <span className="text-muted-foreground capitalize">{s.quality}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
+        {/* Diaper Log */}
+        {diaperEntries.length > 0 && (
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.28 }}>
+            <Card>
+              <CardContent className="p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <Droplets className="h-4 w-4 text-primary" />
+                  <span className="text-sm font-bold">Today's Diaper Log</span>
+                </div>
+                <div className="space-y-1.5">
+                  {diaperEntries.map((d: any, i: number) => {
+                    const emoji = d.diaper_type === 'wet' ? '💧' : d.diaper_type === 'dirty' ? '💩' : d.diaper_type === 'both' ? '💧💩' : '✨';
+                    return (
+                      <div key={i} className="flex items-center gap-2 text-xs">
+                        <span className="font-semibold w-10">{d.time}</span>
+                        <span>{emoji} {d.diaper_type}</span>
+                        {d.color && <span className="text-muted-foreground">{d.color}</span>}
                       </div>
                     );
                   })}
