@@ -326,6 +326,7 @@ export default function Dashboard() {
           { label: 'First 100', icon: ListChecks, path: '/first-100-foods', color: 'bg-lavender/20' },
           { label: 'Growth', icon: TrendingUp, path: '/growth', color: 'bg-primary/10' },
           { label: 'Milestones', icon: Star, path: '/more/milestones', color: 'bg-peach/20' },
+          { label: 'Report', icon: FileText, path: '/weekly-report', color: 'bg-primary/5' },
         ].map(action => (
           <button
             key={action.path}
