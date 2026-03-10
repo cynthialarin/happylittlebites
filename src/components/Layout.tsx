@@ -94,16 +94,21 @@ export default function Layout() {
               )}
             </Popover>
 
-            {children.length <= 1 && (
-              <Button
-                size="sm"
-                variant="ghost"
-                className="rounded-full gap-1 text-xs h-8"
-                onClick={() => navigate('/more/profiles')}
-              >
-                <Plus className="h-3.5 w-3.5" /> Add
+            <div className="flex items-center gap-1">
+              {children.length <= 1 && (
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="rounded-full gap-1 text-xs h-8"
+                  onClick={() => navigate('/more/profiles')}
+                >
+                  <Plus className="h-3.5 w-3.5" /> Add
+                </Button>
+              )}
+              <Button variant="ghost" size="sm" className="text-muted-foreground h-8 w-8 p-0" onClick={signOut} title="Sign Out">
+                <LogOut className="h-3.5 w-3.5" />
               </Button>
-            )}
+            </div>
           </div>
         </div>
       )}
