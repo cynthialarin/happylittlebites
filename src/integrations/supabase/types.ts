@@ -338,6 +338,36 @@ export type Database = {
         }
         Relationships: []
       }
+      milestone_achievements: {
+        Row: {
+          achieved_date: string
+          child_id: string
+          created_at: string
+          id: string
+          milestone_key: string
+          notes: string
+          user_id: string
+        }
+        Insert: {
+          achieved_date: string
+          child_id: string
+          created_at?: string
+          id?: string
+          milestone_key: string
+          notes?: string
+          user_id: string
+        }
+        Update: {
+          achieved_date?: string
+          child_id?: string
+          created_at?: string
+          id?: string
+          milestone_key?: string
+          notes?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           active_child_id: string | null
