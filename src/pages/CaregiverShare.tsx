@@ -563,7 +563,22 @@ export default function CaregiverShare() {
         </Card>
       </motion.div>
 
-      {/* Actions */}
+      {/* Expiration & Actions */}
+      <div className="mb-3">
+        <Label className="text-xs font-semibold mb-1 block">Link/file expires after</Label>
+        <Select value={expiration} onValueChange={setExpiration}>
+          <SelectTrigger className="w-full">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="24h">24 hours</SelectItem>
+            <SelectItem value="7d">7 days</SelectItem>
+            <SelectItem value="30d">30 days</SelectItem>
+          </SelectContent>
+        </Select>
+        <p className="text-[10px] text-muted-foreground mt-1">Shared info reflects data at time of sharing</p>
+      </div>
+
       <div className="grid grid-cols-2 gap-2">
         <Button onClick={handleCopyToClipboard} variant="outline" className="gap-2">
           {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
