@@ -8,6 +8,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { useGroceryList, GroceryItem } from "@/hooks/useGroceryList";
 
 export default function GroceryList() {
+  const navigate = useNavigate();
   const { items, isLoading, addItems, toggleItem, deleteItem, clearChecked } = useGroceryList();
   const [newItem, setNewItem] = useState("");
   const [collapsedGroups, setCollapsedGroups] = useState<Set<string>>(new Set());
