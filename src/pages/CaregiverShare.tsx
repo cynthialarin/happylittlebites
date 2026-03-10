@@ -30,7 +30,7 @@ export default function CaregiverShare() {
   const age = activeChild ? getChildAge(activeChild) : null;
   const today = new Date().toISOString().split('T')[0];
 
-  // Load today's feeding entries
+  // Load today's feeding & sleep entries
   useEffect(() => {
     if (!user || !activeChild) return;
     supabase
@@ -41,6 +41,14 @@ export default function CaregiverShare() {
       .eq('date', today)
       .order('time', { ascending: true })
       .then(({ data }) => setFeedingEntries(data || []));
+    supabase
+      .from('sleep_entries')
+      .select('*')
+      .eq('user_id', user.id)
+      .eq('child_id', activeChild.id)
+      .eq('date', today)
+      .order('start_time', { ascending: true })
+      .then(({ data }) => setSleepEntries(data || []));
   }, [user, activeChild, today]);
 
   const childData = useMemo(() => {
