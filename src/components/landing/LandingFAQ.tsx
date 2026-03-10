@@ -1,3 +1,4 @@
+import React from 'react';
 import { motion } from 'framer-motion';
 import { HelpCircle } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -42,9 +43,9 @@ const faqs = [
   },
 ];
 
-export default function LandingFAQ() {
+const LandingFAQ = React.forwardRef<HTMLElement>(function LandingFAQ(_props, ref) {
   return (
-    <section className="px-5 py-16 md:py-24 max-w-3xl mx-auto">
+    <section ref={ref} className="px-5 py-16 md:py-24 max-w-3xl mx-auto">
       <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }} variants={fadeUp}>
         <div className="flex items-center justify-center gap-2 mb-2">
           <HelpCircle className="h-5 w-5 text-primary" />
@@ -65,4 +66,6 @@ export default function LandingFAQ() {
       </motion.div>
     </section>
   );
-}
+});
+
+export default LandingFAQ;

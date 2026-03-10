@@ -17,18 +17,20 @@ interface FoodImageProps {
 }
 
 async function checkCachedImage(type: string, id: string): Promise<string | null> {
-  const filePath = `${type}/${id}.png`;
-  const { data } = await supabase.storage
+  const { data, error } = await supabase.storage
     .from('food-images')
-    .createSignedUrl(filePath, 3600);
+    .list(type, { search: `${id}.png`, limit: 1 });
 
-  if (data?.signedUrl) {
-    const { data: publicUrlData } = supabase.storage
-      .from('food-images')
-      .getPublicUrl(filePath);
-    return publicUrlData.publicUrl;
+  if (error || !data || data.length === 0) {
+    return null;
   }
-  return null;
+
+  // File exists — return the public URL
+  const filePath = `${type}/${id}.png`;
+  const { data: publicUrlData } = supabase.storage
+    .from('food-images')
+    .getPublicUrl(filePath);
+  return publicUrlData.publicUrl;
 }
 
 async function fetchFoodImage(

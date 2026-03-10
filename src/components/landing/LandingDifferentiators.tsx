@@ -1,3 +1,4 @@
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Sparkles, Brain, Lock, Smartphone, Gift } from 'lucide-react';
 
@@ -18,9 +19,9 @@ const differentiators = [
   { icon: Lock, title: 'Privacy First', desc: 'Your family\'s data stays yours. No selling, no sharing, no third-party tracking. GDPR & COPPA compliant.' },
 ];
 
-export default function LandingDifferentiators() {
+const LandingDifferentiators = React.forwardRef<HTMLElement>(function LandingDifferentiators(_props, ref) {
   return (
-    <section className="px-5 py-16 md:py-24 bg-cream/30">
+    <section ref={ref} className="px-5 py-16 md:py-24 bg-cream/30">
       <div className="max-w-5xl mx-auto">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }} variants={fadeUp}>
           <h2 className="font-heading text-2xl md:text-3xl font-800 text-center mb-3">Built Different, on Purpose</h2>
@@ -44,4 +45,6 @@ export default function LandingDifferentiators() {
       </div>
     </section>
   );
-}
+});
+
+export default LandingDifferentiators;
