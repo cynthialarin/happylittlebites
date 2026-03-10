@@ -105,6 +105,7 @@ export function AppProvider({ children: reactChildren }: { children: React.React
             feedingApproach: c.feeding_approach as any,
             avatar: c.avatar,
             gender: (c.gender as Gender) || 'neutral',
+            fussyFoods: c.fussy_foods || [],
             photoUrl: c.photo_url || undefined,
           })),
           diary: (diaryRes.data || []).map((d: any) => ({
