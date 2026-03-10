@@ -184,9 +184,9 @@ export default function PickyRecipes() {
           )}
 
           <p className="text-xs text-muted-foreground mb-3">
-            Tap once = <span className="text-secondary-foreground font-semibold">Loves</span>, 
-            twice = <span className="text-destructive font-semibold">Won't eat</span>, 
-            three times = reset
+            Tap: <span className="text-secondary-foreground font-semibold">😋 Yummy</span> → 
+            <span className="text-accent-foreground font-semibold">😐 Meh</span> → 
+            <span className="text-destructive font-semibold">🤢 Yucky</span> → reset
           </p>
 
           {/* Food group tabs */}
