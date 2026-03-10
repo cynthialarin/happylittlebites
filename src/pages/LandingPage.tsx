@@ -17,6 +17,7 @@ import LandingBetaOffer from '@/components/landing/LandingBetaOffer';
 import LandingDifferentiators from '@/components/landing/LandingDifferentiators';
 import LandingFAQ from '@/components/landing/LandingFAQ';
 import LandingStats from '@/components/landing/LandingStats';
+import LandingPricing from '@/components/landing/LandingPricing';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
