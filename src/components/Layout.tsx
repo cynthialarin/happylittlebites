@@ -113,7 +113,7 @@ export default function Layout() {
 
       {/* Floating Log Meal FAB */}
       {showChildBar && (
-        <div className="fixed bottom-20 right-4 z-50">
+        <div className="fixed bottom-20 right-16 z-50">
           <HintTooltip id="fab-log-meal" message="Tap here anytime to quickly log what your baby ate!" emoji="✏️">
             <button
               onClick={() => navigate('/tracker')}
