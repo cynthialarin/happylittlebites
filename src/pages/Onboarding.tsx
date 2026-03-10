@@ -53,6 +53,7 @@ export default function Onboarding() {
       gender,
     });
     completeOnboarding();
+    navigate('/', { replace: true });
   };
 
   const stepProgress = step === 0 ? 0 : (step / TOTAL_STEPS) * 100;
