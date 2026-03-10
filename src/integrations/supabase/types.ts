@@ -197,6 +197,48 @@ export type Database = {
         }
         Relationships: []
       }
+      feeding_entries: {
+        Row: {
+          amount_oz: number | null
+          child_id: string
+          created_at: string
+          date: string
+          duration_minutes: number | null
+          feeding_type: string
+          id: string
+          notes: string
+          side: string | null
+          time: string
+          user_id: string
+        }
+        Insert: {
+          amount_oz?: number | null
+          child_id: string
+          created_at?: string
+          date: string
+          duration_minutes?: number | null
+          feeding_type: string
+          id?: string
+          notes?: string
+          side?: string | null
+          time: string
+          user_id: string
+        }
+        Update: {
+          amount_oz?: number | null
+          child_id?: string
+          created_at?: string
+          date?: string
+          duration_minutes?: number | null
+          feeding_type?: string
+          id?: string
+          notes?: string
+          side?: string | null
+          time?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       grocery_list_items: {
         Row: {
           amount: string | null

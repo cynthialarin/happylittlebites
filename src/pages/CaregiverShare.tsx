@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useApp } from '@/contexts/AppContext';
@@ -8,7 +8,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { ArrowLeft, Download, Copy, Check, AlertTriangle, ShieldCheck, UtensilsCrossed, Calendar, Send, Mail } from 'lucide-react';
+import { ArrowLeft, Download, Copy, Check, AlertTriangle, ShieldCheck, UtensilsCrossed, Calendar, Send, Mail, Baby } from 'lucide-react';
 import { foods } from '@/data/foods';
 import { recipes } from '@/data/recipes';
 import { TOP_9_ALLERGENS, CA_EXTRA_ALLERGENS } from '@/types';
@@ -23,10 +23,24 @@ export default function CaregiverShare() {
   const [inviteEmail, setInviteEmail] = useState('');
   const [inviteMessage, setInviteMessage] = useState('');
   const [sendingInvite, setSendingInvite] = useState(false);
+  const [feedingEntries, setFeedingEntries] = useState<any[]>([]);
   const contentRef = useRef<HTMLDivElement>(null);
 
   const age = activeChild ? getChildAge(activeChild) : null;
   const today = new Date().toISOString().split('T')[0];
+
+  // Load today's feeding entries
+  useEffect(() => {
+    if (!user || !activeChild) return;
+    supabase
+      .from('feeding_entries')
+      .select('*')
+      .eq('user_id', user.id)
+      .eq('child_id', activeChild.id)
+      .eq('date', today)
+      .order('time', { ascending: true })
+      .then(({ data }) => setFeedingEntries(data || []));
+  }, [user, activeChild, today]);
 
   const childData = useMemo(() => {
     if (!activeChild) return null;
@@ -144,6 +158,16 @@ export default function CaregiverShare() {
       lines.push(`📅 TODAY'S MEAL PLAN (${today})`);
       childData.todayMeals.forEach(m => {
         lines.push(`  ${m.mealType.charAt(0).toUpperCase() + m.mealType.slice(1)}: ${m.name}`);
+      });
+      lines.push('');
+    }
+
+    if (feedingEntries.length > 0) {
+      lines.push(`🍼 TODAY'S FEEDING LOG (${today})`);
+      feedingEntries.forEach((f: any) => {
+        const typeLabel = f.feeding_type === 'breast' ? 'Breast' : f.feeding_type === 'bottle-breastmilk' ? 'Bottle (BM)' : 'Bottle (Formula)';
+        const details = [f.time, f.amount_oz ? `${f.amount_oz}oz` : null, f.duration_minutes ? `${f.duration_minutes}min` : null, f.side].filter(Boolean).join(', ');
+        lines.push(`  ${typeLabel}: ${details}`);
       });
       lines.push('');
     }
@@ -328,6 +352,33 @@ export default function CaregiverShare() {
             </CardContent>
           </Card>
         </motion.div>
+
+        {/* Feeding Log */}
+        {feedingEntries.length > 0 && (
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.23 }}>
+            <Card>
+              <CardContent className="p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <Baby className="h-4 w-4 text-primary" />
+                  <span className="text-sm font-bold">Today's Feeding Log</span>
+                </div>
+                <div className="space-y-1.5">
+                  {feedingEntries.map((f: any, i: number) => {
+                    const typeLabel = f.feeding_type === 'breast' ? '🤱 Breast' : f.feeding_type === 'bottle-breastmilk' ? '🍼 Bottle (BM)' : '🍼 Bottle (Formula)';
+                    return (
+                      <div key={i} className="flex items-center gap-2 text-xs">
+                        <span className="font-semibold w-10">{f.time}</span>
+                        <span>{typeLabel}</span>
+                        {f.amount_oz && <span className="text-muted-foreground">{f.amount_oz}oz</span>}
+                        {f.duration_minutes && <span className="text-muted-foreground">{f.duration_minutes}min</span>}
+                      </div>
+                    );
+                  })}
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
 
         {/* Choking Hazards */}
         {childData.chokingFoods.length > 0 && (
