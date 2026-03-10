@@ -370,6 +370,38 @@ export default function ChildProfiles() {
               </div>
               <p className="text-[10px] text-muted-foreground mt-1">Tap to toggle. These help filter safety warnings.</p>
             </div>
+
+            <div>
+              <Label className="font-semibold">Fussy Foods 🙅</Label>
+              <p className="text-[10px] text-muted-foreground mb-2">Foods your child doesn't like — type and press Enter to add</p>
+              <div className="flex gap-2 flex-wrap mb-2">
+                {editForm.fussyFoods.map(food => (
+                  <span
+                    key={food}
+                    className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold border border-orange-300 bg-orange-50 text-orange-700 dark:bg-orange-950 dark:border-orange-700 dark:text-orange-300"
+                  >
+                    {food}
+                    <button
+                      onClick={() => setEditForm(prev => ({ ...prev, fussyFoods: prev.fussyFoods.filter(f => f !== food) }))}
+                      className="ml-0.5 hover:text-destructive"
+                    >×</button>
+                  </span>
+                ))}
+              </div>
+              <Input
+                placeholder="e.g., broccoli, avocado…"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const val = (e.target as HTMLInputElement).value.trim().toLowerCase();
+                    if (val && !editForm.fussyFoods.includes(val)) {
+                      setEditForm(prev => ({ ...prev, fussyFoods: [...prev.fussyFoods, val] }));
+                      (e.target as HTMLInputElement).value = '';
+                    }
+                  }
+                }}
+              />
+            </div>
           </div>
 
           <Button className="w-full rounded-full mt-2" onClick={handleSaveEdit} disabled={!editFormValid}>
