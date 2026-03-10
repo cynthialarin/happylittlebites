@@ -10,7 +10,8 @@ import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import MealSlot from '@/components/MealSlot';
 import { recipes } from '@/data/recipes';
 import { MealType, MealPlanEntry, AgeGroup } from '@/types';
-import { Sparkles, Trash2, ShoppingCart, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Sparkles, Trash2, ShoppingCart, ChevronLeft, ChevronRight, ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from '@/components/ui/sonner';
 
 const MEAL_TYPES: MealType[] = ['breakfast', 'lunch', 'dinner', 'snack'];

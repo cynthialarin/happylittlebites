@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useGamification } from '@/hooks/useGamification';
 import { BADGES, LEVELS } from '@/data/badges';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { Trophy } from 'lucide-react';
+import { Trophy, ArrowLeft } from 'lucide-react';
 import Confetti from '@/components/Confetti';
 
 export default function Achievements() {

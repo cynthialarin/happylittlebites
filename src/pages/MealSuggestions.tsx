@@ -8,7 +8,7 @@ import { recipes } from '@/data/recipes';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Sparkles, ChevronRight, RefreshCw, Lightbulb, Star, Bookmark, Check } from 'lucide-react';
+import { Sparkles, ChevronRight, RefreshCw, Lightbulb, Star, Bookmark, Check, ArrowLeft } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface MealSuggestion {
