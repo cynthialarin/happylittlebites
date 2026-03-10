@@ -32,7 +32,7 @@ export default function Onboarding() {
     { icon: Baby, title: '100+ Foods', desc: 'Safe food guides for every age' },
     { icon: ShieldCheck, title: 'Allergen Tracker', desc: 'Step-by-step allergen intro' },
     { icon: Heart, title: 'Picky Eater Help', desc: 'Strategies that actually work' },
-    { icon: Sparkles, title: '100% Free', desc: 'No paywalls, ever' },
+    { icon: Sparkles, title: 'Free During Beta', desc: 'Your first month is on us' },
   ];
 
   const handleComplete = () => {

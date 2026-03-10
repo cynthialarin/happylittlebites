@@ -79,11 +79,17 @@ export function AppProvider({ children: reactChildren }: { children: React.React
 
     const loadData = async () => {
       setLoading(true);
+
+      // Safety timeout: never let loading hang longer than 15s
+      const timeoutPromise = new Promise<'timeout'>((resolve) =>
+        setTimeout(() => resolve('timeout'), 15000)
+      );
+
       try {
         // Check for localStorage migration first
         await migrateLocalStorage(user.id);
 
-        const [profileRes, childrenRes, diaryRes, allergenRes, mealPlanRes, exposuresRes, prefsRes] = await Promise.all([
+        const dataPromise = Promise.all([
           supabase.from('profiles').select('*').eq('user_id', user.id).single(),
           supabase.from('children').select('*').eq('user_id', user.id),
           supabase.from('diary_entries').select('*').eq('user_id', user.id),
@@ -92,6 +98,17 @@ export function AppProvider({ children: reactChildren }: { children: React.React
           supabase.from('exposures').select('*').eq('user_id', user.id),
           supabase.from('user_preferences').select('*').eq('user_id', user.id).single(),
         ]);
+
+        const result = await Promise.race([dataPromise, timeoutPromise]);
+
+        if (result === 'timeout') {
+          console.error('Data loading timed out after 15s');
+          toast({ title: 'Loading took too long', description: 'Some data may not have loaded. Pull down to refresh.', variant: 'destructive' });
+          setLoading(false);
+          return;
+        }
+
+        const [profileRes, childrenRes, diaryRes, allergenRes, mealPlanRes, exposuresRes, prefsRes] = result;
 
         const profile = profileRes.data;
         const prefs = prefsRes.data;

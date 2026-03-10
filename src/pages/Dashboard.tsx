@@ -55,8 +55,21 @@ export default function Dashboard() {
   const suggestions = useMemo(() => {
     if (!age) return [];
     const triedIds = new Set(diary.filter(d => d.childId === activeChild?.id).map(d => d.foodId));
+
+    // Parse safeFromAge (e.g. '6mo', '12mo') to months
+    const parseAgeMonths = (ageStr: string): number => {
+      const match = ageStr.match(/^(\d+)mo$/);
+      return match ? parseInt(match[1], 10) : 0;
+    };
+
     return foods
-      .filter(f => !triedIds.has(f.id))
+      .filter(f => {
+        if (triedIds.has(f.id)) return false;
+        // Age-gate: filter out foods not safe for child's age
+        const safeFrom = parseAgeMonths(f.safeFromAge);
+        if (safeFrom > age.months) return false;
+        return true;
+      })
       .sort(() => Math.random() - 0.5)
       .slice(0, 3);
   }, [age, diary, activeChild]);
