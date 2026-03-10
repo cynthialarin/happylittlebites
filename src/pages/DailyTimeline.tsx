@@ -178,7 +178,7 @@ export default function DailyTimeline() {
                 <div className="flex items-center justify-center gap-1 text-muted-foreground mb-1">
                   <Moon className="h-3.5 w-3.5" />
                 </div>
-                <div className="text-xl font-black">{totals.totalSleepHours > 0 ? `${totals.totalSleepHours}h` : '—'}</div>
+                <div className="text-xl font-black">{`${totals.totalSleepHours}h`}</div>
                 <div className="text-[10px] text-muted-foreground font-semibold">Sleep</div>
               </div>
               <div>
