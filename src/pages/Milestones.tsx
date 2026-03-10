@@ -1,168 +1,212 @@
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '@/contexts/AppContext';
+import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, Check } from 'lucide-react';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Progress } from '@/components/ui/progress';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
+import { Calendar } from '@/components/ui/calendar';
+import { ArrowLeft, CalendarIcon, ChevronDown, ChevronUp } from 'lucide-react';
+import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
+import { milestoneCategories } from '@/data/milestones';
+import { toast } from 'sonner';
 
-interface Milestone {
-  age: string;
-  title: string;
-  items: string[];
+interface Achievement {
+  milestone_key: string;
+  achieved_date: string;
+  notes: string;
 }
-
-const milestones: Milestone[] = [
-  {
-    age: '4-6 months',
-    title: 'Signs of Readiness',
-    items: [
-      'Can sit with minimal support',
-      'Good head and neck control',
-      'Shows interest in food (watching, reaching)',
-      'Loss of tongue-thrust reflex',
-      'Can bring objects to mouth',
-    ]
-  },
-  {
-    age: '6-8 months',
-    title: 'First Foods',
-    items: [
-      'Accepts purees from a spoon',
-      'Opens mouth when food approaches',
-      'Beginning to use palmar grasp for food',
-      'Learning to move food from front to back of mouth',
-      'Trying first allergens',
-    ]
-  },
-  {
-    age: '8-10 months',
-    title: 'Texture Exploration',
-    items: [
-      'Developing pincer grasp (thumb + finger)',
-      'Eating soft finger foods',
-      'Can handle mashed/lumpy textures',
-      'Starting to self-feed with hands',
-      'Drinking from held cup',
-    ]
-  },
-  {
-    age: '10-12 months',
-    title: 'Self-Feeding Skills',
-    items: [
-      'Picking up small foods with pincer grasp',
-      'Attempting to use a spoon',
-      'Biting and chewing soft foods',
-      'Eating a variety of textures',
-      'Drinking from open cup with help',
-    ]
-  },
-  {
-    age: '12-18 months',
-    title: 'Toddler Transitions',
-    items: [
-      'Eating most family foods (modified)',
-      'Using spoon with some accuracy',
-      'Drinking from open cup independently',
-      'Transitioning from bottles/breast',
-      'Eating 3 meals + 2-3 snacks daily',
-    ]
-  },
-  {
-    age: '18-24 months',
-    title: 'Growing Independence',
-    items: [
-      'Using fork to stab food',
-      'Drinking from straw cup well',
-      'Requesting specific foods',
-      'Normal pickiness may begin',
-      'Eating at the table with family',
-    ]
-  },
-  {
-    age: '2-3 years',
-    title: 'Mastering Mealtimes',
-    items: [
-      'Using utensils independently',
-      'Pouring from a small pitcher',
-      'Understanding mealtime routines',
-      'Helping with simple food prep',
-      'Trying some raw fruits and veggies (supervised)',
-    ]
-  },
-  {
-    age: '3-5 years',
-    title: 'Food Explorer',
-    items: [
-      'Spreading with a knife',
-      'Helping cook simple recipes',
-      'Understanding basic nutrition concepts',
-      'Eating a wider variety of foods',
-      'Good mealtime manners developing',
-    ]
-  },
-];
 
 export default function Milestones() {
   const navigate = useNavigate();
   const { activeChild, getChildAge } = useApp();
+  const { user } = useAuth();
   const age = activeChild ? getChildAge(activeChild) : null;
 
-  const getCurrentStageIndex = () => {
-    if (!age) return -1;
-    if (age.months < 6) return 0;
-    if (age.months < 8) return 1;
-    if (age.months < 10) return 2;
-    if (age.months < 12) return 3;
-    if (age.months < 18) return 4;
-    if (age.months < 24) return 5;
-    if (age.months < 36) return 6;
-    return 7;
+  const [achievements, setAchievements] = useState<Achievement[]>([]);
+  const [expandedKey, setExpandedKey] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!user || !activeChild) return;
+    setLoading(true);
+    supabase
+      .from('milestone_achievements')
+      .select('milestone_key, achieved_date, notes')
+      .eq('user_id', user.id)
+      .eq('child_id', activeChild.id)
+      .then(({ data }) => {
+        setAchievements((data as Achievement[]) || []);
+        setLoading(false);
+      });
+  }, [user, activeChild]);
+
+  const isAchieved = useCallback((key: string) => achievements.some(a => a.milestone_key === key), [achievements]);
+  const getAchievement = useCallback((key: string) => achievements.find(a => a.milestone_key === key), [achievements]);
+
+  const toggleMilestone = async (key: string) => {
+    if (!user || !activeChild) return;
+
+    if (isAchieved(key)) {
+      await supabase.from('milestone_achievements').delete().eq('user_id', user.id).eq('child_id', activeChild.id).eq('milestone_key', key);
+      setAchievements(prev => prev.filter(a => a.milestone_key !== key));
+      toast.success('Milestone unmarked');
+    } else {
+      const today = new Date().toISOString().split('T')[0];
+      const { error } = await supabase.from('milestone_achievements').insert({
+        user_id: user.id,
+        child_id: activeChild.id,
+        milestone_key: key,
+        achieved_date: today,
+        notes: '',
+      });
+      if (!error) {
+        setAchievements(prev => [...prev, { milestone_key: key, achieved_date: today, notes: '' }]);
+        toast.success('Milestone achieved! 🎉');
+      }
+    }
   };
 
-  const currentStage = getCurrentStageIndex();
+  const updateDate = async (key: string, date: Date) => {
+    if (!user || !activeChild) return;
+    const dateStr = date.toISOString().split('T')[0];
+    await supabase.from('milestone_achievements').update({ achieved_date: dateStr }).eq('user_id', user.id).eq('child_id', activeChild.id).eq('milestone_key', key);
+    setAchievements(prev => prev.map(a => a.milestone_key === key ? { ...a, achieved_date: dateStr } : a));
+  };
+
+  const updateNotes = async (key: string, notes: string) => {
+    if (!user || !activeChild) return;
+    await supabase.from('milestone_achievements').update({ notes }).eq('user_id', user.id).eq('child_id', activeChild.id).eq('milestone_key', key);
+    setAchievements(prev => prev.map(a => a.milestone_key === key ? { ...a, notes } : a));
+  };
+
+  if (!activeChild) {
+    return (
+      <div className="px-4 pt-6 pb-4 max-w-lg mx-auto">
+        <p className="text-muted-foreground text-center mt-20">Add a child profile first</p>
+      </div>
+    );
+  }
+
+  const totalAchieved = achievements.length;
+  const totalMilestones = milestoneCategories.reduce((sum, c) => sum + c.items.length, 0);
 
   return (
-    <div className="px-4 pt-4 pb-6 max-w-lg mx-auto">
+    <div className="px-4 pt-4 pb-24 max-w-lg mx-auto">
       <button onClick={() => navigate(-1)} className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-4">
         <ArrowLeft className="h-4 w-4" /> Back
       </button>
 
-      <h1 className="text-xl font-black mb-1">Feeding Milestones 📈</h1>
-      <p className="text-sm text-muted-foreground mb-5">
-        {activeChild ? `${activeChild.name} is at the "${milestones[currentStage]?.title || 'Explorer'}" stage` : 'Track your child\'s feeding journey'}
+      <h1 className="text-xl font-black mb-1">Developmental Milestones 📈</h1>
+      <p className="text-sm text-muted-foreground mb-2">
+        {activeChild.name} · {age?.label} · {totalAchieved}/{totalMilestones} achieved
       </p>
+      <Progress value={(totalAchieved / totalMilestones) * 100} className="h-2 mb-5" />
 
-      <div className="space-y-4">
-        {milestones.map((m, i) => {
-          const isCurrent = i === currentStage;
-          const isPast = i < currentStage;
+      <Tabs defaultValue="feeding">
+        <TabsList className="w-full mb-4">
+          {milestoneCategories.map(cat => (
+            <TabsTrigger key={cat.id} value={cat.id} className="flex-1 text-xs">
+              {cat.emoji} {cat.label}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+
+        {milestoneCategories.map(cat => {
+          const catAchieved = cat.items.filter(i => isAchieved(i.key)).length;
+          const catPercent = Math.round((catAchieved / cat.items.length) * 100);
 
           return (
-            <Card key={m.age} className={`${isCurrent ? 'ring-2 ring-primary bg-primary/5' : isPast ? 'opacity-60' : ''}`}>
-              <CardContent className="p-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-                    isPast ? 'bg-sage text-sage-foreground' : isCurrent ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
-                  }`}>
-                    {isPast ? <Check className="h-3.5 w-3.5" /> : i + 1}
-                  </div>
-                  <div>
-                    <span className="text-xs font-bold text-muted-foreground">{m.age}</span>
-                    <h3 className="font-bold text-sm">{m.title}</h3>
-                  </div>
-                  {isCurrent && <span className="ml-auto text-xs px-2 py-0.5 rounded-full bg-primary text-primary-foreground font-semibold">Current</span>}
-                </div>
-                <ul className="space-y-1 ml-8">
-                  {m.items.map(item => (
-                    <li key={item} className="text-xs flex items-start gap-1.5">
-                      <span className="text-muted-foreground mt-0.5">•</span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
+            <TabsContent key={cat.id} value={cat.id}>
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-sm font-bold">{cat.emoji} {cat.label}</span>
+                <span className="text-xs text-muted-foreground">{catAchieved}/{cat.items.length} ({catPercent}%)</span>
+              </div>
+              <Progress value={catPercent} className="h-1.5 mb-4" />
+
+              <div className="space-y-2">
+                {cat.items.map(item => {
+                  const achieved = isAchieved(item.key);
+                  const achievement = getAchievement(item.key);
+                  const isExpanded = expandedKey === item.key && achieved;
+
+                  return (
+                    <Card key={item.key} className={achieved ? 'border-primary/30 bg-primary/5' : ''}>
+                      <CardContent className="p-3">
+                        <div className="flex items-start gap-3">
+                          <Checkbox
+                            checked={achieved}
+                            onCheckedChange={() => toggleMilestone(item.key)}
+                            className="mt-0.5"
+                          />
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center justify-between">
+                              <span className={`text-sm font-semibold ${achieved ? 'line-through text-muted-foreground' : ''}`}>
+                                {item.label}
+                              </span>
+                              {achieved && (
+                                <button onClick={() => setExpandedKey(isExpanded ? null : item.key)} className="p-1">
+                                  {isExpanded ? <ChevronUp className="h-3.5 w-3.5 text-muted-foreground" /> : <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />}
+                                </button>
+                              )}
+                            </div>
+                            <span className="text-[10px] text-muted-foreground font-semibold">{item.ageRange}</span>
+                            {achieved && achievement && (
+                              <span className="text-[10px] text-primary font-semibold ml-2">
+                                ✓ {format(new Date(achievement.achieved_date + 'T00:00:00'), 'MMM d, yyyy')}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+
+                        {isExpanded && achievement && (
+                          <div className="mt-3 ml-7 space-y-2">
+                            <div>
+                              <label className="text-xs font-semibold text-muted-foreground">Date achieved</label>
+                              <Popover>
+                                <PopoverTrigger asChild>
+                                  <Button variant="outline" size="sm" className="w-full justify-start text-left text-xs mt-1">
+                                    <CalendarIcon className="h-3 w-3 mr-2" />
+                                    {format(new Date(achievement.achieved_date + 'T00:00:00'), 'PPP')}
+                                  </Button>
+                                </PopoverTrigger>
+                                <PopoverContent className="w-auto p-0" align="start">
+                                  <Calendar
+                                    mode="single"
+                                    selected={new Date(achievement.achieved_date + 'T00:00:00')}
+                                    onSelect={(d) => d && updateDate(item.key, d)}
+                                    disabled={(d) => d > new Date()}
+                                    className={cn("p-3 pointer-events-auto")}
+                                  />
+                                </PopoverContent>
+                              </Popover>
+                            </div>
+                            <div>
+                              <label className="text-xs font-semibold text-muted-foreground">Notes</label>
+                              <Input
+                                value={achievement.notes}
+                                onChange={(e) => updateNotes(item.key, e.target.value)}
+                                placeholder="Add a memory or note..."
+                                className="text-xs mt-1 h-8"
+                              />
+                            </div>
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  );
+                })}
+              </div>
+            </TabsContent>
           );
         })}
-      </div>
+      </Tabs>
     </div>
   );
 }
