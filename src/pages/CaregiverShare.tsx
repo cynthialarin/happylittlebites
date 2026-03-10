@@ -8,6 +8,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ArrowLeft, Download, Copy, Check, AlertTriangle, ShieldCheck, UtensilsCrossed, Calendar, Send, Mail, Baby, Moon, Droplets } from 'lucide-react';
 import { foods } from '@/data/foods';
 import { recipes } from '@/data/recipes';
@@ -20,6 +21,7 @@ export default function CaregiverShare() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);
+  const [expiration, setExpiration] = useState('7d');
   const [inviteEmail, setInviteEmail] = useState('');
   const [inviteMessage, setInviteMessage] = useState('');
   const [sendingInvite, setSendingInvite] = useState(false);
@@ -561,7 +563,22 @@ export default function CaregiverShare() {
         </Card>
       </motion.div>
 
-      {/* Actions */}
+      {/* Expiration & Actions */}
+      <div className="mb-3">
+        <Label className="text-xs font-semibold mb-1 block">Link/file expires after</Label>
+        <Select value={expiration} onValueChange={setExpiration}>
+          <SelectTrigger className="w-full">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="24h">24 hours</SelectItem>
+            <SelectItem value="7d">7 days</SelectItem>
+            <SelectItem value="30d">30 days</SelectItem>
+          </SelectContent>
+        </Select>
+        <p className="text-[10px] text-muted-foreground mt-1">Shared info reflects data at time of sharing</p>
+      </div>
+
       <div className="grid grid-cols-2 gap-2">
         <Button onClick={handleCopyToClipboard} variant="outline" className="gap-2">
           {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}

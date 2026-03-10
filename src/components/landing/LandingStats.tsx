@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { BookOpen, Apple, Globe, Brain, Users, Star } from 'lucide-react';
+import { BookOpen, Apple, Globe, Brain, Users, Star, Stethoscope } from 'lucide-react';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
@@ -34,14 +34,18 @@ export default function LandingStats() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="flex items-center justify-center gap-2 mb-2">
             <Users size={20} className="text-primary" />
-            <span className="font-heading text-lg md:text-xl font-900">Join 500+ Families</span>
+            <span className="font-heading text-lg md:text-xl font-900">We're New in Town! 🎉</span>
           </div>
-          <p className="text-sm text-muted-foreground">Parents across the US & Canada trust Happy Little Bites for their baby's feeding journey</p>
+          <p className="text-sm text-muted-foreground">Help us make this app awesome by testing it for <span className="font-bold text-primary">FREE for 1 month</span>! Join 50+ families already on board.</p>
           <div className="flex items-center justify-center gap-0.5 mt-2">
             {[...Array(5)].map((_, i) => (
               <Star key={i} size={16} className="text-accent fill-accent" />
             ))}
             <span className="text-xs font-bold text-muted-foreground ml-1.5">4.9/5 from beta testers</span>
+          </div>
+          <div className="flex items-center justify-center gap-1.5 mt-3">
+            <Stethoscope size={14} className="text-primary" />
+            <span className="text-xs font-bold text-primary">Built with pediatrician-recommended guidelines (AAP & Health Canada)</span>
           </div>
         </div>
       </motion.section>
