@@ -132,7 +132,6 @@ function AuthenticatedApp() {
 
   return (
     <AppProvider>
-      <ConsentBanner />
       <AppRoutes />
     </AppProvider>
   );
@@ -148,6 +147,7 @@ function App() {
             <Sonner />
             <OfflineFallback />
             <BrowserRouter>
+              <ConsentBanner />
               <AuthenticatedApp />
             </BrowserRouter>
           </ErrorBoundary>

@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import { Link } from 'react-router-dom';
 
 export default function Auth() {
   const [isLogin, setIsLogin] = useState(true);
@@ -11,8 +13,12 @@ export default function Auth() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [confirmedAge, setConfirmedAge] = useState(false);
   const { signIn, signUp, resetPassword } = useAuth();
   const { toast } = useToast();
+
+  const canSignUp = agreedToTerms && confirmedAge;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -79,7 +85,38 @@ export default function Auth() {
                 />
               </div>
             )}
-            <Button type="submit" className="w-full" disabled={loading}>
+
+            {!isLogin && !showReset && (
+              <div className="space-y-3 pt-1">
+                <div className="flex items-start gap-2">
+                  <Checkbox
+                    id="terms"
+                    checked={agreedToTerms}
+                    onCheckedChange={(checked) => setAgreedToTerms(checked as boolean)}
+                    className="mt-0.5"
+                  />
+                  <label htmlFor="terms" className="text-xs text-muted-foreground leading-snug cursor-pointer">
+                    I agree to the{' '}
+                    <Link to="/terms" className="text-primary hover:underline" target="_blank">Terms of Service</Link>
+                    {' '}and{' '}
+                    <Link to="/privacy" className="text-primary hover:underline" target="_blank">Privacy Policy</Link>
+                  </label>
+                </div>
+                <div className="flex items-start gap-2">
+                  <Checkbox
+                    id="age"
+                    checked={confirmedAge}
+                    onCheckedChange={(checked) => setConfirmedAge(checked as boolean)}
+                    className="mt-0.5"
+                  />
+                  <label htmlFor="age" className="text-xs text-muted-foreground leading-snug cursor-pointer">
+                    I confirm I am 18 years of age or older
+                  </label>
+                </div>
+              </div>
+            )}
+
+            <Button type="submit" className="w-full" disabled={loading || (!isLogin && !showReset && !canSignUp)}>
               {loading
                 ? '...'
                 : showReset
@@ -101,7 +138,7 @@ export default function Auth() {
             )}
             <div>
               <button
-                onClick={() => { setShowReset(false); setIsLogin(!isLogin); }}
+                onClick={() => { setShowReset(false); setIsLogin(!isLogin); setAgreedToTerms(false); setConfirmedAge(false); }}
                 className="text-sm text-muted-foreground hover:text-foreground underline"
               >
                 {showReset

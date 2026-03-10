@@ -286,6 +286,12 @@ export default function GrowthTracker() {
           </div>
         </DialogContent>
       </Dialog>
+
+      <div className="mt-6 px-2">
+        <p className="text-xs text-muted-foreground text-center leading-relaxed">
+          📊 Growth data is for informational tracking only and is not a diagnostic tool. Consult your pediatrician for any concerns about your child's growth or development.
+        </p>
+      </div>
     </div>
   );
 }
