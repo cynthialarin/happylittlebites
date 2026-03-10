@@ -8,7 +8,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { ArrowLeft, Download, Copy, Check, AlertTriangle, ShieldCheck, UtensilsCrossed, Calendar, Send, Mail, Baby } from 'lucide-react';
+import { ArrowLeft, Download, Copy, Check, AlertTriangle, ShieldCheck, UtensilsCrossed, Calendar, Send, Mail, Baby, Moon } from 'lucide-react';
 import { foods } from '@/data/foods';
 import { recipes } from '@/data/recipes';
 import { TOP_9_ALLERGENS, CA_EXTRA_ALLERGENS } from '@/types';
