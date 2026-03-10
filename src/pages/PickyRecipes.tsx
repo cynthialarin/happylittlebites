@@ -157,14 +157,18 @@ export default function PickyRecipes() {
 
         <TabsContent value="preferences">
           {/* Summary */}
-          <div className="flex gap-3 mb-4">
+          <div className="flex gap-2 mb-4">
             <div className="flex-1 rounded-lg bg-secondary/30 p-3 text-center">
               <p className="text-lg font-bold text-secondary-foreground">{lovedCount}</p>
-              <p className="text-[10px] text-muted-foreground">Loves ❤️</p>
+              <p className="text-[10px] text-muted-foreground">😋 Yummy</p>
+            </div>
+            <div className="flex-1 rounded-lg bg-accent/30 p-3 text-center">
+              <p className="text-lg font-bold text-accent-foreground">{mehCount}</p>
+              <p className="text-[10px] text-muted-foreground">😐 Meh</p>
             </div>
             <div className="flex-1 rounded-lg bg-destructive/10 p-3 text-center">
               <p className="text-lg font-bold text-destructive">{refusedCount}</p>
-              <p className="text-[10px] text-muted-foreground">Won't eat 🚫</p>
+              <p className="text-[10px] text-muted-foreground">🤢 Yucky</p>
             </div>
           </div>
 
