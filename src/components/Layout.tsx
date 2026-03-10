@@ -36,6 +36,7 @@ export default function Layout() {
       {showChildBar && (
         <div className="sticky top-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border px-4 py-2">
           <div className="flex items-center justify-between max-w-lg mx-auto">
+            <span className="text-sm font-black tracking-tight">🥦 Happy Little Bites</span>
             <Popover open={switcherOpen} onOpenChange={setSwitcherOpen}>
               <PopoverTrigger asChild>
                 <button className="flex items-center gap-2.5 hover:bg-muted/50 rounded-xl px-2 py-1.5 transition-colors">
