@@ -317,6 +317,7 @@ export default function Dashboard() {
           { label: 'Recipes', icon: BookOpen, path: '/recipes', color: 'bg-peach/20' },
           { label: 'Food Diary', icon: TrendingUp, path: '/tracker', color: 'bg-sky/20' },
           { label: 'Feeding', icon: Baby, path: '/feeding', color: 'bg-peach/10' },
+          { label: 'Sleep', icon: Moon, path: '/sleep', color: 'bg-lavender/20' },
           { label: 'First 100', icon: ListChecks, path: '/first-100-foods', color: 'bg-lavender/20' },
           { label: 'Growth', icon: TrendingUp, path: '/growth', color: 'bg-primary/10' },
         ].map(action => (

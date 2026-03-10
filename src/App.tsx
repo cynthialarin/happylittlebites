@@ -86,6 +86,7 @@ function AppRoutes() {
         <Route path="/growth" element={<GrowthTracker />} />
         <Route path="/saved-recipes" element={<SavedRecipes />} />
         <Route path="/feeding" element={<FeedingTracker />} />
+        <Route path="/sleep" element={<SleepTracker />} />
       </Route>
       <Route path="/privacy" element={<PrivacyPolicy />} />
       <Route path="/terms" element={<TermsOfService />} />

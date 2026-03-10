@@ -167,6 +167,9 @@ export default function FeedingTracker() {
         </div>
       </div>
 
+      {/* Feeding Reminders */}
+      <FeedingReminder />
+
       {/* Date Selector */}
       <div className="flex items-center justify-between mb-4">
         <button onClick={() => setSelectedDate(subDays(new Date(selectedDate), 1).toISOString().split('T')[0])} className="p-2 rounded-lg hover:bg-muted">
