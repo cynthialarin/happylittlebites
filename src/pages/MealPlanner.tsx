@@ -43,6 +43,7 @@ function getWeekDates(offset: number): { date: string; label: string; dayName: s
 }
 
 export default function MealPlanner() {
+  const navigate = useNavigate();
   const { activeChild, mealPlan, addMealPlanEntry, removeMealPlanEntry, clearWeekPlan, getChildAge } = useApp();
   const [weekOffset, setWeekOffset] = useState(0);
   const [showAdd, setShowAdd] = useState(false);
