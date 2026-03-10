@@ -91,6 +91,7 @@ export type Database = {
           avatar: string
           birthdate: string
           feeding_approach: string
+          fussy_foods: string[]
           gender: string
           id: string
           known_allergies: string[]
@@ -102,6 +103,7 @@ export type Database = {
           avatar?: string
           birthdate: string
           feeding_approach?: string
+          fussy_foods?: string[]
           gender?: string
           id: string
           known_allergies?: string[]
@@ -113,6 +115,7 @@ export type Database = {
           avatar?: string
           birthdate?: string
           feeding_approach?: string
+          fussy_foods?: string[]
           gender?: string
           id?: string
           known_allergies?: string[]

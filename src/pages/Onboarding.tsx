@@ -43,6 +43,7 @@ export default function Onboarding() {
       name: name.trim(),
       birthdate,
       knownAllergies: [],
+      fussyFoods: [],
       feedingApproach: approach,
       avatar,
       gender,

@@ -1,0 +1,1 @@
+ALTER TABLE public.children ADD COLUMN fussy_foods text[] NOT NULL DEFAULT '{}'::text[];
