@@ -85,9 +85,9 @@ export default function GroceryList() {
         <Card className="border-0 shadow-sm">
           <CardContent className="p-8 text-center">
             <ShoppingCart className="mx-auto h-12 w-12 text-muted-foreground/30 mb-3" />
-            <p className="font-bold">Your grocery list is empty</p>
-            <p className="text-sm text-muted-foreground">
-              Add ingredients from recipes or meal suggestions to start your list.
+            <p className="font-bold text-foreground">Your grocery list is empty</p>
+            <p className="text-sm text-muted-foreground mt-1 mb-1">
+              Add items manually above, or they'll appear automatically when you plan meals or save recipes.
             </p>
           </CardContent>
         </Card>
