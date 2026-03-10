@@ -141,6 +141,7 @@ export default function Dashboard() {
               { label: 'Timeline', icon: Clock, path: '/timeline', color: 'bg-sage/10' },
               { label: 'First 100', icon: ListChecks, path: '/first-100-foods', color: 'bg-lavender/20' },
               { label: 'Growth', icon: TrendingUp, path: '/growth', color: 'bg-primary/10' },
+              { label: 'Milestones', icon: Star, path: '/more/milestones', color: 'bg-peach/20' },
             ].map(action => (
               <button
                 key={action.path}
