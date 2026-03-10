@@ -50,6 +50,14 @@ export default function CaregiverShare() {
       .eq('date', today)
       .order('start_time', { ascending: true })
       .then(({ data }) => setSleepEntries(data || []));
+    supabase
+      .from('diaper_entries')
+      .select('*')
+      .eq('user_id', user.id)
+      .eq('child_id', activeChild.id)
+      .eq('date', today)
+      .order('time', { ascending: true })
+      .then(({ data }) => setDiaperEntries(data || []));
   }, [user, activeChild, today]);
 
   const childData = useMemo(() => {
