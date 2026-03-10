@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
-import { ShoppingCart, Trash2, CheckCircle2, Circle, Plus, ChevronDown, ChevronRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { ShoppingCart, Trash2, CheckCircle2, Circle, Plus, ChevronDown, ChevronRight, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -7,6 +8,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { useGroceryList, GroceryItem } from "@/hooks/useGroceryList";
 
 export default function GroceryList() {
+  const navigate = useNavigate();
   const { items, isLoading, addItems, toggleItem, deleteItem, clearChecked } = useGroceryList();
   const [newItem, setNewItem] = useState("");
   const [collapsedGroups, setCollapsedGroups] = useState<Set<string>>(new Set());
@@ -38,11 +40,16 @@ export default function GroceryList() {
   return (
     <div className="mx-auto max-w-lg px-4 pt-6 pb-4 space-y-4">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-xl font-black">Grocery List</h1>
-          <p className="text-sm text-muted-foreground">
-            {unchecked.length} item{unchecked.length !== 1 ? "s" : ""} to buy
-          </p>
+        <div className="flex items-center gap-2">
+          <button onClick={() => navigate(-1)} className="p-1.5 rounded-lg hover:bg-muted">
+            <ArrowLeft className="h-5 w-5" />
+          </button>
+          <div>
+            <h1 className="text-xl font-black">Grocery List</h1>
+            <p className="text-sm text-muted-foreground">
+              {unchecked.length} item{unchecked.length !== 1 ? "s" : ""} to buy
+            </p>
+          </div>
         </div>
         {checked.length > 0 && (
           <Button

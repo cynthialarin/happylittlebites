@@ -10,7 +10,8 @@ import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import MealSlot from '@/components/MealSlot';
 import { recipes } from '@/data/recipes';
 import { MealType, MealPlanEntry, AgeGroup } from '@/types';
-import { Sparkles, Trash2, ShoppingCart, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Sparkles, Trash2, ShoppingCart, ChevronLeft, ChevronRight, ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from '@/components/ui/sonner';
 
 const MEAL_TYPES: MealType[] = ['breakfast', 'lunch', 'dinner', 'snack'];
@@ -42,6 +43,7 @@ function getWeekDates(offset: number): { date: string; label: string; dayName: s
 }
 
 export default function MealPlanner() {
+  const navigate = useNavigate();
   const { activeChild, mealPlan, addMealPlanEntry, removeMealPlanEntry, clearWeekPlan, getChildAge } = useApp();
   const [weekOffset, setWeekOffset] = useState(0);
   const [showAdd, setShowAdd] = useState(false);
@@ -192,9 +194,14 @@ export default function MealPlanner() {
   return (
     <div className="px-4 pt-6 pb-4 max-w-lg mx-auto">
       <div className="flex items-center justify-between mb-4">
-        <div>
-          <h1 className="text-xl font-black">Meal Planner</h1>
-          <p className="text-sm text-muted-foreground">{activeChild.name}'s weekly plan</p>
+        <div className="flex items-center gap-2">
+          <button onClick={() => navigate(-1)} className="p-1.5 rounded-lg hover:bg-muted">
+            <ArrowLeft className="h-5 w-5" />
+          </button>
+          <div>
+            <h1 className="text-xl font-black">Meal Planner</h1>
+            <p className="text-sm text-muted-foreground">{activeChild.name}'s weekly plan</p>
+          </div>
         </div>
         <div className="flex gap-1.5">
           <Button size="sm" variant="outline" className="rounded-full gap-1 text-xs" onClick={handleAutoFill}>

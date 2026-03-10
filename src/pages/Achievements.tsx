@@ -1,13 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useGamification } from '@/hooks/useGamification';
 import { BADGES, LEVELS } from '@/data/badges';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { Trophy } from 'lucide-react';
+import { Trophy, ArrowLeft } from 'lucide-react';
 import Confetti from '@/components/Confetti';
 
 export default function Achievements() {
+  const navigate = useNavigate();
   const { xp, level, levelProgress, nextLevel, unlockedBadges } = useGamification();
   const [showConfetti, setShowConfetti] = useState(false);
   const prevBadgeCount = useRef<number | null>(null);
@@ -28,7 +30,12 @@ export default function Achievements() {
   return (
     <div className="px-4 pt-6 pb-4 max-w-lg mx-auto">
       <Confetti active={showConfetti} />
-      <h1 className="text-xl font-black mb-4">Achievements</h1>
+      <div className="flex items-center gap-2 mb-4">
+        <button onClick={() => navigate(-1)} className="p-1.5 rounded-lg hover:bg-muted">
+          <ArrowLeft className="h-5 w-5" />
+        </button>
+        <h1 className="text-xl font-black">Achievements</h1>
+      </div>
 
       {/* Level Card */}
       <Card className="mb-5 bg-primary/10 border-primary/20">

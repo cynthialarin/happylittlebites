@@ -9,7 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { ChevronLeft, ChevronRight, Baby, Moon, Droplets, UtensilsCrossed, Star, Copy, Printer, AlertTriangle } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Baby, Moon, Droplets, UtensilsCrossed, Star, Copy, Printer, AlertTriangle, ArrowLeft } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 export default function WeeklyReport() {
@@ -220,8 +220,13 @@ export default function WeeklyReport() {
     <div className="px-4 pt-6 pb-24 max-w-lg mx-auto print:max-w-none print:px-8">
       {/* Header */}
       <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="mb-5">
-        <h1 className="text-xl font-black mb-1">📋 Weekly Report</h1>
-        <p className="text-sm text-muted-foreground">Share with your pediatrician</p>
+        <div className="flex items-center gap-2 mb-1">
+          <button onClick={() => navigate(-1)} className="p-1.5 rounded-lg hover:bg-muted">
+            <ArrowLeft className="h-5 w-5" />
+          </button>
+          <h1 className="text-xl font-black">📋 Weekly Report</h1>
+        </div>
+        <p className="text-sm text-muted-foreground ml-9">Share with your pediatrician</p>
       </motion.div>
 
       {/* Week Selector */}

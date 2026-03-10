@@ -5,7 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
-import { Plus, TrendingUp, Ruler, Weight } from 'lucide-react';
+import { Plus, TrendingUp, Ruler, Weight, ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from '@/components/ui/sonner';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
@@ -46,6 +47,7 @@ const WHO_WEIGHT_P50 = [
 ];
 
 export default function GrowthTracker() {
+  const navigate = useNavigate();
   const { activeChild, getChildAge } = useApp();
   const [showAdd, setShowAdd] = useState(false);
   const [weight, setWeight] = useState('');
@@ -142,9 +144,14 @@ export default function GrowthTracker() {
   return (
     <div className="px-4 pt-6 pb-4 max-w-lg mx-auto">
       <div className="flex items-center justify-between mb-4">
-        <div>
-          <h1 className="text-xl font-black">Growth Tracker</h1>
-          <p className="text-sm text-muted-foreground">{activeChild.name} • {age?.label}</p>
+        <div className="flex items-center gap-2">
+          <button onClick={() => navigate(-1)} className="p-1.5 rounded-lg hover:bg-muted">
+            <ArrowLeft className="h-5 w-5" />
+          </button>
+          <div>
+            <h1 className="text-xl font-black">Growth Tracker</h1>
+            <p className="text-sm text-muted-foreground">{activeChild.name} • {age?.label}</p>
+          </div>
         </div>
         <Button size="sm" className="rounded-full gap-1 h-10 px-4" onClick={() => setShowAdd(true)}>
           <Plus className="h-4 w-4" /> Add
