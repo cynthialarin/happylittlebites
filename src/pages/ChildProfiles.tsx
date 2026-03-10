@@ -133,6 +133,7 @@ export default function ChildProfiles() {
       avatar: editForm.avatar,
       gender: editForm.gender,
       knownAllergies: editForm.knownAllergies,
+      fussyFoods: editForm.fussyFoods,
     });
     toast('✅ Profile updated!');
     setEditChild(null);
