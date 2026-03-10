@@ -117,7 +117,8 @@ export default function PickyRecipes() {
   const cyclePref = (foodName: string) => {
     const current = getPref(foodName);
     if (current === null) setFoodPreference(childId, foodName, 'loves');
-    else if (current === 'loves') setFoodPreference(childId, foodName, 'refuses');
+    else if (current === 'loves') setFoodPreference(childId, foodName, 'meh');
+    else if (current === 'meh') setFoodPreference(childId, foodName, 'refuses');
     else setFoodPreference(childId, foodName, null);
   };
 
