@@ -15,7 +15,7 @@ import NutritionGoals from '@/components/NutritionGoals';
 import ReintroductionTracker from '@/components/ReintroductionTracker';
 import TextureProgression from '@/components/TextureProgression';
 import { TOP_9_ALLERGENS, CA_EXTRA_ALLERGENS } from '@/types';
-import { UtensilsCrossed, ShieldCheck, TrendingUp, Lightbulb, BookOpen, ChevronRight, ChevronDown, Flame, ListChecks, ShoppingCart, BarChart3, Baby, Moon, Droplets, Clock } from 'lucide-react';
+import { UtensilsCrossed, ShieldCheck, TrendingUp, Lightbulb, BookOpen, ChevronRight, ChevronDown, Flame, ListChecks, ShoppingCart, BarChart3, Baby, Moon, Droplets, Clock, Star } from 'lucide-react';
 
 export default function Dashboard() {
   const { activeChild, diary, allergenRecords, getChildAge, settings } = useApp();
@@ -141,6 +141,7 @@ export default function Dashboard() {
               { label: 'Timeline', icon: Clock, path: '/timeline', color: 'bg-sage/10' },
               { label: 'First 100', icon: ListChecks, path: '/first-100-foods', color: 'bg-lavender/20' },
               { label: 'Growth', icon: TrendingUp, path: '/growth', color: 'bg-primary/10' },
+              { label: 'Milestones', icon: Star, path: '/more/milestones', color: 'bg-peach/20' },
             ].map(action => (
               <button
                 key={action.path}
@@ -324,6 +325,7 @@ export default function Dashboard() {
           { label: 'Timeline', icon: Clock, path: '/timeline', color: 'bg-sage/10' },
           { label: 'First 100', icon: ListChecks, path: '/first-100-foods', color: 'bg-lavender/20' },
           { label: 'Growth', icon: TrendingUp, path: '/growth', color: 'bg-primary/10' },
+          { label: 'Milestones', icon: Star, path: '/more/milestones', color: 'bg-peach/20' },
         ].map(action => (
           <button
             key={action.path}
