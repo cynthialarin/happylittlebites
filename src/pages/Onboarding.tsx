@@ -5,8 +5,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
 import { useApp } from '@/contexts/AppContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { FeedingApproach, Country, Gender } from '@/types';
-import { Baby, Heart, ShieldCheck, Sparkles, ChevronRight, ChevronLeft } from 'lucide-react';
+import { Baby, Heart, ShieldCheck, Sparkles, ChevronRight, ChevronLeft, LogOut } from 'lucide-react';
 
 const AVATARS = ['🐣', '🧸', '🌻', '🐰', '🦊', '🐝', '🍼', '🌈'];
 
