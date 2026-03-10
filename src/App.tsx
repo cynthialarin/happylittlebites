@@ -132,7 +132,6 @@ function AuthenticatedApp() {
 
   return (
     <AppProvider>
-      <ConsentBanner />
       <AppRoutes />
     </AppProvider>
   );
