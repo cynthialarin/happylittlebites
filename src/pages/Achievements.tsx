@@ -9,6 +9,7 @@ import { Trophy, ArrowLeft } from 'lucide-react';
 import Confetti from '@/components/Confetti';
 
 export default function Achievements() {
+  const navigate = useNavigate();
   const { xp, level, levelProgress, nextLevel, unlockedBadges } = useGamification();
   const [showConfetti, setShowConfetti] = useState(false);
   const prevBadgeCount = useRef<number | null>(null);
