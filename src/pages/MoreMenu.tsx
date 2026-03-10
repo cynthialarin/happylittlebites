@@ -3,24 +3,44 @@ import { useApp } from '@/contexts/AppContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ShieldCheck, Brain, Baby, Milestone, Users, Settings, CalendarDays, LogOut, Sparkles, Share2, ListChecks, Globe, ShoppingCart, TrendingUp, Database, FileText, Bookmark } from 'lucide-react';
+import { Globe, LogOut, FileText } from 'lucide-react';
 import { Country } from '@/types';
 
-const getMenuItems = (isCanada: boolean) => [
-  { path: '/first-100-foods', icon: ListChecks, label: 'First 100 Foods', desc: 'Guided journey through essential foods', emoji: '🗺️', color: 'bg-sage/10' },
-  { path: '/suggestions', icon: Sparkles, label: 'AI Meal Ideas', desc: 'Personalized daily meal suggestions', emoji: '✨', color: 'bg-primary/10' },
-  { path: '/meal-planner', icon: CalendarDays, label: 'Meal Planner', desc: 'Plan weekly meals & shopping list', emoji: '📅', color: 'bg-peach/10' },
-  { path: '/grocery-list', icon: ShoppingCart, label: 'Grocery List', desc: 'Track ingredients to buy', emoji: '🛒', color: 'bg-sage/20' },
-  { path: '/growth', icon: TrendingUp, label: 'Growth Tracker', desc: 'Weight, height & percentiles', emoji: '📏', color: 'bg-sky/10' },
-  { path: '/achievements', icon: ShieldCheck, label: 'Achievements', desc: 'Badges, XP & level progress', emoji: '🏆', color: 'bg-primary/10' },
-  { path: '/tracker/allergens', icon: ShieldCheck, label: 'Allergen Tracker', desc: isCanada ? 'Top 11 allergen introduction guide' : 'Top 9 allergen introduction guide', emoji: '🛡️', color: 'bg-sky/20' },
-  { path: '/more/picky-eater', icon: Brain, label: 'Picky Eater Toolkit', desc: 'Evidence-based strategies', emoji: '🧠', color: 'bg-lavender/20' },
-  { path: '/more/safety', icon: ShieldCheck, label: 'Safety Reference', desc: 'Choking, gagging & first aid', emoji: '🚨', color: 'bg-destructive/10' },
-  { path: '/more/milestones', icon: Milestone, label: 'Milestones', desc: 'Feeding milestones by age', emoji: '📈', color: 'bg-sage/20' },
-  { path: '/saved-recipes', icon: Bookmark, label: 'Saved Recipes', desc: 'AI-generated meal ideas you saved', emoji: '📌', color: 'bg-primary/5' },
-  { path: '/caregiver-share', icon: Share2, label: 'Caregiver Share', desc: 'Share food guide with daycare & family', emoji: '📤', color: 'bg-sage/10' },
-  { path: '/more/profiles', icon: Users, label: 'Child Profiles', desc: 'Manage your children', emoji: '👶', color: 'bg-peach/20' },
-  { path: '/more/data', icon: Database, label: 'Data & Privacy', desc: 'Export data, manage account', emoji: '🔐', color: 'bg-muted' },
+const menuSections = (isCanada: boolean) => [
+  {
+    title: '🛠️ Daily Tools',
+    items: [
+      { path: '/first-100-foods', label: 'First 100 Foods', desc: 'Guided journey through essential foods', emoji: '🗺️', color: 'bg-sage/10' },
+      { path: '/suggestions', label: 'AI Meal Ideas', desc: 'Personalized daily meal suggestions', emoji: '✨', color: 'bg-primary/10' },
+      { path: '/meal-planner', label: 'Meal Planner', desc: 'Plan weekly meals & shopping list', emoji: '📅', color: 'bg-peach/10' },
+      { path: '/grocery-list', label: 'Grocery List', desc: 'Track ingredients to buy', emoji: '🛒', color: 'bg-sage/20' },
+    ],
+  },
+  {
+    title: '📊 Tracking',
+    items: [
+      { path: '/growth', label: 'Growth Tracker', desc: 'Weight, height & percentiles', emoji: '📏', color: 'bg-sky/10' },
+      { path: '/achievements', label: 'Achievements', desc: 'Badges, XP & level progress', emoji: '🏆', color: 'bg-primary/10' },
+      { path: '/tracker/allergens', label: 'Allergen Tracker', desc: isCanada ? 'Top 11 allergen introduction guide' : 'Top 9 allergen introduction guide', emoji: '🛡️', color: 'bg-sky/20' },
+      { path: '/saved-recipes', label: 'Saved Recipes', desc: 'AI-generated meal ideas you saved', emoji: '📌', color: 'bg-primary/5' },
+    ],
+  },
+  {
+    title: '📖 Learning',
+    items: [
+      { path: '/more/picky-eater', label: 'Picky Eater Toolkit', desc: 'Evidence-based strategies', emoji: '🧠', color: 'bg-lavender/20' },
+      { path: '/more/safety', label: 'Safety Reference', desc: 'Choking, gagging & first aid', emoji: '🚨', color: 'bg-destructive/10' },
+      { path: '/more/milestones', label: 'Milestones', desc: 'Feeding milestones by age', emoji: '📈', color: 'bg-sage/20' },
+    ],
+  },
+  {
+    title: '⚙️ Account',
+    items: [
+      { path: '/caregiver-share', label: 'Caregiver Share', desc: 'Share food guide with daycare & family', emoji: '📤', color: 'bg-sage/10' },
+      { path: '/more/profiles', label: 'Child Profiles', desc: 'Manage your children', emoji: '👶', color: 'bg-peach/20' },
+      { path: '/more/data', label: 'Data & Privacy', desc: 'Export data, manage account', emoji: '🔐', color: 'bg-muted' },
+    ],
+  },
 ];
 
 export default function MoreMenu() {
@@ -44,19 +64,26 @@ export default function MoreMenu() {
         </Card>
       )}
 
-      <div className="space-y-2">
-        {getMenuItems(settings.country === 'CA').map(item => (
-          <button
-            key={item.path}
-            onClick={() => navigate(item.path)}
-            className={`w-full p-4 rounded-xl ${item.color} text-left hover:ring-2 ring-primary/30 transition-all flex items-center gap-3`}
-          >
-            <span className="text-2xl">{item.emoji}</span>
-            <div>
-              <p className="font-bold text-sm">{item.label}</p>
-              <p className="text-xs text-muted-foreground">{item.desc}</p>
+      <div className="space-y-5">
+        {menuSections(settings.country === 'CA').map(section => (
+          <div key={section.title}>
+            <p className="text-xs font-black text-muted-foreground uppercase tracking-wider mb-2 px-1">{section.title}</p>
+            <div className="space-y-1.5">
+              {section.items.map(item => (
+                <button
+                  key={item.path}
+                  onClick={() => navigate(item.path)}
+                  className={`w-full p-4 rounded-xl ${item.color} text-left hover:ring-2 ring-primary/30 transition-all flex items-center gap-3`}
+                >
+                  <span className="text-2xl">{item.emoji}</span>
+                  <div>
+                    <p className="font-bold text-sm">{item.label}</p>
+                    <p className="text-xs text-muted-foreground">{item.desc}</p>
+                  </div>
+                </button>
+              ))}
             </div>
-          </button>
+          </div>
         ))}
       </div>
 

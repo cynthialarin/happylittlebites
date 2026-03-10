@@ -156,14 +156,15 @@ export default function Tracker() {
 
   return (
     <div className="px-4 pt-6 pb-4 max-w-lg mx-auto">
-      <div className="flex items-center justify-between mb-4">
-        <div>
-          <h1 className="text-xl font-black">Food Diary</h1>
-          <p className="text-sm text-muted-foreground">{activeChild.name}'s eating log</p>
-        </div>
-        <Button size="sm" className="rounded-full gap-1" onClick={() => setShowAdd(true)}>
-          <Plus className="h-4 w-4" /> Log Food
+      <div className="mb-5">
+        <h1 className="text-xl font-black mb-1">Food Diary</h1>
+        <p className="text-sm text-muted-foreground mb-3">{activeChild.name}'s eating log</p>
+        <Button className="w-full rounded-full gap-2 h-12 text-base font-bold" onClick={() => setShowAdd(true)}>
+          <Plus className="h-5 w-5" /> Log a Meal
         </Button>
+        {childDiary.length === 0 && (
+          <p className="text-xs text-muted-foreground text-center mt-2">Tap above to record your baby's first food!</p>
+        )}
       </div>
 
       {/* Unique Foods Count */}

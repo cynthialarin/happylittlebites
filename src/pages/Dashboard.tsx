@@ -1,10 +1,12 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useApp } from '@/contexts/AppContext';
 import { useGamification } from '@/hooks/useGamification';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
+import { Button } from '@/components/ui/button';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { foods } from '@/data/foods';
 import FoodImage from '@/components/FoodImage';
 import NutritionSummary from '@/components/NutritionSummary';
@@ -12,16 +14,14 @@ import NutritionScorecard from '@/components/NutritionScorecard';
 import NutritionGoals from '@/components/NutritionGoals';
 import ReintroductionTracker from '@/components/ReintroductionTracker';
 import TextureProgression from '@/components/TextureProgression';
-import { FOOD_GROUP_COLORS } from '@/data/badges';
-import { TOP_9_ALLERGENS, CA_EXTRA_ALLERGENS, FoodGroup } from '@/types';
-import { UtensilsCrossed, ShieldCheck, TrendingUp, Lightbulb, BookOpen, ChevronRight, Trophy, Flame, Sparkles, ListChecks, ShoppingCart } from 'lucide-react';
-
-
+import { TOP_9_ALLERGENS, CA_EXTRA_ALLERGENS } from '@/types';
+import { UtensilsCrossed, ShieldCheck, TrendingUp, Lightbulb, BookOpen, ChevronRight, ChevronDown, Flame, ListChecks, ShoppingCart, BarChart3 } from 'lucide-react';
 
 export default function Dashboard() {
   const { activeChild, diary, allergenRecords, getChildAge, settings } = useApp();
   const navigate = useNavigate();
   const gamification = useGamification();
+  const [insightsOpen, setInsightsOpen] = useState(false);
 
   const age = activeChild ? getChildAge(activeChild) : null;
 
@@ -47,6 +47,11 @@ export default function Dashboard() {
   const totalAllergens = settings.country === 'CA' ? TOP_9_ALLERGENS.length + CA_EXTRA_ALLERGENS.length : TOP_9_ALLERGENS.length;
   const allergenProgress = (stats.allergensIntro / totalAllergens) * 100;
 
+  const isNewUser = useMemo(() => {
+    if (!activeChild) return true;
+    return diary.filter(d => d.childId === activeChild.id).length === 0;
+  }, [activeChild, diary]);
+
   const suggestions = useMemo(() => {
     if (!age) return [];
     const triedIds = new Set(diary.filter(d => d.childId === activeChild?.id).map(d => d.foodId));
@@ -55,17 +60,6 @@ export default function Dashboard() {
       .sort(() => Math.random() - 0.5)
       .slice(0, 3);
   }, [age, diary, activeChild]);
-
-  const feedingStage = useMemo(() => {
-    if (!age) return '';
-    if (age.months < 6) return 'Getting ready for solids!';
-    if (age.months < 9) return 'Starting solids — purees & first tastes';
-    if (age.months < 12) return 'Exploring textures & finger foods';
-    if (age.months < 18) return 'Self-feeding & expanding variety';
-    if (age.months < 24) return 'Toddler meals & independence';
-    if (age.months < 36) return 'Family meals & adventurous eating';
-    return 'Independent eater & food explorer';
-  }, [age]);
 
   if (!activeChild) {
     return (
@@ -79,25 +73,90 @@ export default function Dashboard() {
     );
   }
 
-  const { level, levelProgress, nextLevel, xp, weeklyChallenge, challengeProgress, unlockedBadges } = gamification;
+  const { level, levelProgress, nextLevel, xp, weeklyChallenge, challengeProgress } = gamification;
 
+  // New user getting started view
+  if (isNewUser) {
+    return (
+      <div className="px-4 pt-6 pb-4 max-w-lg mx-auto">
+        <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="mb-6">
+          <h1 className="text-xl font-black">Welcome! 🎉</h1>
+          <p className="text-sm text-muted-foreground">Let's get {activeChild.name} started on their food journey</p>
+        </motion.div>
+
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
+          <Card className="mb-5 border-primary/20 bg-primary/5">
+            <CardContent className="p-5">
+              <h2 className="text-sm font-black mb-4">Getting Started — 3 Easy Steps</h2>
+              <div className="space-y-4">
+                {[
+                  { step: 1, emoji: '📝', title: 'Log your first meal', desc: 'Record what your baby ate today', action: () => navigate('/tracker'), btn: 'Log a Meal' },
+                  { step: 2, emoji: '📚', title: 'Explore the Food Library', desc: 'Discover age-appropriate foods & prep tips', action: () => navigate('/foods'), btn: 'Browse Foods' },
+                  { step: 3, emoji: '🛡️', title: 'Start introducing allergens', desc: 'Follow a safe, guided allergen plan', action: () => navigate('/tracker/allergens'), btn: 'View Allergens' },
+                ].map(item => (
+                  <div key={item.step} className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-sm font-black text-primary shrink-0">
+                      {item.step}
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-bold">{item.emoji} {item.title}</p>
+                      <p className="text-xs text-muted-foreground mb-1.5">{item.desc}</p>
+                      <Button size="sm" variant={item.step === 1 ? 'default' : 'outline'} className="rounded-full text-xs h-7 px-3" onClick={item.action}>
+                        {item.btn}
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+
+        {/* AI CTA */}
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mb-5">
+          <button onClick={() => navigate('/suggestions')} className="w-full">
+            <Card className="bg-gradient-to-r from-primary/10 to-accent/10 border-primary/20 hover:ring-2 ring-primary/30 transition-all">
+              <CardContent className="p-4 flex items-center gap-3">
+                <div className="h-10 w-10 rounded-xl bg-primary/20 flex items-center justify-center text-lg">✨</div>
+                <div className="flex-1 text-left">
+                  <p className="text-sm font-bold">What should {activeChild.name} eat today?</p>
+                  <p className="text-xs text-muted-foreground">AI-powered meal ideas personalized for {age?.label}</p>
+                </div>
+                <ChevronRight className="h-4 w-4 text-muted-foreground" />
+              </CardContent>
+            </Card>
+          </button>
+        </motion.div>
+
+        {/* Quick Actions */}
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+          <div className="grid grid-cols-3 gap-2">
+            {[
+              { label: 'Food Library', icon: UtensilsCrossed, path: '/foods', color: 'bg-sage/20' },
+              { label: 'Recipes', icon: BookOpen, path: '/recipes', color: 'bg-peach/20' },
+              { label: 'Food Diary', icon: TrendingUp, path: '/tracker', color: 'bg-sky/20' },
+              { label: 'First 100', icon: ListChecks, path: '/first-100-foods', color: 'bg-lavender/20' },
+              { label: 'Groceries', icon: ShoppingCart, path: '/grocery-list', color: 'bg-sage/10' },
+              { label: 'Growth', icon: TrendingUp, path: '/growth', color: 'bg-primary/10' },
+            ].map(action => (
+              <button
+                key={action.path}
+                onClick={() => navigate(action.path)}
+                className={`${action.color} p-4 rounded-xl text-left hover:ring-2 ring-primary/30 transition-all`}
+              >
+                <action.icon className="h-5 w-5 mb-2 text-foreground" />
+                <span className="text-xs font-bold">{action.label}</span>
+              </button>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
+
+  // Returning user dashboard
   return (
     <div className="px-4 pt-6 pb-4 max-w-lg mx-auto">
-      {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="mb-5"
-      >
-        <div className="flex items-center gap-3 mb-1">
-          <div className="text-4xl">{activeChild.avatar}</div>
-          <div className="flex-1">
-            <h1 className="text-xl font-black">{activeChild.name}'s Dashboard</h1>
-            <p className="text-sm text-muted-foreground">{age?.label} • {feedingStage}</p>
-          </div>
-        </div>
-      </motion.div>
-
       {/* XP & Level Bar */}
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}>
         <button onClick={() => navigate('/achievements')} className="w-full mb-4">
@@ -184,26 +243,7 @@ export default function Dashboard() {
         </CardContent>
       </Card>
 
-      {/* Nutrition Scorecard */}
-      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.42 }} className="mb-5">
-        <NutritionScorecard childId={activeChild.id} days={7} compact />
-      </motion.div>
-
-      {/* Nutrition Summary */}
-      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45 }} className="mb-5">
-        <NutritionSummary childId={activeChild.id} days={7} />
-      </motion.div>
-
-      {/* Texture Progression */}
-      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.47 }} className="mb-5">
-        <TextureProgression />
-      </motion.div>
-
-      {/* Reintroduction Tracker */}
-      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.49 }} className="mb-5">
-        <ReintroductionTracker />
-      </motion.div>
-
+      {/* Try Today */}
       <div className="mb-5">
         <div className="flex items-center gap-2 mb-3">
           <Lightbulb className="h-4 w-4 text-primary" />
@@ -247,6 +287,27 @@ export default function Dashboard() {
           </Card>
         </button>
       </motion.div>
+
+      {/* Detailed Insights — Collapsible */}
+      <Collapsible open={insightsOpen} onOpenChange={setInsightsOpen} className="mb-5">
+        <CollapsibleTrigger className="w-full">
+          <Card className="hover:ring-2 ring-primary/30 transition-all">
+            <CardContent className="p-4 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <BarChart3 className="h-4 w-4 text-primary" />
+                <span className="text-sm font-bold">Detailed Insights</span>
+              </div>
+              <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform ${insightsOpen ? 'rotate-180' : ''}`} />
+            </CardContent>
+          </Card>
+        </CollapsibleTrigger>
+        <CollapsibleContent className="space-y-4 mt-4">
+          <NutritionScorecard childId={activeChild.id} days={7} compact />
+          <NutritionSummary childId={activeChild.id} days={7} />
+          <TextureProgression />
+          <ReintroductionTracker />
+        </CollapsibleContent>
+      </Collapsible>
 
       {/* Quick Actions */}
       <div className="grid grid-cols-3 gap-2">
