@@ -283,6 +283,97 @@ export default function ChildProfiles() {
           </Button>
         </DialogContent>
       </Dialog>
+
+      {/* Edit Child Dialog */}
+      <Dialog open={!!editChild} onOpenChange={(open) => !open && setEditChild(null)}>
+        <DialogContent className="max-w-md mx-4 max-h-[85vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Edit {editChild?.name}'s Profile</DialogTitle>
+            <DialogDescription>Update your child's information</DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4">
+            <div>
+              <Label className="font-semibold">Avatar</Label>
+              <div className="flex gap-2 flex-wrap mt-1">
+                {AVATARS.map(a => (
+                  <button key={a} onClick={() => setEditForm(prev => ({ ...prev, avatar: a }))} className={`text-2xl p-2 rounded-xl ${editForm.avatar === a ? 'bg-primary/20 ring-2 ring-primary' : 'bg-muted'}`}>{a}</button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <Label className="font-semibold">Name</Label>
+              <Input placeholder="e.g., Luna" value={editForm.name} onChange={e => setEditForm(prev => ({ ...prev, name: e.target.value }))} className="mt-1" />
+            </div>
+
+            <div>
+              <Label className="font-semibold">Date of birth</Label>
+              <Input type="date" value={editForm.birthdate} onChange={e => setEditForm(prev => ({ ...prev, birthdate: e.target.value }))} className="mt-1" max={new Date().toISOString().split('T')[0]} />
+            </div>
+
+            <div>
+              <Label className="font-semibold">Gender</Label>
+              <div className="flex gap-2 mt-1">
+                {GENDER_OPTIONS.map(opt => (
+                  <button
+                    key={opt.value}
+                    onClick={() => setEditForm(prev => ({ ...prev, gender: opt.value }))}
+                    className={`flex-1 p-3 rounded-xl border-2 text-center transition-all ${editForm.gender === opt.value ? 'border-primary bg-primary/15 ring-2 ring-primary/30' : 'border-border hover:border-primary/40'}`}
+                  >
+                    <div className="text-lg">{opt.emoji}</div>
+                    <div className="text-xs font-bold mt-0.5">{opt.label}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <Label className="font-semibold">Feeding Approach</Label>
+              <div className="flex gap-2 mt-1">
+                {APPROACH_OPTIONS.map(opt => (
+                  <button
+                    key={opt.value}
+                    onClick={() => setEditForm(prev => ({ ...prev, approach: opt.value }))}
+                    className={`flex-1 p-3 rounded-xl border-2 text-center transition-all ${editForm.approach === opt.value ? 'border-primary bg-primary/15 ring-2 ring-primary/30' : 'border-border hover:border-primary/40'}`}
+                  >
+                    <div className="text-lg">{opt.emoji}</div>
+                    <div className="text-xs font-bold mt-0.5">{opt.label}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <Label className="font-semibold">Known Allergies</Label>
+              <div className="flex gap-2 flex-wrap mt-2">
+                {TOP_9_ALLERGENS.map(allergen => {
+                  const selected = editForm.knownAllergies.includes(allergen);
+                  return (
+                    <button
+                      key={allergen}
+                      onClick={() => setEditForm(prev => ({
+                        ...prev,
+                        knownAllergies: selected
+                          ? prev.knownAllergies.filter(a => a !== allergen)
+                          : [...prev.knownAllergies, allergen],
+                      }))}
+                      className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-all ${selected ? 'border-destructive bg-destructive/10 text-destructive' : 'border-border text-muted-foreground hover:border-primary/40'}`}
+                    >
+                      {allergen}
+                    </button>
+                  );
+                })}
+              </div>
+              <p className="text-[10px] text-muted-foreground mt-1">Tap to toggle. These help filter safety warnings.</p>
+            </div>
+          </div>
+
+          <Button className="w-full rounded-full mt-2" onClick={handleSaveEdit} disabled={!editFormValid}>
+            Save Changes
+          </Button>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
