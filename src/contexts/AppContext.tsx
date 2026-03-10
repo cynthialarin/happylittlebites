@@ -263,7 +263,12 @@ export function AppProvider({ children: reactChildren }: { children: React.React
   const getChildAge = useCallback((child: ChildProfile) => {
     const birth = new Date(child.birthdate);
     const now = new Date();
-    const months = (now.getFullYear() - birth.getFullYear()) * 12 + (now.getMonth() - birth.getMonth());
+    let months = (now.getFullYear() - birth.getFullYear()) * 12 + (now.getMonth() - birth.getMonth());
+    // If we haven't reached the birth day-of-month yet this month, subtract one
+    if (now.getDate() < birth.getDate()) {
+      months -= 1;
+    }
+    if (months < 0) months = 0;
     let label = '';
     if (months < 12) label = `${months} month${months !== 1 ? 's' : ''} old`;
     else {
