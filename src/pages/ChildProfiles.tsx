@@ -13,7 +13,6 @@ import { FeedingApproach, Gender, TOP_9_ALLERGENS, ChildProfile } from '@/types'
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/components/ui/sonner';
 import ChildAvatar from '@/components/ChildAvatar';
-import { Pencil } from 'lucide-react';
 
 const AVATARS = ['🐣', '🧸', '🌻', '🐰', '🦊', '🐝', '🍼', '🌈'];
 
