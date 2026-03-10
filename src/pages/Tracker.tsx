@@ -8,9 +8,10 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
+import { Badge } from '@/components/ui/badge';
 import { foods } from '@/data/foods';
 import { AcceptanceLevel, MealType, TextureStage, ReactionSeverity } from '@/types';
-import { Plus, Calendar, Trash2, Camera, X, Image as ImageIcon } from 'lucide-react';
+import { Plus, Calendar, Trash2, Camera, X, Image as ImageIcon, AlertTriangle } from 'lucide-react';
 import { toast } from '@/components/ui/sonner';
 import { supabase } from '@/integrations/supabase/client';
 import PhotoLightbox from '@/components/PhotoLightbox';
@@ -25,8 +26,14 @@ const TEXTURE_LABELS: Record<TextureStage, string> = {
   regular: '🍽️ Regular',
 };
 
+const SEVERITY_CONFIG: Record<string, { label: string; color: string; bgClass: string }> = {
+  mild: { label: '🟡 Mild', color: 'text-yellow-700', bgClass: 'bg-yellow-100 text-yellow-800 border-yellow-300' },
+  moderate: { label: '🟠 Moderate', color: 'text-orange-700', bgClass: 'bg-orange-100 text-orange-800 border-orange-300' },
+  severe: { label: '🔴 Severe', color: 'text-red-700', bgClass: 'bg-red-100 text-red-800 border-red-300' },
+};
+
 export default function Tracker() {
-  const { activeChild, diary, addDiaryEntry, removeDiaryEntry } = useApp();
+  const { activeChild, diary, addDiaryEntry, removeDiaryEntry, updateChild } = useApp();
   const { user } = useAuth();
   const [showAdd, setShowAdd] = useState(false);
   const [formFood, setFormFood] = useState('');
@@ -39,6 +46,10 @@ export default function Tracker() {
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Allergy prompt state
+  const [allergyPromptOpen, setAllergyPromptOpen] = useState(false);
+  const [allergyPromptFood, setAllergyPromptFood] = useState('');
 
   // Lightbox state
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -57,6 +68,30 @@ export default function Tracker() {
     });
     return Object.entries(groups).sort(([a], [b]) => b.localeCompare(a));
   }, [childDiary]);
+
+  // Check if current food has previous reactions or is a known allergen
+  const foodWarning = useMemo(() => {
+    if (!activeChild || !formFood.trim()) return null;
+    const foodLower = formFood.trim().toLowerCase();
+
+    // Check known allergies
+    if (activeChild.knownAllergies?.some(a => a.toLowerCase() === foodLower)) {
+      return { type: 'allergy' as const, message: `⚠️ ${formFood} is listed in ${activeChild.name}'s known allergies!` };
+    }
+
+    // Check past reactions
+    const pastReaction = childDiary.find(
+      d => d.foodName.toLowerCase() === foodLower && d.reactionSeverity && d.reactionSeverity !== 'none'
+    );
+    if (pastReaction) {
+      const date = new Date(pastReaction.date + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      return {
+        type: 'reaction' as const,
+        message: `⚠️ ${activeChild.name} had a ${pastReaction.reactionSeverity} reaction to this food on ${date}: "${pastReaction.reaction}"`,
+      };
+    }
+    return null;
+  }, [activeChild, formFood, childDiary]);
 
   // Collect all photos for the lightbox
   const allPhotos = useMemo(() => {
@@ -104,6 +139,7 @@ export default function Tracker() {
 
     const entryId = crypto.randomUUID();
     const matchedFood = foods.find(f => f.name.toLowerCase() === formFood.toLowerCase());
+    const savedFoodName = formFood;
 
     let photoUrl: string | undefined;
     if (photoFile) {
@@ -125,17 +161,43 @@ export default function Tracker() {
       notes: '',
       photoUrl,
     });
+
     const isNew = !childDiary.some(d => d.foodId === (matchedFood?.id || formFood.toLowerCase().replace(/\s+/g, '-')));
     setFormFood('');
     setFormReaction('');
+    setFormSeverity('none');
     clearPhoto();
     setShowAdd(false);
     setUploading(false);
+
     if (isNew) {
-      toast('🎉 New food! +25 XP', { description: `${formFood} added to the diary` });
+      toast('🎉 New food! +25 XP', { description: `${savedFoodName} added to the diary` });
     } else {
       toast('📝 Food logged! +10 XP');
     }
+
+    // Prompt to add to known allergies if reaction was logged
+    if (formSeverity !== 'none' && formReaction.trim()) {
+      const alreadyKnown = activeChild.knownAllergies?.some(
+        a => a.toLowerCase() === savedFoodName.toLowerCase()
+      );
+      if (!alreadyKnown) {
+        setAllergyPromptFood(savedFoodName);
+        setAllergyPromptOpen(true);
+      }
+    }
+  };
+
+  const handleAddToAllergies = () => {
+    if (!activeChild || !allergyPromptFood) return;
+    const updated = {
+      ...activeChild,
+      knownAllergies: [...(activeChild.knownAllergies || []), allergyPromptFood],
+    };
+    updateChild(updated);
+    toast('🛡️ Allergy saved', { description: `${allergyPromptFood} added to ${activeChild.name}'s known allergies` });
+    setAllergyPromptOpen(false);
+    setAllergyPromptFood('');
   };
 
   const handleDelete = (id: string) => {
@@ -208,7 +270,14 @@ export default function Tracker() {
                     <div className="flex-1 min-w-0">
                       <span className="text-sm font-semibold">{entry.foodName}</span>
                       {entry.reaction && (
-                        <p className="text-[10px] text-destructive font-medium">{entry.reaction}</p>
+                        <div className="flex items-center gap-1 mt-0.5">
+                          <p className="text-[10px] text-destructive font-medium">{entry.reaction}</p>
+                          {entry.reactionSeverity && entry.reactionSeverity !== 'none' && SEVERITY_CONFIG[entry.reactionSeverity] && (
+                            <Badge variant="outline" className={`text-[9px] px-1 py-0 h-4 ${SEVERITY_CONFIG[entry.reactionSeverity].bgClass}`}>
+                              {entry.reactionSeverity}
+                            </Badge>
+                          )}
+                        </div>
                       )}
                     </div>
                     <span className="text-lg">{ACCEPTANCE_EMOJI[entry.acceptance]}</span>
@@ -249,8 +318,31 @@ export default function Tracker() {
         onClose={() => setLightboxOpen(false)}
       />
 
+      {/* Allergy Prompt Dialog */}
+      <AlertDialog open={allergyPromptOpen} onOpenChange={setAllergyPromptOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2">
+              <AlertTriangle className="h-5 w-5 text-orange-500" />
+              Add to known allergies?
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              It looks like {activeChild.name} had a reaction to <strong>{allergyPromptFood}</strong>. Would you like to add it to their known allergies so you'll be warned in the future?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => { setAllergyPromptOpen(false); setAllergyPromptFood(''); }}>
+              No, skip
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={handleAddToAllergies} className="bg-orange-600 hover:bg-orange-700 text-white">
+              Yes, save allergy
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
       {/* Add Dialog */}
-      <Dialog open={showAdd} onOpenChange={(open) => { setShowAdd(open); if (!open) clearPhoto(); }}>
+      <Dialog open={showAdd} onOpenChange={(open) => { setShowAdd(open); if (!open) { clearPhoto(); setFormSeverity('none'); } }}>
         <DialogContent className="max-w-md mx-4">
           <DialogHeader>
             <DialogTitle>Log a Food</DialogTitle>
@@ -263,6 +355,17 @@ export default function Tracker() {
               <datalist id="food-suggestions">
                 {foods.map(f => <option key={f.id} value={f.name} />)}
               </datalist>
+              {/* Warning banner for known reactive foods */}
+              {foodWarning && (
+                <div className={`mt-2 p-2.5 rounded-lg border flex items-start gap-2 text-xs font-medium ${
+                  foodWarning.type === 'allergy'
+                    ? 'bg-red-50 border-red-200 text-red-700'
+                    : 'bg-yellow-50 border-yellow-200 text-yellow-800'
+                }`}>
+                  <AlertTriangle className="h-4 w-4 shrink-0 mt-0.5" />
+                  <span>{foodWarning.message}</span>
+                </div>
+              )}
             </div>
 
             {/* Photo upload */}
@@ -360,6 +463,33 @@ export default function Tracker() {
             <div>
               <Label className="font-semibold">Any reaction?</Label>
               <Input placeholder="e.g., mild rash around mouth" value={formReaction} onChange={e => setFormReaction(e.target.value)} className="mt-1" />
+              {/* Severity picker — shown when reaction text is entered */}
+              {formReaction.trim() && (
+                <div className="mt-2">
+                  <Label className="text-xs text-muted-foreground">Reaction severity</Label>
+                  <div className="flex gap-1.5 mt-1">
+                    {(['none', 'mild', 'moderate', 'severe'] as ReactionSeverity[]).map(sev => {
+                      const isActive = formSeverity === sev;
+                      const config = SEVERITY_CONFIG[sev];
+                      return (
+                        <button
+                          key={sev}
+                          onClick={() => setFormSeverity(sev)}
+                          className={`flex-1 px-2 py-1.5 rounded-lg text-xs font-semibold transition-all border ${
+                            isActive
+                              ? sev === 'none'
+                                ? 'bg-muted ring-2 ring-primary border-primary'
+                                : `${config?.bgClass} ring-2 ring-offset-1`
+                              : 'bg-muted border-transparent hover:bg-muted/80'
+                          }`}
+                        >
+                          {sev === 'none' ? '✅ None' : config?.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
             <Button className="w-full rounded-full" onClick={handleAdd} disabled={!formFood.trim() || uploading}>
               {uploading ? 'Uploading…' : 'Save Entry'}
