@@ -15,7 +15,7 @@ import NutritionGoals from '@/components/NutritionGoals';
 import ReintroductionTracker from '@/components/ReintroductionTracker';
 import TextureProgression from '@/components/TextureProgression';
 import { TOP_9_ALLERGENS, CA_EXTRA_ALLERGENS } from '@/types';
-import { UtensilsCrossed, ShieldCheck, TrendingUp, Lightbulb, BookOpen, ChevronRight, ChevronDown, Flame, ListChecks, ShoppingCart, BarChart3, Baby, Moon, Droplets, Clock, Star, FileText } from 'lucide-react';
+import { UtensilsCrossed, ShieldCheck, TrendingUp, Lightbulb, BookOpen, ChevronRight, ChevronDown, Flame, ListChecks, ShoppingCart, BarChart3, Baby, Moon, Droplets, Clock, Star, FileText, ShieldAlert, Users } from 'lucide-react';
 
 export default function Dashboard() {
   const { activeChild, diary, allergenRecords, getChildAge, settings } = useApp();
@@ -177,6 +177,8 @@ export default function Dashboard() {
               { label: 'Growth', icon: TrendingUp, path: '/growth', color: 'bg-primary/10' },
               { label: 'Milestones', icon: Star, path: '/more/milestones', color: 'bg-peach/20' },
               { label: 'Report', icon: FileText, path: '/weekly-report', color: 'bg-primary/5' },
+              { label: 'Emergency', icon: ShieldAlert, path: '/more/safety', color: 'bg-destructive/10' },
+              { label: 'Share', icon: Users, path: '/caregiver-share', color: 'bg-accent/10' },
             ].map(action => (
               <button
                 key={action.path}
@@ -313,6 +315,36 @@ export default function Dashboard() {
         </button>
       </motion.div>
 
+      {/* Emergency SOS + Caregiver Share */}
+      <div className="grid grid-cols-2 gap-2 mb-5">
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.55 }}>
+          <button onClick={() => navigate('/more/safety')} className="w-full h-full">
+            <Card className="bg-destructive/10 border-destructive/20 hover:ring-2 ring-destructive/30 transition-all h-full">
+              <CardContent className="p-3.5 flex items-start gap-2.5">
+                <ShieldAlert className="h-5 w-5 text-destructive shrink-0 mt-0.5" />
+                <div className="text-left">
+                  <p className="text-xs font-bold">Emergency SOS</p>
+                  <p className="text-[10px] text-muted-foreground">Choking & allergy first aid</p>
+                </div>
+              </CardContent>
+            </Card>
+          </button>
+        </motion.div>
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}>
+          <button onClick={() => navigate('/caregiver-share')} className="w-full h-full">
+            <Card className="bg-accent/10 border-accent/20 hover:ring-2 ring-accent/30 transition-all h-full">
+              <CardContent className="p-3.5 flex items-start gap-2.5">
+                <Users className="h-5 w-5 text-accent shrink-0 mt-0.5" />
+                <div className="text-left">
+                  <p className="text-xs font-bold">Share Report</p>
+                  <p className="text-[10px] text-muted-foreground">Send to a caregiver</p>
+                </div>
+              </CardContent>
+            </Card>
+          </button>
+        </motion.div>
+      </div>
+
       {/* Detailed Insights — Collapsible */}
       <Collapsible open={insightsOpen} onOpenChange={setInsightsOpen} className="mb-5">
         <CollapsibleTrigger className="w-full">
@@ -348,6 +380,8 @@ export default function Dashboard() {
           { label: 'Growth', icon: TrendingUp, path: '/growth', color: 'bg-primary/10' },
           { label: 'Milestones', icon: Star, path: '/more/milestones', color: 'bg-peach/20' },
           { label: 'Report', icon: FileText, path: '/weekly-report', color: 'bg-primary/5' },
+          { label: 'Emergency', icon: ShieldAlert, path: '/more/safety', color: 'bg-destructive/10' },
+          { label: 'Share', icon: Users, path: '/caregiver-share', color: 'bg-accent/10' },
         ].map(action => (
           <button
             key={action.path}
