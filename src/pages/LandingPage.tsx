@@ -107,19 +107,6 @@ export default function LandingPage() {
       {/* What Makes Us Different */}
       <LandingDifferentiators />
 
-      {/* Testimonial */}
-      <motion.section
-        initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }} variants={fadeUp}
-        className="px-5 py-16 md:py-20 bg-sage/10"
-      >
-        <div className="max-w-2xl mx-auto text-center">
-          <div className="text-4xl mb-4">💛</div>
-          <blockquote className="font-heading text-xl md:text-2xl font-700 italic leading-relaxed text-foreground/85 mb-4">
-            "Finally, one app that does it all. I used to have three different trackers — now Happy Little Bites is the only one I need."
-          </blockquote>
-          <p className="text-sm text-muted-foreground font-heading font-bold">— A happy beta tester</p>
-        </div>
-      </motion.section>
 
       {/* FAQ */}
       <LandingFAQ />

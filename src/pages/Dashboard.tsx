@@ -88,14 +88,35 @@ export default function Dashboard() {
 
   const { level, levelProgress, nextLevel, xp, weeklyChallenge, challengeProgress } = gamification;
 
+  // XP Bar component used in both new & returning views
+  const XpBar = () => (
+    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}>
+      <button onClick={() => navigate('/achievements')} className="w-full mb-4">
+        <Card className="bg-primary/10 border-primary/20 hover:ring-2 ring-primary/30 transition-all">
+          <CardContent className="p-3">
+            <div className="flex items-center gap-2 mb-1.5">
+              <span className="text-xl">{level.emoji}</span>
+              <span className="text-sm font-black">{level.title}</span>
+              <span className="text-xs text-muted-foreground ml-auto font-bold">{xp} XP</span>
+              <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" />
+            </div>
+            {nextLevel && <Progress value={levelProgress} className="h-1.5" />}
+          </CardContent>
+        </Card>
+      </button>
+    </motion.div>
+  );
+
   // New user getting started view
   if (isNewUser) {
     return (
       <div className="px-4 pt-6 pb-4 max-w-lg mx-auto">
-        <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="mb-6">
+        <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="mb-4">
           <h1 className="text-xl font-black">Welcome! 🎉</h1>
           <p className="text-sm text-muted-foreground">Let's get {activeChild.name} started on their food journey</p>
         </motion.div>
+
+        <XpBar />
 
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
           <Card className="mb-5 border-primary/20 bg-primary/5">
@@ -176,21 +197,7 @@ export default function Dashboard() {
   return (
     <div className="px-4 pt-6 pb-4 max-w-lg mx-auto">
       {/* XP & Level Bar */}
-      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}>
-        <button onClick={() => navigate('/achievements')} className="w-full mb-4">
-          <Card className="bg-primary/10 border-primary/20 hover:ring-2 ring-primary/30 transition-all">
-            <CardContent className="p-3">
-              <div className="flex items-center gap-2 mb-1.5">
-                <span className="text-xl">{level.emoji}</span>
-                <span className="text-sm font-black">{level.title}</span>
-                <span className="text-xs text-muted-foreground ml-auto font-bold">{xp} XP</span>
-                <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" />
-              </div>
-              {nextLevel && <Progress value={levelProgress} className="h-1.5" />}
-            </CardContent>
-          </Card>
-        </button>
-      </motion.div>
+      <XpBar />
 
       {/* Stats Grid */}
       <div className="grid grid-cols-3 gap-2 mb-5">

@@ -30,10 +30,18 @@ export default function HintTooltip({ id, children, message, emoji = '💡', pos
 
   useEffect(() => {
     if (!hasSeenHint(id)) {
-      const timer = setTimeout(() => setVisible(true), 800);
-      return () => clearTimeout(timer);
+      const showTimer = setTimeout(() => setVisible(true), 800);
+      return () => clearTimeout(showTimer);
     }
   }, [id]);
+
+  // Auto-dismiss after 4 seconds
+  useEffect(() => {
+    if (visible) {
+      const hideTimer = setTimeout(() => dismiss(), 4000);
+      return () => clearTimeout(hideTimer);
+    }
+  }, [visible]);
 
   const dismiss = () => {
     setVisible(false);
