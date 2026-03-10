@@ -59,6 +59,7 @@ export default function PickyRecipes() {
   const prefs = foodPreferences[childId] || {};
 
   const lovedCount = Object.values(prefs).filter(v => v === 'loves').length;
+  const mehCount = Object.values(prefs).filter(v => v === 'meh').length;
   const refusedCount = Object.values(prefs).filter(v => v === 'refuses').length;
 
   const foodsByGroup = useMemo(() => {
@@ -116,7 +117,8 @@ export default function PickyRecipes() {
   const cyclePref = (foodName: string) => {
     const current = getPref(foodName);
     if (current === null) setFoodPreference(childId, foodName, 'loves');
-    else if (current === 'loves') setFoodPreference(childId, foodName, 'refuses');
+    else if (current === 'loves') setFoodPreference(childId, foodName, 'meh');
+    else if (current === 'meh') setFoodPreference(childId, foodName, 'refuses');
     else setFoodPreference(childId, foodName, null);
   };
 
@@ -155,14 +157,18 @@ export default function PickyRecipes() {
 
         <TabsContent value="preferences">
           {/* Summary */}
-          <div className="flex gap-3 mb-4">
+          <div className="flex gap-2 mb-4">
             <div className="flex-1 rounded-lg bg-secondary/30 p-3 text-center">
               <p className="text-lg font-bold text-secondary-foreground">{lovedCount}</p>
-              <p className="text-[10px] text-muted-foreground">Loves ❤️</p>
+              <p className="text-[10px] text-muted-foreground">😋 Yummy</p>
+            </div>
+            <div className="flex-1 rounded-lg bg-accent/30 p-3 text-center">
+              <p className="text-lg font-bold text-accent-foreground">{mehCount}</p>
+              <p className="text-[10px] text-muted-foreground">😐 Meh</p>
             </div>
             <div className="flex-1 rounded-lg bg-destructive/10 p-3 text-center">
               <p className="text-lg font-bold text-destructive">{refusedCount}</p>
-              <p className="text-[10px] text-muted-foreground">Won't eat 🚫</p>
+              <p className="text-[10px] text-muted-foreground">🤢 Yucky</p>
             </div>
           </div>
 
@@ -178,9 +184,9 @@ export default function PickyRecipes() {
           )}
 
           <p className="text-xs text-muted-foreground mb-3">
-            Tap once = <span className="text-secondary-foreground font-semibold">Loves</span>, 
-            twice = <span className="text-destructive font-semibold">Won't eat</span>, 
-            three times = reset
+            Tap: <span className="text-secondary-foreground font-semibold">😋 Yummy</span> → 
+            <span className="text-accent-foreground font-semibold">😐 Meh</span> → 
+            <span className="text-destructive font-semibold">🤢 Yucky</span> → reset
           </p>
 
           {/* Food group tabs */}
@@ -211,6 +217,8 @@ export default function PickyRecipes() {
                   className={`relative flex flex-col items-center gap-1 p-3 rounded-xl border-2 transition-all ${
                     pref === 'loves'
                       ? 'border-secondary bg-secondary/15'
+                      : pref === 'meh'
+                      ? 'border-accent bg-accent/15'
                       : pref === 'refuses'
                       ? 'border-destructive bg-destructive/10'
                       : 'border-border bg-card hover:border-muted-foreground/30'
@@ -219,10 +227,13 @@ export default function PickyRecipes() {
                   <span className="text-2xl">{food.emoji}</span>
                   <span className="text-[10px] font-medium leading-tight text-center">{food.name}</span>
                   {pref === 'loves' && (
-                    <Heart className="absolute top-1 right-1 h-3.5 w-3.5 text-secondary-foreground fill-secondary-foreground" />
+                    <span className="absolute top-0.5 right-1 text-sm">😋</span>
+                  )}
+                  {pref === 'meh' && (
+                    <span className="absolute top-0.5 right-1 text-sm">😐</span>
                   )}
                   {pref === 'refuses' && (
-                    <X className="absolute top-1 right-1 h-3.5 w-3.5 text-destructive" />
+                    <span className="absolute top-0.5 right-1 text-sm">🤢</span>
                   )}
                 </button>
               );
