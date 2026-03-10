@@ -84,6 +84,7 @@ function AppRoutes() {
         <Route path="/grocery-list" element={<GroceryList />} />
         <Route path="/growth" element={<GrowthTracker />} />
         <Route path="/saved-recipes" element={<SavedRecipes />} />
+        <Route path="/feeding" element={<FeedingTracker />} />
       </Route>
       <Route path="/privacy" element={<PrivacyPolicy />} />
       <Route path="/terms" element={<TermsOfService />} />
