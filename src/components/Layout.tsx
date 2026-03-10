@@ -6,6 +6,7 @@ import { useApp } from '@/contexts/AppContext';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Button } from '@/components/ui/button';
 import ChildAvatar from './ChildAvatar';
+import HintTooltip from './HintTooltip';
 import { useState } from 'react';
 
 const navItems = [
@@ -112,13 +113,17 @@ export default function Layout() {
 
       {/* Floating Log Meal FAB */}
       {showChildBar && (
-        <button
-          onClick={() => navigate('/tracker')}
-          className="fixed bottom-20 right-4 z-50 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-lg flex items-center justify-center hover:bg-primary/90 transition-colors active:scale-95"
-          aria-label="Log a meal"
-        >
-          <Plus className="h-6 w-6" />
-        </button>
+        <div className="fixed bottom-20 right-4 z-50">
+          <HintTooltip id="fab-log-meal" message="Tap here anytime to quickly log what your baby ate!" emoji="✏️">
+            <button
+              onClick={() => navigate('/tracker')}
+              className="w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-lg flex items-center justify-center hover:bg-primary/90 transition-colors active:scale-95"
+              aria-label="Log a meal"
+            >
+              <Plus className="h-6 w-6" />
+            </button>
+          </HintTooltip>
+        </div>
       )}
 
       <nav className="fixed bottom-0 left-0 right-0 z-40 bg-card border-t border-border safe-bottom">
@@ -132,7 +137,7 @@ export default function Layout() {
                 key={item.path}
                 onClick={() => navigate(item.path)}
                 className={cn(
-                  "flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl transition-colors min-w-[56px]",
+                  "flex flex-col items-center gap-0.5 px-4 py-2 rounded-xl transition-colors min-w-[60px]",
                   isActive
                     ? "text-primary"
                     : "text-muted-foreground hover:text-foreground"

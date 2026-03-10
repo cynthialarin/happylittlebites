@@ -177,10 +177,10 @@ export default function Tracker() {
 
       {/* Diary Entries */}
       {groupedByDate.length === 0 ? (
-        <div className="text-center py-12 text-muted-foreground">
-          <div className="text-4xl mb-2">📝</div>
-          <p className="font-semibold">No entries yet</p>
-          <p className="text-sm">Log your first food to start tracking!</p>
+        <div className="text-center py-12">
+          <div className="text-5xl mb-3">📝</div>
+          <p className="font-bold text-foreground mb-1">No entries yet</p>
+          <p className="text-sm text-muted-foreground">Every food journey starts with the first bite. Log what your baby ate to start building their food diary!</p>
         </div>
       ) : (
         <div className="space-y-4">

@@ -1,11 +1,12 @@
-import { useState, Fragment } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Progress } from '@/components/ui/progress';
 import { useApp } from '@/contexts/AppContext';
 import { FeedingApproach, Country, Gender } from '@/types';
-import { Baby, Heart, ShieldCheck, Sparkles, ChevronRight } from 'lucide-react';
+import { Baby, Heart, ShieldCheck, Sparkles, ChevronRight, ChevronLeft } from 'lucide-react';
 
 const AVATARS = ['🐣', '🧸', '🌻', '🐰', '🦊', '🐝', '🍼', '🌈'];
 
@@ -14,6 +15,8 @@ const GENDER_OPTIONS: { value: Gender; label: string; emoji: string }[] = [
   { value: 'girl', label: 'Girl', emoji: '👧' },
   { value: 'neutral', label: 'Prefer not to say', emoji: '🌟' },
 ];
+
+const TOTAL_STEPS = 3;
 
 export default function Onboarding() {
   const { addChild, completeOnboarding, setCountry } = useApp();
@@ -26,10 +29,10 @@ export default function Onboarding() {
   const [gender, setGender] = useState<Gender>('neutral');
 
   const features = [
-    { icon: Baby, title: '100+ Foods', desc: 'Age-appropriate safety guides for every food' },
-    { icon: ShieldCheck, title: 'Allergen Tracker', desc: 'Guided top-9 allergen introduction' },
-    { icon: Heart, title: 'Picky Eater Help', desc: 'Evidence-based strategies that work' },
-    { icon: Sparkles, title: '100% Free', desc: 'No subscriptions, no paywalls, ever' },
+    { icon: Baby, title: '100+ Foods', desc: 'Safe food guides for every age' },
+    { icon: ShieldCheck, title: 'Allergen Tracker', desc: 'Step-by-step allergen intro' },
+    { icon: Heart, title: 'Picky Eater Help', desc: 'Strategies that actually work' },
+    { icon: Sparkles, title: '100% Free', desc: 'No paywalls, ever' },
   ];
 
   const handleComplete = () => {
@@ -47,8 +50,21 @@ export default function Onboarding() {
     completeOnboarding();
   };
 
+  const stepProgress = step === 0 ? 0 : (step / TOTAL_STEPS) * 100;
+
   return (
     <div className="min-h-screen bg-background flex flex-col">
+      {/* Progress bar — visible on steps 1+ */}
+      {step > 0 && (
+        <div className="px-6 pt-4 max-w-md mx-auto w-full">
+          <div className="flex items-center justify-between mb-1.5">
+            <span className="text-xs font-bold text-muted-foreground">Step {step} of {TOTAL_STEPS}</span>
+            <span className="text-xs text-muted-foreground">{Math.round(stepProgress)}%</span>
+          </div>
+          <Progress value={stepProgress} className="h-2" />
+        </div>
+      )}
+
       <AnimatePresence mode="wait">
         {step === 0 && (
           <motion.div
@@ -67,8 +83,11 @@ export default function Onboarding() {
               🍽️
             </motion.div>
             <h1 className="text-3xl font-black mb-2">Happy Little Bites</h1>
-            <p className="text-muted-foreground mb-8 max-w-sm">
-              Your free guide to baby & toddler feeding — from first purees to family meals
+            <p className="text-foreground/70 mb-2 max-w-sm text-base">
+              Your free guide to baby & toddler feeding
+            </p>
+            <p className="text-muted-foreground mb-8 max-w-sm text-sm">
+              From first purees to family meals — we'll walk you through it step by step.
             </p>
 
             <div className="grid grid-cols-2 gap-3 mb-8 w-full max-w-sm">
@@ -78,18 +97,19 @@ export default function Onboarding() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 + i * 0.1 }}
-                  className="p-3 rounded-xl bg-card border border-border text-left"
+                  className="p-4 rounded-xl bg-card border border-border text-left"
                 >
-                  <f.icon className="h-5 w-5 text-primary mb-1" />
+                  <f.icon className="h-5 w-5 text-primary mb-1.5" />
                   <p className="font-bold text-sm">{f.title}</p>
                   <p className="text-xs text-muted-foreground">{f.desc}</p>
                 </motion.div>
               ))}
             </div>
 
-            <Button size="lg" className="gap-2 rounded-full px-8" onClick={() => setStep(1)}>
+            <Button size="lg" className="gap-2 rounded-full px-8 h-12 text-base" onClick={() => setStep(1)}>
               Get Started <ChevronRight className="h-4 w-4" />
             </Button>
+            <p className="text-xs text-muted-foreground mt-3">Takes less than 1 minute ⏱️</p>
           </motion.div>
         )}
 
@@ -103,13 +123,13 @@ export default function Onboarding() {
           >
             <h2 className="text-2xl font-black mb-2">Where are you located? 🌍</h2>
             <p className="text-muted-foreground mb-8 max-w-sm">
-              We'll show guidelines from your country's health authority
+              We'll show food safety guidelines from your country's health authority
             </p>
 
             <div className="grid grid-cols-2 gap-4 w-full max-w-sm mb-8">
               {([
                 { value: 'US' as Country, label: 'United States', flag: '🇺🇸', desc: 'AAP & CDC guidelines' },
-                { value: 'CA' as Country, label: 'Canada', flag: '🇨🇦', desc: 'Health Canada & CPS guidelines' },
+                { value: 'CA' as Country, label: 'Canada', flag: '🇨🇦', desc: 'Health Canada & CPS' },
               ]).map(opt => (
                 <button
                   key={opt.value}
@@ -128,8 +148,10 @@ export default function Onboarding() {
             </div>
 
             <div className="flex gap-3 w-full max-w-sm">
-              <Button variant="outline" onClick={() => setStep(0)} className="rounded-full">Back</Button>
-              <Button className="flex-1 rounded-full gap-2" onClick={() => setStep(2)}>
+              <Button variant="outline" onClick={() => setStep(0)} className="rounded-full h-11 px-5 gap-1">
+                <ChevronLeft className="h-4 w-4" /> Back
+              </Button>
+              <Button className="flex-1 rounded-full gap-2 h-11" onClick={() => setStep(2)}>
                 Continue <ChevronRight className="h-4 w-4" />
               </Button>
             </div>
@@ -138,39 +160,41 @@ export default function Onboarding() {
 
         {step === 2 && (
           <motion.div
-            key="profile"
+            key="profile-basics"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="flex-1 flex flex-col px-6 py-12 max-w-md mx-auto w-full"
+            className="flex-1 flex flex-col px-6 py-8 max-w-md mx-auto w-full"
           >
-            <h2 className="text-3xl font-black mb-2">Add your little one 🍼</h2>
-            <p className="text-base text-foreground/60 mb-6">Tell us about your child to personalize their experience</p>
+            <h2 className="text-2xl font-black mb-1">Tell us about your little one 🍼</h2>
+            <p className="text-muted-foreground mb-6 text-sm">We'll personalize everything for their age and needs</p>
 
             <div className="space-y-5">
               <div>
-                <Label className="mb-2 block text-base font-bold">Choose an avatar</Label>
+                <Label className="mb-2 block text-base font-bold">Pick an avatar</Label>
                 <div className="flex gap-2 flex-wrap">
                   {AVATARS.map(a => (
                     <button
                       key={a}
                       onClick={() => setAvatar(a)}
-                      className={`text-2xl p-2 rounded-xl transition-all ${avatar === a ? 'bg-primary/20 ring-2 ring-primary scale-110' : 'bg-muted hover:bg-muted/80'}`}
+                      className={`text-2xl p-3 rounded-xl transition-all ${avatar === a ? 'bg-primary/20 ring-2 ring-primary scale-110' : 'bg-muted hover:bg-muted/80'}`}
                     >
                       {a}
                     </button>
                   ))}
                 </div>
+                <p className="text-xs text-muted-foreground mt-1.5">You can upload a real photo later!</p>
               </div>
 
               <div>
                 <Label htmlFor="name" className="text-base font-bold">Child's name</Label>
-                <Input id="name" placeholder="e.g., Luna" value={name} onChange={e => setName(e.target.value)} className="mt-1.5" />
+                <Input id="name" placeholder="e.g., Luna" value={name} onChange={e => setName(e.target.value)} className="mt-1.5 h-11" />
               </div>
 
               <div>
                 <Label htmlFor="birthdate" className="text-base font-bold">Date of birth</Label>
-                <Input id="birthdate" type="date" value={birthdate} onChange={e => setBirthdate(e.target.value)} className="mt-1.5" max={new Date().toISOString().split('T')[0]} />
+                <Input id="birthdate" type="date" value={birthdate} onChange={e => setBirthdate(e.target.value)} className="mt-1.5 h-11" max={new Date().toISOString().split('T')[0]} />
+                <p className="text-xs text-muted-foreground mt-1">This helps us show age-appropriate foods</p>
               </div>
 
               <div>
@@ -183,50 +207,78 @@ export default function Onboarding() {
                       className={`p-4 rounded-xl border-2 transition-all text-center ${gender === opt.value ? 'border-primary bg-primary/15 ring-2 ring-primary/30' : 'border-border hover:border-primary/40'}`}
                     >
                       <div className="text-2xl mb-1">{opt.emoji}</div>
-                      <div className="text-sm font-bold">{opt.label}</div>
+                      <div className="text-xs font-bold">{opt.label}</div>
                     </button>
                   ))}
                 </div>
-              </div>
-
-              <div>
-                <Label className="text-base font-bold mb-2 block">Feeding approach</Label>
-                <div className="grid grid-cols-3 gap-2">
-                  {([
-                    { value: 'blw' as const, label: 'Baby-Led', emoji: '🤚', desc: 'Baby self-feeds soft finger foods from the start' },
-                    { value: 'purees' as const, label: 'Purées', emoji: '🥣', desc: 'Spoon-fed smooth foods, gradually adding texture' },
-                    { value: 'combo' as const, label: 'Combo', emoji: '✨', desc: 'Mix of both — spoon-feeding & finger foods' },
-                  ]).map(opt => (
-                    <button
-                      key={opt.value}
-                      onClick={() => setApproach(opt.value)}
-                      className={`p-5 rounded-xl border-2 transition-all text-center ${approach === opt.value ? 'border-primary bg-primary/15 ring-2 ring-primary/30' : 'border-border hover:border-primary/40'}`}
-                    >
-                      <div className="text-2xl mb-1">{opt.emoji}</div>
-                      <div className="text-sm font-bold">{opt.label}</div>
-                      <div className="text-xs text-foreground/70 mt-1 leading-tight">{opt.desc}</div>
-                    </button>
-                  ))}
-                </div>
-                <details className="mt-3 text-left">
-                  <summary className="text-sm text-primary cursor-pointer font-medium hover:underline">Not sure? Learn more ℹ️</summary>
-                  <div className="mt-2 space-y-2 text-sm text-foreground/70 bg-muted/50 rounded-xl p-4">
-                    <p><span className="font-semibold text-foreground">Baby-Led Weaning (BLW)</span> is a trending approach where babies skip purees entirely and self-feed soft, age-appropriate finger foods from around 6 months. It encourages independence, motor skills, and exploring real textures early.</p>
-                    <p><span className="font-semibold text-foreground">Purées</span> is the traditional approach — you spoon-feed smooth blended foods and gradually increase texture over weeks/months.</p>
-                    <p><span className="font-semibold text-foreground">Combo</span> blends both methods — offering purees alongside soft finger foods so baby gets the best of both worlds.</p>
-                  </div>
-                </details>
               </div>
             </div>
 
-            <div className="mt-8 flex gap-3">
-              <Button variant="outline" onClick={() => setStep(1)} className="rounded-full">Back</Button>
+            <div className="mt-6 flex gap-3">
+              <Button variant="outline" onClick={() => setStep(1)} className="rounded-full h-11 px-5 gap-1">
+                <ChevronLeft className="h-4 w-4" /> Back
+              </Button>
               <Button
-                className="flex-1 rounded-full"
+                className="flex-1 rounded-full h-11 gap-2"
+                onClick={() => setStep(3)}
+                disabled={!name.trim() || !birthdate}
+              >
+                Almost done! <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
+          </motion.div>
+        )}
+
+        {step === 3 && (
+          <motion.div
+            key="feeding"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="flex-1 flex flex-col px-6 py-8 max-w-md mx-auto w-full"
+          >
+            <h2 className="text-2xl font-black mb-1">How do you feed? 🥣</h2>
+            <p className="text-muted-foreground mb-6 text-sm">No worries — you can change this anytime</p>
+
+            <div className="space-y-3">
+              {([
+                { value: 'blw' as const, label: 'Baby-Led Weaning', emoji: '🤚', desc: 'Baby self-feeds soft finger foods from the start. Great for motor skills and independence.' },
+                { value: 'purees' as const, label: 'Traditional Purées', emoji: '🥣', desc: 'Spoon-fed smooth foods, gradually adding texture over weeks. A gentle, classic approach.' },
+                { value: 'combo' as const, label: 'Combo (Most Popular)', emoji: '✨', desc: 'Mix of both — spoon-feeding & finger foods. Flexible and works for most families!' },
+              ]).map(opt => (
+                <button
+                  key={opt.value}
+                  onClick={() => setApproach(opt.value)}
+                  className={`w-full p-5 rounded-xl border-2 transition-all text-left flex items-start gap-3 ${approach === opt.value ? 'border-primary bg-primary/10 ring-2 ring-primary/20' : 'border-border hover:border-primary/40'}`}
+                >
+                  <span className="text-2xl mt-0.5">{opt.emoji}</span>
+                  <div>
+                    <p className="text-sm font-bold">{opt.label}</p>
+                    <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{opt.desc}</p>
+                  </div>
+                </button>
+              ))}
+            </div>
+
+            <details className="mt-4 text-left">
+              <summary className="text-sm text-primary cursor-pointer font-medium hover:underline">Not sure? Learn more ℹ️</summary>
+              <div className="mt-2 space-y-2 text-sm text-foreground/70 bg-muted/50 rounded-xl p-4">
+                <p><span className="font-semibold text-foreground">Baby-Led Weaning (BLW)</span> is a trending approach where babies skip purees entirely and self-feed soft, age-appropriate finger foods from around 6 months.</p>
+                <p><span className="font-semibold text-foreground">Purées</span> is the traditional approach — you spoon-feed smooth blended foods and gradually increase texture over weeks/months.</p>
+                <p><span className="font-semibold text-foreground">Combo</span> blends both methods — the most popular choice among parents using this app!</p>
+              </div>
+            </details>
+
+            <div className="mt-8 flex gap-3">
+              <Button variant="outline" onClick={() => setStep(2)} className="rounded-full h-11 px-5 gap-1">
+                <ChevronLeft className="h-4 w-4" /> Back
+              </Button>
+              <Button
+                className="flex-1 rounded-full h-12 text-base font-bold gap-2"
                 onClick={handleComplete}
                 disabled={!name.trim() || !birthdate}
               >
-                Start Exploring 🎉
+                Let's Go! 🎉
               </Button>
             </div>
           </motion.div>
