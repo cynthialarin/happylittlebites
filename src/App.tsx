@@ -147,6 +147,7 @@ function App() {
             <Sonner />
             <OfflineFallback />
             <BrowserRouter>
+              <ConsentBanner />
               <AuthenticatedApp />
             </BrowserRouter>
           </ErrorBoundary>

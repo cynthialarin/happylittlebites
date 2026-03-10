@@ -298,6 +298,12 @@ export default function MealSuggestions() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <div className="mt-6 px-2">
+        <p className="text-xs text-muted-foreground text-center leading-relaxed">
+          ⚕️ AI suggestions are for inspiration only and do not constitute medical advice. Always consult your pediatrician before introducing new foods, especially if your child has known allergies.
+        </p>
+      </div>
     </div>
   );
 }
