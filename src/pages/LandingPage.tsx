@@ -36,6 +36,18 @@ const steps = [
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      {/* Top Nav */}
+      <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
+        <div className="max-w-5xl mx-auto flex items-center justify-between px-5 py-3">
+          <span className="text-lg font-black tracking-tight">🥦 Happy Little Bites</span>
+          <Link to="/login">
+            <Button variant="outline" size="sm" className="rounded-full font-bold">
+              Sign In
+            </Button>
+          </Link>
+        </div>
+      </header>
+
       {/* Hero */}
       <LandingHero />
 
