@@ -36,6 +36,7 @@ export default function DailyTimeline() {
   const [feedingEntries, setFeedingEntries] = useState<any[]>([]);
   const [sleepEntries, setSleepEntries] = useState<any[]>([]);
   const [diaperEntries, setDiaperEntries] = useState<any[]>([]);
+  const [milestoneEntries, setMilestoneEntries] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   const age = activeChild ? getChildAge(activeChild) : null;
@@ -47,10 +48,12 @@ export default function DailyTimeline() {
       supabase.from('feeding_entries').select('*').eq('user_id', user.id).eq('child_id', activeChild.id).eq('date', selectedDate),
       supabase.from('sleep_entries').select('*').eq('user_id', user.id).eq('child_id', activeChild.id).eq('date', selectedDate),
       supabase.from('diaper_entries').select('*').eq('user_id', user.id).eq('child_id', activeChild.id).eq('date', selectedDate),
-    ]).then(([f, s, d]) => {
+      supabase.from('milestone_achievements').select('*').eq('user_id', user.id).eq('child_id', activeChild.id).eq('achieved_date', selectedDate),
+    ]).then(([f, s, d, m]) => {
       setFeedingEntries(f.data || []);
       setSleepEntries(s.data || []);
       setDiaperEntries(d.data || []);
+      setMilestoneEntries(m.data || []);
       setLoading(false);
     });
   }, [user, activeChild, selectedDate]);
