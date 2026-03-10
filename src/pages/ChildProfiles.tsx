@@ -57,7 +57,7 @@ export default function ChildProfiles() {
   const [forms, setForms] = useState<ChildForm[]>([emptyForm()]);
   const [uploading, setUploading] = useState<string | null>(null);
   const [editChild, setEditChild] = useState<ChildProfile | null>(null);
-  const [editForm, setEditForm] = useState<ChildForm & { knownAllergies: string[] }>({ ...emptyForm(), knownAllergies: [] });
+  const [editForm, setEditForm] = useState<ChildForm & { knownAllergies: string[]; fussyFoods: string[] }>({ ...emptyForm(), knownAllergies: [], fussyFoods: [] });
 
   const updateForm = (index: number, updates: Partial<ChildForm>) => {
     setForms(prev => prev.map((f, i) => i === index ? { ...f, ...updates } : f));
