@@ -72,7 +72,7 @@ export default function GroceryList() {
           onChange={(e) => setNewItem(e.target.value)}
           className="flex-1"
         />
-        <Button type="submit" size="icon" disabled={!newItem.trim()} className="shrink-0">
+        <Button type="submit" size="icon" disabled={!newItem.trim()} className="shrink-0 h-10 w-10">
           <Plus className="h-4 w-4" />
         </Button>
       </form>

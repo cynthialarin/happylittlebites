@@ -238,8 +238,8 @@ export default function GrowthTracker() {
                     {m.headCm && <span className="text-sm font-semibold">Head: {m.headCm} cm</span>}
                   </div>
                 </div>
-                <button onClick={() => handleDelete(m.id)} className="text-muted-foreground hover:text-destructive p-1">
-                  <span className="text-xs">✕</span>
+                <button onClick={() => handleDelete(m.id)} className="text-muted-foreground hover:text-destructive p-2 rounded-lg hover:bg-destructive/10 transition-colors">
+                  <span className="text-sm">✕</span>
                 </button>
               </CardContent>
             </Card>
