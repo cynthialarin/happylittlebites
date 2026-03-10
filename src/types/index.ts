@@ -24,6 +24,7 @@ export interface ChildProfile {
   name: string;
   birthdate: string;
   knownAllergies: string[];
+  fussyFoods: string[];
   feedingApproach: FeedingApproach;
   avatar: string;
   gender: Gender;
