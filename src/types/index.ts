@@ -143,3 +143,24 @@ export interface SleepEntry {
   quality: SleepQuality;
   notes: string;
 }
+
+export type DiaperType = 'wet' | 'dirty' | 'both' | 'dry';
+
+export interface DiaperEntry {
+  id: string;
+  childId: string;
+  date: string;
+  time: string;
+  diaperType: DiaperType;
+  color: string;
+  notes: string;
+}
+  id: string;
+  childId: string;
+  date: string;
+  startTime: string;
+  endTime: string;
+  sleepType: SleepType;
+  quality: SleepQuality;
+  notes: string;
+}
