@@ -59,6 +59,7 @@ export default function PickyRecipes() {
   const prefs = foodPreferences[childId] || {};
 
   const lovedCount = Object.values(prefs).filter(v => v === 'loves').length;
+  const mehCount = Object.values(prefs).filter(v => v === 'meh').length;
   const refusedCount = Object.values(prefs).filter(v => v === 'refuses').length;
 
   const foodsByGroup = useMemo(() => {
