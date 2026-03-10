@@ -15,6 +15,11 @@ import { toast } from '@/components/ui/sonner';
 import ChildAvatar from '@/components/ChildAvatar';
 
 const AVATARS = ['🐣', '🧸', '🌻', '🐰', '🦊', '🐝', '🍼', '🌈'];
+const APPROACH_OPTIONS: { value: FeedingApproach; label: string; emoji: string }[] = [
+  { value: 'blw', label: 'Baby-Led', emoji: '🥦' },
+  { value: 'purees', label: 'Purées', emoji: '🥣' },
+  { value: 'combo', label: 'Combo', emoji: '🍽️' },
+];
 
 const GENDER_OPTIONS: { value: Gender; label: string; emoji: string }[] = [
   { value: 'boy', label: 'Boy', emoji: '👦' },
