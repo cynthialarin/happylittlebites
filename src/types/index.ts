@@ -114,3 +114,18 @@ export interface AppSettings {
   theme: 'light' | 'dark' | 'system';
   country: Country;
 }
+
+export type FeedingType = 'breast' | 'bottle-breastmilk' | 'bottle-formula';
+export type BreastSide = 'left' | 'right' | 'both';
+
+export interface FeedingEntry {
+  id: string;
+  childId: string;
+  date: string;
+  time: string;
+  feedingType: FeedingType;
+  amountOz: number | null;
+  durationMinutes: number | null;
+  side: BreastSide | null;
+  notes: string;
+}
