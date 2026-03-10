@@ -155,12 +155,3 @@ export interface DiaperEntry {
   color: string;
   notes: string;
 }
-  id: string;
-  childId: string;
-  date: string;
-  startTime: string;
-  endTime: string;
-  sleepType: SleepType;
-  quality: SleepQuality;
-  notes: string;
-}
