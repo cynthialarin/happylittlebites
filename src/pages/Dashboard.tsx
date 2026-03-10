@@ -15,7 +15,7 @@ import NutritionGoals from '@/components/NutritionGoals';
 import ReintroductionTracker from '@/components/ReintroductionTracker';
 import TextureProgression from '@/components/TextureProgression';
 import { TOP_9_ALLERGENS, CA_EXTRA_ALLERGENS } from '@/types';
-import { UtensilsCrossed, ShieldCheck, TrendingUp, Lightbulb, BookOpen, ChevronRight, ChevronDown, Flame, ListChecks, ShoppingCart, BarChart3, Baby } from 'lucide-react';
+import { UtensilsCrossed, ShieldCheck, TrendingUp, Lightbulb, BookOpen, ChevronRight, ChevronDown, Flame, ListChecks, ShoppingCart, BarChart3, Baby, Moon } from 'lucide-react';
 
 export default function Dashboard() {
   const { activeChild, diary, allergenRecords, getChildAge, settings } = useApp();
