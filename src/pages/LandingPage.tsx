@@ -214,6 +214,28 @@ export default function LandingPage() {
         </div>
       </motion.section>
 
+      {/* FAQ Section */}
+      <section className="px-5 py-16 md:py-24 max-w-3xl mx-auto">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }} variants={fadeUp}>
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <HelpCircle className="h-5 w-5 text-primary" />
+            <h2 className="font-heading text-2xl md:text-3xl font-800 text-center">Frequently Asked Questions</h2>
+          </div>
+          <p className="text-center text-muted-foreground mb-8 text-sm">Everything you need to know before getting started.</p>
+        </motion.div>
+
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }} variants={fadeUp}>
+          <Accordion type="single" collapsible className="w-full">
+            {faqs.map((faq, i) => (
+              <AccordionItem key={i} value={`faq-${i}`}>
+                <AccordionTrigger className="text-left text-sm font-semibold">{faq.q}</AccordionTrigger>
+                <AccordionContent className="text-sm text-muted-foreground leading-relaxed">{faq.a}</AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </motion.div>
+      </section>
+
       {/* Final CTA */}
       <motion.section
         initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }} variants={fadeUp}
