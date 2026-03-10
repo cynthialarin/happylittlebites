@@ -146,7 +146,7 @@ export default function GrowthTracker() {
           <h1 className="text-xl font-black">Growth Tracker</h1>
           <p className="text-sm text-muted-foreground">{activeChild.name} • {age?.label}</p>
         </div>
-        <Button size="sm" className="rounded-full gap-1" onClick={() => setShowAdd(true)}>
+        <Button size="sm" className="rounded-full gap-1 h-10 px-4" onClick={() => setShowAdd(true)}>
           <Plus className="h-4 w-4" /> Add
         </Button>
       </div>
