@@ -455,6 +455,32 @@ export default function CaregiverShare() {
           </motion.div>
         )}
 
+        {/* Diaper Log */}
+        {diaperEntries.length > 0 && (
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.28 }}>
+            <Card>
+              <CardContent className="p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <Droplets className="h-4 w-4 text-primary" />
+                  <span className="text-sm font-bold">Today's Diaper Log</span>
+                </div>
+                <div className="space-y-1.5">
+                  {diaperEntries.map((d: any, i: number) => {
+                    const emoji = d.diaper_type === 'wet' ? '💧' : d.diaper_type === 'dirty' ? '💩' : d.diaper_type === 'both' ? '💧💩' : '✨';
+                    return (
+                      <div key={i} className="flex items-center gap-2 text-xs">
+                        <span className="font-semibold w-10">{d.time}</span>
+                        <span>{emoji} {d.diaper_type}</span>
+                        {d.color && <span className="text-muted-foreground">{d.color}</span>}
+                      </div>
+                    );
+                  })}
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
         {/* Choking Hazards */}
         {childData.chokingFoods.length > 0 && (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
