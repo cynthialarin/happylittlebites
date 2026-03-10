@@ -105,6 +105,9 @@ export default function LandingPage() {
       {/* Beta Offer CTA */}
       <LandingBetaOffer />
 
+      {/* Pricing Preview */}
+      <LandingPricing />
+
       {/* What Makes Us Different */}
       <LandingDifferentiators />
 
