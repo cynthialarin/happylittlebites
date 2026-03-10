@@ -61,7 +61,7 @@ export default function LandingHero() {
 
         {/* Beta reward callout */}
         <motion.p variants={fadeUp} className="mt-6 text-sm text-primary font-heading font-bold">
-          🎉 Sign up during Beta → Get 50% off your first 3 months when we launch
+          🎉 Sign up during Beta — Your first month is FREE!
         </motion.p>
       </motion.div>
     </section>

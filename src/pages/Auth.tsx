@@ -59,7 +59,7 @@ export default function Auth() {
               ? 'Enter your email to reset your password'
               : isLogin
                 ? 'Welcome back! Sign in to your account'
-                : 'Create an account to get started'}
+                : 'Start your free month — no credit card needed'}
           </CardDescription>
         </CardHeader>
         <CardContent>

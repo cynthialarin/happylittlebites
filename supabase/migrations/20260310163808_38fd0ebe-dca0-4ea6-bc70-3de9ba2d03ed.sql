@@ -1,0 +1,1 @@
+ALTER TABLE public.profiles ADD COLUMN trial_start_date timestamp with time zone DEFAULT now();

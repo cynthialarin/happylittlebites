@@ -22,15 +22,15 @@ export default function LandingBetaOffer() {
         <div className="relative">
           <Gift size={40} className="text-primary mx-auto mb-4" />
           <h2 className="font-heading text-2xl md:text-3xl font-900 mb-3">
-            Join the Beta — Get Rewarded
+            Join the Beta — Your First Month is FREE!
           </h2>
           <p className="text-muted-foreground max-w-lg mx-auto mb-6">
-            Help us build the best baby feeding app ever. Sign up now during our Beta period and lock in exclusive early adopter pricing.
+            Help us build the best baby feeding app ever. Sign up now and get full access for an entire month — completely free, no credit card needed.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center text-sm text-foreground/80 mb-8">
             <span className="flex items-center justify-center gap-1.5"><Check size={16} className="text-primary" /> 1 month completely free</span>
-            <span className="flex items-center justify-center gap-1.5"><Check size={16} className="text-primary" /> 50% off first 3 months</span>
+            <span className="flex items-center justify-center gap-1.5"><Check size={16} className="text-primary" /> Full access to all features</span>
             <span className="flex items-center justify-center gap-1.5"><Check size={16} className="text-primary" /> No credit card required</span>
           </div>
 
