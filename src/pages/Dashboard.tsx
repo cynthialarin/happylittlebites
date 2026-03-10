@@ -199,6 +199,7 @@ export default function Dashboard() {
   // Returning user dashboard
   return (
     <div className="px-4 pt-6 pb-4 max-w-lg mx-auto">
+      <ProductTour />
       {/* XP & Level Bar */}
       <XpBar />
 
