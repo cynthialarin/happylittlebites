@@ -10,6 +10,7 @@ import OfflineFallback from "@/components/OfflineFallback";
 import ConsentBanner from "@/components/ConsentBanner";
 import Layout from "@/components/Layout";
 import Auth from "@/pages/Auth";
+import LandingPage from "@/pages/LandingPage";
 import ResetPassword from "@/pages/ResetPassword";
 import Onboarding from "@/pages/Onboarding";
 import Dashboard from "@/pages/Dashboard";
@@ -118,10 +119,13 @@ function AuthenticatedApp() {
   if (!user) {
     return (
       <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<Auth />} />
+        <Route path="/signup" element={<Auth />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<TermsOfService />} />
-        <Route path="*" element={<Auth />} />
+        <Route path="*" element={<LandingPage />} />
       </Routes>
     );
   }
