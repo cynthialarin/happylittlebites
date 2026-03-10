@@ -40,6 +40,7 @@ import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import TermsOfService from "@/pages/TermsOfService";
 import DataManagementPage from "@/pages/DataManagementPage";
 import SavedRecipes from "@/pages/SavedRecipes";
+import WeeklyReport from "@/pages/WeeklyReport";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
