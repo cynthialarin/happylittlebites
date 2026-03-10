@@ -23,6 +23,7 @@ const TOTAL_STEPS = 3;
 export default function Onboarding() {
   const { addChild, completeOnboarding, setCountry } = useApp();
   const { signOut } = useAuth();
+  const navigate = useNavigate();
   const [step, setStep] = useState(0);
   const [name, setName] = useState('');
   const [birthdate, setBirthdate] = useState('');
