@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { BookOpen, Apple, Globe, Brain, Users, Star } from 'lucide-react';
+import { BookOpen, Apple, Globe, Brain, Users, Star, Stethoscope } from 'lucide-react';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },

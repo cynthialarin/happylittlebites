@@ -15,9 +15,14 @@ export default function Safety() {
       <h1 className="text-xl font-black mb-4">Safety & First Aid 🚨</h1>
 
       {/* Emergency Banner */}
-      <Button variant="destructive" className="w-full mb-5 gap-2" onClick={() => window.open('tel:911')}>
-        <Phone className="h-4 w-4" /> Call 911 (Emergency)
-      </Button>
+      <div className="grid grid-cols-2 gap-2 mb-5">
+        <Button variant="destructive" className="gap-2" onClick={() => window.open('tel:911')}>
+          <Phone className="h-4 w-4" /> Call 911
+        </Button>
+        <Button variant="outline" className="gap-2 border-primary/30 text-primary hover:bg-primary/10" onClick={() => window.open('tel:1-800-222-1222')}>
+          <Phone className="h-4 w-4" /> Poison Control
+        </Button>
+      </div>
 
       {/* Choking vs Gagging */}
       <Card className="mb-4">
