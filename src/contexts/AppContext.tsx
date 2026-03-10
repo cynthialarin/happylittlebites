@@ -291,6 +291,7 @@ export function AppProvider({ children: reactChildren }: { children: React.React
           id: child.id, user_id: user.id, name: child.name, birthdate: child.birthdate,
           known_allergies: child.knownAllergies, feeding_approach: child.feedingApproach, avatar: child.avatar,
           gender: child.gender || 'neutral', photo_url: child.photoUrl || null,
+          fussy_foods: child.fussyFoods || [],
         } as any);
         await supabase.from('profiles').update({ active_child_id: child.id }).eq('user_id', user.id);
       }
