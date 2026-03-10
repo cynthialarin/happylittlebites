@@ -14,6 +14,7 @@ import NutritionScorecard from '@/components/NutritionScorecard';
 import NutritionGoals from '@/components/NutritionGoals';
 import ReintroductionTracker from '@/components/ReintroductionTracker';
 import TextureProgression from '@/components/TextureProgression';
+import ProductTour from '@/components/ProductTour';
 import { TOP_9_ALLERGENS, CA_EXTRA_ALLERGENS } from '@/types';
 import { UtensilsCrossed, ShieldCheck, TrendingUp, Lightbulb, BookOpen, ChevronRight, ChevronDown, Flame, ListChecks, ShoppingCart, BarChart3, Baby, Moon, Droplets, Clock, Star, FileText, ShieldAlert, Users } from 'lucide-react';
 
