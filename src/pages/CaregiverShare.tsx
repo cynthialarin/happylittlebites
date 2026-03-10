@@ -24,6 +24,7 @@ export default function CaregiverShare() {
   const [inviteMessage, setInviteMessage] = useState('');
   const [sendingInvite, setSendingInvite] = useState(false);
   const [feedingEntries, setFeedingEntries] = useState<any[]>([]);
+  const [sleepEntries, setSleepEntries] = useState<any[]>([]);
   const contentRef = useRef<HTMLDivElement>(null);
 
   const age = activeChild ? getChildAge(activeChild) : null;
