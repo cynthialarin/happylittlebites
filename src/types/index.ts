@@ -129,3 +129,17 @@ export interface FeedingEntry {
   side: BreastSide | null;
   notes: string;
 }
+
+export type SleepType = 'nap' | 'nighttime';
+export type SleepQuality = 'poor' | 'fair' | 'good' | 'great';
+
+export interface SleepEntry {
+  id: string;
+  childId: string;
+  date: string;
+  startTime: string;
+  endTime: string;
+  sleepType: SleepType;
+  quality: SleepQuality;
+  notes: string;
+}
