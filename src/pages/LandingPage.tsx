@@ -5,8 +5,9 @@ import { Card, CardContent } from '@/components/ui/card';
 import {
   Apple, Brain, ShieldAlert, Baby, Utensils, FileText,
   TrendingUp, Users, ShoppingCart, Smartphone, Lock, Sparkles,
-  Heart, Play, ChevronRight, Star
+  Heart, ChevronRight, Star
 } from 'lucide-react';
+import AppWalkthrough from '@/components/landing/AppWalkthrough';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
@@ -95,14 +96,7 @@ export default function LandingPage() {
         className="px-5 py-16 md:py-24 max-w-4xl mx-auto"
       >
         <h2 className="font-heading text-2xl md:text-3xl font-800 text-center mb-8">See It in Action</h2>
-        <div className="relative rounded-2xl overflow-hidden border border-border bg-muted aspect-video flex items-center justify-center shadow-xl">
-          <div className="text-center">
-            <div className="w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center mx-auto mb-3 shadow-lg cursor-pointer hover:scale-105 transition-transform">
-              <Play size={28} className="text-primary-foreground ml-1" />
-            </div>
-            <p className="font-heading font-bold text-foreground/70 text-sm">Demo video coming soon</p>
-          </div>
-        </div>
+        <AppWalkthrough />
       </motion.section>
 
       {/* Feature Grid */}
