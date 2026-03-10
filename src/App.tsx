@@ -119,10 +119,13 @@ function AuthenticatedApp() {
   if (!user) {
     return (
       <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<Auth />} />
+        <Route path="/signup" element={<Auth />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<TermsOfService />} />
-        <Route path="*" element={<Auth />} />
+        <Route path="*" element={<LandingPage />} />
       </Routes>
     );
   }
