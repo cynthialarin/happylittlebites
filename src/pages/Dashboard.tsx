@@ -313,6 +313,36 @@ export default function Dashboard() {
         </button>
       </motion.div>
 
+      {/* Emergency SOS + Caregiver Share */}
+      <div className="grid grid-cols-2 gap-2 mb-5">
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.55 }}>
+          <button onClick={() => navigate('/more/safety')} className="w-full h-full">
+            <Card className="bg-destructive/10 border-destructive/20 hover:ring-2 ring-destructive/30 transition-all h-full">
+              <CardContent className="p-3.5 flex items-start gap-2.5">
+                <ShieldAlert className="h-5 w-5 text-destructive shrink-0 mt-0.5" />
+                <div className="text-left">
+                  <p className="text-xs font-bold">Emergency SOS</p>
+                  <p className="text-[10px] text-muted-foreground">Choking & allergy first aid</p>
+                </div>
+              </CardContent>
+            </Card>
+          </button>
+        </motion.div>
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}>
+          <button onClick={() => navigate('/caregiver-share')} className="w-full h-full">
+            <Card className="bg-accent/10 border-accent/20 hover:ring-2 ring-accent/30 transition-all h-full">
+              <CardContent className="p-3.5 flex items-start gap-2.5">
+                <Users className="h-5 w-5 text-accent shrink-0 mt-0.5" />
+                <div className="text-left">
+                  <p className="text-xs font-bold">Share Report</p>
+                  <p className="text-[10px] text-muted-foreground">Send to a caregiver</p>
+                </div>
+              </CardContent>
+            </Card>
+          </button>
+        </motion.div>
+      </div>
+
       {/* Detailed Insights — Collapsible */}
       <Collapsible open={insightsOpen} onOpenChange={setInsightsOpen} className="mb-5">
         <CollapsibleTrigger className="w-full">
