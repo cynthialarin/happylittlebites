@@ -47,6 +47,7 @@ const WHO_WEIGHT_P50 = [
 ];
 
 export default function GrowthTracker() {
+  const navigate = useNavigate();
   const { activeChild, getChildAge } = useApp();
   const [showAdd, setShowAdd] = useState(false);
   const [weight, setWeight] = useState('');
