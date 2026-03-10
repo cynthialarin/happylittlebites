@@ -9,7 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { ChevronLeft, ChevronRight, Baby, Moon, Droplets, UtensilsCrossed, Star, Copy, Printer, AlertTriangle } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Baby, Moon, Droplets, UtensilsCrossed, Star, Copy, Printer, AlertTriangle, ArrowLeft } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 export default function WeeklyReport() {
