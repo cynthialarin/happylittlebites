@@ -33,6 +33,7 @@ import First100Foods from "@/pages/First100Foods";
 import GroceryList from "@/pages/GroceryList";
 import GrowthTracker from "@/pages/GrowthTracker";
 import FeedingTracker from "@/pages/FeedingTracker";
+import SleepTracker from "@/pages/SleepTracker";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import TermsOfService from "@/pages/TermsOfService";
 import DataManagementPage from "@/pages/DataManagementPage";
@@ -85,6 +86,7 @@ function AppRoutes() {
         <Route path="/growth" element={<GrowthTracker />} />
         <Route path="/saved-recipes" element={<SavedRecipes />} />
         <Route path="/feeding" element={<FeedingTracker />} />
+        <Route path="/sleep" element={<SleepTracker />} />
       </Route>
       <Route path="/privacy" element={<PrivacyPolicy />} />
       <Route path="/terms" element={<TermsOfService />} />

@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import FeedingReminder from '@/components/FeedingReminder';
 import { motion } from 'framer-motion';
 import { useApp } from '@/contexts/AppContext';
 import { useAuth } from '@/contexts/AuthContext';
@@ -165,6 +166,9 @@ export default function FeedingTracker() {
           <p className="text-xs text-muted-foreground">{activeChild.name} · {age?.label}</p>
         </div>
       </div>
+
+      {/* Feeding Reminders */}
+      <FeedingReminder />
 
       {/* Date Selector */}
       <div className="flex items-center justify-between mb-4">

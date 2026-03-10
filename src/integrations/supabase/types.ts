@@ -365,6 +365,45 @@ export type Database = {
         }
         Relationships: []
       }
+      sleep_entries: {
+        Row: {
+          child_id: string
+          created_at: string
+          date: string
+          end_time: string
+          id: string
+          notes: string
+          quality: string
+          sleep_type: string
+          start_time: string
+          user_id: string
+        }
+        Insert: {
+          child_id: string
+          created_at?: string
+          date: string
+          end_time: string
+          id?: string
+          notes?: string
+          quality?: string
+          sleep_type?: string
+          start_time: string
+          user_id: string
+        }
+        Update: {
+          child_id?: string
+          created_at?: string
+          date?: string
+          end_time?: string
+          id?: string
+          notes?: string
+          quality?: string
+          sleep_type?: string
+          start_time?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_preferences: {
         Row: {
           favorite_recipes: string[]
