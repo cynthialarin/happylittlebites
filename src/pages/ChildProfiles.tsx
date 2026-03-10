@@ -119,6 +119,7 @@ export default function ChildProfiles() {
       avatar: child.avatar,
       gender: child.gender,
       knownAllergies: child.knownAllergies || [],
+      fussyFoods: child.fussyFoods || [],
     });
   };
 
