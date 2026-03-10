@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -22,6 +23,7 @@ const TOTAL_STEPS = 3;
 export default function Onboarding() {
   const { addChild, completeOnboarding, setCountry } = useApp();
   const { signOut } = useAuth();
+  const navigate = useNavigate();
   const [step, setStep] = useState(0);
   const [name, setName] = useState('');
   const [birthdate, setBirthdate] = useState('');
@@ -51,6 +53,7 @@ export default function Onboarding() {
       gender,
     });
     completeOnboarding();
+    navigate('/', { replace: true });
   };
 
   const stepProgress = step === 0 ? 0 : (step / TOTAL_STEPS) * 100;
