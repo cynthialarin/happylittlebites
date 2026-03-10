@@ -109,9 +109,35 @@ export default function ChildProfiles() {
     setUploading(null);
   };
 
-  const allFormsValid = forms.every(f => f.name.trim() && f.birthdate);
+  const openEdit = (child: ChildProfile) => {
+    setEditChild(child);
+    setEditForm({
+      name: child.name,
+      birthdate: child.birthdate,
+      approach: child.feedingApproach,
+      avatar: child.avatar,
+      gender: child.gender,
+      knownAllergies: child.knownAllergies || [],
+    });
+  };
 
-  return (
+  const handleSaveEdit = () => {
+    if (!editChild || !editForm.name.trim() || !editForm.birthdate) return;
+    updateChild({
+      ...editChild,
+      name: editForm.name.trim(),
+      birthdate: editForm.birthdate,
+      feedingApproach: editForm.approach,
+      avatar: editForm.avatar,
+      gender: editForm.gender,
+      knownAllergies: editForm.knownAllergies,
+    });
+    toast('✅ Profile updated!');
+    setEditChild(null);
+  };
+
+  const allFormsValid = forms.every(f => f.name.trim() && f.birthdate);
+  const editFormValid = editForm.name.trim() && editForm.birthdate;
     <div className="px-4 pt-4 pb-6 max-w-lg mx-auto">
       <button onClick={() => navigate(-1)} className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-4">
         <ArrowLeft className="h-4 w-4" /> Back
