@@ -6,6 +6,7 @@ import { useApp } from '@/contexts/AppContext';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Button } from '@/components/ui/button';
 import ChildAvatar from './ChildAvatar';
+import HintTooltip from './HintTooltip';
 import { useState } from 'react';
 
 const navItems = [
