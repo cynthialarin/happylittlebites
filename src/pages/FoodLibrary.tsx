@@ -2,12 +2,16 @@ import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FoodImage from '@/components/FoodImage';
 import { foods } from '@/data/foods';
+import { culturalFoods } from '@/data/culturalFoods';
 import { Input } from '@/components/ui/input';
 import { Search, Filter } from 'lucide-react';
 import { FoodGroup, AgeGroup } from '@/types';
 
-const FOOD_GROUPS: { value: FoodGroup | 'all'; label: string; emoji: string }[] = [
+const allFoods = [...foods, ...culturalFoods];
+
+const FOOD_GROUPS: { value: FoodGroup | 'all' | 'cultural'; label: string; emoji: string }[] = [
   { value: 'all', label: 'All', emoji: '🍽️' },
+  { value: 'cultural', label: 'Cultural', emoji: '🌍' },
   { value: 'fruits', label: 'Fruits', emoji: '🍎' },
   { value: 'vegetables', label: 'Veggies', emoji: '🥦' },
   { value: 'protein', label: 'Protein', emoji: '🍗' },
@@ -20,21 +24,25 @@ const FOOD_GROUPS: { value: FoodGroup | 'all'; label: string; emoji: string }[] 
 
 export default function FoodLibrary() {
   const [search, setSearch] = useState('');
-  const [group, setGroup] = useState<FoodGroup | 'all'>('all');
+  const [group, setGroup] = useState<FoodGroup | 'all' | 'cultural'>('all');
   const navigate = useNavigate();
 
+  const culturalFoodIds = useMemo(() => new Set(culturalFoods.map(f => f.id)), []);
+
   const filtered = useMemo(() => {
-    return foods.filter(f => {
+    return allFoods.filter(f => {
       const matchesSearch = f.name.toLowerCase().includes(search.toLowerCase());
-      const matchesGroup = group === 'all' || f.foodGroup === group;
+      const matchesGroup = group === 'all' 
+        || (group === 'cultural' && culturalFoodIds.has(f.id))
+        || (group !== 'cultural' && f.foodGroup === group);
       return matchesSearch && matchesGroup;
     });
-  }, [search, group]);
+  }, [search, group, culturalFoodIds]);
 
   return (
     <div className="px-4 pt-6 pb-4 max-w-lg mx-auto">
       <h1 className="text-xl font-black mb-1">Food Library</h1>
-      <p className="text-sm text-muted-foreground mb-4">{foods.length} foods with safety & serving guides</p>
+      <p className="text-sm text-muted-foreground mb-4">{allFoods.length} foods with safety & serving guides</p>
 
       {/* Search */}
       <div className="relative mb-4">

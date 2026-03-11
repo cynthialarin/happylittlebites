@@ -308,6 +308,42 @@ export type Database = {
         }
         Relationships: []
       }
+      growth_measurements: {
+        Row: {
+          child_id: string
+          created_at: string
+          date: string
+          head_cm: number | null
+          height_cm: number | null
+          id: string
+          notes: string
+          user_id: string
+          weight_kg: number | null
+        }
+        Insert: {
+          child_id: string
+          created_at?: string
+          date: string
+          head_cm?: number | null
+          height_cm?: number | null
+          id?: string
+          notes?: string
+          user_id: string
+          weight_kg?: number | null
+        }
+        Update: {
+          child_id?: string
+          created_at?: string
+          date?: string
+          head_cm?: number | null
+          height_cm?: number | null
+          id?: string
+          notes?: string
+          user_id?: string
+          weight_kg?: number | null
+        }
+        Relationships: []
+      }
       meal_plan_entries: {
         Row: {
           child_id: string

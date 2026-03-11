@@ -1,5 +1,7 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import { useApp } from '@/contexts/AppContext';
+import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,7 +12,6 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from '@/components/ui/sonner';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
-// Store measurements in localStorage per child
 interface GrowthMeasurement {
   id: string;
   date: string;
@@ -18,21 +19,6 @@ interface GrowthMeasurement {
   heightCm: number | null;
   headCm: number | null;
   notes: string;
-}
-
-function getStorageKey(childId: string) {
-  return `hlb-growth-${childId}`;
-}
-
-function loadMeasurements(childId: string): GrowthMeasurement[] {
-  try {
-    const stored = localStorage.getItem(getStorageKey(childId));
-    return stored ? JSON.parse(stored) : [];
-  } catch { return []; }
-}
-
-function saveMeasurements(childId: string, measurements: GrowthMeasurement[]) {
-  localStorage.setItem(getStorageKey(childId), JSON.stringify(measurements));
 }
 
 // WHO weight-for-age percentile reference (simplified, boys, 0-24 months)
@@ -49,16 +35,82 @@ const WHO_WEIGHT_P50 = [
 export default function GrowthTracker() {
   const navigate = useNavigate();
   const { activeChild, getChildAge } = useApp();
+  const { user } = useAuth();
   const [showAdd, setShowAdd] = useState(false);
   const [weight, setWeight] = useState('');
   const [height, setHeight] = useState('');
   const [head, setHead] = useState('');
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
-  const [measurements, setMeasurements] = useState<GrowthMeasurement[]>(() =>
-    activeChild ? loadMeasurements(activeChild.id) : []
-  );
+  const [measurements, setMeasurements] = useState<GrowthMeasurement[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const age = activeChild ? getChildAge(activeChild) : null;
+
+  const loadMeasurements = useCallback(async () => {
+    if (!user || !activeChild) return;
+    setLoading(true);
+    const { data } = await supabase
+      .from('growth_measurements')
+      .select('*')
+      .eq('user_id', user.id)
+      .eq('child_id', activeChild.id)
+      .order('date', { ascending: true });
+
+    setMeasurements(
+      (data || []).map((d: any) => ({
+        id: d.id,
+        date: d.date,
+        weightKg: d.weight_kg ? Number(d.weight_kg) : null,
+        heightCm: d.height_cm ? Number(d.height_cm) : null,
+        headCm: d.head_cm ? Number(d.head_cm) : null,
+        notes: d.notes || '',
+      }))
+    );
+    setLoading(false);
+
+    // Migrate localStorage data if any
+    try {
+      const lsKey = `hlb-growth-${activeChild.id}`;
+      const stored = localStorage.getItem(lsKey);
+      if (stored) {
+        const lsData: any[] = JSON.parse(stored);
+        if (lsData.length > 0 && (!data || data.length === 0)) {
+          const rows = lsData.map((m: any) => ({
+            user_id: user.id,
+            child_id: activeChild.id,
+            date: m.date,
+            weight_kg: m.weightKg ?? null,
+            height_cm: m.heightCm ?? null,
+            head_cm: m.headCm ?? null,
+            notes: m.notes || '',
+          }));
+          await supabase.from('growth_measurements').insert(rows);
+          // Reload after migration
+          const { data: newData } = await supabase
+            .from('growth_measurements')
+            .select('*')
+            .eq('user_id', user.id)
+            .eq('child_id', activeChild.id)
+            .order('date', { ascending: true });
+          setMeasurements(
+            (newData || []).map((d: any) => ({
+              id: d.id,
+              date: d.date,
+              weightKg: d.weight_kg ? Number(d.weight_kg) : null,
+              heightCm: d.height_cm ? Number(d.height_cm) : null,
+              headCm: d.head_cm ? Number(d.head_cm) : null,
+              notes: d.notes || '',
+            }))
+          );
+        }
+        localStorage.removeItem(lsKey);
+      }
+    } catch {}
+  }, [user, activeChild]);
+
+  useEffect(() => {
+    loadMeasurements();
+  }, [loadMeasurements]);
 
   const sorted = useMemo(() =>
     [...measurements].sort((a, b) => a.date.localeCompare(b.date)),
@@ -66,23 +118,21 @@ export default function GrowthTracker() {
   );
 
   const weightData = useMemo(() => {
-    const data = sorted
+    return sorted
       .filter(m => m.weightKg !== null)
       .map(m => ({
         date: new Date(m.date + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
         weight: m.weightKg,
       }));
-    return data;
   }, [sorted]);
 
   const heightData = useMemo(() => {
-    const data = sorted
+    return sorted
       .filter(m => m.heightCm !== null)
       .map(m => ({
         date: new Date(m.date + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
         height: m.heightCm,
       }));
-    return data;
   }, [sorted]);
 
   const latestWeight = [...sorted].reverse().find(m => m.weightKg !== null);
@@ -91,7 +141,6 @@ export default function GrowthTracker() {
   const percentile = useMemo(() => {
     if (!age || !latestWeight?.weightKg) return null;
     const months = age.months;
-    // Find nearest WHO reference
     const ref = WHO_WEIGHT_P50.reduce((prev, curr) =>
       Math.abs(curr.month - months) < Math.abs(prev.month - months) ? curr : prev
     );
@@ -104,36 +153,40 @@ export default function GrowthTracker() {
     return '<3rd';
   }, [age, latestWeight]);
 
-  const handleAdd = () => {
-    if (!activeChild) return;
+  const handleAdd = async () => {
+    if (!activeChild || !user) return;
     const w = weight ? parseFloat(weight) : null;
     const h = height ? parseFloat(height) : null;
     const hd = head ? parseFloat(head) : null;
     if (w === null && h === null && hd === null) return;
 
-    const newMeasurement: GrowthMeasurement = {
-      id: crypto.randomUUID(),
+    const { error } = await supabase.from('growth_measurements').insert({
+      user_id: user.id,
+      child_id: activeChild.id,
       date,
-      weightKg: w,
-      heightCm: h,
-      headCm: hd,
+      weight_kg: w,
+      height_cm: h,
+      head_cm: hd,
       notes: '',
-    };
-    const updated = [...measurements, newMeasurement];
-    setMeasurements(updated);
-    saveMeasurements(activeChild.id, updated);
+    });
+
+    if (error) {
+      toast('❌ Failed to save measurement');
+      return;
+    }
+
     setWeight('');
     setHeight('');
     setHead('');
     setShowAdd(false);
     toast('📏 Measurement saved!');
+    loadMeasurements();
   };
 
-  const handleDelete = (id: string) => {
-    if (!activeChild) return;
-    const updated = measurements.filter(m => m.id !== id);
-    setMeasurements(updated);
-    saveMeasurements(activeChild.id, updated);
+  const handleDelete = async (id: string) => {
+    if (!user) return;
+    await supabase.from('growth_measurements').delete().eq('id', id).eq('user_id', user.id);
+    setMeasurements(prev => prev.filter(m => m.id !== id));
     toast('🗑️ Measurement removed');
   };
 
@@ -220,7 +273,9 @@ export default function GrowthTracker() {
       )}
 
       {/* Measurement History */}
-      {sorted.length === 0 ? (
+      {loading ? (
+        <p className="text-center text-muted-foreground py-8">Loading...</p>
+      ) : sorted.length === 0 ? (
         <div className="text-center py-12">
           <div className="text-5xl mb-3">📊</div>
           <p className="font-bold text-foreground mb-1">No measurements yet</p>

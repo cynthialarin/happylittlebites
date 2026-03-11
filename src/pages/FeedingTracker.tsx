@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FeedingReminder from '@/components/FeedingReminder';
+import FeedingTimer from '@/components/FeedingTimer';
 import { motion } from 'framer-motion';
 import { useApp } from '@/contexts/AppContext';
 import { useAuth } from '@/contexts/AuthContext';
@@ -169,6 +170,17 @@ export default function FeedingTracker() {
 
       {/* Feeding Reminders */}
       <FeedingReminder />
+
+      {/* Feeding Timer */}
+      <FeedingTimer onComplete={(minutes) => {
+        setFormType('breast');
+        setFormTime(format(new Date(), 'HH:mm'));
+        setFormDuration(String(minutes));
+        setFormAmountOz('');
+        setFormSide('left');
+        setFormNotes('');
+        setShowForm(true);
+      }} />
 
       {/* Date Selector */}
       <div className="flex items-center justify-between mb-4">
