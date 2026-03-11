@@ -451,9 +451,9 @@ export const foods: FoodEntry[] = [
   {
     id: 'oatmeal', name: 'Oatmeal', emoji: '🥣', foodGroup: 'grains', allergens: [],
     chokingHazard: false, chokingNotes: 'Soft texture, very safe',
-    servingByAge: { '6mo': 'Thin porridge consistency', '9mo': 'Thicker porridge, can add mix-ins', '12mo': 'Regular oatmeal with toppings', '2yr': 'Any preparation — overnight oats, baked oats', '3yr+': 'Any preparation' },
-    nutritionHighlights: ['Fiber', 'Iron', 'Magnesium', 'B vitamins'],
-    commonReactions: ['Generally very well tolerated'], prepTips: 'Start with baby oat cereal or finely ground oats. Increase texture over time.',
+    servingByAge: { '6mo': 'Thin porridge consistency (iron-fortified infant cereal preferred as first grain)', '9mo': 'Thicker porridge, add mashed fruit or nut butter', '12mo': 'Regular oatmeal with toppings', '2yr': 'Overnight oats, baked oats, any style', '3yr+': 'Any preparation' },
+    nutritionHighlights: ['Fiber (beta-glucan)', 'Iron (fortified)', 'Magnesium', 'B vitamins'],
+    commonReactions: ['Generally very well tolerated. Not a gluten grain but may be cross-contaminated — choose certified GF if celiac concern.'], prepTips: 'Per AAP: iron-fortified infant cereal is recommended as one of the first complementary foods. As baby progresses, regular oats work well. Steel-cut oats have lowest glycemic index. Add ground flax or hemp seeds for omega-3.',
     safeFromAge: '6mo'
   },
   {
