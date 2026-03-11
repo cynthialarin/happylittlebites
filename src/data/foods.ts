@@ -344,10 +344,10 @@ export const foods: FoodEntry[] = [
   },
   {
     id: 'chicken', name: 'Chicken', emoji: '🍗', foodGroup: 'protein', allergens: [],
-    chokingHazard: true, chokingNotes: 'Can be tough — serve as strips or shredded',
-    servingByAge: { '6mo': 'Drumstick with cartilage removed, or pureed', '9mo': 'Shredded or minced', '12mo': 'Small shredded pieces or strips', '2yr': 'Cut into pieces', '3yr+': 'Any preparation' },
-    nutritionHighlights: ['Protein', 'Iron', 'Zinc', 'B vitamins'],
-    commonReactions: ['Rarely allergenic'], prepTips: 'Dark meat is more tender and iron-rich. Slow cook or braise for softer texture.',
+    chokingHazard: true, chokingNotes: 'Can be tough and stringy — serve as large strips for gnawing or shredded. Never cubed for young babies.',
+    servingByAge: { '6mo': 'Drumstick with cartilage/loose bits removed (baby gnaws), or pureed dark meat', '9mo': 'Shredded, very finely minced, or ground', '12mo': 'Small shredded pieces, strips, or meatballs', '2yr': 'Cut into small pieces, any tender preparation', '3yr+': 'Any preparation' },
+    nutritionHighlights: ['Protein', 'Iron (heme — best absorbed)', 'Zinc', 'B vitamins'],
+    commonReactions: ['Rarely allergenic'], prepTips: 'Per AAP: meat is recommended as one of the first complementary foods due to high bioavailable iron and zinc. Dark meat (thighs) is more tender, juicy, and iron-rich than breast. Slow cook or braise for softest texture. Internal temp: 165°F/74°C.',
     safeFromAge: '6mo'
   },
   {
