@@ -549,9 +549,9 @@ export const foods: FoodEntry[] = [
   {
     id: 'yogurt', name: 'Yogurt', emoji: '🥛', foodGroup: 'dairy', allergens: ['milk'],
     chokingHazard: false, chokingNotes: 'Smooth texture, no choking risk',
-    servingByAge: { '6mo': 'Full-fat plain yogurt, spoon-fed or on preloaded spoon', '9mo': 'Serve as dip or mixed with fruit puree', '12mo': 'In bowls, as dip, mixed with granola', '2yr': 'Any style', '3yr+': 'Any style' },
+    servingByAge: { '6mo': 'Full-fat plain yogurt on preloaded spoon. Small amounts OK from 6 months.', '9mo': 'As dip, mixed with fruit puree, self-spoon practice', '12mo': 'In bowls, as dip, mixed with granola', '2yr': 'Any style', '3yr+': 'Any style' },
     nutritionHighlights: ['Calcium', 'Protein', 'Probiotics', 'Vitamin B12'],
-    commonReactions: ['Dairy allergen — watch for rash, digestive issues'], prepTips: 'Choose plain, full-fat, unsweetened yogurt. Greek yogurt has more protein.',
+    commonReactions: ['Dairy allergen — watch for rash, digestive issues, eczema flare'], prepTips: 'Per AAP: yogurt and cheese are safe from 6 months — only cow\'s MILK as a primary drink should wait until 12 months (US) or 9-12 months (Health Canada). Choose plain, full-fat, unsweetened. Greek yogurt has 2x protein. Avoid honey-flavored varieties before 12 months.',
     safeFromAge: '6mo'
   },
   {
