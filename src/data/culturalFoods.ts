@@ -202,10 +202,10 @@ export const culturalFoods: FoodEntry[] = [
   },
   {
     id: 'groundnut-soup', name: 'Groundnut (Peanut) Soup', emoji: '🥜', foodGroup: 'legumes', allergens: ['peanuts'],
-    chokingHazard: false, chokingNotes: 'Soup form, no choking risk',
-    servingByAge: { '6mo': 'Thin soup — great for early allergen intro', '9mo': 'Thicker soup', '12mo': 'With rice or fufu', '2yr': 'Regular portion', '3yr+': 'Any preparation' },
+    chokingHazard: false, chokingNotes: 'Soup form, no choking risk — ideal texture for early allergen introduction',
+    servingByAge: { '6mo': 'Thin soup — excellent for early peanut allergen introduction per AAP guidelines', '9mo': 'Thicker soup with soft vegetables', '12mo': 'With rice or fufu', '2yr': 'Regular portion', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Protein', 'Healthy fats', 'Niacin', 'Manganese'],
-    commonReactions: ['Contains peanuts — top allergen. Excellent for early introduction'], prepTips: 'Groundnut soup is one of the best ways to introduce peanut allergen early. Smooth, no choking risk.',
+    commonReactions: ['Contains peanuts — top allergen. Per LEAP study: early introduction in soup form is one of the safest methods.'], prepTips: 'Groundnut soup is one of the best ways to introduce peanut allergen early — smooth consistency eliminates choking risk. Per AAP/LEAP study: early peanut introduction (around 6 months) can reduce peanut allergy risk by up to 81%. Start with small amounts. For high-risk babies (severe eczema/egg allergy), discuss with pediatrician first.',
     safeFromAge: '6mo'
   },
 
