@@ -44,10 +44,10 @@ export const culturalFoods: FoodEntry[] = [
   },
   {
     id: 'yuca', name: 'Yuca (Cassava)', emoji: '🥔', foodGroup: 'vegetables', allergens: [],
-    chokingHazard: true, chokingNotes: 'Must be cooked thoroughly — never serve raw',
-    servingByAge: { '6mo': 'Boiled and mashed', '9mo': 'Soft boiled sticks', '12mo': 'Boiled or baked pieces', '2yr': 'Yuca fries', '3yr+': 'Any preparation' },
+    chokingHazard: true, chokingNotes: '⚠️ Must be peeled and cooked thoroughly — NEVER serve raw. Contains cyanogenic compounds.',
+    servingByAge: { '6mo': 'Boiled until very soft and mashed', '9mo': 'Soft boiled sticks', '12mo': 'Boiled or baked pieces', '2yr': 'Yuca fries (baked preferred)', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Vitamin C', 'Manganese', 'Carbohydrates', 'Potassium'],
-    commonReactions: ['Well tolerated when cooked'], prepTips: '⚠️ Must be peeled and cooked thoroughly. Never serve raw — contains naturally occurring cyanide compounds that cooking removes.',
+    commonReactions: ['Well tolerated when properly cooked'], prepTips: '⚠️ Per WHO/FDA: yuca MUST be peeled and cooked thoroughly. Raw cassava contains naturally occurring cyanogenic glycosides that are toxic. Boil in water for at least 20 minutes. Sweet cassava varieties are safer than bitter. Discard cooking water.',
     safeFromAge: '6mo'
   },
 
