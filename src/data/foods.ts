@@ -4,10 +4,10 @@ export const foods: FoodEntry[] = [
   // ===== FRUITS =====
   {
     id: 'avocado', name: 'Avocado', emoji: '🥑', foodGroup: 'fruits', allergens: [],
-    chokingHazard: false, chokingNotes: 'Soft texture, low risk when ripe',
-    servingByAge: { '6mo': 'Mash or serve as thick spears', '9mo': 'Diced or sliced strips', '12mo': 'Sliced or cubed', '2yr': 'Sliced, on toast, in guacamole', '3yr+': 'Any preparation' },
+    chokingHazard: false, chokingNotes: 'Soft texture, low risk when ripe. Roll in hemp seeds or crushed cereal for grip.',
+    servingByAge: { '6mo': 'Mash or serve as thick spears (finger-width). Roll in ground flax for grip.', '9mo': 'Diced or thin sliced strips, self-feeding encouraged', '12mo': 'Sliced, cubed, or on toast strips', '2yr': 'Sliced, on toast, guacamole, in smoothies', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Healthy fats', 'Potassium', 'Fiber', 'Vitamin K'],
-    commonReactions: ['Rarely allergenic'], prepTips: 'Choose ripe avocados that yield to gentle pressure. Toss with lemon to prevent browning.',
+    commonReactions: ['Rarely allergenic — cross-reactivity with latex possible but very rare'], prepTips: 'Choose ripe avocados that yield to gentle pressure. Toss with lemon to prevent browning. Per AAP, healthy fats are critical for brain development — avocado is an ideal first food.',
     safeFromAge: '6mo'
   },
   {
