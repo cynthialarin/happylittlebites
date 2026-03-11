@@ -664,10 +664,10 @@ export const foods: FoodEntry[] = [
   // ===== NUTS & SEEDS =====
   {
     id: 'peanut-butter', name: 'Peanut Butter', emoji: '🥜', foodGroup: 'nuts-seeds', allergens: ['peanuts'],
-    chokingHazard: true, chokingNotes: 'Never serve whole nuts or thick globs — thin spread or mix into purees',
-    servingByAge: { '6mo': 'Thin layer on toast strip or mixed into puree', '9mo': 'Thin spread on soft foods', '12mo': 'Spread on toast, mixed into oatmeal', '2yr': 'Spread on crackers, in smoothies', '3yr+': 'Any preparation — still avoid whole nuts until 4+' },
+    chokingHazard: true, chokingNotes: '⚠️ NEVER serve whole peanuts or thick globs. Thin spread only, or dilute into purees. No whole nuts until 4+.',
+    servingByAge: { '6mo': 'Thin smear on toast strip or mixed into puree/yogurt (dilute with breastmilk/water)', '9mo': 'Thin spread on soft foods, mixed into oatmeal', '12mo': 'Spread on toast, stirred into oatmeal or yogurt', '2yr': 'Spread on crackers, in smoothies, sauces', '3yr+': 'Any preparation — NO whole peanuts until age 4+' },
     nutritionHighlights: ['Protein', 'Healthy fats', 'Vitamin E', 'Niacin'],
-    commonReactions: ['Top allergen — watch for hives, swelling, breathing difficulty', 'Introduce early per AAP guidelines'], prepTips: 'Use smooth, natural peanut butter. Mix with breast milk or water for thinner consistency for first intro.',
+    commonReactions: ['Top allergen — watch for hives, swelling, breathing difficulty within 2 hours', 'Per LEAP study: early introduction reduces allergy risk by up to 81%'], prepTips: 'Per AAP 2024 & LEAP/EAT study data: introduce peanut early (around 6 months) especially for high-risk babies (eczema/egg allergy). For high-risk: consult pediatrician first, consider skin prick test. Mix smooth PB with warm water to thin consistency for first exposure. Never serve whole/chunked nuts to children under 4.',
     safeFromAge: '6mo'
   },
   {
