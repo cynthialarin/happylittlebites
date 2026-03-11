@@ -3,7 +3,7 @@ import { useApp } from '@/contexts/AppContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Globe, LogOut, FileText } from 'lucide-react';
+import { Globe, LogOut, FileText, Moon, Sun, Monitor } from 'lucide-react';
 import { Country } from '@/types';
 
 const menuSections = (isCanada: boolean) => [
