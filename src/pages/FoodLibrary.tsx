@@ -2,12 +2,16 @@ import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FoodImage from '@/components/FoodImage';
 import { foods } from '@/data/foods';
+import { culturalFoods } from '@/data/culturalFoods';
 import { Input } from '@/components/ui/input';
 import { Search, Filter } from 'lucide-react';
 import { FoodGroup, AgeGroup } from '@/types';
 
-const FOOD_GROUPS: { value: FoodGroup | 'all'; label: string; emoji: string }[] = [
+const allFoods = [...foods, ...culturalFoods];
+
+const FOOD_GROUPS: { value: FoodGroup | 'all' | 'cultural'; label: string; emoji: string }[] = [
   { value: 'all', label: 'All', emoji: '🍽️' },
+  { value: 'cultural', label: 'Cultural', emoji: '🌍' },
   { value: 'fruits', label: 'Fruits', emoji: '🍎' },
   { value: 'vegetables', label: 'Veggies', emoji: '🥦' },
   { value: 'protein', label: 'Protein', emoji: '🍗' },
