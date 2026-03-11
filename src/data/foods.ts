@@ -467,9 +467,9 @@ export const foods: FoodEntry[] = [
   {
     id: 'rice', name: 'Rice', emoji: '🍚', foodGroup: 'grains', allergens: [],
     chokingHazard: false, chokingNotes: 'Soft when cooked, safe',
-    servingByAge: { '6mo': 'Well-cooked and mashed/pureed', '9mo': 'Sticky rice balls or porridge', '12mo': 'Regular cooked rice', '2yr': 'Any preparation', '3yr+': 'Any preparation' },
+    servingByAge: { '6mo': 'Well-cooked and mashed or as thick porridge', '9mo': 'Sticky rice balls or porridge', '12mo': 'Regular cooked rice', '2yr': 'Any preparation', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Carbohydrates', 'B vitamins', 'Manganese'],
-    commonReactions: ['Contains low levels of arsenic — vary grains'], prepTips: 'Limit rice to 1-2 servings per week due to arsenic content. Rinse well before cooking.',
+    commonReactions: ['Contains low levels of inorganic arsenic — FDA advises varying grains'], prepTips: 'Per FDA advisory: limit rice/rice cereal to 1-2 servings per week due to arsenic content. Rinse rice thoroughly and cook in excess water (6:1 ratio) then drain — reduces arsenic by up to 60%. Vary with oats, barley, quinoa, millet. Brown rice has more arsenic than white.',
     safeFromAge: '6mo'
   },
   {
