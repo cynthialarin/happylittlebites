@@ -409,9 +409,9 @@ export const foods: FoodEntry[] = [
   {
     id: 'tuna', name: 'Tuna', emoji: '🐠', foodGroup: 'protein', allergens: ['fish'],
     chokingHazard: false, chokingNotes: 'Canned tuna is soft, low risk',
-    servingByAge: { '6mo': 'Mashed canned light tuna', '9mo': 'Flaked tuna', '12mo': 'In tuna salad, patties', '2yr': 'Any preparation', '3yr+': 'Any preparation' },
+    servingByAge: { '6mo': 'Mashed canned light tuna (not albacore)', '9mo': 'Flaked light tuna', '12mo': 'In tuna salad, patties, on pasta', '2yr': 'Any preparation', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Protein', 'Omega-3', 'Vitamin D', 'Selenium'],
-    commonReactions: ['Fish allergen'], prepTips: 'Choose "light" tuna (lower mercury). Limit to 2-3 servings per week. Avoid albacore for babies.',
+    commonReactions: ['Fish allergen'], prepTips: 'Per FDA mercury advisory: choose "light" tuna (skipjack) — it has 3x less mercury than albacore/white. Limit to 2-3 oz servings, 2x per week for babies. Health Canada recommends no more than 75g of albacore per week for children. Check FDA\'s Best Choices fish list.',
     safeFromAge: '6mo'
   },
   {
