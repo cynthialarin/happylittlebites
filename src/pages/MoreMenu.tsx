@@ -46,7 +46,7 @@ const menuSections = (isCanada: boolean) => [
 
 export default function MoreMenu() {
   const navigate = useNavigate();
-  const { activeChild, children: allChildren, settings, setCountry } = useApp();
+  const { activeChild, children: allChildren, settings, setCountry, setTheme } = useApp();
   const { signOut } = useAuth();
 
   return (
