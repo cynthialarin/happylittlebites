@@ -100,11 +100,8 @@ export default function Layout() {
                 size="sm"
                 className="text-muted-foreground h-8 w-8 p-0"
                 onClick={() => {
-                  const current = settings.theme || 'light';
-                  const next = current === 'dark' ? 'light' : 'dark';
-                  (useApp as any).__setThemeRef?.(next);
-                  // Direct call via context
-                  document.dispatchEvent(new CustomEvent('hlb-toggle-theme'));
+                  const isDark = settings.theme === 'dark';
+                  setTheme(isDark ? 'light' : 'dark');
                 }}
                 title={settings.theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
               >
