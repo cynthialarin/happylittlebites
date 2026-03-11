@@ -95,6 +95,21 @@ export default function Layout() {
             </Popover>
 
             <div className="flex items-center gap-1">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-muted-foreground h-8 w-8 p-0"
+                onClick={() => {
+                  const current = settings.theme || 'light';
+                  const next = current === 'dark' ? 'light' : 'dark';
+                  (useApp as any).__setThemeRef?.(next);
+                  // Direct call via context
+                  document.dispatchEvent(new CustomEvent('hlb-toggle-theme'));
+                }}
+                title={settings.theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              >
+                {settings.theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+              </Button>
               {children.length <= 1 && (
                 <Button
                   size="sm"
