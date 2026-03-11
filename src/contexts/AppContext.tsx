@@ -35,6 +35,7 @@ interface AppContextType extends AppState {
   setFoodPreference: (childId: string, foodName: string, pref: 'loves' | 'meh' | 'refuses' | null) => void;
   clearFoodPreferences: (childId: string) => void;
   setCountry: (country: Country) => void;
+  setTheme: (theme: 'light' | 'dark' | 'system') => void;
   completeOnboarding: () => void;
   getChildAge: (child: ChildProfile) => { months: number; label: string };
   loading: boolean;
@@ -61,6 +62,22 @@ const defaultState: AppState = {
 
 const STORAGE_KEY = 'happy-little-bites';
 
+function applyTheme(theme: 'light' | 'dark' | 'system') {
+  const root = document.documentElement;
+  if (theme === 'dark') {
+    root.classList.add('dark');
+  } else if (theme === 'light') {
+    root.classList.remove('dark');
+  } else {
+    // system
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+  }
+}
+
 const AppContext = createContext<AppContextType | null>(null);
 
 export function AppProvider({ children: reactChildren }: { children: React.ReactNode }) {
@@ -69,6 +86,24 @@ export function AppProvider({ children: reactChildren }: { children: React.React
   const [state, setState] = useState<AppState>(defaultState);
   const [loading, setLoading] = useState(true);
   const migrationDone = useRef(false);
+
+  // Apply theme on mount and when system preference changes
+  useEffect(() => {
+    const saved = localStorage.getItem('hlb-theme') as 'light' | 'dark' | 'system' | null;
+    const theme = saved || 'system';
+    if (saved) {
+      setState(prev => ({ ...prev, settings: { ...prev.settings, theme } }));
+    }
+    applyTheme(theme);
+
+    const mql = window.matchMedia('(prefers-color-scheme: dark)');
+    const handler = () => {
+      const current = localStorage.getItem('hlb-theme') || 'system';
+      if (current === 'system') applyTheme('system');
+    };
+    mql.addEventListener('change', handler);
+    return () => mql.removeEventListener('change', handler);
+  }, []);
 
   // Load all data from database when user is available
   useEffect(() => {
@@ -519,6 +554,12 @@ export function AppProvider({ children: reactChildren }: { children: React.React
     setCountry: (country: Country) => {
       setState(prev => ({ ...prev, settings: { ...prev.settings, country } }));
       localStorage.setItem('hlb-country', country);
+    },
+
+    setTheme: (theme: 'light' | 'dark' | 'system') => {
+      setState(prev => ({ ...prev, settings: { ...prev.settings, theme } }));
+      localStorage.setItem('hlb-theme', theme);
+      applyTheme(theme);
     },
   };
 
