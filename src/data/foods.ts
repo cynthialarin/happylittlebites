@@ -360,10 +360,10 @@ export const foods: FoodEntry[] = [
   },
   {
     id: 'beef', name: 'Beef', emoji: '🥩', foodGroup: 'protein', allergens: [],
-    chokingHazard: true, chokingNotes: 'Serve ground or as very tender strips',
-    servingByAge: { '6mo': 'Pureed or as a large strip to suck/gnaw on', '9mo': 'Ground beef or very tender shreds', '12mo': 'Ground in patties, shredded', '2yr': 'Diced tender pieces, meatballs', '3yr+': 'Any preparation' },
-    nutritionHighlights: ['Iron (heme)', 'Zinc', 'Protein', 'B12'],
-    commonReactions: ['Very rarely allergenic'], prepTips: 'One of the best iron sources for babies. Slow-cook for tenderness. Pair with vitamin C for iron absorption.',
+    chokingHazard: true, chokingNotes: 'Serve ground, pureed, or as very tender slow-cooked strips. Never serve tough cubes.',
+    servingByAge: { '6mo': 'Pureed or as a large slow-cooked strip to suck/gnaw (too large to bite off)', '9mo': 'Ground beef, very tender shreds, mini meatballs', '12mo': 'Ground in patties, meatballs, shredded slow-cooked', '2yr': 'Diced tender pieces, meatballs, ground', '3yr+': 'Any preparation' },
+    nutritionHighlights: ['Iron (heme — 2-3x better absorbed than plant iron)', 'Zinc', 'Protein', 'B12'],
+    commonReactions: ['Very rarely allergenic'], prepTips: 'Per AAP 2024: iron-rich foods like beef should be among the first complementary foods. Babies\' iron stores from birth begin depleting around 6 months. Heme iron from meat is absorbed 2-3x better than plant iron. Slow-cook for tenderness. Pair with vitamin C foods. Internal temp: 160°F/71°C for ground.',
     safeFromAge: '6mo'
   },
   {
