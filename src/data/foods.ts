@@ -336,10 +336,10 @@ export const foods: FoodEntry[] = [
   // ===== PROTEIN =====
   {
     id: 'eggs', name: 'Eggs', emoji: '🥚', foodGroup: 'protein', allergens: ['eggs'],
-    chokingHazard: false, chokingNotes: 'Soft when cooked, low risk',
-    servingByAge: { '6mo': 'Scrambled or as thin omelet strips', '9mo': 'Scrambled or hard-boiled in wedges', '12mo': 'Any style — scrambled, boiled, fried', '2yr': 'Any preparation', '3yr+': 'Any preparation' },
-    nutritionHighlights: ['Complete protein', 'Choline', 'Iron', 'Vitamin D'],
-    commonReactions: ['One of top 9 allergens', 'Watch for hives, vomiting, swelling'], prepTips: 'Introduce early (around 6mo) — early exposure may reduce allergy risk. Cook fully.',
+    chokingHazard: false, chokingNotes: 'Soft when cooked, low risk. Hard-boiled eggs can be crumbly — cut into wedges.',
+    servingByAge: { '6mo': 'Scrambled, thin omelet strips, or hard-boiled in wedges. Introduce whole egg (yolk + white) early.', '9mo': 'Scrambled, hard-boiled wedges, egg muffins', '12mo': 'Any style — scrambled, boiled, fried, in baking', '2yr': 'Any preparation', '3yr+': 'Any preparation' },
+    nutritionHighlights: ['Complete protein', 'Choline (brain development)', 'Iron', 'Vitamin D'],
+    commonReactions: ['One of top 9 allergens — watch for hives, vomiting, swelling within 2 hours', 'Most children outgrow egg allergy by age 5'], prepTips: 'Per AAP 2024 and LEAP study findings: introduce whole egg (yolk + white) early around 6 months — early introduction may reduce allergy risk by up to 40%. Cook fully — raw or undercooked eggs increase salmonella risk. Egg yolk is one of the best sources of choline for brain development.',
     safeFromAge: '6mo'
   },
   {
