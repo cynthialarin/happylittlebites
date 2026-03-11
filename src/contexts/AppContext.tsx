@@ -521,6 +521,12 @@ export function AppProvider({ children: reactChildren }: { children: React.React
       setState(prev => ({ ...prev, settings: { ...prev.settings, country } }));
       localStorage.setItem('hlb-country', country);
     },
+
+    setTheme: (theme: 'light' | 'dark' | 'system') => {
+      setState(prev => ({ ...prev, settings: { ...prev.settings, theme } }));
+      localStorage.setItem('hlb-theme', theme);
+      applyTheme(theme);
+    },
   };
 
   return <AppContext.Provider value={value}>{reactChildren}</AppContext.Provider>;
