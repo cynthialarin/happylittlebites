@@ -198,10 +198,10 @@ export const foods: FoodEntry[] = [
   },
   {
     id: 'spinach', name: 'Spinach', emoji: '🥬', foodGroup: 'vegetables', allergens: [],
-    chokingHazard: false, chokingNotes: 'Wilts down, low risk when cooked',
-    servingByAge: { '6mo': 'Pureed or finely chopped and mixed into foods', '9mo': 'Finely chopped cooked', '12mo': 'Chopped in omelets, pasta', '2yr': 'In smoothies, cooked dishes', '3yr+': 'Any preparation including salads' },
-    nutritionHighlights: ['Iron', 'Vitamin K', 'Folate', 'Calcium'],
-    commonReactions: ['High in nitrates — avoid large quantities before 6 months'], prepTips: 'Cook spinach to reduce nitrate levels. Pairs well with vitamin C foods for iron absorption.',
+    chokingHazard: false, chokingNotes: 'Wilts down, low risk when cooked. Chop finely for babies.',
+    servingByAge: { '6mo': 'Pureed or finely chopped cooked, mixed into foods', '9mo': 'Finely chopped cooked spinach', '12mo': 'Chopped in omelets, pasta, smoothies', '2yr': 'In smoothies, cooked dishes, pesto', '3yr+': 'Any preparation including salads' },
+    nutritionHighlights: ['Iron (non-heme)', 'Vitamin K', 'Folate', 'Calcium'],
+    commonReactions: ['High in nitrates — FDA advises limiting before 6 months. Safe after 6 months in normal amounts.'], prepTips: 'Cook spinach to reduce nitrate and oxalate levels. Pair with vitamin C foods (citrus, bell pepper) to boost non-heme iron absorption by up to 6x per AAP. Avoid as sole source of iron.',
     safeFromAge: '6mo'
   },
   {
