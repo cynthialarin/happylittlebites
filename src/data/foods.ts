@@ -36,10 +36,10 @@ export const foods: FoodEntry[] = [
   },
   {
     id: 'apple', name: 'Apple', emoji: '🍎', foodGroup: 'fruits', allergens: [],
-    chokingHazard: true, chokingNotes: 'Raw apple is a top choking hazard — always cook for under 3',
-    servingByAge: { '6mo': 'Steamed/baked until very soft, as spears', '9mo': 'Grated raw or cooked soft pieces', '12mo': 'Very thinly sliced raw or cooked', '2yr': 'Thin slices, grated raw', '3yr+': 'Regular slices — supervise until 4' },
+    chokingHazard: true, chokingNotes: '⚠️ RAW APPLE is a top choking hazard per AAP/CDC — always cook for under 3. Grate if raw.',
+    servingByAge: { '6mo': 'Steamed/baked until fork-tender, serve as thick spears. Never raw.', '9mo': 'Grated raw or very soft cooked pieces', '12mo': 'Paper-thin raw slices or cooked. Test: should squish between fingers.', '2yr': 'Thin slices, grated raw, cooked in any form', '3yr+': 'Regular slices — continue to supervise until 4' },
     nutritionHighlights: ['Fiber', 'Vitamin C', 'Quercetin', 'Potassium'],
-    commonReactions: ['Rarely allergenic'], prepTips: '⚠️ RAW APPLE is a leading choking hazard. Always cook, grate, or slice paper-thin for babies and toddlers.',
+    commonReactions: ['Rarely allergenic. Oral allergy syndrome possible with birch pollen allergy.'], prepTips: '⚠️ RAW APPLE is a leading choking cause per CDC data. Always cook, microwave until soft, grate, or slice paper-thin for babies and toddlers under 3. Pair with iron-rich foods — vitamin C boosts iron absorption.',
     safeFromAge: '6mo'
   },
   {
