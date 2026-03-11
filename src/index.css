@@ -193,15 +193,15 @@
     font-size: 12pt;
   }
   
-  .print\\:hidden {
+  .print\:hidden {
     display: none !important;
   }
   
-  .print\\:max-w-none {
+  .print\:max-w-none {
     max-width: none !important;
   }
   
-  .print\\:px-8 {
+  .print\:px-8 {
     padding-left: 2rem !important;
     padding-right: 2rem !important;
   }
@@ -217,7 +217,7 @@
     border-color: #e5e5e5 !important;
   }
 
-  .bg-peach\\/10, .bg-lavender\\/10, .bg-sky\\/10, .bg-sage\\/10, .bg-primary\\/5 {
+  [class*="bg-peach"], [class*="bg-lavender"], [class*="bg-sky"], [class*="bg-sage"], [class*="bg-primary"] {
     background: #f9f9f9 !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
