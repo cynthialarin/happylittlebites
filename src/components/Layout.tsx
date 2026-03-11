@@ -21,7 +21,7 @@ const navItems = [
 export default function Layout() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { activeChild, children, setActiveChild, getChildAge, settings } = useApp();
+  const { activeChild, children, setActiveChild, getChildAge, settings, setTheme } = useApp();
   const { signOut } = useAuth();
   const [switcherOpen, setSwitcherOpen] = useState(false);
 
