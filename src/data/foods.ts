@@ -263,9 +263,9 @@ export const foods: FoodEntry[] = [
   {
     id: 'beets', name: 'Beets', emoji: '🟥', foodGroup: 'vegetables', allergens: [],
     chokingHazard: false, chokingNotes: 'Soft when cooked, low risk',
-    servingByAge: { '6mo': 'Steamed and mashed or as soft sticks', '9mo': 'Soft cooked cubes', '12mo': 'Roasted cubes or sticks', '2yr': 'Any cooked preparation', '3yr+': 'Any preparation' },
+    servingByAge: { '6mo': 'Steamed until very soft and mashed, or as soft sticks', '9mo': 'Soft cooked cubes', '12mo': 'Roasted cubes or sticks', '2yr': 'Any cooked preparation', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Folate', 'Manganese', 'Iron', 'Fiber'],
-    commonReactions: ['May turn stool and urine pink/red — harmless (beeturia)'], prepTips: 'Will stain everything! Use a bib and expect red stool — this is normal, not blood.',
+    commonReactions: ['May turn stool and urine pink/red — harmless (beeturia). NOT blood.'], prepTips: 'Will stain everything! Use a bib. Expect red stool — this is beeturia, completely normal. Like spinach, beets are higher in nitrates — safe after 6 months in normal portions per FDA. Pair with vitamin C foods for iron absorption.',
     safeFromAge: '6mo'
   },
   {
