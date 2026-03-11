@@ -25,7 +25,7 @@ export default function ReintroductionTracker() {
           accepted: false,
           refuseCount: (existing?.refuseCount || 0) + 1,
         });
-      } else if (entry.acceptance === 'loved' || entry.acceptance === 'okay') {
+      } else if (entry.acceptance === 'loved' || entry.acceptance === 'liked' || entry.acceptance === 'okay') {
         const existing = foodStatus.get(entry.foodId);
         if (existing) {
           foodStatus.set(entry.foodId, { ...existing, accepted: true });

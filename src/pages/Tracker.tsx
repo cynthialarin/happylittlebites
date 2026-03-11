@@ -10,13 +10,26 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Badge } from '@/components/ui/badge';
 import { foods } from '@/data/foods';
-import { AcceptanceLevel, MealType, TextureStage, ReactionSeverity } from '@/types';
-import { Plus, Calendar, Trash2, Camera, X, Image as ImageIcon, AlertTriangle } from 'lucide-react';
+import { AcceptanceLevel, MealType, TextureStage, ReactionSeverity, DiaryEntry } from '@/types';
+import { Plus, Calendar, Trash2, Camera, X, Image as ImageIcon, AlertTriangle, Pencil } from 'lucide-react';
 import { toast } from '@/components/ui/sonner';
 import { supabase } from '@/integrations/supabase/client';
 import PhotoLightbox from '@/components/PhotoLightbox';
 
-const ACCEPTANCE_EMOJI: Record<AcceptanceLevel, string> = { loved: '😍', okay: '😐', refused: '😤' };
+const ACCEPTANCE_EMOJI: Record<AcceptanceLevel, string> = {
+  loved: '😍',
+  liked: '😊',
+  okay: '😐',
+  disliked: '😕',
+  refused: '😤',
+};
+const ACCEPTANCE_LABELS: Record<AcceptanceLevel, string> = {
+  loved: 'Loved',
+  liked: 'Liked',
+  okay: 'Okay',
+  disliked: 'Meh',
+  refused: 'Refused',
+};
 const MEAL_EMOJI: Record<MealType, string> = { breakfast: '🌅', lunch: '☀️', dinner: '🌙', snack: '🍪' };
 const TEXTURE_LABELS: Record<TextureStage, string> = {
   purees: '🥣 Purees',
@@ -32,10 +45,13 @@ const SEVERITY_CONFIG: Record<string, { label: string; color: string; bgClass: s
   severe: { label: '🔴 Severe', color: 'text-red-700', bgClass: 'bg-red-100 text-red-800 border-red-300' },
 };
 
+const ALL_ACCEPTANCE_LEVELS: AcceptanceLevel[] = ['loved', 'liked', 'okay', 'disliked', 'refused'];
+
 export default function Tracker() {
-  const { activeChild, diary, addDiaryEntry, removeDiaryEntry, updateChild } = useApp();
+  const { activeChild, diary, addDiaryEntry, updateDiaryEntry, removeDiaryEntry, updateChild } = useApp();
   const { user } = useAuth();
   const [showAdd, setShowAdd] = useState(false);
+  const [editingEntry, setEditingEntry] = useState<DiaryEntry | null>(null);
   const [formFood, setFormFood] = useState('');
   const [formMeal, setFormMeal] = useState<MealType>('lunch');
   const [formAcceptance, setFormAcceptance] = useState<AcceptanceLevel>('okay');
@@ -74,12 +90,10 @@ export default function Tracker() {
     if (!activeChild || !formFood.trim()) return null;
     const foodLower = formFood.trim().toLowerCase();
 
-    // Check known allergies
     if (activeChild.knownAllergies?.some(a => a.toLowerCase() === foodLower)) {
       return { type: 'allergy' as const, message: `⚠️ ${formFood} is listed in ${activeChild.name}'s known allergies!` };
     }
 
-    // Check past reactions
     const pastReaction = childDiary.find(
       d => d.foodName.toLowerCase() === foodLower && d.reactionSeverity && d.reactionSeverity !== 'none'
     );
@@ -93,7 +107,6 @@ export default function Tracker() {
     return null;
   }, [activeChild, formFood, childDiary]);
 
-  // Collect all photos for the lightbox
   const allPhotos = useMemo(() => {
     return childDiary
       .filter(e => e.photoUrl)
@@ -133,10 +146,64 @@ export default function Tracker() {
     return urlData.publicUrl;
   };
 
-  const handleAdd = async () => {
+  const resetForm = () => {
+    setFormFood('');
+    setFormMeal('lunch');
+    setFormAcceptance('okay');
+    setFormTexture('purees');
+    setFormReaction('');
+    setFormSeverity('none');
+    clearPhoto();
+    setEditingEntry(null);
+  };
+
+  const openEditDialog = (entry: DiaryEntry) => {
+    setEditingEntry(entry);
+    setFormFood(entry.foodName);
+    setFormMeal(entry.mealType);
+    setFormAcceptance(entry.acceptance);
+    setFormTexture(entry.textureStage);
+    setFormReaction(entry.reaction);
+    setFormSeverity(entry.reactionSeverity);
+    if (entry.photoUrl) {
+      setPhotoPreview(entry.photoUrl);
+    }
+    setShowAdd(true);
+  };
+
+  const handleSave = async () => {
     if (!activeChild || !formFood.trim()) return;
     setUploading(true);
 
+    if (editingEntry) {
+      // Update existing entry
+      let photoUrl = editingEntry.photoUrl;
+      if (photoFile) {
+        const url = await uploadPhoto(editingEntry.id);
+        if (url) photoUrl = url;
+      }
+
+      const updated: DiaryEntry = {
+        ...editingEntry,
+        foodName: formFood,
+        foodId: foods.find(f => f.name.toLowerCase() === formFood.toLowerCase())?.id || formFood.toLowerCase().replace(/\s+/g, '-'),
+        mealType: formMeal,
+        acceptance: formAcceptance,
+        textureStage: formTexture,
+        reaction: formReaction,
+        reactionSeverity: formSeverity,
+        photoUrl,
+      };
+
+      updateDiaryEntry(updated);
+      resetForm();
+      setShowAdd(false);
+      setUploading(false);
+      toast('✏️ Entry updated');
+      return;
+    }
+
+    // Add new entry
     const entryId = crypto.randomUUID();
     const matchedFood = foods.find(f => f.name.toLowerCase() === formFood.toLowerCase());
     const savedFoodName = formFood;
@@ -163,10 +230,7 @@ export default function Tracker() {
     });
 
     const isNew = !childDiary.some(d => d.foodId === (matchedFood?.id || formFood.toLowerCase().replace(/\s+/g, '-')));
-    setFormFood('');
-    setFormReaction('');
-    setFormSeverity('none');
-    clearPhoto();
+    resetForm();
     setShowAdd(false);
     setUploading(false);
 
@@ -216,12 +280,14 @@ export default function Tracker() {
     return <div className="flex items-center justify-center min-h-screen text-muted-foreground">Add a child profile first</div>;
   }
 
+  const isEditing = !!editingEntry;
+
   return (
     <div className="px-4 pt-6 pb-4 max-w-lg mx-auto">
       <div className="mb-5">
         <h1 className="text-xl font-black mb-1">Food Diary</h1>
         <p className="text-sm text-muted-foreground mb-3">{activeChild.name}'s eating log</p>
-        <Button className="w-full rounded-full gap-2 h-12 text-base font-bold" onClick={() => setShowAdd(true)}>
+        <Button className="w-full rounded-full gap-2 h-12 text-base font-bold" onClick={() => { resetForm(); setShowAdd(true); }}>
           <Plus className="h-5 w-5" /> Log a Meal
         </Button>
         {childDiary.length === 0 && (
@@ -280,7 +346,13 @@ export default function Tracker() {
                         </div>
                       )}
                     </div>
-                    <span className="text-lg">{ACCEPTANCE_EMOJI[entry.acceptance]}</span>
+                    <span className="text-lg" title={ACCEPTANCE_LABELS[entry.acceptance]}>{ACCEPTANCE_EMOJI[entry.acceptance]}</span>
+                    <button
+                      onClick={() => openEditDialog(entry)}
+                      className="opacity-40 hover:opacity-100 transition-opacity p-1 rounded hover:bg-primary/10"
+                    >
+                      <Pencil className="h-3.5 w-3.5 text-muted-foreground hover:text-primary" />
+                    </button>
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
                         <button className="opacity-40 hover:opacity-100 transition-opacity p-1 rounded hover:bg-destructive/10">
@@ -341,12 +413,12 @@ export default function Tracker() {
         </AlertDialogContent>
       </AlertDialog>
 
-      {/* Add Dialog */}
-      <Dialog open={showAdd} onOpenChange={(open) => { setShowAdd(open); if (!open) { clearPhoto(); setFormSeverity('none'); } }}>
+      {/* Add/Edit Dialog */}
+      <Dialog open={showAdd} onOpenChange={(open) => { setShowAdd(open); if (!open) { resetForm(); } }}>
         <DialogContent className="max-w-md mx-4">
           <DialogHeader>
-            <DialogTitle>Log a Food</DialogTitle>
-            <DialogDescription>Record what {activeChild.name} ate</DialogDescription>
+            <DialogTitle>{isEditing ? 'Edit Entry' : 'Log a Food'}</DialogTitle>
+            <DialogDescription>{isEditing ? `Update ${editingEntry?.foodName}` : `Record what ${activeChild.name} ate`}</DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
             <div>
@@ -355,7 +427,6 @@ export default function Tracker() {
               <datalist id="food-suggestions">
                 {foods.map(f => <option key={f.id} value={f.name} />)}
               </datalist>
-              {/* Warning banner for known reactive foods */}
               {foodWarning && (
                 <div className={`mt-2 p-2.5 rounded-lg border flex items-start gap-2 text-xs font-medium ${
                   foodWarning.type === 'allergy'
@@ -433,14 +504,15 @@ export default function Tracker() {
               </div>
               <div>
                 <Label className="font-semibold">Acceptance</Label>
-                <div className="flex gap-1 mt-1">
-                  {(['loved', 'okay', 'refused'] as AcceptanceLevel[]).map(level => (
+                <div className="flex gap-0.5 mt-1">
+                  {ALL_ACCEPTANCE_LEVELS.map(level => (
                     <button
                       key={level}
                       onClick={() => setFormAcceptance(level)}
-                      className={`flex-1 p-2 rounded-lg text-center transition-all ${formAcceptance === level ? 'bg-primary/10 ring-2 ring-primary' : 'bg-muted'}`}
+                      className={`flex-1 p-1.5 rounded-lg text-center transition-all ${formAcceptance === level ? 'bg-primary/10 ring-2 ring-primary' : 'bg-muted'}`}
+                      title={ACCEPTANCE_LABELS[level]}
                     >
-                      <span className="text-lg">{ACCEPTANCE_EMOJI[level]}</span>
+                      <span className="text-base">{ACCEPTANCE_EMOJI[level]}</span>
                     </button>
                   ))}
                 </div>
@@ -463,7 +535,6 @@ export default function Tracker() {
             <div>
               <Label className="font-semibold">Any reaction?</Label>
               <Input placeholder="e.g., mild rash around mouth" value={formReaction} onChange={e => setFormReaction(e.target.value)} className="mt-1" />
-              {/* Severity picker — shown when reaction text is entered */}
               {formReaction.trim() && (
                 <div className="mt-2">
                   <Label className="text-xs text-muted-foreground">Reaction severity</Label>
@@ -491,8 +562,8 @@ export default function Tracker() {
                 </div>
               )}
             </div>
-            <Button className="w-full rounded-full" onClick={handleAdd} disabled={!formFood.trim() || uploading}>
-              {uploading ? 'Uploading…' : 'Save Entry'}
+            <Button className="w-full rounded-full" onClick={handleSave} disabled={!formFood.trim() || uploading}>
+              {uploading ? 'Saving…' : isEditing ? 'Update Entry' : 'Save Entry'}
             </Button>
           </div>
         </DialogContent>

@@ -44,10 +44,10 @@ export const culturalFoods: FoodEntry[] = [
   },
   {
     id: 'yuca', name: 'Yuca (Cassava)', emoji: '🥔', foodGroup: 'vegetables', allergens: [],
-    chokingHazard: true, chokingNotes: 'Must be cooked thoroughly — never serve raw',
-    servingByAge: { '6mo': 'Boiled and mashed', '9mo': 'Soft boiled sticks', '12mo': 'Boiled or baked pieces', '2yr': 'Yuca fries', '3yr+': 'Any preparation' },
+    chokingHazard: true, chokingNotes: '⚠️ Must be peeled and cooked thoroughly — NEVER serve raw. Contains cyanogenic compounds.',
+    servingByAge: { '6mo': 'Boiled until very soft and mashed', '9mo': 'Soft boiled sticks', '12mo': 'Boiled or baked pieces', '2yr': 'Yuca fries (baked preferred)', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Vitamin C', 'Manganese', 'Carbohydrates', 'Potassium'],
-    commonReactions: ['Well tolerated when cooked'], prepTips: '⚠️ Must be peeled and cooked thoroughly. Never serve raw — contains naturally occurring cyanide compounds that cooking removes.',
+    commonReactions: ['Well tolerated when properly cooked'], prepTips: '⚠️ Per WHO/FDA: yuca MUST be peeled and cooked thoroughly. Raw cassava contains naturally occurring cyanogenic glycosides that are toxic. Boil in water for at least 20 minutes. Sweet cassava varieties are safer than bitter. Discard cooking water.',
     safeFromAge: '6mo'
   },
 
@@ -55,9 +55,9 @@ export const culturalFoods: FoodEntry[] = [
   {
     id: 'dal', name: 'Dal (Lentils)', emoji: '🍲', foodGroup: 'legumes', allergens: [],
     chokingHazard: false, chokingNotes: 'Soft and soupy, very safe',
-    servingByAge: { '6mo': 'Thin dal puree', '9mo': 'Thicker dal', '12mo': 'Dal with rice', '2yr': 'Regular dal', '3yr+': 'Any preparation' },
-    nutritionHighlights: ['Protein', 'Iron', 'Folate', 'Fiber'],
-    commonReactions: ['May cause gas initially'], prepTips: 'Red lentils cook fastest and puree smoothest. Add turmeric for anti-inflammatory benefits.',
+    servingByAge: { '6mo': 'Thin dal puree — excellent iron-rich first food', '9mo': 'Thicker dal with soft rice', '12mo': 'Dal with rice, roti pieces', '2yr': 'Regular dal with any accompaniment', '3yr+': 'Any preparation' },
+    nutritionHighlights: ['Protein', 'Iron (non-heme)', 'Folate', 'Fiber'],
+    commonReactions: ['May cause gas initially — introduce gradually'], prepTips: 'Red/yellow lentils cook fastest and puree smoothest — ideal for first foods. Add turmeric for anti-inflammatory benefits and a pinch of cumin for digestion. Per AAP: pair with vitamin C (lemon squeeze, tomato) to boost iron absorption from plant sources.',
     safeFromAge: '6mo'
   },
   {
@@ -202,10 +202,10 @@ export const culturalFoods: FoodEntry[] = [
   },
   {
     id: 'groundnut-soup', name: 'Groundnut (Peanut) Soup', emoji: '🥜', foodGroup: 'legumes', allergens: ['peanuts'],
-    chokingHazard: false, chokingNotes: 'Soup form, no choking risk',
-    servingByAge: { '6mo': 'Thin soup — great for early allergen intro', '9mo': 'Thicker soup', '12mo': 'With rice or fufu', '2yr': 'Regular portion', '3yr+': 'Any preparation' },
+    chokingHazard: false, chokingNotes: 'Soup form, no choking risk — ideal texture for early allergen introduction',
+    servingByAge: { '6mo': 'Thin soup — excellent for early peanut allergen introduction per AAP guidelines', '9mo': 'Thicker soup with soft vegetables', '12mo': 'With rice or fufu', '2yr': 'Regular portion', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Protein', 'Healthy fats', 'Niacin', 'Manganese'],
-    commonReactions: ['Contains peanuts — top allergen. Excellent for early introduction'], prepTips: 'Groundnut soup is one of the best ways to introduce peanut allergen early. Smooth, no choking risk.',
+    commonReactions: ['Contains peanuts — top allergen. Per LEAP study: early introduction in soup form is one of the safest methods.'], prepTips: 'Groundnut soup is one of the best ways to introduce peanut allergen early — smooth consistency eliminates choking risk. Per AAP/LEAP study: early peanut introduction (around 6 months) can reduce peanut allergy risk by up to 81%. Start with small amounts. For high-risk babies (severe eczema/egg allergy), discuss with pediatrician first.',
     safeFromAge: '6mo'
   },
 

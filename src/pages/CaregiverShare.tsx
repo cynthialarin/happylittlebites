@@ -67,8 +67,8 @@ export default function CaregiverShare() {
 
     const childDiary = diary.filter(d => d.childId === activeChild.id);
     const triedFoodIds = new Set(childDiary.map(d => d.foodId));
-    const lovedFoods = childDiary.filter(d => d.acceptance === 'loved').map(d => d.foodName);
-    const refusedFoods = childDiary.filter(d => d.acceptance === 'refused').map(d => d.foodName);
+    const lovedFoods = childDiary.filter(d => d.acceptance === 'loved' || d.acceptance === 'liked').map(d => d.foodName);
+    const refusedFoods = childDiary.filter(d => d.acceptance === 'refused' || d.acceptance === 'disliked').map(d => d.foodName);
     const uniqueLovedFoods = [...new Set(lovedFoods)];
     const uniqueRefusedFoods = [...new Set(refusedFoods)];
 

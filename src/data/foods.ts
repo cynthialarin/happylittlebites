@@ -4,10 +4,10 @@ export const foods: FoodEntry[] = [
   // ===== FRUITS =====
   {
     id: 'avocado', name: 'Avocado', emoji: '🥑', foodGroup: 'fruits', allergens: [],
-    chokingHazard: false, chokingNotes: 'Soft texture, low risk when ripe',
-    servingByAge: { '6mo': 'Mash or serve as thick spears', '9mo': 'Diced or sliced strips', '12mo': 'Sliced or cubed', '2yr': 'Sliced, on toast, in guacamole', '3yr+': 'Any preparation' },
+    chokingHazard: false, chokingNotes: 'Soft texture, low risk when ripe. Roll in hemp seeds or crushed cereal for grip.',
+    servingByAge: { '6mo': 'Mash or serve as thick spears (finger-width). Roll in ground flax for grip.', '9mo': 'Diced or thin sliced strips, self-feeding encouraged', '12mo': 'Sliced, cubed, or on toast strips', '2yr': 'Sliced, on toast, guacamole, in smoothies', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Healthy fats', 'Potassium', 'Fiber', 'Vitamin K'],
-    commonReactions: ['Rarely allergenic'], prepTips: 'Choose ripe avocados that yield to gentle pressure. Toss with lemon to prevent browning.',
+    commonReactions: ['Rarely allergenic — cross-reactivity with latex possible but very rare'], prepTips: 'Choose ripe avocados that yield to gentle pressure. Toss with lemon to prevent browning. Per AAP, healthy fats are critical for brain development — avocado is an ideal first food.',
     safeFromAge: '6mo'
   },
   {
@@ -36,10 +36,10 @@ export const foods: FoodEntry[] = [
   },
   {
     id: 'apple', name: 'Apple', emoji: '🍎', foodGroup: 'fruits', allergens: [],
-    chokingHazard: true, chokingNotes: 'Raw apple is a top choking hazard — always cook for under 3',
-    servingByAge: { '6mo': 'Steamed/baked until very soft, as spears', '9mo': 'Grated raw or cooked soft pieces', '12mo': 'Very thinly sliced raw or cooked', '2yr': 'Thin slices, grated raw', '3yr+': 'Regular slices — supervise until 4' },
+    chokingHazard: true, chokingNotes: '⚠️ RAW APPLE is a top choking hazard per AAP/CDC — always cook for under 3. Grate if raw.',
+    servingByAge: { '6mo': 'Steamed/baked until fork-tender, serve as thick spears. Never raw.', '9mo': 'Grated raw or very soft cooked pieces', '12mo': 'Paper-thin raw slices or cooked. Test: should squish between fingers.', '2yr': 'Thin slices, grated raw, cooked in any form', '3yr+': 'Regular slices — continue to supervise until 4' },
     nutritionHighlights: ['Fiber', 'Vitamin C', 'Quercetin', 'Potassium'],
-    commonReactions: ['Rarely allergenic'], prepTips: '⚠️ RAW APPLE is a leading choking hazard. Always cook, grate, or slice paper-thin for babies and toddlers.',
+    commonReactions: ['Rarely allergenic. Oral allergy syndrome possible with birch pollen allergy.'], prepTips: '⚠️ RAW APPLE is a leading choking cause per CDC data. Always cook, microwave until soft, grate, or slice paper-thin for babies and toddlers under 3. Pair with iron-rich foods — vitamin C boosts iron absorption.',
     safeFromAge: '6mo'
   },
   {
@@ -100,10 +100,10 @@ export const foods: FoodEntry[] = [
   },
   {
     id: 'grapes', name: 'Grapes', emoji: '🍇', foodGroup: 'fruits', allergens: [],
-    chokingHazard: true, chokingNotes: '⚠️ HIGH RISK — always cut lengthwise into quarters, never serve whole',
-    servingByAge: { '6mo': 'Quartered lengthwise and squished', '9mo': 'Quartered lengthwise', '12mo': 'Quartered lengthwise', '2yr': 'Halved lengthwise', '3yr+': 'Quartered until age 5' },
+    chokingHazard: true, chokingNotes: '⚠️ #1 CHOKING HAZARD per AAP — ALWAYS cut lengthwise into quarters. Never serve whole to children under 5.',
+    servingByAge: { '6mo': 'Quartered lengthwise and squished flat', '9mo': 'Quartered lengthwise', '12mo': 'Quartered lengthwise', '2yr': 'Halved lengthwise minimum', '3yr+': 'Quartered until age 5 per AAP guidelines' },
     nutritionHighlights: ['Vitamin K', 'Vitamin C', 'Potassium', 'Antioxidants'],
-    commonReactions: ['Well tolerated'], prepTips: '⚠️ ALWAYS cut grapes lengthwise into quarters. Whole grapes are the #1 choking hazard food for children.',
+    commonReactions: ['Well tolerated'], prepTips: '⚠️ ALWAYS cut grapes lengthwise into quarters — never across. Whole grapes are the #1 food choking hazard for children per AAP. This applies to ALL grape varieties including small ones. Continue quartering until age 5.',
     safeFromAge: '6mo'
   },
   {
@@ -198,10 +198,10 @@ export const foods: FoodEntry[] = [
   },
   {
     id: 'spinach', name: 'Spinach', emoji: '🥬', foodGroup: 'vegetables', allergens: [],
-    chokingHazard: false, chokingNotes: 'Wilts down, low risk when cooked',
-    servingByAge: { '6mo': 'Pureed or finely chopped and mixed into foods', '9mo': 'Finely chopped cooked', '12mo': 'Chopped in omelets, pasta', '2yr': 'In smoothies, cooked dishes', '3yr+': 'Any preparation including salads' },
-    nutritionHighlights: ['Iron', 'Vitamin K', 'Folate', 'Calcium'],
-    commonReactions: ['High in nitrates — avoid large quantities before 6 months'], prepTips: 'Cook spinach to reduce nitrate levels. Pairs well with vitamin C foods for iron absorption.',
+    chokingHazard: false, chokingNotes: 'Wilts down, low risk when cooked. Chop finely for babies.',
+    servingByAge: { '6mo': 'Pureed or finely chopped cooked, mixed into foods', '9mo': 'Finely chopped cooked spinach', '12mo': 'Chopped in omelets, pasta, smoothies', '2yr': 'In smoothies, cooked dishes, pesto', '3yr+': 'Any preparation including salads' },
+    nutritionHighlights: ['Iron (non-heme)', 'Vitamin K', 'Folate', 'Calcium'],
+    commonReactions: ['High in nitrates — FDA advises limiting before 6 months. Safe after 6 months in normal amounts.'], prepTips: 'Cook spinach to reduce nitrate and oxalate levels. Pair with vitamin C foods (citrus, bell pepper) to boost non-heme iron absorption by up to 6x per AAP. Avoid as sole source of iron.',
     safeFromAge: '6mo'
   },
   {
@@ -263,9 +263,9 @@ export const foods: FoodEntry[] = [
   {
     id: 'beets', name: 'Beets', emoji: '🟥', foodGroup: 'vegetables', allergens: [],
     chokingHazard: false, chokingNotes: 'Soft when cooked, low risk',
-    servingByAge: { '6mo': 'Steamed and mashed or as soft sticks', '9mo': 'Soft cooked cubes', '12mo': 'Roasted cubes or sticks', '2yr': 'Any cooked preparation', '3yr+': 'Any preparation' },
+    servingByAge: { '6mo': 'Steamed until very soft and mashed, or as soft sticks', '9mo': 'Soft cooked cubes', '12mo': 'Roasted cubes or sticks', '2yr': 'Any cooked preparation', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Folate', 'Manganese', 'Iron', 'Fiber'],
-    commonReactions: ['May turn stool and urine pink/red — harmless (beeturia)'], prepTips: 'Will stain everything! Use a bib and expect red stool — this is normal, not blood.',
+    commonReactions: ['May turn stool and urine pink/red — harmless (beeturia). NOT blood.'], prepTips: 'Will stain everything! Use a bib. Expect red stool — this is beeturia, completely normal. Like spinach, beets are higher in nitrates — safe after 6 months in normal portions per FDA. Pair with vitamin C foods for iron absorption.',
     safeFromAge: '6mo'
   },
   {
@@ -336,34 +336,34 @@ export const foods: FoodEntry[] = [
   // ===== PROTEIN =====
   {
     id: 'eggs', name: 'Eggs', emoji: '🥚', foodGroup: 'protein', allergens: ['eggs'],
-    chokingHazard: false, chokingNotes: 'Soft when cooked, low risk',
-    servingByAge: { '6mo': 'Scrambled or as thin omelet strips', '9mo': 'Scrambled or hard-boiled in wedges', '12mo': 'Any style — scrambled, boiled, fried', '2yr': 'Any preparation', '3yr+': 'Any preparation' },
-    nutritionHighlights: ['Complete protein', 'Choline', 'Iron', 'Vitamin D'],
-    commonReactions: ['One of top 9 allergens', 'Watch for hives, vomiting, swelling'], prepTips: 'Introduce early (around 6mo) — early exposure may reduce allergy risk. Cook fully.',
+    chokingHazard: false, chokingNotes: 'Soft when cooked, low risk. Hard-boiled eggs can be crumbly — cut into wedges.',
+    servingByAge: { '6mo': 'Scrambled, thin omelet strips, or hard-boiled in wedges. Introduce whole egg (yolk + white) early.', '9mo': 'Scrambled, hard-boiled wedges, egg muffins', '12mo': 'Any style — scrambled, boiled, fried, in baking', '2yr': 'Any preparation', '3yr+': 'Any preparation' },
+    nutritionHighlights: ['Complete protein', 'Choline (brain development)', 'Iron', 'Vitamin D'],
+    commonReactions: ['One of top 9 allergens — watch for hives, vomiting, swelling within 2 hours', 'Most children outgrow egg allergy by age 5'], prepTips: 'Per AAP 2024 and LEAP study findings: introduce whole egg (yolk + white) early around 6 months — early introduction may reduce allergy risk by up to 40%. Cook fully — raw or undercooked eggs increase salmonella risk. Egg yolk is one of the best sources of choline for brain development.',
     safeFromAge: '6mo'
   },
   {
     id: 'chicken', name: 'Chicken', emoji: '🍗', foodGroup: 'protein', allergens: [],
-    chokingHazard: true, chokingNotes: 'Can be tough — serve as strips or shredded',
-    servingByAge: { '6mo': 'Drumstick with cartilage removed, or pureed', '9mo': 'Shredded or minced', '12mo': 'Small shredded pieces or strips', '2yr': 'Cut into pieces', '3yr+': 'Any preparation' },
-    nutritionHighlights: ['Protein', 'Iron', 'Zinc', 'B vitamins'],
-    commonReactions: ['Rarely allergenic'], prepTips: 'Dark meat is more tender and iron-rich. Slow cook or braise for softer texture.',
+    chokingHazard: true, chokingNotes: 'Can be tough and stringy — serve as large strips for gnawing or shredded. Never cubed for young babies.',
+    servingByAge: { '6mo': 'Drumstick with cartilage/loose bits removed (baby gnaws), or pureed dark meat', '9mo': 'Shredded, very finely minced, or ground', '12mo': 'Small shredded pieces, strips, or meatballs', '2yr': 'Cut into small pieces, any tender preparation', '3yr+': 'Any preparation' },
+    nutritionHighlights: ['Protein', 'Iron (heme — best absorbed)', 'Zinc', 'B vitamins'],
+    commonReactions: ['Rarely allergenic'], prepTips: 'Per AAP: meat is recommended as one of the first complementary foods due to high bioavailable iron and zinc. Dark meat (thighs) is more tender, juicy, and iron-rich than breast. Slow cook or braise for softest texture. Internal temp: 165°F/74°C.',
     safeFromAge: '6mo'
   },
   {
     id: 'salmon', name: 'Salmon', emoji: '🐟', foodGroup: 'protein', allergens: ['fish'],
-    chokingHazard: false, chokingNotes: 'Flakes easily, low risk when deboned',
-    servingByAge: { '6mo': 'Flaked and mashed, or as large fillet strip', '9mo': 'Flaked into soft pieces', '12mo': 'Small flaked pieces or salmon cakes', '2yr': 'Salmon cakes, flaked on pasta', '3yr+': 'Any preparation' },
-    nutritionHighlights: ['Omega-3 DHA', 'Protein', 'Vitamin D', 'Selenium'],
-    commonReactions: ['Fish allergen — introduce carefully'], prepTips: 'Remove ALL bones carefully. Wild-caught has fewer contaminants. Bake or steam for easy flaking.',
+    chokingHazard: false, chokingNotes: 'Flakes easily, low risk when deboned. Check every bite for small bones.',
+    servingByAge: { '6mo': 'Flaked and mashed, or serve a large fillet strip to suck on (debone carefully)', '9mo': 'Flaked into soft pieces, in fish cakes', '12mo': 'Salmon cakes, flaked on pasta or rice', '2yr': 'Salmon cakes, flaked, baked fillets', '3yr+': 'Any preparation' },
+    nutritionHighlights: ['Omega-3 DHA (brain & eye development)', 'Protein', 'Vitamin D', 'Selenium'],
+    commonReactions: ['Fish allergen — introduce carefully. Watch for hives, vomiting within 2 hours.'], prepTips: 'Per FDA "Best Choices" list: salmon is low in mercury and high in omega-3 DHA critical for brain development. Wild-caught has fewer contaminants. Serve 2-3 times per week. Remove ALL bones — run finger along fillet. Bake at 400°F until internal temp reaches 145°F.',
     safeFromAge: '6mo'
   },
   {
     id: 'beef', name: 'Beef', emoji: '🥩', foodGroup: 'protein', allergens: [],
-    chokingHazard: true, chokingNotes: 'Serve ground or as very tender strips',
-    servingByAge: { '6mo': 'Pureed or as a large strip to suck/gnaw on', '9mo': 'Ground beef or very tender shreds', '12mo': 'Ground in patties, shredded', '2yr': 'Diced tender pieces, meatballs', '3yr+': 'Any preparation' },
-    nutritionHighlights: ['Iron (heme)', 'Zinc', 'Protein', 'B12'],
-    commonReactions: ['Very rarely allergenic'], prepTips: 'One of the best iron sources for babies. Slow-cook for tenderness. Pair with vitamin C for iron absorption.',
+    chokingHazard: true, chokingNotes: 'Serve ground, pureed, or as very tender slow-cooked strips. Never serve tough cubes.',
+    servingByAge: { '6mo': 'Pureed or as a large slow-cooked strip to suck/gnaw (too large to bite off)', '9mo': 'Ground beef, very tender shreds, mini meatballs', '12mo': 'Ground in patties, meatballs, shredded slow-cooked', '2yr': 'Diced tender pieces, meatballs, ground', '3yr+': 'Any preparation' },
+    nutritionHighlights: ['Iron (heme — 2-3x better absorbed than plant iron)', 'Zinc', 'Protein', 'B12'],
+    commonReactions: ['Very rarely allergenic'], prepTips: 'Per AAP 2024: iron-rich foods like beef should be among the first complementary foods. Babies\' iron stores from birth begin depleting around 6 months. Heme iron from meat is absorbed 2-3x better than plant iron. Slow-cook for tenderness. Pair with vitamin C foods. Internal temp: 160°F/71°C for ground.',
     safeFromAge: '6mo'
   },
   {
@@ -409,9 +409,9 @@ export const foods: FoodEntry[] = [
   {
     id: 'tuna', name: 'Tuna', emoji: '🐠', foodGroup: 'protein', allergens: ['fish'],
     chokingHazard: false, chokingNotes: 'Canned tuna is soft, low risk',
-    servingByAge: { '6mo': 'Mashed canned light tuna', '9mo': 'Flaked tuna', '12mo': 'In tuna salad, patties', '2yr': 'Any preparation', '3yr+': 'Any preparation' },
+    servingByAge: { '6mo': 'Mashed canned light tuna (not albacore)', '9mo': 'Flaked light tuna', '12mo': 'In tuna salad, patties, on pasta', '2yr': 'Any preparation', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Protein', 'Omega-3', 'Vitamin D', 'Selenium'],
-    commonReactions: ['Fish allergen'], prepTips: 'Choose "light" tuna (lower mercury). Limit to 2-3 servings per week. Avoid albacore for babies.',
+    commonReactions: ['Fish allergen'], prepTips: 'Per FDA mercury advisory: choose "light" tuna (skipjack) — it has 3x less mercury than albacore/white. Limit to 2-3 oz servings, 2x per week for babies. Health Canada recommends no more than 75g of albacore per week for children. Check FDA\'s Best Choices fish list.',
     safeFromAge: '6mo'
   },
   {
@@ -451,9 +451,9 @@ export const foods: FoodEntry[] = [
   {
     id: 'oatmeal', name: 'Oatmeal', emoji: '🥣', foodGroup: 'grains', allergens: [],
     chokingHazard: false, chokingNotes: 'Soft texture, very safe',
-    servingByAge: { '6mo': 'Thin porridge consistency', '9mo': 'Thicker porridge, can add mix-ins', '12mo': 'Regular oatmeal with toppings', '2yr': 'Any preparation — overnight oats, baked oats', '3yr+': 'Any preparation' },
-    nutritionHighlights: ['Fiber', 'Iron', 'Magnesium', 'B vitamins'],
-    commonReactions: ['Generally very well tolerated'], prepTips: 'Start with baby oat cereal or finely ground oats. Increase texture over time.',
+    servingByAge: { '6mo': 'Thin porridge consistency (iron-fortified infant cereal preferred as first grain)', '9mo': 'Thicker porridge, add mashed fruit or nut butter', '12mo': 'Regular oatmeal with toppings', '2yr': 'Overnight oats, baked oats, any style', '3yr+': 'Any preparation' },
+    nutritionHighlights: ['Fiber (beta-glucan)', 'Iron (fortified)', 'Magnesium', 'B vitamins'],
+    commonReactions: ['Generally very well tolerated. Not a gluten grain but may be cross-contaminated — choose certified GF if celiac concern.'], prepTips: 'Per AAP: iron-fortified infant cereal is recommended as one of the first complementary foods. As baby progresses, regular oats work well. Steel-cut oats have lowest glycemic index. Add ground flax or hemp seeds for omega-3.',
     safeFromAge: '6mo'
   },
   {
@@ -467,9 +467,9 @@ export const foods: FoodEntry[] = [
   {
     id: 'rice', name: 'Rice', emoji: '🍚', foodGroup: 'grains', allergens: [],
     chokingHazard: false, chokingNotes: 'Soft when cooked, safe',
-    servingByAge: { '6mo': 'Well-cooked and mashed/pureed', '9mo': 'Sticky rice balls or porridge', '12mo': 'Regular cooked rice', '2yr': 'Any preparation', '3yr+': 'Any preparation' },
+    servingByAge: { '6mo': 'Well-cooked and mashed or as thick porridge', '9mo': 'Sticky rice balls or porridge', '12mo': 'Regular cooked rice', '2yr': 'Any preparation', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Carbohydrates', 'B vitamins', 'Manganese'],
-    commonReactions: ['Contains low levels of arsenic — vary grains'], prepTips: 'Limit rice to 1-2 servings per week due to arsenic content. Rinse well before cooking.',
+    commonReactions: ['Contains low levels of inorganic arsenic — FDA advises varying grains'], prepTips: 'Per FDA advisory: limit rice/rice cereal to 1-2 servings per week due to arsenic content. Rinse rice thoroughly and cook in excess water (6:1 ratio) then drain — reduces arsenic by up to 60%. Vary with oats, barley, quinoa, millet. Brown rice has more arsenic than white.',
     safeFromAge: '6mo'
   },
   {
@@ -549,9 +549,9 @@ export const foods: FoodEntry[] = [
   {
     id: 'yogurt', name: 'Yogurt', emoji: '🥛', foodGroup: 'dairy', allergens: ['milk'],
     chokingHazard: false, chokingNotes: 'Smooth texture, no choking risk',
-    servingByAge: { '6mo': 'Full-fat plain yogurt, spoon-fed or on preloaded spoon', '9mo': 'Serve as dip or mixed with fruit puree', '12mo': 'In bowls, as dip, mixed with granola', '2yr': 'Any style', '3yr+': 'Any style' },
+    servingByAge: { '6mo': 'Full-fat plain yogurt on preloaded spoon. Small amounts OK from 6 months.', '9mo': 'As dip, mixed with fruit puree, self-spoon practice', '12mo': 'In bowls, as dip, mixed with granola', '2yr': 'Any style', '3yr+': 'Any style' },
     nutritionHighlights: ['Calcium', 'Protein', 'Probiotics', 'Vitamin B12'],
-    commonReactions: ['Dairy allergen — watch for rash, digestive issues'], prepTips: 'Choose plain, full-fat, unsweetened yogurt. Greek yogurt has more protein.',
+    commonReactions: ['Dairy allergen — watch for rash, digestive issues, eczema flare'], prepTips: 'Per AAP: yogurt and cheese are safe from 6 months — only cow\'s MILK as a primary drink should wait until 12 months (US) or 9-12 months (Health Canada). Choose plain, full-fat, unsweetened. Greek yogurt has 2x protein. Avoid honey-flavored varieties before 12 months.',
     safeFromAge: '6mo'
   },
   {
@@ -664,10 +664,10 @@ export const foods: FoodEntry[] = [
   // ===== NUTS & SEEDS =====
   {
     id: 'peanut-butter', name: 'Peanut Butter', emoji: '🥜', foodGroup: 'nuts-seeds', allergens: ['peanuts'],
-    chokingHazard: true, chokingNotes: 'Never serve whole nuts or thick globs — thin spread or mix into purees',
-    servingByAge: { '6mo': 'Thin layer on toast strip or mixed into puree', '9mo': 'Thin spread on soft foods', '12mo': 'Spread on toast, mixed into oatmeal', '2yr': 'Spread on crackers, in smoothies', '3yr+': 'Any preparation — still avoid whole nuts until 4+' },
+    chokingHazard: true, chokingNotes: '⚠️ NEVER serve whole peanuts or thick globs. Thin spread only, or dilute into purees. No whole nuts until 4+.',
+    servingByAge: { '6mo': 'Thin smear on toast strip or mixed into puree/yogurt (dilute with breastmilk/water)', '9mo': 'Thin spread on soft foods, mixed into oatmeal', '12mo': 'Spread on toast, stirred into oatmeal or yogurt', '2yr': 'Spread on crackers, in smoothies, sauces', '3yr+': 'Any preparation — NO whole peanuts until age 4+' },
     nutritionHighlights: ['Protein', 'Healthy fats', 'Vitamin E', 'Niacin'],
-    commonReactions: ['Top allergen — watch for hives, swelling, breathing difficulty', 'Introduce early per AAP guidelines'], prepTips: 'Use smooth, natural peanut butter. Mix with breast milk or water for thinner consistency for first intro.',
+    commonReactions: ['Top allergen — watch for hives, swelling, breathing difficulty within 2 hours', 'Per LEAP study: early introduction reduces allergy risk by up to 81%'], prepTips: 'Per AAP 2024 & LEAP/EAT study data: introduce peanut early (around 6 months) especially for high-risk babies (eczema/egg allergy). For high-risk: consult pediatrician first, consider skin prick test. Mix smooth PB with warm water to thin consistency for first exposure. Never serve whole/chunked nuts to children under 4.',
     safeFromAge: '6mo'
   },
   {
@@ -771,9 +771,9 @@ export const foods: FoodEntry[] = [
   {
     id: 'honey', name: 'Honey', emoji: '🍯', foodGroup: 'other', allergens: [],
     chokingHazard: false, chokingNotes: 'Liquid/sticky, no choking risk',
-    servingByAge: { '6mo': '⚠️ NOT SAFE before 12 months', '9mo': '⚠️ NOT SAFE before 12 months', '12mo': 'Small amounts as sweetener', '2yr': 'In cooking, on toast', '3yr+': 'Any preparation' },
+    servingByAge: { '6mo': '⚠️ NEVER before 12 months — botulism risk', '9mo': '⚠️ NEVER before 12 months — botulism risk', '12mo': 'Small amounts as natural sweetener', '2yr': 'In cooking, on toast, in baking', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Natural sugars', 'Antioxidants', 'Antimicrobial properties'],
-    commonReactions: ['⚠️ Can cause infant botulism under 12 months'], prepTips: '⚠️ NEVER give honey to babies under 12 months — risk of infant botulism. Safe after first birthday.',
+    commonReactions: ['⚠️ Can cause infant botulism under 12 months — potentially fatal'], prepTips: '⚠️ PER AAP/CDC/WHO: NEVER give honey to babies under 12 months. Clostridium botulinum spores in honey can cause infant botulism — a potentially life-threatening condition. This includes honey in baked goods, on pacifiers, or in any form. Safe after first birthday when gut flora is mature enough to handle spores.',
     safeFromAge: '12mo'
   },
 ];
