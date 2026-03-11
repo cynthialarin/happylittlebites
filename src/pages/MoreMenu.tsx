@@ -88,8 +88,40 @@ export default function MoreMenu() {
         ))}
       </div>
 
-      {/* Country Toggle */}
+      {/* Appearance Toggle */}
       <Card className="mt-5 mb-2">
+        <CardContent className="p-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Moon className="h-4 w-4 text-muted-foreground" />
+              <span className="text-sm font-bold">Appearance</span>
+            </div>
+            <div className="flex gap-1">
+              {([
+                { code: 'light' as const, icon: Sun, label: 'Light' },
+                { code: 'dark' as const, icon: Moon, label: 'Dark' },
+                { code: 'system' as const, icon: Monitor, label: 'Auto' },
+              ]).map(t => (
+                <button
+                  key={t.code}
+                  onClick={() => setTheme(t.code)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1 ${
+                    settings.theme === t.code
+                      ? 'bg-primary text-primary-foreground'
+                      : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                  }`}
+                >
+                  <t.icon className="h-3 w-3" />
+                  {t.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Country Toggle */}
+      <Card className="mb-2">
         <CardContent className="p-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
