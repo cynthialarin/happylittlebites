@@ -352,10 +352,10 @@ export const foods: FoodEntry[] = [
   },
   {
     id: 'salmon', name: 'Salmon', emoji: '🐟', foodGroup: 'protein', allergens: ['fish'],
-    chokingHazard: false, chokingNotes: 'Flakes easily, low risk when deboned',
-    servingByAge: { '6mo': 'Flaked and mashed, or as large fillet strip', '9mo': 'Flaked into soft pieces', '12mo': 'Small flaked pieces or salmon cakes', '2yr': 'Salmon cakes, flaked on pasta', '3yr+': 'Any preparation' },
-    nutritionHighlights: ['Omega-3 DHA', 'Protein', 'Vitamin D', 'Selenium'],
-    commonReactions: ['Fish allergen — introduce carefully'], prepTips: 'Remove ALL bones carefully. Wild-caught has fewer contaminants. Bake or steam for easy flaking.',
+    chokingHazard: false, chokingNotes: 'Flakes easily, low risk when deboned. Check every bite for small bones.',
+    servingByAge: { '6mo': 'Flaked and mashed, or serve a large fillet strip to suck on (debone carefully)', '9mo': 'Flaked into soft pieces, in fish cakes', '12mo': 'Salmon cakes, flaked on pasta or rice', '2yr': 'Salmon cakes, flaked, baked fillets', '3yr+': 'Any preparation' },
+    nutritionHighlights: ['Omega-3 DHA (brain & eye development)', 'Protein', 'Vitamin D', 'Selenium'],
+    commonReactions: ['Fish allergen — introduce carefully. Watch for hives, vomiting within 2 hours.'], prepTips: 'Per FDA "Best Choices" list: salmon is low in mercury and high in omega-3 DHA critical for brain development. Wild-caught has fewer contaminants. Serve 2-3 times per week. Remove ALL bones — run finger along fillet. Bake at 400°F until internal temp reaches 145°F.',
     safeFromAge: '6mo'
   },
   {
