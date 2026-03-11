@@ -1,5 +1,5 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { Home, UtensilsCrossed, BookOpen, ClipboardList, Menu, Plus, ChevronDown, Check, LogOut } from 'lucide-react';
+import { Home, UtensilsCrossed, BookOpen, ClipboardList, Menu, Plus, ChevronDown, Check, LogOut, Moon, Sun } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import SafetyButton from './SafetyButton';
 import { useApp } from '@/contexts/AppContext';
