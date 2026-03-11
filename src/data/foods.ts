@@ -100,10 +100,10 @@ export const foods: FoodEntry[] = [
   },
   {
     id: 'grapes', name: 'Grapes', emoji: '🍇', foodGroup: 'fruits', allergens: [],
-    chokingHazard: true, chokingNotes: '⚠️ HIGH RISK — always cut lengthwise into quarters, never serve whole',
-    servingByAge: { '6mo': 'Quartered lengthwise and squished', '9mo': 'Quartered lengthwise', '12mo': 'Quartered lengthwise', '2yr': 'Halved lengthwise', '3yr+': 'Quartered until age 5' },
+    chokingHazard: true, chokingNotes: '⚠️ #1 CHOKING HAZARD per AAP — ALWAYS cut lengthwise into quarters. Never serve whole to children under 5.',
+    servingByAge: { '6mo': 'Quartered lengthwise and squished flat', '9mo': 'Quartered lengthwise', '12mo': 'Quartered lengthwise', '2yr': 'Halved lengthwise minimum', '3yr+': 'Quartered until age 5 per AAP guidelines' },
     nutritionHighlights: ['Vitamin K', 'Vitamin C', 'Potassium', 'Antioxidants'],
-    commonReactions: ['Well tolerated'], prepTips: '⚠️ ALWAYS cut grapes lengthwise into quarters. Whole grapes are the #1 choking hazard food for children.',
+    commonReactions: ['Well tolerated'], prepTips: '⚠️ ALWAYS cut grapes lengthwise into quarters — never across. Whole grapes are the #1 food choking hazard for children per AAP. This applies to ALL grape varieties including small ones. Continue quartering until age 5.',
     safeFromAge: '6mo'
   },
   {
