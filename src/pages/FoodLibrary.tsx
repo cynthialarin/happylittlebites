@@ -24,16 +24,20 @@ const FOOD_GROUPS: { value: FoodGroup | 'all' | 'cultural'; label: string; emoji
 
 export default function FoodLibrary() {
   const [search, setSearch] = useState('');
-  const [group, setGroup] = useState<FoodGroup | 'all'>('all');
+  const [group, setGroup] = useState<FoodGroup | 'all' | 'cultural'>('all');
   const navigate = useNavigate();
 
+  const culturalFoodIds = useMemo(() => new Set(culturalFoods.map(f => f.id)), []);
+
   const filtered = useMemo(() => {
-    return foods.filter(f => {
+    return allFoods.filter(f => {
       const matchesSearch = f.name.toLowerCase().includes(search.toLowerCase());
-      const matchesGroup = group === 'all' || f.foodGroup === group;
+      const matchesGroup = group === 'all' 
+        || (group === 'cultural' && culturalFoodIds.has(f.id))
+        || (group !== 'cultural' && f.foodGroup === group);
       return matchesSearch && matchesGroup;
     });
-  }, [search, group]);
+  }, [search, group, culturalFoodIds]);
 
   return (
     <div className="px-4 pt-6 pb-4 max-w-lg mx-auto">
