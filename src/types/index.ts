@@ -1,6 +1,6 @@
 export type FeedingApproach = 'blw' | 'purees' | 'combo';
 export type TextureStage = 'purees' | 'mashed' | 'soft-chunks' | 'finger-foods' | 'regular';
-export type AcceptanceLevel = 'loved' | 'okay' | 'refused';
+export type AcceptanceLevel = 'loved' | 'liked' | 'okay' | 'disliked' | 'refused';
 export type AgeGroup = '6mo' | '9mo' | '12mo' | '2yr' | '3yr+';
 export type FoodGroup = 'fruits' | 'vegetables' | 'grains' | 'protein' | 'dairy' | 'legumes' | 'nuts-seeds' | 'other';
 export type MealType = 'breakfast' | 'lunch' | 'dinner' | 'snack';

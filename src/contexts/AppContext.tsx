@@ -370,6 +370,18 @@ export function AppProvider({ children: reactChildren }: { children: React.React
       }
     },
 
+    updateDiaryEntry: async (entry) => {
+      setState(prev => ({ ...prev, diary: prev.diary.map(e => e.id === entry.id ? entry : e) }));
+      if (user) {
+        await supabase.from('diary_entries').update({
+          food_id: entry.foodId, food_name: entry.foodName, meal_type: entry.mealType,
+          texture_stage: entry.textureStage, acceptance: entry.acceptance,
+          reaction: entry.reaction, reaction_severity: entry.reactionSeverity, notes: entry.notes,
+          photo_url: entry.photoUrl || null,
+        } as any).eq('id', entry.id).eq('user_id', user.id);
+      }
+    },
+
     removeDiaryEntry: async (id) => {
       setState(prev => ({ ...prev, diary: prev.diary.filter(e => e.id !== id) }));
       if (user) {
