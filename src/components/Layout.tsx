@@ -1,5 +1,5 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { Home, UtensilsCrossed, BookOpen, ClipboardList, Menu, Plus, ChevronDown, Check, LogOut } from 'lucide-react';
+import { Home, UtensilsCrossed, BookOpen, ClipboardList, Menu, Plus, ChevronDown, Check, LogOut, Moon, Sun } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import SafetyButton from './SafetyButton';
 import { useApp } from '@/contexts/AppContext';
@@ -21,7 +21,7 @@ const navItems = [
 export default function Layout() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { activeChild, children, setActiveChild, getChildAge, settings } = useApp();
+  const { activeChild, children, setActiveChild, getChildAge, settings, setTheme } = useApp();
   const { signOut } = useAuth();
   const [switcherOpen, setSwitcherOpen] = useState(false);
 
@@ -95,6 +95,18 @@ export default function Layout() {
             </Popover>
 
             <div className="flex items-center gap-1">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-muted-foreground h-8 w-8 p-0"
+                onClick={() => {
+                  const isDark = settings.theme === 'dark';
+                  setTheme(isDark ? 'light' : 'dark');
+                }}
+                title={settings.theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              >
+                {settings.theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+              </Button>
               {children.length <= 1 && (
                 <Button
                   size="sm"
