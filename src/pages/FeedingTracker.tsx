@@ -171,6 +171,17 @@ export default function FeedingTracker() {
       {/* Feeding Reminders */}
       <FeedingReminder />
 
+      {/* Feeding Timer */}
+      <FeedingTimer onComplete={(minutes) => {
+        setFormType('breast');
+        setFormTime(format(new Date(), 'HH:mm'));
+        setFormDuration(String(minutes));
+        setFormAmountOz('');
+        setFormSide('left');
+        setFormNotes('');
+        setShowForm(true);
+      }} />
+
       {/* Date Selector */}
       <div className="flex items-center justify-between mb-4">
         <button onClick={() => setSelectedDate(subDays(new Date(selectedDate), 1).toISOString().split('T')[0])} className="p-2 rounded-lg hover:bg-muted">

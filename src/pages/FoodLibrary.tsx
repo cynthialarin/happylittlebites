@@ -42,7 +42,7 @@ export default function FoodLibrary() {
   return (
     <div className="px-4 pt-6 pb-4 max-w-lg mx-auto">
       <h1 className="text-xl font-black mb-1">Food Library</h1>
-      <p className="text-sm text-muted-foreground mb-4">{foods.length} foods with safety & serving guides</p>
+      <p className="text-sm text-muted-foreground mb-4">{allFoods.length} foods with safety & serving guides</p>
 
       {/* Search */}
       <div className="relative mb-4">
