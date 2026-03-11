@@ -55,9 +55,9 @@ export const culturalFoods: FoodEntry[] = [
   {
     id: 'dal', name: 'Dal (Lentils)', emoji: '🍲', foodGroup: 'legumes', allergens: [],
     chokingHazard: false, chokingNotes: 'Soft and soupy, very safe',
-    servingByAge: { '6mo': 'Thin dal puree', '9mo': 'Thicker dal', '12mo': 'Dal with rice', '2yr': 'Regular dal', '3yr+': 'Any preparation' },
-    nutritionHighlights: ['Protein', 'Iron', 'Folate', 'Fiber'],
-    commonReactions: ['May cause gas initially'], prepTips: 'Red lentils cook fastest and puree smoothest. Add turmeric for anti-inflammatory benefits.',
+    servingByAge: { '6mo': 'Thin dal puree — excellent iron-rich first food', '9mo': 'Thicker dal with soft rice', '12mo': 'Dal with rice, roti pieces', '2yr': 'Regular dal with any accompaniment', '3yr+': 'Any preparation' },
+    nutritionHighlights: ['Protein', 'Iron (non-heme)', 'Folate', 'Fiber'],
+    commonReactions: ['May cause gas initially — introduce gradually'], prepTips: 'Red/yellow lentils cook fastest and puree smoothest — ideal for first foods. Add turmeric for anti-inflammatory benefits and a pinch of cumin for digestion. Per AAP: pair with vitamin C (lemon squeeze, tomato) to boost iron absorption from plant sources.',
     safeFromAge: '6mo'
   },
   {
