@@ -23,6 +23,7 @@ interface AppContextType extends AppState {
   setActiveChild: (id: string) => void;
   activeChild: ChildProfile | null;
   addDiaryEntry: (entry: DiaryEntry) => void;
+  updateDiaryEntry: (entry: DiaryEntry) => void;
   removeDiaryEntry: (id: string) => void;
   addAllergenRecord: (record: AllergenRecord) => void;
   toggleFavoriteRecipe: (id: string) => void;
