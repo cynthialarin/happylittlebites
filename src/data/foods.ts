@@ -771,9 +771,9 @@ export const foods: FoodEntry[] = [
   {
     id: 'honey', name: 'Honey', emoji: '🍯', foodGroup: 'other', allergens: [],
     chokingHazard: false, chokingNotes: 'Liquid/sticky, no choking risk',
-    servingByAge: { '6mo': '⚠️ NOT SAFE before 12 months', '9mo': '⚠️ NOT SAFE before 12 months', '12mo': 'Small amounts as sweetener', '2yr': 'In cooking, on toast', '3yr+': 'Any preparation' },
+    servingByAge: { '6mo': '⚠️ NEVER before 12 months — botulism risk', '9mo': '⚠️ NEVER before 12 months — botulism risk', '12mo': 'Small amounts as natural sweetener', '2yr': 'In cooking, on toast, in baking', '3yr+': 'Any preparation' },
     nutritionHighlights: ['Natural sugars', 'Antioxidants', 'Antimicrobial properties'],
-    commonReactions: ['⚠️ Can cause infant botulism under 12 months'], prepTips: '⚠️ NEVER give honey to babies under 12 months — risk of infant botulism. Safe after first birthday.',
+    commonReactions: ['⚠️ Can cause infant botulism under 12 months — potentially fatal'], prepTips: '⚠️ PER AAP/CDC/WHO: NEVER give honey to babies under 12 months. Clostridium botulinum spores in honey can cause infant botulism — a potentially life-threatening condition. This includes honey in baked goods, on pacifiers, or in any form. Safe after first birthday when gut flora is mature enough to handle spores.',
     safeFromAge: '12mo'
   },
 ];
