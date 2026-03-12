@@ -52,6 +52,7 @@ export default function Tracker() {
   const { activeChild, diary, addDiaryEntry, updateDiaryEntry, removeDiaryEntry, updateChild } = useApp();
   const { user } = useAuth();
   const [showAdd, setShowAdd] = useState(false);
+  const [showScanner, setShowScanner] = useState(false);
   const [editingEntry, setEditingEntry] = useState<DiaryEntry | null>(null);
   const [formFood, setFormFood] = useState('');
   const [formMeal, setFormMeal] = useState<MealType>('lunch');
