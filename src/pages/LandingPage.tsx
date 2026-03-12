@@ -12,6 +12,7 @@ import {
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import AppWalkthrough from '@/components/landing/AppWalkthrough';
 import LandingHero from '@/components/landing/LandingHero';
+import logoOption3 from '@/assets/logo-option-3.png';
 import LandingFeatures from '@/components/landing/LandingFeatures';
 import LandingBetaOffer from '@/components/landing/LandingBetaOffer';
 import LandingDifferentiators from '@/components/landing/LandingDifferentiators';
