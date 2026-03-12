@@ -385,6 +385,95 @@ export default function FoodDetail() {
       <p className="text-[10px] text-muted-foreground text-center mt-5 px-4">
         For informational purposes only. Not a substitute for professional medical advice. Always consult your pediatrician.
       </p>
+
+      {/* Quick-Log Dialog */}
+      <Dialog open={showTriedDialog} onOpenChange={setShowTriedDialog}>
+        <DialogContent className="max-w-sm mx-auto">
+          <DialogHeader>
+            <DialogTitle className="text-center">
+              How did {activeChild?.name || 'baby'} like {food.name}?
+            </DialogTitle>
+          </DialogHeader>
+
+          {/* Acceptance Emojis */}
+          <div className="flex justify-center gap-2">
+            {(['loved', 'liked', 'okay', 'disliked', 'refused'] as AcceptanceLevel[]).map(level => (
+              <button
+                key={level}
+                onClick={() => setTriedAcceptance(level)}
+                className={`flex flex-col items-center gap-0.5 p-2 rounded-xl transition-all ${
+                  triedAcceptance === level
+                    ? 'bg-primary/15 ring-2 ring-primary scale-110'
+                    : 'hover:bg-muted'
+                }`}
+              >
+                <span className="text-2xl">{ACCEPTANCE_EMOJI[level]}</span>
+                <span className="text-[10px] font-medium capitalize text-muted-foreground">{level}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Meal Type */}
+          <div>
+            <p className="text-xs font-semibold text-muted-foreground mb-1.5">Meal</p>
+            <div className="flex gap-1.5 flex-wrap">
+              {(['breakfast', 'lunch', 'dinner', 'snack'] as MealType[]).map(m => (
+                <button
+                  key={m}
+                  onClick={() => setTriedMealType(m)}
+                  className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
+                    triedMealType === m
+                      ? 'bg-primary text-primary-foreground'
+                      : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                  }`}
+                >
+                  {m.charAt(0).toUpperCase() + m.slice(1)}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Reaction Check */}
+          <div className="space-y-2">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <Checkbox
+                checked={triedHasReaction}
+                onCheckedChange={(v) => setTriedHasReaction(v === true)}
+              />
+              <span className="text-sm font-medium">Had a reaction</span>
+            </label>
+            {triedHasReaction && (
+              <div className="space-y-2 pl-6">
+                <div className="flex gap-1.5">
+                  {(['mild', 'moderate', 'severe'] as ReactionSeverity[]).map(s => (
+                    <button
+                      key={s}
+                      onClick={() => setTriedReactionSeverity(s)}
+                      className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
+                        triedReactionSeverity === s
+                          ? s === 'severe' ? 'bg-destructive text-destructive-foreground' : 'bg-primary text-primary-foreground'
+                          : 'bg-muted text-muted-foreground'
+                      }`}
+                    >
+                      {s.charAt(0).toUpperCase() + s.slice(1)}
+                    </button>
+                  ))}
+                </div>
+                <Textarea
+                  placeholder="Describe symptoms (optional)"
+                  value={triedNotes}
+                  onChange={e => setTriedNotes(e.target.value)}
+                  className="min-h-[60px] text-sm"
+                />
+              </div>
+            )}
+          </div>
+
+          <Button onClick={handleSaveTried} className="w-full mt-1">
+            Save
+          </Button>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
