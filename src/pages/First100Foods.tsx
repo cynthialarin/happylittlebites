@@ -356,7 +356,3 @@ export default function First100Foods() {
     </div>
   );
 }
-      </p>
-    </div>
-  );
-}
