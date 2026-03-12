@@ -199,7 +199,7 @@ export default function FeedingReminder() {
           <div className="flex items-center gap-2">
             {enabled ? <Bell className="h-4 w-4 text-primary" /> : <BellOff className="h-4 w-4 text-muted-foreground" />}
             <span className="text-sm font-bold">Feeding Reminders</span>
-            {pushSupported && <Smartphone className="h-3 w-3 text-muted-foreground" title="Push notifications supported" />}
+            {pushSupported && <Smartphone className="h-3 w-3 text-muted-foreground" />}
           </div>
           <Switch checked={enabled} onCheckedChange={toggleEnabled} disabled={loading} />
         </div>
