@@ -6,10 +6,12 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Button } from '@/components/ui/button';
 import { FIRST_100_FOODS, FIRST_100_MILESTONES, FOOD_CATEGORIES } from '@/data/first100foods';
 import { foods } from '@/data/foods';
-import { ChevronLeft, Trophy, Filter, ChevronRight, Sparkles, Info } from 'lucide-react';
+import { ChevronLeft, Trophy, Filter, ChevronRight, Sparkles, Info, Share2 } from 'lucide-react';
 import Confetti from '@/components/Confetti';
+import MilestoneShareCard from '@/components/MilestoneShareCard';
 
 export default function First100Foods() {
   const navigate = useNavigate();
