@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { AppProvider, useApp } from "@/contexts/AppContext";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import logoOption3 from '@/assets/logo-option-3.png';
 import OfflineFallback from "@/components/OfflineFallback";
 import ConsentBanner from "@/components/ConsentBanner";
 import Layout from "@/components/Layout";
