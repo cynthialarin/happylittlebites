@@ -81,14 +81,16 @@ export default function Dashboard() {
 
   const suggestions = useMemo(() => {
     if (!age) return [];
-    const triedIds = new Set(diary.filter(d => d.childId === activeChild?.id).map(d => d.foodId));
+    const childDiary = diary.filter(d => d.childId === activeChild?.id);
+    const triedIds = new Set(childDiary.map(d => d.foodId));
+    const triedNames = new Set(childDiary.map(d => d.foodName.toLowerCase()));
     const parseAgeMonths = (ageStr: string): number => {
       const match = ageStr.match(/^(\d+)mo$/);
       return match ? parseInt(match[1], 10) : 0;
     };
     return foods
       .filter(f => {
-        if (triedIds.has(f.id)) return false;
+        if (triedIds.has(f.id) || triedNames.has(f.name.toLowerCase())) return false;
         const safeFrom = parseAgeMonths(f.safeFromAge);
         if (safeFrom > age.months) return false;
         return true;

@@ -1,4 +1,5 @@
-import { useState, useMemo, useRef } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useApp } from '@/contexts/AppContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent } from '@/components/ui/card';
@@ -51,6 +52,7 @@ const ALL_ACCEPTANCE_LEVELS: AcceptanceLevel[] = ['loved', 'liked', 'okay', 'dis
 export default function Tracker() {
   const { activeChild, diary, addDiaryEntry, updateDiaryEntry, removeDiaryEntry, updateChild } = useApp();
   const { user } = useAuth();
+  const location = useLocation();
   const [showAdd, setShowAdd] = useState(false);
   const [showScanner, setShowScanner] = useState(false);
   const [editingEntry, setEditingEntry] = useState<DiaryEntry | null>(null);
@@ -64,6 +66,17 @@ export default function Tracker() {
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Prefill from navigation state (e.g., from FoodDetail or JarFoodLibrary)
+  useEffect(() => {
+    const state = location.state as { prefillFood?: string } | null;
+    if (state?.prefillFood) {
+      setFormFood(state.prefillFood);
+      setShowAdd(true);
+      // Clear the state so it doesn't re-trigger
+      window.history.replaceState({}, document.title);
+    }
+  }, [location.state]);
 
   // Allergy prompt state
   const [allergyPromptOpen, setAllergyPromptOpen] = useState(false);

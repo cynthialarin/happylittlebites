@@ -1,12 +1,21 @@
+import { useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { foods } from '@/data/foods';
+import { recipes } from '@/data/recipes';
 import { useApp } from '@/contexts/AppContext';
+import { useGroceryList } from '@/hooks/useGroceryList';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, AlertTriangle, ShieldCheck, Apple, ChefHat } from 'lucide-react';
+import { ArrowLeft, AlertTriangle, ShieldCheck, Apple, ChefHat, BookOpen, ShoppingCart, ClipboardCheck, NotebookPen } from 'lucide-react';
 import FoodImage from '@/components/FoodImage';
+import { toast } from '@/components/ui/sonner';
+import { AcceptanceLevel } from '@/types';
 
 const AGE_LABELS = { '6mo': '6 months', '9mo': '9 months', '12mo': '12 months', '2yr': '2 years', '3yr+': '3+ years' };
+
+const ACCEPTANCE_EMOJI: Record<AcceptanceLevel, string> = {
+  loved: '😍', liked: '😊', okay: '😐', disliked: '😕', refused: '😤',
+};
 
 const COUNTRY_SAFETY_NOTES: Record<string, { US: string; CA: string }> = {
   yogurt: {
@@ -66,9 +75,47 @@ const COUNTRY_SAFETY_NOTES: Record<string, { US: string; CA: string }> = {
 export default function FoodDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { settings } = useApp();
+  const { settings, activeChild, diary, addDiaryEntry } = useApp();
+  const { addItems } = useGroceryList();
   const isCanada = settings.country === 'CA';
   const food = foods.find(f => f.id === id);
+
+  // Tried history for active child
+  const triedHistory = useMemo(() => {
+    if (!activeChild || !food) return [];
+    return diary.filter(
+      d => d.childId === activeChild.id &&
+        (d.foodId === food.id || d.foodName.toLowerCase().includes(food.name.toLowerCase()))
+    );
+  }, [activeChild, food, diary]);
+
+  // Matching recipes
+  const matchingRecipes = useMemo(() => {
+    if (!food) return [];
+    const nameLower = food.name.toLowerCase();
+    return recipes.filter(r =>
+      r.ingredients.some(ing => ing.toLowerCase().includes(nameLower))
+    ).slice(0, 5);
+  }, [food]);
+
+  // Related foods from same food group
+  const relatedFoods = useMemo(() => {
+    if (!food) return [];
+    return foods
+      .filter(f => f.foodGroup === food.foodGroup && f.id !== food.id)
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 4);
+  }, [food]);
+
+  // Acceptance breakdown
+  const acceptanceBreakdown = useMemo(() => {
+    const counts: Partial<Record<AcceptanceLevel, number>> = {};
+    triedHistory.forEach(entry => {
+      const a = entry.acceptance as AcceptanceLevel;
+      counts[a] = (counts[a] || 0) + 1;
+    });
+    return counts;
+  }, [triedHistory]);
 
   if (!food) {
     return (
@@ -82,24 +129,98 @@ export default function FoodDetail() {
     );
   }
 
+  const handleLogToDiary = () => {
+    navigate('/tracker', { state: { prefillFood: food.name, prefillFoodId: food.id } });
+  };
+
+  const handleMarkAsTried = () => {
+    if (!activeChild) {
+      toast('No child selected', { description: 'Please select a child profile first.' });
+      return;
+    }
+    const today = new Date().toISOString().split('T')[0];
+    addDiaryEntry({
+      id: crypto.randomUUID(),
+      childId: activeChild.id,
+      date: today,
+      foodId: food.id,
+      foodName: food.name,
+      mealType: 'snack',
+      textureStage: 'purees',
+      acceptance: 'okay',
+      reaction: '',
+      reactionSeverity: 'none',
+      notes: 'Quick-logged from food detail',
+    });
+    toast('✅ Marked as tried!', { description: `${food.name} logged for ${activeChild.name} today.` });
+  };
+
+  const handleAddToGrocery = () => {
+    addItems.mutate([{ name: food.name, source: 'Food Library' }], {
+      onSuccess: () => toast('🛒 Added to grocery list!', { description: food.name }),
+      onError: () => toast('Failed to add', { description: 'Please try again.' }),
+    });
+  };
+
+  const handleViewRecipes = () => {
+    navigate('/recipes', { state: { searchQuery: food.name } });
+  };
+
+
   return (
     <div className="px-4 pt-4 pb-6 max-w-lg mx-auto">
       <button onClick={() => navigate(-1)} className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-4">
         <ArrowLeft className="h-4 w-4" /> Back
       </button>
 
-      <div className="text-center mb-5">
+      <div className="text-center mb-3">
         <div className="mx-auto w-40 h-40 mb-3">
-          <FoodImage
-            type="food"
-            id={food.id}
-            name={food.name}
-            fallbackEmoji={food.emoji}
-            className="w-full h-full rounded-2xl"
-          />
+          <FoodImage type="food" id={food.id} name={food.name} fallbackEmoji={food.emoji} className="w-full h-full rounded-2xl" />
         </div>
         <h1 className="text-2xl font-black">{food.name}</h1>
         <p className="text-sm text-muted-foreground capitalize">Safe from {AGE_LABELS[food.safeFromAge]}</p>
+      </div>
+
+      {/* Tried History Badge */}
+      {triedHistory.length > 0 && (
+        <div className="mb-4 p-3 rounded-xl bg-sage/20 border border-sage/30">
+          <div className="flex items-center gap-2 mb-1">
+            <ClipboardCheck className="h-4 w-4 text-primary" />
+            <span className="text-sm font-bold text-primary">
+              ✓ Tried {triedHistory.length} time{triedHistory.length > 1 ? 's' : ''}
+            </span>
+          </div>
+          <div className="flex gap-2 flex-wrap">
+            {Object.entries(acceptanceBreakdown).map(([level, count]) => (
+              <span key={level} className="text-xs bg-background/60 px-2 py-0.5 rounded-full">
+                {ACCEPTANCE_EMOJI[level as AcceptanceLevel]} {count}×
+              </span>
+            ))}
+          </div>
+          <p className="text-[10px] text-muted-foreground mt-1">
+            Last: {new Date(triedHistory[0].date + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+          </p>
+        </div>
+      )}
+
+      {/* Action Buttons */}
+      <div className="flex gap-2 flex-wrap mb-5">
+        <Button size="sm" className="rounded-full text-xs gap-1.5" onClick={handleLogToDiary}>
+          <NotebookPen className="h-3.5 w-3.5" /> Log to Diary
+        </Button>
+        {triedHistory.length === 0 && (
+          <Button size="sm" variant="outline" className="rounded-full text-xs gap-1.5" onClick={handleMarkAsTried}>
+            <ClipboardCheck className="h-3.5 w-3.5" /> Mark as Tried
+          </Button>
+        )}
+        {matchingRecipes.length > 0 && (
+          <Button size="sm" variant="outline" className="rounded-full text-xs gap-1.5" onClick={handleViewRecipes}>
+            <BookOpen className="h-3.5 w-3.5" /> Recipes ({matchingRecipes.length})
+          </Button>
+        )}
+        <Button size="sm" variant="outline" className="rounded-full text-xs gap-1.5" onClick={handleAddToGrocery}>
+          <ShoppingCart className="h-3.5 w-3.5" /> Add to Grocery
+        </Button>
       </div>
 
       {/* Honey / Botulism Warning */}
@@ -121,9 +242,7 @@ export default function FoodDetail() {
           <CardContent className="p-4">
             <div className="flex items-center gap-2 mb-1">
               <span className="text-base">{isCanada ? '🇨🇦' : '🇺🇸'}</span>
-              <span className="font-bold text-sm">
-                {isCanada ? 'Health Canada Guideline' : 'AAP / FDA Guideline'}
-              </span>
+              <span className="font-bold text-sm">{isCanada ? 'Health Canada Guideline' : 'AAP / FDA Guideline'}</span>
             </div>
             <p className="text-sm">{COUNTRY_SAFETY_NOTES[food.id][isCanada ? 'CA' : 'US']}</p>
           </CardContent>
@@ -153,9 +272,7 @@ export default function FoodDetail() {
             </div>
             <div className="flex gap-1 flex-wrap">
               {food.allergens.map(a => (
-                <span key={a} className="text-xs px-2 py-1 rounded-full bg-accent/20 font-semibold capitalize">
-                  {a.replace('-', ' ')}
-                </span>
+                <span key={a} className="text-xs px-2 py-1 rounded-full bg-accent/20 font-semibold capitalize">{a.replace('-', ' ')}</span>
               ))}
             </div>
           </CardContent>
@@ -212,12 +329,33 @@ export default function FoodDetail() {
       )}
 
       {/* Prep Tips */}
-      <Card>
+      <Card className="mb-4">
         <CardContent className="p-4">
           <h2 className="font-bold text-sm mb-2">💡 Prep Tips</h2>
           <p className="text-sm">{food.prepTips}</p>
         </CardContent>
       </Card>
+
+      {/* Related Foods */}
+      {relatedFoods.length > 0 && (
+        <div className="mb-4">
+          <h2 className="font-bold text-sm mb-3">Also Try...</h2>
+          <div className="flex gap-2 overflow-x-auto pb-1">
+            {relatedFoods.map(rf => (
+              <button
+                key={rf.id}
+                onClick={() => navigate(`/foods/${rf.id}`)}
+                className="flex-shrink-0 rounded-xl bg-card border border-border hover:border-primary/40 transition-colors min-w-[90px] text-center overflow-hidden"
+              >
+                <FoodImage type="food" id={rf.id} name={rf.name} fallbackEmoji={rf.emoji} className="w-full h-14 rounded-t-xl" cacheOnly />
+                <div className="p-1.5">
+                  <span className="text-[11px] font-semibold">{rf.name}</span>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       <p className="text-[10px] text-muted-foreground text-center mt-5 px-4">
         For informational purposes only. Not a substitute for professional medical advice. Always consult your pediatrician.
