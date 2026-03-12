@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ArrowRight, ChevronDown, Sparkles, Check } from 'lucide-react';
+import logoOption3 from '@/assets/logo-option-3.png';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
