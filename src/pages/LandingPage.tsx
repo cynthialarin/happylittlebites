@@ -41,7 +41,10 @@ export default function LandingPage() {
       {/* Top Nav */}
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
         <div className="max-w-5xl mx-auto flex items-center justify-between px-5 py-3">
-          <span className="text-lg font-black tracking-tight">🥦 Happy Little Bites</span>
+          <span className="flex items-center gap-2 text-lg font-black tracking-tight">
+            <img src={logoOption3} alt="Happy Little Bites" className="h-8 w-8 object-contain" />
+            Happy Little Bites
+          </span>
           <Link to="/login">
             <Button variant="outline" size="sm" className="rounded-full font-bold">
               Sign In
