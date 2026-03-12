@@ -1,19 +1,38 @@
 import { useState } from 'react';
-import { ShieldAlert, X, Phone } from 'lucide-react';
+import { ShieldAlert, Phone, Copy, Check } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { toast } from 'sonner';
 
 export default function SafetyButton() {
   const [open, setOpen] = useState(false);
+  const [copied, setCopied] = useState<string | null>(null);
+  const isMobile = useIsMobile();
+
+  const handleCall = (number: string, label: string) => {
+    if (isMobile) {
+      window.location.href = `tel:${number}`;
+    } else {
+      navigator.clipboard.writeText(number).then(() => {
+        setCopied(number);
+        toast.success(`${number} copied to clipboard`, {
+          description: `Dial ${label} from your phone.`,
+        });
+        setTimeout(() => setCopied(null), 3000);
+      });
+    }
+  };
 
   return (
     <>
       <button
         onClick={() => setOpen(true)}
-        className="fixed bottom-20 right-4 z-50 w-12 h-12 rounded-full bg-destructive text-destructive-foreground shadow-lg flex items-center justify-center hover:scale-105 transition-transform"
-        aria-label="Safety & First Aid"
+        className="fixed bottom-20 right-4 z-50 w-14 h-14 rounded-full bg-destructive text-destructive-foreground shadow-lg flex flex-col items-center justify-center hover:scale-105 transition-transform animate-pulse"
+        aria-label="Emergency SOS"
       >
         <ShieldAlert className="h-5 w-5" />
+        <span className="text-[10px] font-black leading-none mt-0.5">SOS</span>
       </button>
 
       <Dialog open={open} onOpenChange={setOpen}>
@@ -42,7 +61,7 @@ export default function SafetyButton() {
             <div className="p-4 rounded-lg bg-accent/30 border border-accent/40">
               <h3 className="font-bold text-accent-foreground mb-2">⚠️ Choking vs Gagging:</h3>
               <div className="text-sm space-y-2">
-                <p><strong>Gagging</strong> (NORMAL): Noisy, coughing, red face, eyes watering. Baby is protecting themselves. Don't intervene.</p>
+                <p><strong>Gagging</strong> (NORMAL): Noisy, coughing, red face, eyes watering. Don't intervene.</p>
                 <p><strong>Choking</strong> (EMERGENCY): Silent, can't cry/cough, turning blue. ACT IMMEDIATELY.</p>
               </div>
             </div>
@@ -51,26 +70,40 @@ export default function SafetyButton() {
               <h3 className="font-bold mb-2">🤧 Allergic Reaction Signs:</h3>
               <ul className="text-sm space-y-1 list-disc list-inside">
                 <li><strong>Mild:</strong> Hives, rash, runny nose, mild swelling</li>
-                <li><strong>Severe (call 911):</strong> Difficulty breathing, throat tightness, vomiting, limpness, swollen tongue</li>
+                <li><strong>Severe (call 911):</strong> Difficulty breathing, throat tightness, vomiting, limpness</li>
               </ul>
             </div>
 
             <div className="grid grid-cols-2 gap-2">
               <Button
                 variant="destructive"
-                className="gap-2"
-                onClick={() => window.open('tel:911')}
+                className="gap-2 h-12 text-base font-bold"
+                onClick={() => handleCall('911', 'Emergency Services')}
               >
-                <Phone className="h-4 w-4" /> Call 911
+                {isMobile ? (
+                  <><Phone className="h-4 w-4" /> Call 911</>
+                ) : (
+                  <>{copied === '911' ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />} 911</>
+                )}
               </Button>
               <Button
                 variant="outline"
-                className="gap-2 border-primary/30 text-primary hover:bg-primary/10"
-                onClick={() => window.open('tel:1-800-222-1222')}
+                className="gap-2 h-12 text-sm font-bold border-primary/30 text-primary hover:bg-primary/10"
+                onClick={() => handleCall('1-800-222-1222', 'Poison Control')}
               >
-                <Phone className="h-4 w-4" /> Poison Control
+                {isMobile ? (
+                  <><Phone className="h-4 w-4" /> Poison Control</>
+                ) : (
+                  <>{copied === '1-800-222-1222' ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />} 1-800-222-1222</>
+                )}
               </Button>
             </div>
+
+            {!isMobile && (
+              <p className="text-xs text-muted-foreground text-center">
+                On desktop, numbers are copied to clipboard. Dial from your phone.
+              </p>
+            )}
           </div>
         </DialogContent>
       </Dialog>
