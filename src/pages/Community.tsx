@@ -121,7 +121,7 @@ export default function Community() {
       } as any);
       if (error) throw error;
       // Increment reply count
-      await supabase.rpc('increment_reply_count' as any, { post_id: postId } as any);
+      await (supabase.rpc as any)('increment_reply_count', { post_id: postId });
     },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['community_replies'] });
