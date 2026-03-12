@@ -77,7 +77,7 @@ export default function Auth() {
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <div className="text-5xl mb-2">🥦</div>
+          <img src={logoOption3} alt="Happy Little Bites" className="w-16 h-16 object-contain mx-auto mb-2" />
           <CardTitle className="text-2xl font-bold text-foreground">
             Happy Little Bites
           </CardTitle>

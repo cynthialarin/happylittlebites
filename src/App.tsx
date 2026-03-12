@@ -117,7 +117,7 @@ function AuthenticatedApp() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="text-center">
-          <div className="text-4xl mb-2">🥦</div>
+          <img src={logoOption3} alt="Happy Little Bites" className="w-12 h-12 object-contain mb-2" />
           <p className="text-muted-foreground">Loading...</p>
         </div>
       </div>

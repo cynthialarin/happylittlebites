@@ -153,6 +153,10 @@ export default function LandingPage() {
           <Link to="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link>
           <Link to="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link>
         </div>
+        <div className="flex items-center justify-center gap-2 mb-2">
+          <img src={logoOption3} alt="Happy Little Bites" className="h-6 w-6 object-contain" />
+          <span className="font-heading font-bold text-sm">Happy Little Bites</span>
+        </div>
         <p className="text-xs text-muted-foreground/60 font-heading">© {new Date().getFullYear()} Happy Little Bites. Made with 💛 for families.</p>
       </footer>
     </div>

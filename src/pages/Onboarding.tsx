@@ -97,9 +97,9 @@ export default function Onboarding() {
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ type: 'spring', delay: 0.2 }}
-              className="text-7xl mb-6"
+              className="mb-6"
             >
-              🍽️
+              <img src={logoOption3} alt="Happy Little Bites" className="w-16 h-16 object-contain" />
             </motion.div>
             <h1 className="text-3xl font-black mb-2">Happy Little Bites</h1>
             <p className="text-foreground/70 mb-2 max-w-sm text-base">

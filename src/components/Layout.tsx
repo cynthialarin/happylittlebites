@@ -33,7 +33,7 @@ export default function Layout() {
       {showChildBar && (
         <div className="sticky top-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border px-4 py-2">
           <div className="flex items-center justify-between max-w-lg mx-auto gap-2">
-            <span className="text-sm font-black tracking-tight shrink-0">🥦</span>
+            <img src={logoOption3} alt="Happy Little Bites" className="h-6 w-6 object-contain shrink-0" />
 
             {/* Horizontal scrollable child pills */}
             <div ref={scrollRef} className="flex-1 overflow-x-auto scrollbar-hide">
