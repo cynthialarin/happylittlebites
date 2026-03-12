@@ -389,6 +389,9 @@ export default function Tracker() {
         </div>
       )}
 
+      {/* Meal Scanner */}
+      <MealScanner open={showScanner} onOpenChange={setShowScanner} mealType="lunch" />
+
       {/* Lightbox */}
       <PhotoLightbox
         images={allPhotos}
