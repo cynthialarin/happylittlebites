@@ -107,6 +107,16 @@ export default function FoodDetail() {
       .slice(0, 4);
   }, [food]);
 
+  // Acceptance breakdown
+  const acceptanceBreakdown = useMemo(() => {
+    const counts: Partial<Record<AcceptanceLevel, number>> = {};
+    triedHistory.forEach(entry => {
+      const a = entry.acceptance as AcceptanceLevel;
+      counts[a] = (counts[a] || 0) + 1;
+    });
+    return counts;
+  }, [triedHistory]);
+
   if (!food) {
     return (
       <div className="flex items-center justify-center min-h-screen">
