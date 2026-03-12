@@ -9,6 +9,7 @@ import { useApp } from '@/contexts/AppContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { FeedingApproach, Country, Gender } from '@/types';
 import { Baby, Heart, ShieldCheck, Sparkles, ChevronRight, ChevronLeft, LogOut } from 'lucide-react';
+import logoOption3 from '@/assets/logo-option-3.png';
 
 const AVATARS = ['🐣', '🧸', '🌻', '🐰', '🦊', '🐝', '🍼', '🌈'];
 
