@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import ChildAvatar from './ChildAvatar';
 import HintTooltip from './HintTooltip';
 import { useRef } from 'react';
+import logoOption3 from '@/assets/logo-option-3.png';
 
 const navItems = [
   { path: '/', icon: Home, label: 'Home' },
