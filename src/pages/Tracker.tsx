@@ -289,9 +289,14 @@ export default function Tracker() {
       <div className="mb-5">
         <h1 className="text-xl font-black mb-1">Food Diary</h1>
         <p className="text-sm text-muted-foreground mb-3">{activeChild.name}'s eating log</p>
-        <Button className="w-full rounded-full gap-2 h-12 text-base font-bold" onClick={() => { resetForm(); setShowAdd(true); }}>
-          <Plus className="h-5 w-5" /> Log a Meal
-        </Button>
+        <div className="flex gap-2">
+          <Button className="flex-1 rounded-full gap-2 h-12 text-base font-bold" onClick={() => { resetForm(); setShowAdd(true); }}>
+            <Plus className="h-5 w-5" /> Log a Meal
+          </Button>
+          <Button variant="outline" className="rounded-full gap-2 h-12 text-base font-bold" onClick={() => setShowScanner(true)}>
+            <Camera className="h-5 w-5" /> Scan
+          </Button>
+        </div>
         {childDiary.length === 0 && (
           <p className="text-xs text-muted-foreground text-center mt-2">Tap above to record your baby's first food!</p>
         )}
