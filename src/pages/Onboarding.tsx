@@ -64,7 +64,10 @@ export default function Onboarding() {
       {/* Persistent header */}
       <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border px-4 py-2.5">
         <div className="flex items-center justify-between max-w-md mx-auto">
-          <span className="text-base font-black tracking-tight">🥦 Happy Little Bites</span>
+          <span className="flex items-center gap-2 text-base font-black tracking-tight">
+            <img src={logoOption3} alt="Happy Little Bites" className="h-6 w-6 object-contain" />
+            Happy Little Bites
+          </span>
           <Button variant="ghost" size="sm" className="text-muted-foreground gap-1.5 text-xs" onClick={signOut}>
             <LogOut className="h-3.5 w-3.5" /> Sign Out
           </Button>
