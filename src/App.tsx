@@ -132,6 +132,7 @@ function AuthenticatedApp() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<TermsOfService />} />
+        <Route path="/choose-logo" element={<ChooseLogo />} />
         <Route path="*" element={<LandingPage />} />
       </Routes>
     );
