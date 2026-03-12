@@ -166,15 +166,6 @@ export default function FoodDetail() {
     navigate('/recipes', { state: { searchQuery: food.name } });
   };
 
-  // Acceptance breakdown
-  const acceptanceBreakdown = useMemo(() => {
-    const counts: Partial<Record<AcceptanceLevel, number>> = {};
-    triedHistory.forEach(entry => {
-      const a = entry.acceptance as AcceptanceLevel;
-      counts[a] = (counts[a] || 0) + 1;
-    });
-    return counts;
-  }, [triedHistory]);
 
   return (
     <div className="px-4 pt-4 pb-6 max-w-lg mx-auto">
