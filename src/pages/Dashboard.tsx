@@ -88,7 +88,7 @@ export default function Dashboard() {
     };
     return foods
       .filter(f => {
-        if (triedIds.has(f.id)) return false;
+        if (triedIds.has(f.id) || triedNames.has(f.name.toLowerCase())) return false;
         const safeFrom = parseAgeMonths(f.safeFromAge);
         if (safeFrom > age.months) return false;
         return true;
