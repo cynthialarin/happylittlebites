@@ -21,6 +21,7 @@ export default function First100Foods() {
   const [showCompleted, setShowCompleted] = useState(true);
   const [celebratingMilestone, setCelebratingMilestone] = useState<string | null>(null);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [shareFood, setShareFood] = useState<{ name: string; emoji: string; number: number } | null>(null);
   const prevCountRef = useRef<number | null>(null);
 
   const triedFoodNames = useMemo(() => {
