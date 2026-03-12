@@ -11,6 +11,7 @@ import ConsentBanner from "@/components/ConsentBanner";
 import Layout from "@/components/Layout";
 import Auth from "@/pages/Auth";
 import LandingPage from "@/pages/LandingPage";
+import ChooseLogo from "@/pages/ChooseLogo";
 import ResetPassword from "@/pages/ResetPassword";
 import Onboarding from "@/pages/Onboarding";
 import Dashboard from "@/pages/Dashboard";
@@ -131,6 +132,7 @@ function AuthenticatedApp() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<TermsOfService />} />
+        <Route path="/choose-logo" element={<ChooseLogo />} />
         <Route path="*" element={<LandingPage />} />
       </Routes>
     );
