@@ -12,13 +12,17 @@ serve(async (req) => {
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
 
-    const { childAge, childName, feedingApproach, knownAllergies, recentFoods, triedFoods, availableRecipes, country } = await req.json();
+    const { childAge, childName, feedingApproach, knownAllergies, recentFoods, triedFoods, availableRecipes, country, availableIngredients } = await req.json();
 
     const isCanada = country === 'CA';
     const guidelineSource = isCanada ? 'Health Canada and CPS (Canadian Paediatric Society)' : 'AAP (American Academy of Pediatrics) and CDC';
     const countryNote = isCanada
       ? `Follow Health Canada guidelines: iron-rich meat/alternatives should be prioritized as first complementary foods. Cow milk as a drink is OK from 9-12 months (pasteurized, homogenized 3.25% M.F.). Limit fresh/frozen tuna, shark, swordfish, marlin to max 75g/month. Canada recognizes 11 priority allergens (adds mustard and sulphites).`
       : `Follow AAP/CDC guidelines: cow milk as a drink should wait until 12 months. Use FDA Best Choices fish list. Top 9 allergens.`;
+
+    const ingredientNote = availableIngredients?.length
+      ? `\nAVAILABLE INGREDIENTS (from fridge/pantry scan — prioritize meals using these):\n${availableIngredients.join(', ')}`
+      : '';
 
     const systemPrompt = `You are a pediatric nutrition expert specializing in baby and toddler feeding. You help parents decide what to feed their child each day. You follow ${guidelineSource} guidelines.
 
@@ -31,6 +35,7 @@ CHILD CONTEXT:
 - Known allergies: ${knownAllergies?.length ? knownAllergies.join(', ') : 'None'}
 - Foods eaten in last 7 days: ${recentFoods?.length ? recentFoods.join(', ') : 'None logged'}
 - Total unique foods tried: ${triedFoods?.length || 0}
+${ingredientNote}
 
 RULES:
 1. NEVER suggest foods containing known allergens
@@ -41,10 +46,16 @@ RULES:
 6. If the child is under 12 months, no honey, no added salt/sugar, no whole nuts
 7. If a matching recipe ID is available, include it
 8. Give a brief, encouraging reason for each suggestion (1-2 sentences max)
-9. Suggest one new/untried food per day to encourage exploration`;
+9. Suggest one new/untried food per day to encourage exploration
+10. Provide clear preparation instructions appropriate for the child's age and feeding approach
+11. Assess choking risk and explain how to prepare food safely
+12. Note any allergens present in each meal
+13. Highlight key nutrients in each meal
+14. Estimate preparation time realistically
+15. Provide age-appropriate serving size guidance`;
 
-    const userPrompt = `Please suggest 3 meals (breakfast, lunch, dinner) and 1 snack for ${childName} today. 
-    
+    const userPrompt = `Please suggest 3 meals for ${childName} today in these categories: one quick snack, one balanced meal, and one iron-rich option.${availableIngredients?.length ? ' Prioritize using available ingredients: ' + availableIngredients.join(', ') + '.' : ''}
+
 Available recipe IDs that you can reference: ${availableRecipes?.slice(0, 50)?.join(', ') || 'none provided'}`;
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
@@ -73,14 +84,20 @@ Available recipe IDs that you can reference: ${availableRecipes?.slice(0, 50)?.j
                     items: {
                       type: "object",
                       properties: {
-                        mealType: { type: "string", enum: ["breakfast", "lunch", "dinner", "snack"] },
+                        mealType: { type: "string", enum: ["quick-snack", "balanced-meal", "iron-rich"] },
                         title: { type: "string", description: "Name of the meal" },
                         description: { type: "string", description: "Brief encouraging reason (1-2 sentences)" },
+                        prepInstructions: { type: "string", description: "Step-by-step preparation instructions appropriate for baby's feeding stage" },
+                        chokingRisk: { type: "string", enum: ["low", "medium", "high"], description: "Choking risk level with this preparation method" },
+                        allergenInfo: { type: "string", description: "Allergens present in this meal, or 'None' if allergen-free" },
+                        nutritionHighlights: { type: "array", items: { type: "string" }, description: "Key nutrients provided (e.g. 'Iron', 'Vitamin C', 'Healthy fats')" },
+                        prepTimeMinutes: { type: "number", description: "Estimated preparation time in minutes" },
+                        servingSize: { type: "string", description: "Age-appropriate serving size guidance" },
                         recipeId: { type: "string", description: "Matching recipe ID if available, otherwise empty string" },
                         emoji: { type: "string", description: "A single food emoji for this meal" },
                         newFood: { type: "boolean", description: "Whether this includes a food the child hasn't tried yet" },
                       },
-                      required: ["mealType", "title", "description", "recipeId", "emoji", "newFood"],
+                      required: ["mealType", "title", "description", "prepInstructions", "chokingRisk", "allergenInfo", "nutritionHighlights", "prepTimeMinutes", "servingSize", "recipeId", "emoji", "newFood"],
                       additionalProperties: false,
                     },
                   },
