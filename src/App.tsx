@@ -43,6 +43,8 @@ import DataManagementPage from "@/pages/DataManagementPage";
 import SavedRecipes from "@/pages/SavedRecipes";
 import WeeklyReport from "@/pages/WeeklyReport";
 import JarFoodLibrary from "@/pages/JarFoodLibrary";
+import Insights from "@/pages/Insights";
+import Community from "@/pages/Community";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
