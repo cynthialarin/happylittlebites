@@ -1,11 +1,12 @@
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { ShoppingCart, Trash2, CheckCircle2, Circle, Plus, ChevronDown, ChevronRight, ArrowLeft } from "lucide-react";
+import { ShoppingCart, Trash2, CheckCircle2, Circle, Plus, ChevronDown, ChevronRight, ArrowLeft, Copy, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useGroceryList, GroceryItem } from "@/hooks/useGroceryList";
+import { toast } from "sonner";
 
 export default function GroceryList() {
   const navigate = useNavigate();
