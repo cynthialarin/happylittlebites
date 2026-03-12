@@ -15,6 +15,7 @@ import { Plus, Calendar, Trash2, Camera, X, Image as ImageIcon, AlertTriangle, P
 import { toast } from '@/components/ui/sonner';
 import { supabase } from '@/integrations/supabase/client';
 import PhotoLightbox from '@/components/PhotoLightbox';
+import MealScanner from '@/components/MealScanner';
 
 const ACCEPTANCE_EMOJI: Record<AcceptanceLevel, string> = {
   loved: '😍',
