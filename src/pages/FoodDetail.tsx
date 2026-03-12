@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { foods } from '@/data/foods';
 import { recipes } from '@/data/recipes';
@@ -6,6 +6,9 @@ import { useApp } from '@/contexts/AppContext';
 import { useGroceryList } from '@/hooks/useGroceryList';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Textarea } from '@/components/ui/textarea';
 import { ArrowLeft, AlertTriangle, ShieldCheck, Apple, ChefHat, BookOpen, ShoppingCart, ClipboardCheck, NotebookPen } from 'lucide-react';
 import FoodImage from '@/components/FoodImage';
 import { toast } from '@/components/ui/sonner';
