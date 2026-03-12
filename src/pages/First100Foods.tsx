@@ -6,10 +6,12 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Button } from '@/components/ui/button';
 import { FIRST_100_FOODS, FIRST_100_MILESTONES, FOOD_CATEGORIES } from '@/data/first100foods';
 import { foods } from '@/data/foods';
-import { ChevronLeft, Trophy, Filter, ChevronRight, Sparkles, Info } from 'lucide-react';
+import { ChevronLeft, Trophy, Filter, ChevronRight, Sparkles, Info, Share2 } from 'lucide-react';
 import Confetti from '@/components/Confetti';
+import MilestoneShareCard from '@/components/MilestoneShareCard';
 
 export default function First100Foods() {
   const navigate = useNavigate();
@@ -19,6 +21,7 @@ export default function First100Foods() {
   const [showCompleted, setShowCompleted] = useState(true);
   const [celebratingMilestone, setCelebratingMilestone] = useState<string | null>(null);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [shareFood, setShareFood] = useState<{ name: string; emoji: string; number: number } | null>(null);
   const prevCountRef = useRef<number | null>(null);
 
   const triedFoodNames = useMemo(() => {
@@ -287,14 +290,30 @@ export default function First100Foods() {
                     <Badge variant="outline" className="text-[9px] px-1.5 py-0 h-4">{food.ageRecommended}</Badge>
                   </div>
                 </div>
-                {food.foodId && (
-                  <button
-                    onClick={() => navigate(`/foods/${food.foodId}`)}
-                    className="p-1.5 rounded-lg hover:bg-muted"
-                  >
-                    <ChevronRight className="h-4 w-4 text-muted-foreground" />
-                  </button>
-                )}
+                <div className="flex items-center gap-1">
+                  {isChecked && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        // Find which number this food is
+                        const checkedList = FIRST_100_FOODS.filter(f => checkedFoods.has(f.id));
+                        const idx = checkedList.findIndex(f => f.id === food.id);
+                        setShareFood({ name: food.name, emoji: food.emoji, number: idx + 1 });
+                      }}
+                      className="p-1.5 rounded-lg hover:bg-primary/10 transition-colors"
+                    >
+                      <Share2 className="h-3.5 w-3.5 text-primary" />
+                    </button>
+                  )}
+                  {food.foodId && (
+                    <button
+                      onClick={() => navigate(`/foods/${food.foodId}`)}
+                      className="p-1.5 rounded-lg hover:bg-muted"
+                    >
+                      <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                    </button>
+                  )}
+                </div>
               </div>
             </motion.div>
           );
@@ -322,6 +341,18 @@ export default function First100Foods() {
       <p className="text-[10px] text-muted-foreground text-center mt-4 px-4">
         For informational purposes only. Not a substitute for professional medical advice. Always consult your pediatrician.
       </p>
+
+      {/* Share Card Modal */}
+      {shareFood && activeChild && (
+        <MilestoneShareCard
+          childName={activeChild.name}
+          foodName={shareFood.name}
+          foodEmoji={shareFood.emoji}
+          foodNumber={shareFood.number}
+          totalFoods={100}
+          onClose={() => setShareFood(null)}
+        />
+      )}
     </div>
   );
 }

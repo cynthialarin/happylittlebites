@@ -125,6 +125,77 @@ export type Database = {
         }
         Relationships: []
       }
+      community_posts: {
+        Row: {
+          body: string
+          created_at: string
+          display_name: string
+          id: string
+          likes: number
+          reply_count: number
+          title: string
+          topic: string
+          user_id: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          display_name?: string
+          id?: string
+          likes?: number
+          reply_count?: number
+          title: string
+          topic?: string
+          user_id: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          display_name?: string
+          id?: string
+          likes?: number
+          reply_count?: number
+          title?: string
+          topic?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      community_replies: {
+        Row: {
+          body: string
+          created_at: string
+          display_name: string
+          id: string
+          post_id: string
+          user_id: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          display_name?: string
+          id?: string
+          post_id: string
+          user_id: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          display_name?: string
+          id?: string
+          post_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_replies_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "community_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       diaper_entries: {
         Row: {
           child_id: string
@@ -571,7 +642,8 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      increment_post_likes: { Args: { post_id: string }; Returns: undefined }
+      increment_reply_count: { Args: { post_id: string }; Returns: undefined }
     }
     Enums: {
       [_ in never]: never
