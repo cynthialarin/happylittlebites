@@ -18,6 +18,7 @@ import ProductTour from '@/components/ProductTour';
 import ChildAvatar from '@/components/ChildAvatar';
 import { TOP_9_ALLERGENS, CA_EXTRA_ALLERGENS } from '@/types';
 import { UtensilsCrossed, ShieldCheck, TrendingUp, Lightbulb, BookOpen, ChevronRight, ChevronDown, Flame, ListChecks, ShoppingCart, BarChart3, Baby, Moon, Droplets, Clock, Star, FileText, ShieldAlert, Users, MessageCircle, PieChart } from 'lucide-react';
+import logoOption3 from '@/assets/logo-option-3.png';
 
 export default function Dashboard() {
   const { activeChild, children, diary, allergenRecords, getChildAge, settings, setActiveChild } = useApp();
@@ -115,7 +116,7 @@ export default function Dashboard() {
     return (
       <div className="flex items-center justify-center min-h-screen px-6">
         <div className="text-center">
-          <div className="text-5xl mb-4">🍽️</div>
+          <img src={logoOption3} alt="Happy Little Bites" className="w-16 h-16 object-contain mx-auto mb-4" />
           <h1 className="text-2xl font-black mb-2">Happy Little Bites</h1>
           <p className="text-muted-foreground">Add a child profile to get started</p>
         </div>

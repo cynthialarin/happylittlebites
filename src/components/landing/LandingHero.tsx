@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ArrowRight, ChevronDown, Sparkles, Check } from 'lucide-react';
+import logoOption3 from '@/assets/logo-option-3.png';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
@@ -25,11 +26,8 @@ export default function LandingHero() {
           </Badge>
         </motion.div>
 
-        <motion.div variants={fadeUp} className="flex justify-center gap-3 text-3xl mb-6">
-          <span className="animate-bounce-gentle inline-block" style={{ animationDelay: '0s' }}>🥦</span>
-          <span className="animate-bounce-gentle inline-block" style={{ animationDelay: '0.3s' }}>🍌</span>
-          <span className="animate-bounce-gentle inline-block" style={{ animationDelay: '0.6s' }}>🥕</span>
-          <span className="animate-bounce-gentle inline-block" style={{ animationDelay: '0.9s' }}>🍓</span>
+        <motion.div variants={fadeUp} className="flex justify-center mb-6">
+          <img src={logoOption3} alt="Happy Little Bites" className="w-20 h-20 object-contain animate-bounce-gentle" />
         </motion.div>
 
         <motion.h1 variants={fadeUp} className="font-heading text-4xl md:text-6xl font-900 leading-tight tracking-tight mb-4">

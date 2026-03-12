@@ -12,6 +12,7 @@ import {
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import AppWalkthrough from '@/components/landing/AppWalkthrough';
 import LandingHero from '@/components/landing/LandingHero';
+import logoOption3 from '@/assets/logo-option-3.png';
 import LandingFeatures from '@/components/landing/LandingFeatures';
 import LandingBetaOffer from '@/components/landing/LandingBetaOffer';
 import LandingDifferentiators from '@/components/landing/LandingDifferentiators';
@@ -40,7 +41,10 @@ export default function LandingPage() {
       {/* Top Nav */}
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
         <div className="max-w-5xl mx-auto flex items-center justify-between px-5 py-3">
-          <span className="text-lg font-black tracking-tight">🥦 Happy Little Bites</span>
+          <span className="flex items-center gap-2 text-lg font-black tracking-tight">
+            <img src={logoOption3} alt="Happy Little Bites" className="h-8 w-8 object-contain" />
+            Happy Little Bites
+          </span>
           <Link to="/login">
             <Button variant="outline" size="sm" className="rounded-full font-bold">
               Sign In
@@ -148,6 +152,10 @@ export default function LandingPage() {
           <Link to="/login" className="hover:text-foreground transition-colors">Sign In</Link>
           <Link to="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link>
           <Link to="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link>
+        </div>
+        <div className="flex items-center justify-center gap-2 mb-2">
+          <img src={logoOption3} alt="Happy Little Bites" className="h-6 w-6 object-contain" />
+          <span className="font-heading font-bold text-sm">Happy Little Bites</span>
         </div>
         <p className="text-xs text-muted-foreground/60 font-heading">© {new Date().getFullYear()} Happy Little Bites. Made with 💛 for families.</p>
       </footer>

@@ -9,6 +9,7 @@ import { useApp } from '@/contexts/AppContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { FeedingApproach, Country, Gender } from '@/types';
 import { Baby, Heart, ShieldCheck, Sparkles, ChevronRight, ChevronLeft, LogOut } from 'lucide-react';
+import logoOption3 from '@/assets/logo-option-3.png';
 
 const AVATARS = ['🐣', '🧸', '🌻', '🐰', '🦊', '🐝', '🍼', '🌈'];
 
@@ -63,7 +64,10 @@ export default function Onboarding() {
       {/* Persistent header */}
       <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border px-4 py-2.5">
         <div className="flex items-center justify-between max-w-md mx-auto">
-          <span className="text-base font-black tracking-tight">🥦 Happy Little Bites</span>
+          <span className="flex items-center gap-2 text-base font-black tracking-tight">
+            <img src={logoOption3} alt="Happy Little Bites" className="h-6 w-6 object-contain" />
+            Happy Little Bites
+          </span>
           <Button variant="ghost" size="sm" className="text-muted-foreground gap-1.5 text-xs" onClick={signOut}>
             <LogOut className="h-3.5 w-3.5" /> Sign Out
           </Button>
@@ -93,9 +97,9 @@ export default function Onboarding() {
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ type: 'spring', delay: 0.2 }}
-              className="text-7xl mb-6"
+              className="mb-6"
             >
-              🍽️
+              <img src={logoOption3} alt="Happy Little Bites" className="w-16 h-16 object-contain" />
             </motion.div>
             <h1 className="text-3xl font-black mb-2">Happy Little Bites</h1>
             <p className="text-foreground/70 mb-2 max-w-sm text-base">
