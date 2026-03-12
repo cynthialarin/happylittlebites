@@ -42,6 +42,7 @@ import TermsOfService from "@/pages/TermsOfService";
 import DataManagementPage from "@/pages/DataManagementPage";
 import SavedRecipes from "@/pages/SavedRecipes";
 import WeeklyReport from "@/pages/WeeklyReport";
+import JarFoodLibrary from "@/pages/JarFoodLibrary";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -89,6 +90,7 @@ function AppRoutes() {
         <Route path="/grocery-list" element={<GroceryList />} />
         <Route path="/growth" element={<GrowthTracker />} />
         <Route path="/saved-recipes" element={<SavedRecipes />} />
+        <Route path="/jar-foods" element={<JarFoodLibrary />} />
         <Route path="/weekly-report" element={<WeeklyReport />} />
         <Route path="/feeding" element={<FeedingTracker />} />
         <Route path="/sleep" element={<SleepTracker />} />
