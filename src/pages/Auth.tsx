@@ -8,6 +8,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { Link, useLocation } from 'react-router-dom';
 import { lovable } from '@/integrations/lovable/index';
+import logoOption3 from '@/assets/logo-option-3.png';
 
 function GoogleIcon({ className }: { className?: string }) {
   return (
