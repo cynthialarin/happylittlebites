@@ -266,6 +266,8 @@ export default function Dashboard() {
               { label: 'First 100', icon: ListChecks, path: '/first-100-foods', color: 'bg-lavender/20' },
               { label: 'Growth', icon: TrendingUp, path: '/growth', color: 'bg-primary/10' },
               { label: 'Milestones', icon: Star, path: '/more/milestones', color: 'bg-peach/20' },
+              { label: 'Insights', icon: PieChart, path: '/insights', color: 'bg-sage/30' },
+              { label: 'Community', icon: MessageCircle, path: '/community', color: 'bg-lavender/30' },
               { label: 'Report', icon: FileText, path: '/weekly-report', color: 'bg-primary/5' },
               { label: 'Emergency', icon: ShieldAlert, path: '/more/safety', color: 'bg-destructive/10' },
               { label: 'Share', icon: Users, path: '/caregiver-share', color: 'bg-accent/10' },

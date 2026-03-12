@@ -341,6 +341,22 @@ export default function First100Foods() {
       <p className="text-[10px] text-muted-foreground text-center mt-4 px-4">
         For informational purposes only. Not a substitute for professional medical advice. Always consult your pediatrician.
       </p>
+
+      {/* Share Card Modal */}
+      {shareFood && activeChild && (
+        <MilestoneShareCard
+          childName={activeChild.name}
+          foodName={shareFood.name}
+          foodEmoji={shareFood.emoji}
+          foodNumber={shareFood.number}
+          totalFoods={100}
+          onClose={() => setShareFood(null)}
+        />
+      )}
+    </div>
+  );
+}
+      </p>
     </div>
   );
 }
