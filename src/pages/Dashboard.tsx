@@ -400,17 +400,17 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* AI Suggestion CTA */}
-      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="mb-5">
+      {/* AI Suggestion CTA — Hero */}
+      <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.5, type: 'spring', stiffness: 200 }} className="mb-5">
         <button onClick={() => navigate('/suggestions')} className="w-full">
-          <Card className="bg-gradient-to-r from-primary/10 to-accent/10 border-primary/20 hover:ring-2 ring-primary/30 transition-all">
-            <CardContent className="p-4 flex items-center gap-3">
-              <div className="h-10 w-10 rounded-xl bg-primary/20 flex items-center justify-center text-lg">✨</div>
-              <div className="flex-1 text-left">
-                <p className="text-sm font-bold">What should {activeChild.name} eat today?</p>
-                <p className="text-xs text-muted-foreground">AI-powered meal ideas personalized for {age?.label}</p>
+          <Card className="bg-gradient-to-br from-primary/15 via-accent/10 to-primary/5 border-primary/25 hover:ring-2 ring-primary/40 transition-all shadow-lg shadow-primary/10">
+            <CardContent className="p-5 text-center">
+              <div className="text-4xl mb-2">✨</div>
+              <p className="text-base font-black">What should {activeChild.name} eat right now?</p>
+              <p className="text-xs text-muted-foreground mt-1 mb-3">AI-powered • Personalized for {age?.label}</p>
+              <div className="inline-flex items-center gap-2 bg-primary text-primary-foreground rounded-full px-5 py-2 text-sm font-bold">
+                Get Meal Ideas <ChevronRight className="h-4 w-4" />
               </div>
-              <ChevronRight className="h-4 w-4 text-muted-foreground" />
             </CardContent>
           </Card>
         </button>
