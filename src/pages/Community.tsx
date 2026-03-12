@@ -134,7 +134,7 @@ export default function Community() {
 
   const likePost = useMutation({
     mutationFn: async (postId: string) => {
-      await supabase.rpc('increment_post_likes' as any, { post_id: postId } as any);
+      await (supabase.rpc as any)('increment_post_likes', { post_id: postId });
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ['community_posts'] }),
   });
