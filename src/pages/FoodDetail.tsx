@@ -12,7 +12,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { ArrowLeft, AlertTriangle, ShieldCheck, Apple, ChefHat, BookOpen, ShoppingCart, ClipboardCheck, NotebookPen } from 'lucide-react';
 import FoodImage from '@/components/FoodImage';
 import { toast } from '@/components/ui/sonner';
-import { AcceptanceLevel } from '@/types';
+import { AcceptanceLevel, MealType, ReactionSeverity } from '@/types';
 
 const AGE_LABELS = { '6mo': '6 months', '9mo': '9 months', '12mo': '12 months', '2yr': '2 years', '3yr+': '3+ years' };
 
