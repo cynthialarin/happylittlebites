@@ -93,6 +93,8 @@ function AppRoutes() {
         <Route path="/growth" element={<GrowthTracker />} />
         <Route path="/saved-recipes" element={<SavedRecipes />} />
         <Route path="/jar-foods" element={<JarFoodLibrary />} />
+        <Route path="/insights" element={<Insights />} />
+        <Route path="/community" element={<Community />} />
         <Route path="/weekly-report" element={<WeeklyReport />} />
         <Route path="/feeding" element={<FeedingTracker />} />
         <Route path="/sleep" element={<SleepTracker />} />

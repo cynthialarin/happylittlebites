@@ -52,16 +52,53 @@ export default function GroceryList() {
             </p>
           </div>
         </div>
-        {checked.length > 0 && (
-          <Button
-            variant="outline"
-            size="sm"
-            className="rounded-full text-xs"
-            onClick={() => clearChecked.mutate()}
-          >
-            <Trash2 className="h-3.5 w-3.5 mr-1" /> Clear done
-          </Button>
-        )}
+        <div className="flex gap-1.5">
+          {unchecked.length > 0 && (
+            <>
+              <Button
+                variant="outline"
+                size="sm"
+                className="rounded-full text-xs"
+                onClick={() => {
+                  const text = unchecked
+                    .map(i => `${i.amount && i.unit ? `${i.amount} ${i.unit} ` : ''}${i.name}`)
+                    .join('\n');
+                  navigator.clipboard.writeText(text);
+                  toast.success('Grocery list copied!');
+                }}
+              >
+                <Copy className="h-3.5 w-3.5 mr-1" /> Copy
+              </Button>
+              {navigator.share && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="rounded-full text-xs"
+                  onClick={async () => {
+                    const text = unchecked
+                      .map(i => `☐ ${i.amount && i.unit ? `${i.amount} ${i.unit} ` : ''}${i.name}`)
+                      .join('\n');
+                    try {
+                      await navigator.share({ title: 'Grocery List', text: `🛒 Grocery List\n\n${text}` });
+                    } catch {}
+                  }}
+                >
+                  <Share2 className="h-3.5 w-3.5 mr-1" /> Share
+                </Button>
+              )}
+            </>
+          )}
+          {checked.length > 0 && (
+            <Button
+              variant="outline"
+              size="sm"
+              className="rounded-full text-xs"
+              onClick={() => clearChecked.mutate()}
+            >
+              <Trash2 className="h-3.5 w-3.5 mr-1" /> Clear done
+            </Button>
+          )}
+        </div>
       </div>
 
       <form
