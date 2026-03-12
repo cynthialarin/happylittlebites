@@ -42,6 +42,7 @@ import TermsOfService from "@/pages/TermsOfService";
 import DataManagementPage from "@/pages/DataManagementPage";
 import SavedRecipes from "@/pages/SavedRecipes";
 import WeeklyReport from "@/pages/WeeklyReport";
+import JarFoodLibrary from "@/pages/JarFoodLibrary";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
