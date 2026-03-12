@@ -144,13 +144,8 @@ export default function FoodDetail() {
     navigate('/tracker', { state: { prefillFood: food.name, prefillFoodId: food.id } });
   };
 
-  // Quick-log dialog state
-  const [showTriedDialog, setShowTriedDialog] = useState(false);
-  const [triedAcceptance, setTriedAcceptance] = useState<AcceptanceLevel>('okay');
-  const [triedMealType, setTriedMealType] = useState('snack');
-  const [triedHasReaction, setTriedHasReaction] = useState(false);
-  const [triedReactionSeverity, setTriedReactionSeverity] = useState('mild');
-  const [triedNotes, setTriedNotes] = useState('');
+
+
 
   const handleMarkAsTried = () => {
     if (!activeChild) {
