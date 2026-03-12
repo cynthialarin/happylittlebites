@@ -290,14 +290,30 @@ export default function First100Foods() {
                     <Badge variant="outline" className="text-[9px] px-1.5 py-0 h-4">{food.ageRecommended}</Badge>
                   </div>
                 </div>
-                {food.foodId && (
-                  <button
-                    onClick={() => navigate(`/foods/${food.foodId}`)}
-                    className="p-1.5 rounded-lg hover:bg-muted"
-                  >
-                    <ChevronRight className="h-4 w-4 text-muted-foreground" />
-                  </button>
-                )}
+                <div className="flex items-center gap-1">
+                  {isChecked && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        // Find which number this food is
+                        const checkedList = FIRST_100_FOODS.filter(f => checkedFoods.has(f.id));
+                        const idx = checkedList.findIndex(f => f.id === food.id);
+                        setShareFood({ name: food.name, emoji: food.emoji, number: idx + 1 });
+                      }}
+                      className="p-1.5 rounded-lg hover:bg-primary/10 transition-colors"
+                    >
+                      <Share2 className="h-3.5 w-3.5 text-primary" />
+                    </button>
+                  )}
+                  {food.foodId && (
+                    <button
+                      onClick={() => navigate(`/foods/${food.foodId}`)}
+                      className="p-1.5 rounded-lg hover:bg-muted"
+                    >
+                      <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                    </button>
+                  )}
+                </div>
               </div>
             </motion.div>
           );
