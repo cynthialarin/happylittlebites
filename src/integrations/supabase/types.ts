@@ -431,6 +431,39 @@ export type Database = {
         }
         Relationships: []
       }
+      push_subscriptions: {
+        Row: {
+          auth: string
+          created_at: string
+          endpoint: string
+          id: string
+          p256dh: string
+          reminder_enabled: boolean
+          reminder_interval_hours: number | null
+          user_id: string
+        }
+        Insert: {
+          auth: string
+          created_at?: string
+          endpoint: string
+          id?: string
+          p256dh: string
+          reminder_enabled?: boolean
+          reminder_interval_hours?: number | null
+          user_id: string
+        }
+        Update: {
+          auth?: string
+          created_at?: string
+          endpoint?: string
+          id?: string
+          p256dh?: string
+          reminder_enabled?: boolean
+          reminder_interval_hours?: number | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       saved_recipes: {
         Row: {
           created_at: string

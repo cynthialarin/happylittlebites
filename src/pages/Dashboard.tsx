@@ -1,6 +1,6 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, PanInfo } from 'framer-motion';
 import { useApp } from '@/contexts/AppContext';
 import { useGamification } from '@/hooks/useGamification';
 import { Card, CardContent } from '@/components/ui/card';
@@ -15,11 +15,12 @@ import NutritionGoals from '@/components/NutritionGoals';
 import ReintroductionTracker from '@/components/ReintroductionTracker';
 import TextureProgression from '@/components/TextureProgression';
 import ProductTour from '@/components/ProductTour';
+import ChildAvatar from '@/components/ChildAvatar';
 import { TOP_9_ALLERGENS, CA_EXTRA_ALLERGENS } from '@/types';
 import { UtensilsCrossed, ShieldCheck, TrendingUp, Lightbulb, BookOpen, ChevronRight, ChevronDown, Flame, ListChecks, ShoppingCart, BarChart3, Baby, Moon, Droplets, Clock, Star, FileText, ShieldAlert, Users } from 'lucide-react';
 
 export default function Dashboard() {
-  const { activeChild, diary, allergenRecords, getChildAge, settings } = useApp();
+  const { activeChild, children, diary, allergenRecords, getChildAge, settings, setActiveChild } = useApp();
   const navigate = useNavigate();
   const gamification = useGamification();
   const [insightsOpen, setInsightsOpen] = useState(false);
@@ -45,6 +46,31 @@ export default function Dashboard() {
     return { foodsTried: uniqueFoods.size, allergensIntro: uniqueAllergens.size, streak };
   }, [activeChild, diary, allergenRecords]);
 
+  // Per-child stats for multi-child cards
+  const childStats = useMemo(() => {
+    if (children.length <= 1) return [];
+    return children.map(child => {
+      const childDiary = diary.filter(d => d.childId === child.id);
+      const uniqueFoods = new Set(childDiary.map(d => d.foodId));
+      let streak = 0;
+      const today = new Date();
+      for (let i = 0; i < 365; i++) {
+        const d = new Date(today);
+        d.setDate(d.getDate() - i);
+        const dateStr = d.toISOString().split('T')[0];
+        if (childDiary.some(e => e.date === dateStr)) streak++;
+        else break;
+      }
+      const lastEntry = childDiary.sort((a, b) => b.date.localeCompare(a.date))[0];
+      return {
+        child,
+        foodsTried: uniqueFoods.size,
+        streak,
+        lastMeal: lastEntry?.foodName || 'No meals yet',
+      };
+    });
+  }, [children, diary]);
+
   const totalAllergens = settings.country === 'CA' ? TOP_9_ALLERGENS.length + CA_EXTRA_ALLERGENS.length : TOP_9_ALLERGENS.length;
   const allergenProgress = (stats.allergensIntro / totalAllergens) * 100;
 
@@ -56,17 +82,13 @@ export default function Dashboard() {
   const suggestions = useMemo(() => {
     if (!age) return [];
     const triedIds = new Set(diary.filter(d => d.childId === activeChild?.id).map(d => d.foodId));
-
-    // Parse safeFromAge (e.g. '6mo', '12mo') to months
     const parseAgeMonths = (ageStr: string): number => {
       const match = ageStr.match(/^(\d+)mo$/);
       return match ? parseInt(match[1], 10) : 0;
     };
-
     return foods
       .filter(f => {
         if (triedIds.has(f.id)) return false;
-        // Age-gate: filter out foods not safe for child's age
         const safeFrom = parseAgeMonths(f.safeFromAge);
         if (safeFrom > age.months) return false;
         return true;
@@ -74,6 +96,18 @@ export default function Dashboard() {
       .sort(() => Math.random() - 0.5)
       .slice(0, 3);
   }, [age, diary, activeChild]);
+
+  // Swipe to switch children
+  const handleDragEnd = useCallback((_: any, info: PanInfo) => {
+    if (children.length <= 1 || !activeChild) return;
+    const threshold = 80;
+    const currentIdx = children.findIndex(c => c.id === activeChild.id);
+    if (info.offset.x < -threshold && currentIdx < children.length - 1) {
+      setActiveChild(children[currentIdx + 1].id);
+    } else if (info.offset.x > threshold && currentIdx > 0) {
+      setActiveChild(children[currentIdx - 1].id);
+    }
+  }, [children, activeChild, setActiveChild]);
 
   if (!activeChild) {
     return (
@@ -89,7 +123,6 @@ export default function Dashboard() {
 
   const { level, levelProgress, nextLevel, xp, weeklyChallenge, challengeProgress } = gamification;
 
-  // XP Bar component used in both new & returning views
   const XpBar = () => (
     <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}>
       <button onClick={() => navigate('/achievements')} className="w-full mb-4">
@@ -108,16 +141,72 @@ export default function Dashboard() {
     </motion.div>
   );
 
-  // New user getting started view
+  // Multi-child summary section
+  const ChildrenCards = () => {
+    if (childStats.length <= 1) return null;
+    return (
+      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="mb-5">
+        <div className="flex items-center gap-2 mb-3">
+          <Users className="h-4 w-4 text-primary" />
+          <h2 className="text-sm font-bold">Your Children</h2>
+          <span className="text-[10px] text-muted-foreground ml-auto">Swipe to switch ←→</span>
+        </div>
+        <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
+          {childStats.map(({ child, foodsTried, streak, lastMeal }) => {
+            const isActive = child.id === activeChild.id;
+            const childAge = getChildAge(child);
+            return (
+              <button
+                key={child.id}
+                onClick={() => setActiveChild(child.id)}
+                className={`flex-shrink-0 w-40 rounded-xl border p-3 text-left transition-all ${
+                  isActive
+                    ? 'bg-primary/10 border-primary/30 ring-2 ring-primary/20'
+                    : 'bg-card border-border hover:border-primary/30'
+                }`}
+              >
+                <div className="flex items-center gap-2 mb-2">
+                  <ChildAvatar photoUrl={child.photoUrl} emoji={child.avatar} name={child.name} size="sm" />
+                  <div>
+                    <p className="text-xs font-bold truncate">{child.name}</p>
+                    <p className="text-[9px] text-muted-foreground">{childAge.label}</p>
+                  </div>
+                </div>
+                <div className="space-y-1">
+                  <div className="flex justify-between text-[10px]">
+                    <span className="text-muted-foreground">Foods</span>
+                    <span className="font-bold">{foodsTried}</span>
+                  </div>
+                  <div className="flex justify-between text-[10px]">
+                    <span className="text-muted-foreground">Streak</span>
+                    <span className="font-bold">{streak}🔥</span>
+                  </div>
+                  <p className="text-[9px] text-muted-foreground truncate mt-1">Last: {lastMeal}</p>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </motion.div>
+    );
+  };
+
   if (isNewUser) {
     return (
-      <div className="px-4 pt-6 pb-4 max-w-lg mx-auto">
+      <motion.div
+        className="px-4 pt-6 pb-4 max-w-lg mx-auto"
+        drag={children.length > 1 ? "x" : false}
+        dragConstraints={{ left: 0, right: 0 }}
+        dragElastic={0.3}
+        onDragEnd={handleDragEnd}
+      >
         <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="mb-4">
           <h1 className="text-xl font-black">Welcome! 🎉</h1>
           <p className="text-sm text-muted-foreground">Let's get {activeChild.name} started on their food journey</p>
         </motion.div>
 
         <XpBar />
+        <ChildrenCards />
 
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
           <Card className="mb-5 border-primary/20 bg-primary/5">
@@ -147,7 +236,6 @@ export default function Dashboard() {
           </Card>
         </motion.div>
 
-        {/* AI CTA */}
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mb-5">
           <button onClick={() => navigate('/suggestions')} className="w-full">
             <Card className="bg-gradient-to-r from-primary/10 to-accent/10 border-primary/20 hover:ring-2 ring-primary/30 transition-all">
@@ -163,7 +251,6 @@ export default function Dashboard() {
           </button>
         </motion.div>
 
-        {/* Quick Actions */}
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
           <div className="grid grid-cols-3 gap-2">
             {[
@@ -192,15 +279,20 @@ export default function Dashboard() {
             ))}
           </div>
         </motion.div>
-      </div>
+      </motion.div>
     );
   }
 
   // Returning user dashboard
   return (
-    <div className="px-4 pt-6 pb-4 max-w-lg mx-auto">
+    <motion.div
+      className="px-4 pt-6 pb-4 max-w-lg mx-auto"
+      drag={children.length > 1 ? "x" : false}
+      dragConstraints={{ left: 0, right: 0 }}
+      dragElastic={0.3}
+      onDragEnd={handleDragEnd}
+    >
       <ProductTour />
-      {/* XP & Level Bar */}
       <XpBar />
 
       {/* Stats Grid */}
@@ -226,6 +318,9 @@ export default function Dashboard() {
           </motion.div>
         ))}
       </div>
+
+      {/* Multi-child cards */}
+      <ChildrenCards />
 
       {/* Nutrition Goals */}
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="mb-5">
@@ -395,6 +490,6 @@ export default function Dashboard() {
           </button>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 }
