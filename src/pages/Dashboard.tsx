@@ -17,7 +17,7 @@ import TextureProgression from '@/components/TextureProgression';
 import ProductTour from '@/components/ProductTour';
 import ChildAvatar from '@/components/ChildAvatar';
 import { TOP_9_ALLERGENS, CA_EXTRA_ALLERGENS } from '@/types';
-import { UtensilsCrossed, ShieldCheck, TrendingUp, Lightbulb, BookOpen, ChevronRight, ChevronDown, Flame, ListChecks, ShoppingCart, BarChart3, Baby, Moon, Droplets, Clock, Star, FileText, ShieldAlert, Users } from 'lucide-react';
+import { UtensilsCrossed, ShieldCheck, TrendingUp, Lightbulb, BookOpen, ChevronRight, ChevronDown, Flame, ListChecks, ShoppingCart, BarChart3, Baby, Moon, Droplets, Clock, Star, FileText, ShieldAlert, Users, MessageCircle, PieChart } from 'lucide-react';
 
 export default function Dashboard() {
   const { activeChild, children, diary, allergenRecords, getChildAge, settings, setActiveChild } = useApp();
