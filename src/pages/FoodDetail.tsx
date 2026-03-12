@@ -120,6 +120,14 @@ export default function FoodDetail() {
     return counts;
   }, [triedHistory]);
 
+  // Quick-log dialog state (must be before early return)
+  const [showTriedDialog, setShowTriedDialog] = useState(false);
+  const [triedAcceptance, setTriedAcceptance] = useState<AcceptanceLevel>('okay');
+  const [triedMealType, setTriedMealType] = useState<MealType>('snack');
+  const [triedHasReaction, setTriedHasReaction] = useState(false);
+  const [triedReactionSeverity, setTriedReactionSeverity] = useState<ReactionSeverity>('mild');
+  const [triedNotes, setTriedNotes] = useState('');
+
   if (!food) {
     return (
       <div className="flex items-center justify-center min-h-screen">
