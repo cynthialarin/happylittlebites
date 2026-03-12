@@ -41,7 +41,15 @@ export default function FoodLibrary() {
 
   return (
     <div className="px-4 pt-6 pb-4 max-w-lg mx-auto">
-      <h1 className="text-xl font-black mb-1">Food Library</h1>
+      <div className="flex items-center justify-between mb-1">
+        <h1 className="text-xl font-black">Food Library</h1>
+        <button
+          onClick={() => navigate('/jar-foods')}
+          className="text-xs font-bold px-3 py-1.5 rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
+        >
+          🍼 Store-Bought
+        </button>
+      </div>
       <p className="text-sm text-muted-foreground mb-4">{allFoods.length} foods with safety & serving guides</p>
 
       {/* Search */}
