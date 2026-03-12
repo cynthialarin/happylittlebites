@@ -136,11 +136,24 @@ export default function FoodDetail() {
     navigate('/tracker', { state: { prefillFood: food.name, prefillFoodId: food.id } });
   };
 
+  // Quick-log dialog state
+  const [showTriedDialog, setShowTriedDialog] = useState(false);
+  const [triedAcceptance, setTriedAcceptance] = useState<AcceptanceLevel>('okay');
+  const [triedMealType, setTriedMealType] = useState('snack');
+  const [triedHasReaction, setTriedHasReaction] = useState(false);
+  const [triedReactionSeverity, setTriedReactionSeverity] = useState('mild');
+  const [triedNotes, setTriedNotes] = useState('');
+
   const handleMarkAsTried = () => {
     if (!activeChild) {
       toast('No child selected', { description: 'Please select a child profile first.' });
       return;
     }
+    setShowTriedDialog(true);
+  };
+
+  const handleSaveTried = () => {
+    if (!activeChild) return;
     const today = new Date().toISOString().split('T')[0];
     addDiaryEntry({
       id: crypto.randomUUID(),
@@ -148,14 +161,20 @@ export default function FoodDetail() {
       date: today,
       foodId: food.id,
       foodName: food.name,
-      mealType: 'snack',
+      mealType: triedMealType,
       textureStage: 'purees',
-      acceptance: 'okay',
-      reaction: '',
-      reactionSeverity: 'none',
-      notes: 'Quick-logged from food detail',
+      acceptance: triedAcceptance,
+      reaction: triedHasReaction ? triedNotes : '',
+      reactionSeverity: triedHasReaction ? triedReactionSeverity : 'none',
+      notes: triedNotes || 'Quick-logged from food detail',
     });
     toast('✅ Marked as tried!', { description: `${food.name} logged for ${activeChild.name} today.` });
+    setShowTriedDialog(false);
+    setTriedAcceptance('okay');
+    setTriedMealType('snack');
+    setTriedHasReaction(false);
+    setTriedReactionSeverity('mild');
+    setTriedNotes('');
   };
 
   const handleAddToGrocery = () => {
