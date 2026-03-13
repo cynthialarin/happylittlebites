@@ -52,6 +52,16 @@ export default function MoreMenu() {
   const navigate = useNavigate();
   const { activeChild, children: allChildren, settings, setCountry, setTheme } = useApp();
   const { signOut } = useAuth();
+  const [showTour, setShowTour] = useState(false);
+
+  const handleMenuClick = (path: string) => {
+    if (path === '#replay-tour') {
+      try { localStorage.removeItem('hlb-product-tour-seen'); } catch {}
+      setShowTour(true);
+    } else {
+      navigate(path);
+    }
+  };
 
   return (
     <div className="px-4 pt-6 pb-4 max-w-lg mx-auto">
