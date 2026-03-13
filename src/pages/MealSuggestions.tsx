@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Badge } from '@/components/ui/badge';
-import { Sparkles, ChevronRight, ChevronDown, RefreshCw, Lightbulb, Star, Bookmark, Check, ArrowLeft, Clock, AlertTriangle, Shield, Refrigerator } from 'lucide-react';
+import { Sparkles, ChevronRight, ChevronDown, RefreshCw, Lightbulb, Star, Bookmark, Check, ArrowLeft, Clock, AlertTriangle, Shield, Refrigerator, Package } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import FridgeScanner, { DetectedIngredient } from '@/components/FridgeScanner';
 import { usePantryItems } from '@/hooks/usePantryItems';
