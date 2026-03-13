@@ -13,6 +13,7 @@ import { MealType, MealPlanEntry, AgeGroup } from '@/types';
 import { Sparkles, Trash2, ShoppingCart, ChevronLeft, ChevronRight, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from '@/components/ui/sonner';
+import PageHint from '@/components/PageHint';
 
 const MEAL_TYPES: MealType[] = ['breakfast', 'lunch', 'dinner', 'snack'];
 
