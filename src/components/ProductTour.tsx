@@ -92,6 +92,7 @@ export default function ProductTour({ forceShow, onClose }: ProductTourProps = {
   const dismiss = () => {
     setActive(false);
     try { localStorage.setItem(TOUR_KEY, 'true'); } catch {}
+    onClose?.();
   };
 
   const next = () => {
