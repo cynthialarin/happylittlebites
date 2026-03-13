@@ -6,6 +6,7 @@ import { culturalFoods } from '@/data/culturalFoods';
 import { Input } from '@/components/ui/input';
 import { Search, Filter } from 'lucide-react';
 import { FoodGroup, AgeGroup } from '@/types';
+import PageHint from '@/components/PageHint';
 
 const allFoods = [...foods, ...culturalFoods];
 
