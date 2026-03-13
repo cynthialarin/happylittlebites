@@ -47,6 +47,7 @@ import WeeklyReport from "@/pages/WeeklyReport";
 import JarFoodLibrary from "@/pages/JarFoodLibrary";
 import Insights from "@/pages/Insights";
 import Community from "@/pages/Community";
+import MyPantry from "@/pages/MyPantry";
 import Feedback from "@/pages/Feedback";
 import MyFeedback from "@/pages/MyFeedback";
 import AdminRoute from "@/components/AdminRoute";
@@ -104,6 +105,7 @@ function AppRoutes() {
         <Route path="/jar-foods" element={<JarFoodLibrary />} />
         <Route path="/insights" element={<Insights />} />
         <Route path="/community" element={<Community />} />
+        <Route path="/pantry" element={<MyPantry />} />
         <Route path="/weekly-report" element={<WeeklyReport />} />
         <Route path="/feeding" element={<FeedingTracker />} />
         <Route path="/sleep" element={<SleepTracker />} />

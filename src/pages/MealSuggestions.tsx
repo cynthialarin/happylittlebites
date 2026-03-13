@@ -10,9 +10,10 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Badge } from '@/components/ui/badge';
-import { Sparkles, ChevronRight, ChevronDown, RefreshCw, Lightbulb, Star, Bookmark, Check, ArrowLeft, Clock, AlertTriangle, Shield, Refrigerator } from 'lucide-react';
+import { Sparkles, ChevronRight, ChevronDown, RefreshCw, Lightbulb, Star, Bookmark, Check, ArrowLeft, Clock, AlertTriangle, Shield, Refrigerator, Package } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import FridgeScanner, { DetectedIngredient } from '@/components/FridgeScanner';
+import { usePantryItems } from '@/hooks/usePantryItems';
 
 interface MealSuggestion {
   mealType: string;
@@ -64,6 +65,7 @@ export default function MealSuggestions() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { items: pantryItems } = usePantryItems();
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<SuggestionsResponse | null>(null);
   const [savedMeals, setSavedMeals] = useState<Set<string>>(new Set());
@@ -215,6 +217,17 @@ export default function MealSuggestions() {
             <Refrigerator className="h-4 w-4" />
             Scan My Fridge First
           </Button>
+          {pantryItems.filter(i => i.in_stock).length > 0 && (
+            <Button variant="outline" className="w-full gap-2" onClick={() => {
+              const inStock = pantryItems.filter(i => i.in_stock && !['diapers', 'formula'].includes(i.category));
+              const asIngredients: DetectedIngredient[] = inStock.map(i => ({ name: i.name, category: i.category, confidence: 'high' }));
+              setFridgeIngredients(asIngredients);
+              fetchSuggestions(asIngredients);
+            }}>
+              <Package className="h-4 w-4" />
+              Use My Pantry ({pantryItems.filter(i => i.in_stock).length} items)
+            </Button>
+          )}
         </motion.div>
       )}
 
