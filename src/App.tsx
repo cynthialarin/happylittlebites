@@ -47,6 +47,12 @@ import WeeklyReport from "@/pages/WeeklyReport";
 import JarFoodLibrary from "@/pages/JarFoodLibrary";
 import Insights from "@/pages/Insights";
 import Community from "@/pages/Community";
+import Feedback from "@/pages/Feedback";
+import AdminRoute from "@/components/AdminRoute";
+import AdminDashboard from "@/pages/admin/AdminDashboard";
+import AdminFeedback from "@/pages/admin/AdminFeedback";
+import AdminUsers from "@/pages/admin/AdminUsers";
+import AdminAnalytics from "@/pages/admin/AdminAnalytics";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
