@@ -65,6 +65,7 @@ export default function MealSuggestions() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { items: pantryItems } = usePantryItems();
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<SuggestionsResponse | null>(null);
   const [savedMeals, setSavedMeals] = useState<Set<string>>(new Set());
