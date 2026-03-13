@@ -47,6 +47,7 @@ import WeeklyReport from "@/pages/WeeklyReport";
 import JarFoodLibrary from "@/pages/JarFoodLibrary";
 import Insights from "@/pages/Insights";
 import Community from "@/pages/Community";
+import MyPantry from "@/pages/MyPantry";
 import Feedback from "@/pages/Feedback";
 import MyFeedback from "@/pages/MyFeedback";
 import AdminRoute from "@/components/AdminRoute";
