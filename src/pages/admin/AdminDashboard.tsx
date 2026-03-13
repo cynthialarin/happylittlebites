@@ -107,6 +107,54 @@ export default function AdminDashboard() {
         ))}
       </div>
 
+      {/* Notifications */}
+      <div className="mb-6">
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-2">
+            <Bell className="h-4 w-4 text-foreground/70" />
+            <h2 className="text-sm font-bold">Notifications</h2>
+            {unreadCount > 0 && (
+              <span className="text-[10px] font-bold bg-destructive text-destructive-foreground px-1.5 py-0.5 rounded-full">
+                {unreadCount}
+              </span>
+            )}
+          </div>
+          {unreadCount > 0 && (
+            <button onClick={markAllRead} className="text-xs text-primary font-medium hover:underline">
+              Mark all read
+            </button>
+          )}
+        </div>
+        {notifications.length === 0 ? (
+          <p className="text-xs text-muted-foreground text-center py-4">No notifications yet</p>
+        ) : (
+          <div className="space-y-1.5 max-h-48 overflow-y-auto">
+            {notifications.slice(0, 10).map(n => (
+              <div
+                key={n.id}
+                className={`p-3 rounded-lg border transition-all cursor-pointer flex items-start gap-2 ${
+                  n.is_read ? 'bg-card border-border' : 'bg-primary/5 border-primary/20'
+                }`}
+                onClick={() => {
+                  if (!n.is_read) markAsRead(n.id);
+                  if (n.reference_id) navigate('/admin/feedback');
+                }}
+              >
+                <MessageSquare className={`h-4 w-4 mt-0.5 shrink-0 ${n.is_read ? 'text-muted-foreground' : 'text-primary'}`} />
+                <div className="min-w-0 flex-1">
+                  <p className={`text-xs font-bold ${n.is_read ? 'text-muted-foreground' : ''}`}>{n.title}</p>
+                  <p className="text-[11px] text-muted-foreground truncate">{n.message}</p>
+                  <p className="text-[10px] text-muted-foreground mt-0.5">
+                    {new Date(n.created_at).toLocaleDateString()} {new Date(n.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </p>
+                </div>
+                {!n.is_read && <div className="w-2 h-2 rounded-full bg-primary shrink-0 mt-1" />}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
       {/* Nav */}
       <div className="space-y-2">
         {navItems.map(item => (
