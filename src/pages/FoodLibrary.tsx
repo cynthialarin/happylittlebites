@@ -42,6 +42,12 @@ export default function FoodLibrary() {
 
   return (
     <div className="px-4 pt-6 pb-4 max-w-lg mx-auto">
+      <PageHint
+        id="food-library"
+        emoji="📚"
+        title="150+ Foods with Safety Guides"
+        message="Tap any food for age-specific prep tips, allergen flags, and nutrition highlights. Filter by food group or search."
+      />
       <div className="flex items-center justify-between mb-1">
         <h1 className="text-xl font-black">Food Library</h1>
         <button

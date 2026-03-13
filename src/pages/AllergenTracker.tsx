@@ -66,6 +66,12 @@ export default function AllergenTracker() {
 
   return (
     <div className="px-4 pt-4 pb-6 max-w-lg mx-auto">
+      <PageHint
+        id="allergen-tracker"
+        emoji="🛡️"
+        title="Safe Allergen Introduction"
+        message="Follow the recommended order below. Tap an allergen to log the introduction, track reactions, and record symptoms."
+      />
       <button onClick={() => navigate(-1)} className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-4">
         <ArrowLeft className="h-4 w-4" /> Back
       </button>

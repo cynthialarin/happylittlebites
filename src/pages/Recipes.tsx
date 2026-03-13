@@ -35,6 +35,12 @@ export default function Recipes() {
 
   return (
     <div className="px-4 pt-6 pb-4 max-w-lg mx-auto">
+      <PageHint
+        id="recipes"
+        emoji="👩‍🍳"
+        title="Age-Appropriate Recipes"
+        message="Browse family-friendly recipes by category. Tap ❤️ to save favorites and quickly find them later."
+      />
       <h1 className="text-xl font-black mb-1">Recipes</h1>
       <p className="text-sm text-muted-foreground mb-4">{recipes.length} family-friendly recipes</p>
 
