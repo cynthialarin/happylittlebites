@@ -87,7 +87,7 @@ export default function MoreMenu() {
               {section.items.map(item => (
                 <button
                   key={item.path}
-                  onClick={() => navigate(item.path)}
+                  onClick={() => handleMenuClick(item.path)}
                   className={`w-full p-4 rounded-xl ${item.color} text-left hover:ring-2 ring-primary/30 transition-all flex items-center gap-3`}
                 >
                   <span className="text-2xl">{item.emoji}</span>
