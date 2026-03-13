@@ -564,7 +564,7 @@ export const AppProvider = React.forwardRef<HTMLDivElement, { children: React.Re
   };
 
   return <AppContext.Provider value={value}>{reactChildren}</AppContext.Provider>;
-}
+});
 
 export function useApp() {
   const ctx = useContext(AppContext);
