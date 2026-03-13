@@ -10,6 +10,7 @@ import { Allergen, AllergenCA, ReactionSeverity } from '@/types';
 import { ArrowLeft, Check, AlertTriangle, Info, FileText } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import AllergenExport from '@/components/AllergenExport';
+import PageHint from '@/components/PageHint';
 
 const SEVERITY_COLORS: Record<ReactionSeverity, string> = {
   none: 'bg-sage/20 text-sage-foreground',
