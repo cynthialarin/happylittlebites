@@ -12,6 +12,7 @@ const menuSections = (isCanada: boolean) => [
   {
     title: '🛠️ Daily Tools',
     items: [
+      { path: '/pantry', label: 'My Pantry & Fridge', desc: 'Track what you have on hand', emoji: '🧊', color: 'bg-sky/15' },
       { path: '/first-100-foods', label: 'First 100 Foods', desc: 'Guided journey through essential foods', emoji: '🗺️', color: 'bg-sage/10' },
       { path: '/jar-foods', label: 'Store-Bought Guide', desc: 'Jar & pouch baby food database', emoji: '🍼', color: 'bg-sky/10' },
       { path: '/suggestions', label: 'AI Meal Ideas', desc: 'Personalized daily meal suggestions', emoji: '✨', color: 'bg-primary/10' },
