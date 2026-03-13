@@ -13,6 +13,7 @@ import { Badge } from '@/components/ui/badge';
 import { Sparkles, ChevronRight, ChevronDown, RefreshCw, Lightbulb, Star, Bookmark, Check, ArrowLeft, Clock, AlertTriangle, Shield, Refrigerator } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import FridgeScanner, { DetectedIngredient } from '@/components/FridgeScanner';
+import { usePantryItems } from '@/hooks/usePantryItems';
 
 interface MealSuggestion {
   mealType: string;
