@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Search, Heart, Clock, Snowflake, Users } from 'lucide-react';
 import { RecipeCategory } from '@/types';
 import FoodImage from '@/components/FoodImage';
+import PageHint from '@/components/PageHint';
 
 const CATEGORIES: { value: RecipeCategory | 'all' | 'favorites'; label: string }[] = [
   { value: 'all', label: '🍽️ All' },
