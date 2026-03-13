@@ -11,3 +11,6 @@ verify_jwt = false
 
 [functions.scan-fridge]
 verify_jwt = false
+
+[functions.generate-lovable-prompt]
+verify_jwt = false

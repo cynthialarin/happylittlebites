@@ -1,5 +1,5 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { Home, UtensilsCrossed, BookOpen, ClipboardList, Menu, Plus, LogOut, Moon, Sun } from 'lucide-react';
+import { Home, UtensilsCrossed, BookOpen, ClipboardList, Menu, Plus, LogOut, Moon, Sun, MessageCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import SafetyButton from './SafetyButton';
 import { useApp } from '@/contexts/AppContext';
@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import ChildAvatar from './ChildAvatar';
 import HintTooltip from './HintTooltip';
 import { useRef } from 'react';
+import { useAdmin } from '@/hooks/useAdmin';
 import logoOption3 from '@/assets/logo-option-3.png';
 
 const navItems = [
@@ -23,6 +24,7 @@ export default function Layout() {
   const navigate = useNavigate();
   const { activeChild, children, setActiveChild, getChildAge, settings, setTheme } = useApp();
   const { signOut } = useAuth();
+  const { isAdmin } = useAdmin();
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const genderTheme = activeChild?.gender === 'boy' ? 'theme-boy' : activeChild?.gender === 'girl' ? 'theme-girl' : '';
@@ -33,7 +35,10 @@ export default function Layout() {
       {showChildBar && (
         <div className="sticky top-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border px-4 py-2">
           <div className="flex items-center justify-between max-w-lg mx-auto gap-2">
-            <img src={logoOption3} alt="Happy Little Bites" className="h-6 w-6 object-contain shrink-0" />
+            <div className="flex items-center gap-1 shrink-0">
+              <img src={logoOption3} alt="Happy Little Bites" className="h-6 w-6 object-contain" />
+              <span className="text-[9px] font-black bg-primary/20 text-primary px-1.5 py-0.5 rounded-full">BETA</span>
+            </div>
 
             {/* Horizontal scrollable child pills */}
             <div ref={scrollRef} className="flex-1 overflow-x-auto scrollbar-hide">
@@ -76,6 +81,24 @@ export default function Layout() {
             </div>
 
             <div className="flex items-center gap-0.5 shrink-0">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-muted-foreground h-8 w-8 p-0"
+                onClick={() => navigate('/feedback')}
+              >
+                <MessageCircle className="h-4 w-4" />
+              </Button>
+              {isAdmin && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-destructive h-8 w-8 p-0"
+                  onClick={() => navigate('/admin')}
+                >
+                  <span className="text-[10px] font-black">⚙️</span>
+                </Button>
+              )}
               <Button
                 variant="ghost"
                 size="sm"

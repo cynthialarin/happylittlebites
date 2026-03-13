@@ -304,6 +304,80 @@ export type Database = {
         }
         Relationships: []
       }
+      feedback_replies: {
+        Row: {
+          admin_id: string
+          created_at: string
+          id: string
+          message: string
+          ticket_id: string
+        }
+        Insert: {
+          admin_id: string
+          created_at?: string
+          id?: string
+          message: string
+          ticket_id: string
+        }
+        Update: {
+          admin_id?: string
+          created_at?: string
+          id?: string
+          message?: string
+          ticket_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "feedback_replies_ticket_id_fkey"
+            columns: ["ticket_id"]
+            isOneToOne: false
+            referencedRelation: "feedback_tickets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      feedback_tickets: {
+        Row: {
+          admin_notes: string
+          category: string
+          created_at: string
+          description: string
+          id: string
+          priority: string
+          screenshots: string[]
+          status: string
+          user_email: string
+          user_id: string
+          wants_response: boolean
+        }
+        Insert: {
+          admin_notes?: string
+          category?: string
+          created_at?: string
+          description: string
+          id?: string
+          priority?: string
+          screenshots?: string[]
+          status?: string
+          user_email?: string
+          user_id: string
+          wants_response?: boolean
+        }
+        Update: {
+          admin_notes?: string
+          category?: string
+          created_at?: string
+          description?: string
+          id?: string
+          priority?: string
+          screenshots?: string[]
+          status?: string
+          user_email?: string
+          user_id?: string
+          wants_response?: boolean
+        }
+        Relationships: []
+      }
       feeding_entries: {
         Row: {
           amount_oz: number | null
@@ -637,16 +711,75 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      admin_get_all_profiles: {
+        Args: never
+        Returns: {
+          active_child_id: string | null
+          created_at: string
+          id: string
+          onboarding_complete: boolean
+          trial_start_date: string | null
+          user_id: string
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "profiles"
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
+      admin_get_user_emails: {
+        Args: never
+        Returns: {
+          created_at: string
+          email: string
+          id: string
+        }[]
+      }
+      admin_get_user_stats: {
+        Args: never
+        Returns: {
+          children_count: number
+          diary_entries_count: number
+          feedback_count: number
+          user_id: string
+        }[]
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
       increment_post_likes: { Args: { post_id: string }; Returns: undefined }
       increment_reply_count: { Args: { post_id: string }; Returns: undefined }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -773,6 +906,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
