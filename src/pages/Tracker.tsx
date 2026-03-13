@@ -17,6 +17,7 @@ import { toast } from '@/components/ui/sonner';
 import { supabase } from '@/integrations/supabase/client';
 import PhotoLightbox from '@/components/PhotoLightbox';
 import MealScanner from '@/components/MealScanner';
+import PageHint from '@/components/PageHint';
 
 const ACCEPTANCE_EMOJI: Record<AcceptanceLevel, string> = {
   loved: '😍',
