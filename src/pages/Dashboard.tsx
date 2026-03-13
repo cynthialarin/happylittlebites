@@ -17,7 +17,7 @@ import TextureProgression from '@/components/TextureProgression';
 import ProductTour from '@/components/ProductTour';
 import ChildAvatar from '@/components/ChildAvatar';
 import { TOP_9_ALLERGENS, CA_EXTRA_ALLERGENS } from '@/types';
-import { UtensilsCrossed, ShieldCheck, TrendingUp, Lightbulb, BookOpen, ChevronRight, ChevronDown, Flame, ListChecks, ShoppingCart, BarChart3, Baby, Moon, Droplets, Clock, Star, FileText, ShieldAlert, Users, MessageCircle, PieChart } from 'lucide-react';
+import { UtensilsCrossed, ShieldCheck, TrendingUp, Lightbulb, BookOpen, ChevronRight, ChevronDown, Flame, ListChecks, ShoppingCart, BarChart3, Baby, Moon, Droplets, Clock, Star, FileText, ShieldAlert, Users, MessageCircle, PieChart, Package } from 'lucide-react';
 import logoOption3 from '@/assets/logo-option-3.png';
 
 export default function Dashboard() {
@@ -260,6 +260,7 @@ export default function Dashboard() {
               { label: 'Food Library', icon: UtensilsCrossed, path: '/foods', color: 'bg-sage/20' },
               { label: 'Recipes', icon: BookOpen, path: '/recipes', color: 'bg-peach/20' },
               { label: 'Food Diary', icon: TrendingUp, path: '/tracker', color: 'bg-sky/20' },
+              { label: 'Pantry', icon: Package, path: '/pantry', color: 'bg-sky/15' },
               { label: 'Feeding', icon: Baby, path: '/feeding', color: 'bg-peach/10' },
               { label: 'Sleep', icon: Moon, path: '/sleep', color: 'bg-lavender/20' },
               { label: 'Diapers', icon: Droplets, path: '/diapers', color: 'bg-sky/10' },
@@ -401,6 +402,22 @@ export default function Dashboard() {
         </div>
       </div>
 
+      {/* My Pantry Quick Access */}
+      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.48 }} className="mb-5">
+        <button onClick={() => navigate('/pantry')} className="w-full">
+          <Card className="bg-sky/10 border-sky/20 hover:ring-2 ring-primary/30 transition-all">
+            <CardContent className="p-4 flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-sky/20 flex items-center justify-center text-xl">🧊</div>
+              <div className="text-left flex-1">
+                <p className="text-sm font-bold">My Pantry & Fridge</p>
+                <p className="text-[10px] text-muted-foreground">Track what you have on hand</p>
+              </div>
+              <ChevronRight className="h-4 w-4 text-muted-foreground" />
+            </CardContent>
+          </Card>
+        </button>
+      </motion.div>
+
       {/* AI Suggestion CTA — Hero */}
       <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.5, type: 'spring', stiffness: 200 }} className="mb-5">
         <button onClick={() => navigate('/suggestions')} className="w-full">
@@ -474,6 +491,7 @@ export default function Dashboard() {
           { label: 'Food Library', icon: UtensilsCrossed, path: '/foods', color: 'bg-sage/20' },
           { label: 'Recipes', icon: BookOpen, path: '/recipes', color: 'bg-peach/20' },
           { label: 'Food Diary', icon: TrendingUp, path: '/tracker', color: 'bg-sky/20' },
+          { label: 'Pantry', icon: Package, path: '/pantry', color: 'bg-sky/15' },
           { label: 'Feeding', icon: Baby, path: '/feeding', color: 'bg-peach/10' },
           { label: 'Sleep', icon: Moon, path: '/sleep', color: 'bg-lavender/20' },
           { label: 'Diapers', icon: Droplets, path: '/diapers', color: 'bg-sky/10' },
