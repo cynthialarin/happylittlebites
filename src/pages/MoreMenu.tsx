@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '@/contexts/AppContext';
 import { useAuth } from '@/contexts/AuthContext';
@@ -5,6 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Globe, LogOut, FileText, Moon, Sun, Monitor } from 'lucide-react';
 import { Country } from '@/types';
+import ProductTour from '@/components/ProductTour';
 
 const menuSections = (isCanada: boolean) => [
   {
@@ -41,6 +43,7 @@ const menuSections = (isCanada: boolean) => [
       { path: '/caregiver-share', label: 'Caregiver Share', desc: 'Share food guide with daycare & family', emoji: '📤', color: 'bg-sage/10' },
       { path: '/more/profiles', label: 'Child Profiles', desc: 'Manage your children', emoji: '👶', color: 'bg-peach/20' },
       { path: '/my-feedback', label: 'My Feedback', desc: 'View your tickets & replies', emoji: '📨', color: 'bg-primary/5' },
+      { path: '#replay-tour', label: 'Replay Tour', desc: 'Re-watch the onboarding walkthrough', emoji: '🎓', color: 'bg-lavender/10' },
       { path: '/more/data', label: 'Data & Privacy', desc: 'Export data, manage account', emoji: '🔐', color: 'bg-muted' },
     ],
   },
@@ -50,6 +53,16 @@ export default function MoreMenu() {
   const navigate = useNavigate();
   const { activeChild, children: allChildren, settings, setCountry, setTheme } = useApp();
   const { signOut } = useAuth();
+  const [showTour, setShowTour] = useState(false);
+
+  const handleMenuClick = (path: string) => {
+    if (path === '#replay-tour') {
+      try { localStorage.removeItem('hlb-product-tour-seen'); } catch {}
+      setShowTour(true);
+    } else {
+      navigate(path);
+    }
+  };
 
   return (
     <div className="px-4 pt-6 pb-4 max-w-lg mx-auto">
@@ -75,7 +88,7 @@ export default function MoreMenu() {
               {section.items.map(item => (
                 <button
                   key={item.path}
-                  onClick={() => navigate(item.path)}
+                  onClick={() => handleMenuClick(item.path)}
                   className={`w-full p-4 rounded-xl ${item.color} text-left hover:ring-2 ring-primary/30 transition-all flex items-center gap-3`}
                 >
                   <span className="text-2xl">{item.emoji}</span>
@@ -167,6 +180,7 @@ export default function MoreMenu() {
         <LogOut className="w-4 h-4 mr-2" />
         Sign Out
       </Button>
+      {showTour && <ProductTour forceShow onClose={() => setShowTour(false)} />}
     </div>
   );
 }
