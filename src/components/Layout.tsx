@@ -10,6 +10,7 @@ import HintTooltip from './HintTooltip';
 import { useRef } from 'react';
 import { useAdmin } from '@/hooks/useAdmin';
 import logoOption3 from '@/assets/logo-option-3.png';
+import SupportChatbot from './SupportChatbot';
 
 const navItems = [
   { path: '/', icon: Home, label: 'Home' },
@@ -120,6 +121,7 @@ export default function Layout() {
       </main>
 
       <SafetyButton />
+      <SupportChatbot />
 
       {showChildBar && (
         <div className="fixed bottom-20 right-16 z-50">
