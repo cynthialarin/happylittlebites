@@ -50,6 +50,7 @@ export default function AdminDashboard() {
     { label: 'New (7 days)', value: stats.newSignups7d, icon: Users, color: 'text-accent-foreground' },
     { label: 'Total Tickets', value: stats.totalTickets, icon: MessageSquare, color: 'text-primary' },
     { label: 'New Tickets', value: stats.newTickets, icon: MessageSquare, color: 'text-destructive' },
+    ...(newSinceLastVisit > 0 ? [{ label: 'Since Last Visit', value: newSinceLastVisit, icon: MessageSquare, color: 'text-primary' }] : []),
   ];
 
   const navItems = [
