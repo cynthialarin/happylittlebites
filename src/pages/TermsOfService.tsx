@@ -13,7 +13,7 @@ export default function TermsOfService() {
             <ArrowLeft className="h-4 w-4 mr-2" /> Back
           </Button>
           <h1 className="text-3xl font-bold">Terms of Service</h1>
-          <p className="text-muted-foreground mt-2">Last updated: March 10, 2026</p>
+          <p className="text-muted-foreground mt-2">Last updated: March 13, 2026</p>
         </div>
 
         <div className="space-y-8">
@@ -26,7 +26,7 @@ export default function TermsOfService() {
               <div className="mt-4 space-y-2">
                 <p>• <strong>Always consult your pediatrician</strong> before introducing new foods, especially potential allergens</p>
                 <p>• <strong>Seek immediate medical attention</strong> for any signs of allergic reactions (hives, swelling, difficulty breathing, vomiting)</p>
-                <p>• <strong>AI-generated meal suggestions</strong> are for educational and inspirational purposes only — they do not constitute medical or nutritional advice</p>
+                <p>• <strong>AI-generated meal suggestions, chatbot responses, and scanner results</strong> are for educational and inspirational purposes only — they do not constitute medical or nutritional advice</p>
                 <p>• <strong>Growth charts, milestones, and nutrition scores</strong> are general reference points, not diagnostic tools</p>
                 <p>• <strong>Allergen tracking features</strong> are organizational aids — they do not replace professional allergy testing or medical guidance</p>
               </div>
@@ -43,7 +43,7 @@ export default function TermsOfService() {
           <section>
             <h2 className="text-2xl font-semibold mb-4">1b. Beta Program & Subscription</h2>
             <div className="space-y-3 text-sm leading-relaxed">
-              <p>Happy Little Bites is currently in <strong>Beta</strong>. During the Beta period, all features are available at no cost. When the Beta period ends, the App will transition to a paid subscription model.</p>
+              <p>Happy Little Bites is currently in <strong>Beta</strong>. During the Beta period, all features are available at no cost — including AI-powered features such as the Fridge Scanner, Plate Scanner, Meal Suggestions, and Support Chatbot. When the Beta period ends, the App will transition to a paid subscription model.</p>
               <p><strong>Free Trial:</strong> New users receive a 1-month free trial with full access to all features. No credit card is required to start the trial.</p>
               <p><strong>Beta Early Adopter Discount:</strong> Users who create an account during the Beta period will receive 50% off their subscription for the first 3 months after the official launch.</p>
               <p><strong>Pre-Charge Notification:</strong> We will always send you an email notification before your free trial ends or before any subscription charges begin. You may cancel at any time from your account settings.</p>
@@ -61,13 +61,14 @@ export default function TermsOfService() {
                 <ul className="list-disc pl-6 space-y-1 text-sm">
                   <li>First 100 Foods visual checklist with safety guides for each food</li>
                   <li>Food diary with meal type, texture stage, acceptance level, and reaction logging</li>
-                  <li>Food library with 100+ foods including age-appropriate serving tips</li>
+                  <li>Food library with 150+ foods including age-appropriate serving tips and cultural foods (40+ diverse entries)</li>
                   <li>Recipe library with 100+ baby-friendly recipes organized by age group</li>
                   <li>Meal planner with weekly calendar and recipe integration</li>
                   <li>Auto-generated grocery lists from meal plans and recipes</li>
                   <li>Nutrition scorecard and daily nutrition summaries</li>
-                  <li>Picky eater toolkit with evidence-based strategies</li>
+                  <li>Picky eater toolkit with evidence-based strategies and reintroduction tracking</li>
                   <li>Texture progression tracking (purees → finger foods)</li>
+                  <li>Store-bought / jar food guide with 40+ evaluated products</li>
                 </ul>
               </div>
               <div>
@@ -80,6 +81,7 @@ export default function TermsOfService() {
                   <li>Feeding session tracker (breast, bottle, solids) with duration and amounts</li>
                   <li>Sleep tracker with quality ratings and pattern analysis</li>
                   <li>Diaper tracker with type and color logging</li>
+                  <li>Daily timeline view showing all tracked activities</li>
                   <li>Choking hazard warnings and CPR quick-reference button</li>
                 </ul>
               </div>
@@ -87,9 +89,13 @@ export default function TermsOfService() {
                 <h3 className="text-lg font-medium mb-2">AI & Smart Features</h3>
                 <ul className="list-disc pl-6 space-y-1 text-sm">
                   <li>AI-powered meal suggestions based on your child's age, food history, and preferences</li>
+                  <li>AI Fridge Scanner — photograph your fridge to get instant baby-friendly meal ideas from available ingredients</li>
+                  <li>AI Plate Scanner — photograph a meal to auto-log it in your food diary</li>
+                  <li>AI Support Chatbot — ask questions about app features, feeding guidance, and troubleshooting</li>
                   <li>AI-generated food images for visual reference</li>
+                  <li>Insights page with charts, trend analysis, and data visualization</li>
                   <li>Weekly summary reports for pediatrician visits</li>
-                  <li>Achievement and gamification system to celebrate milestones</li>
+                  <li>Achievement and gamification system with badges, XP, and streaks</li>
                   <li>Food reintroduction tracker for previously refused foods</li>
                 </ul>
               </div>
@@ -98,6 +104,9 @@ export default function TermsOfService() {
                 <ul className="list-disc pl-6 space-y-1 text-sm">
                   <li>Multi-child profile management with individual settings</li>
                   <li>Caregiver sharing via email invitations (partners, grandparents, daycare)</li>
+                  <li>In-app feedback and bug reporting system</li>
+                  <li>In-app product tour and contextual page hints for new users</li>
+                  <li>Community forum for parent discussions</li>
                   <li>Data export and account deletion capabilities</li>
                   <li>Progressive Web App (PWA) — works offline and installable on any device</li>
                 </ul>
@@ -111,7 +120,7 @@ export default function TermsOfService() {
             <div className="space-y-4">
               <div className="bg-accent/10 border border-accent/30 rounded-lg p-4">
                 <h3 className="font-semibold mb-2">No Medical Advice</h3>
-                <p className="text-sm">We are not healthcare professionals. All content, including food safety information, allergen guidance, growth charts, milestone checklists, and nutrition scores, is for informational and organizational purposes only. Nothing in this App should be interpreted as medical diagnosis or treatment.</p>
+                <p className="text-sm">We are not healthcare professionals. All content, including food safety information, allergen guidance, growth charts, milestone checklists, nutrition scores, AI chatbot responses, and scanner results, is for informational and organizational purposes only. Nothing in this App should be interpreted as medical diagnosis or treatment.</p>
               </div>
               <div className="bg-accent/10 border border-accent/30 rounded-lg p-4">
                 <h3 className="font-semibold mb-2">Allergen Tracking Disclaimer</h3>
@@ -128,7 +137,7 @@ export default function TermsOfService() {
           <section>
             <h2 className="text-2xl font-semibold mb-4">4. AI-Generated Content</h2>
             <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 mb-4">
-              <p className="text-sm leading-relaxed">The App uses artificial intelligence to generate meal suggestions, food images, and recipe ideas. You acknowledge and agree that:</p>
+              <p className="text-sm leading-relaxed">The App uses artificial intelligence to generate meal suggestions, food images, recipe ideas, fridge-based meal recommendations, plate photo analysis, and support chatbot responses. You acknowledge and agree that:</p>
             </div>
             <ul className="list-disc pl-6 space-y-2 text-sm">
               <li>AI suggestions are generated based on your child's age, logged food history, known allergies, and dietary preferences</li>
@@ -136,6 +145,9 @@ export default function TermsOfService() {
               <li>AI suggestions <strong>do not account for</strong> all possible medical conditions, medication interactions, or individual health circumstances</li>
               <li>You must verify all AI-generated recipes and suggestions with your pediatrician before serving them to your child</li>
               <li>AI-generated food images are for illustrative purposes and may not accurately represent the actual appearance of prepared foods</li>
+              <li>The <strong>Fridge Scanner</strong> identifies ingredients from photos using AI image recognition, which may misidentify items — always verify ingredients before preparing meals</li>
+              <li>The <strong>Plate Scanner</strong> attempts to identify foods in meal photos for automatic diary logging — you should review and correct any entries before saving</li>
+              <li>The <strong>AI Support Chatbot</strong> provides general guidance about app features and feeding information — it is not a medical professional and cannot provide personalized medical advice</li>
               <li>Your child's data is sent to AI model providers on a per-request basis for generating suggestions; it is not stored by AI providers after processing</li>
             </ul>
           </section>
@@ -174,12 +186,13 @@ export default function TermsOfService() {
             <ul className="list-disc pl-6 space-y-2 text-sm">
               <li>Provide accurate information about your child's age, allergies, and health conditions</li>
               <li>Use the App in conjunction with — not as a replacement for — your pediatrician's recommendations</li>
-              <li>Verify all AI-generated meal suggestions and recipes with a qualified healthcare professional before serving</li>
+              <li>Verify all AI-generated meal suggestions, chatbot responses, and scanner results with a qualified healthcare professional before acting on them</li>
               <li>Accurately log allergen introductions, reactions, and symptoms</li>
               <li>Monitor your child closely when introducing new foods, especially priority allergens</li>
               <li>Introduce allergens one at a time, waiting 2–3 days between new introductions, per standard pediatric guidance</li>
               <li>Keep your account credentials secure and not share login information</li>
               <li>Use the caregiver sharing feature responsibly, only inviting trusted individuals</li>
+              <li>Use the community forum respectfully and not post harmful or misleading health advice</li>
               <li>Report any inaccurate food safety information you encounter in the App</li>
             </ul>
           </section>
@@ -200,36 +213,36 @@ export default function TermsOfService() {
           <section>
             <h2 className="text-2xl font-semibold mb-4">8. Limitation of Liability</h2>
             <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
-              <p className="leading-relaxed text-sm"><strong>TO THE MAXIMUM EXTENT PERMITTED BY LAW, WE SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES ARISING FROM YOUR USE OF THE APP.</strong> This includes, without limitation, damages arising from reliance on food safety information, AI-generated suggestions, allergen tracking data, growth measurements, or any other content provided by the App. You acknowledge that the App is a tracking and educational tool only.</p>
+              <p className="leading-relaxed text-sm"><strong>TO THE MAXIMUM EXTENT PERMITTED BY LAW, WE SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES ARISING FROM YOUR USE OF THE APP.</strong> This includes, without limitation, damages arising from reliance on food safety information, AI-generated suggestions, chatbot responses, scanner results, allergen tracking data, growth measurements, or any other content provided by the App. You acknowledge that the App is a tracking and educational tool only.</p>
             </div>
           </section>
 
           {/* 9. Data & Privacy */}
           <section>
             <h2 className="text-2xl font-semibold mb-4">9. Data and Privacy</h2>
-            <p className="leading-relaxed">Your use of the App is also governed by our <Link to="/privacy" className="text-primary underline">Privacy Policy</Link>, which details how we collect, use, store, and protect your family's information, including children's data, AI processing, and caregiver sharing.</p>
+            <p className="leading-relaxed">Your use of the App is also governed by our <Link to="/privacy" className="text-primary underline">Privacy Policy</Link>, which details how we collect, use, store, and protect your family's information, including children's data, AI processing, scanner photo handling, chatbot conversations, and caregiver sharing.</p>
           </section>
 
           {/* 10. Data Export & Deletion */}
           <section>
             <h2 className="text-2xl font-semibold mb-4">10. Data Export & Deletion</h2>
             <ul className="list-disc pl-6 space-y-2 text-sm">
-              <li>You may export your data (food diary, allergen records, growth data) at any time through the Data Management section</li>
+              <li>You may export your data (food diary, allergen records, growth data, feeding/sleep/diaper logs) at any time through the Data Management section</li>
               <li>You may delete your account and all associated data at any time through the App settings</li>
-              <li>Upon account deletion, all personal data including child profiles, diary entries, photos, and tracking data will be permanently removed within 30 days</li>
+              <li>Upon account deletion, all personal data including child profiles, diary entries, photos, tracking data, saved recipes, community posts, and feedback tickets will be permanently removed within 30 days</li>
             </ul>
           </section>
 
           {/* 11. PWA & Offline */}
           <section>
             <h2 className="text-2xl font-semibold mb-4">11. PWA & Offline Usage</h2>
-            <p className="leading-relaxed text-sm">The App is a Progressive Web App (PWA) that can be installed on your device and used offline. Data entered while offline will sync when connectivity is restored. We are not responsible for data loss due to device failure, browser cache clearing, or extended offline periods.</p>
+            <p className="leading-relaxed text-sm">The App is a Progressive Web App (PWA) that can be installed on your device and used offline. Data entered while offline will sync when connectivity is restored. AI-powered features (Meal Suggestions, Fridge Scanner, Plate Scanner, Support Chatbot) require an active internet connection. We are not responsible for data loss due to device failure, browser cache clearing, or extended offline periods.</p>
           </section>
 
           {/* 12. Account Termination */}
           <section>
             <h2 className="text-2xl font-semibold mb-4">12. Account Termination</h2>
-            <p className="leading-relaxed">We may suspend or terminate your account if you violate these terms or misuse the service. You may delete your account at any time through the App settings.</p>
+            <p className="leading-relaxed">We may suspend or terminate your account if you violate these terms, misuse the service, or abuse community features. You may delete your account at any time through the App settings.</p>
           </section>
 
           {/* 13. Changes to Terms */}
