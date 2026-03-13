@@ -9,6 +9,7 @@ import logoOption3 from '@/assets/logo-option-3.png';
 export default function AdminDashboard() {
   const navigate = useNavigate();
   const [stats, setStats] = useState({ totalUsers: 0, newSignups7d: 0, totalTickets: 0, newTickets: 0 });
+  const [newSinceLastVisit, setNewSinceLastVisit] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
