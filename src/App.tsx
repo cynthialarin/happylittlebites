@@ -48,6 +48,7 @@ import JarFoodLibrary from "@/pages/JarFoodLibrary";
 import Insights from "@/pages/Insights";
 import Community from "@/pages/Community";
 import Feedback from "@/pages/Feedback";
+import MyFeedback from "@/pages/MyFeedback";
 import AdminRoute from "@/components/AdminRoute";
 import AdminDashboard from "@/pages/admin/AdminDashboard";
 import AdminFeedback from "@/pages/admin/AdminFeedback";
@@ -109,6 +110,7 @@ function AppRoutes() {
         <Route path="/diapers" element={<DiaperTracker />} />
         <Route path="/timeline" element={<DailyTimeline />} />
         <Route path="/feedback" element={<Feedback />} />
+        <Route path="/my-feedback" element={<MyFeedback />} />
       </Route>
       <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
       <Route path="/admin/feedback" element={<AdminRoute><AdminFeedback /></AdminRoute>} />
