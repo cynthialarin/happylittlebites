@@ -12,6 +12,7 @@ import { foods } from '@/data/foods';
 import { ChevronLeft, Trophy, Filter, ChevronRight, Sparkles, Info, Share2 } from 'lucide-react';
 import Confetti from '@/components/Confetti';
 import MilestoneShareCard from '@/components/MilestoneShareCard';
+import PageHint from '@/components/PageHint';
 
 export default function First100Foods() {
   const navigate = useNavigate();
