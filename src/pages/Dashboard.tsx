@@ -401,6 +401,22 @@ export default function Dashboard() {
         </div>
       </div>
 
+      {/* My Pantry Quick Access */}
+      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.48 }} className="mb-5">
+        <button onClick={() => navigate('/pantry')} className="w-full">
+          <Card className="bg-sky/10 border-sky/20 hover:ring-2 ring-primary/30 transition-all">
+            <CardContent className="p-4 flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-sky/20 flex items-center justify-center text-xl">🧊</div>
+              <div className="text-left flex-1">
+                <p className="text-sm font-bold">My Pantry & Fridge</p>
+                <p className="text-[10px] text-muted-foreground">Track what you have on hand</p>
+              </div>
+              <ChevronRight className="h-4 w-4 text-muted-foreground" />
+            </CardContent>
+          </Card>
+        </button>
+      </motion.div>
+
       {/* AI Suggestion CTA — Hero */}
       <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.5, type: 'spring', stiffness: 200 }} className="mb-5">
         <button onClick={() => navigate('/suggestions')} className="w-full">
