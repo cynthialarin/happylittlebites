@@ -26,8 +26,8 @@ const stagger = {
 
 const steps = [
   { num: '1', emoji: '👶', title: 'Create a Profile', desc: 'Add your baby\'s details in under a minute.' },
-  { num: '2', emoji: '🥕', title: 'Log First Food', desc: 'Record meals, reactions, and textures effortlessly.' },
-  { num: '3', emoji: '📊', title: 'Watch Progress', desc: 'See trends, celebrate milestones, and share reports.' },
+  { num: '2', emoji: '📋', title: 'Start Tracking', desc: 'Log meals, sleep, diapers, and milestones — all in one place.' },
+  { num: '3', emoji: '🤖', title: 'Get AI Insights', desc: 'See trends, earn achievements, and share reports with your pediatrician.' },
 ];
 
 export default function LandingPage() {

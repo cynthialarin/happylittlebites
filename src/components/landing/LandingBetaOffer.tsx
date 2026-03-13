@@ -30,7 +30,7 @@ export default function LandingBetaOffer() {
             Join the Beta — Your First Month is FREE!
           </h2>
           <p className="text-sm sm:text-base text-muted-foreground max-w-lg mx-auto mb-5">
-            Help us build the best baby feeding app ever. Full access for an entire month — completely free, no credit card needed.
+            Help us build the best baby tracking app ever. Full access to feeding, sleep, diaper tracking, AI scanners, meal planning, and more — completely free, no credit card needed.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-center text-xs sm:text-sm text-foreground/80 mb-6">
