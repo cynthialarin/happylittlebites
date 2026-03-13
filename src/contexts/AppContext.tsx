@@ -80,7 +80,7 @@ function applyTheme(theme: 'light' | 'dark' | 'system') {
 
 const AppContext = createContext<AppContextType | null>(null);
 
-export function AppProvider({ children: reactChildren }: { children: React.ReactNode }) {
+export const AppProvider = React.forwardRef<HTMLDivElement, { children: React.ReactNode }>(function AppProvider({ children: reactChildren }, _ref) {
   const { user } = useAuth();
   const { toast } = useToast();
   const [state, setState] = useState<AppState>(defaultState);
@@ -564,7 +564,7 @@ export function AppProvider({ children: reactChildren }: { children: React.React
   };
 
   return <AppContext.Provider value={value}>{reactChildren}</AppContext.Provider>;
-}
+});
 
 export function useApp() {
   const ctx = useContext(AppContext);
