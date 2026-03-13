@@ -1,5 +1,5 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { Home, UtensilsCrossed, BookOpen, ClipboardList, Menu, Plus, LogOut, Moon, Sun } from 'lucide-react';
+import { Home, UtensilsCrossed, BookOpen, ClipboardList, Menu, Plus, LogOut, Moon, Sun, MessageCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import SafetyButton from './SafetyButton';
 import { useApp } from '@/contexts/AppContext';
@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import ChildAvatar from './ChildAvatar';
 import HintTooltip from './HintTooltip';
 import { useRef } from 'react';
+import { useAdmin } from '@/hooks/useAdmin';
 import logoOption3 from '@/assets/logo-option-3.png';
 
 const navItems = [
