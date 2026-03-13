@@ -65,19 +65,29 @@ const steps = [
   },
 ];
 
-export default function ProductTour() {
-  const [active, setActive] = useState(false);
+interface ProductTourProps {
+  forceShow?: boolean;
+  onClose?: () => void;
+}
+
+export default function ProductTour({ forceShow, onClose }: ProductTourProps = {}) {
+  const [active, setActive] = useState(!!forceShow);
   const [step, setStep] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (forceShow) {
+      setActive(true);
+      setStep(0);
+      return;
+    }
     try {
       if (!localStorage.getItem(TOUR_KEY)) {
         const timer = setTimeout(() => setActive(true), 1200);
         return () => clearTimeout(timer);
       }
     } catch {}
-  }, []);
+  }, [forceShow]);
 
   const dismiss = () => {
     setActive(false);
