@@ -2,55 +2,71 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Users, MessageSquare, BarChart3, Shield, ArrowLeft } from 'lucide-react';
+import { Users, MessageSquare, BarChart3, Shield, ArrowLeft, Bell, Check } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import logoOption3 from '@/assets/logo-option-3.png';
+
+interface AdminNotification {
+  id: string;
+  type: string;
+  title: string;
+  message: string;
+  reference_id: string | null;
+  is_read: boolean;
+  created_at: string;
+}
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
   const [stats, setStats] = useState({ totalUsers: 0, newSignups7d: 0, totalTickets: 0, newTickets: 0 });
-  const [newSinceLastVisit, setNewSinceLastVisit] = useState(0);
+  const [notifications, setNotifications] = useState<AdminNotification[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchStats = async () => {
+    const fetchData = async () => {
       try {
-        // Get all profiles via admin function
-        const { data: profiles } = await supabase.rpc('admin_get_all_profiles');
-        const totalUsers = profiles?.length || 0;
+        const [{ data: profiles }, { data: tickets }, { data: notifs }] = await Promise.all([
+          supabase.rpc('admin_get_all_profiles'),
+          supabase.from('feedback_tickets').select('id, status'),
+          supabase.from('admin_notifications').select('*').order('created_at', { ascending: false }).limit(20),
+        ]);
 
+        const totalUsers = profiles?.length || 0;
         const sevenDaysAgo = new Date(Date.now() - 7 * 86400000).toISOString();
         const newSignups7d = profiles?.filter((p: any) => p.created_at >= sevenDaysAgo).length || 0;
-
-        // Get feedback tickets
-        const { data: tickets } = await supabase.from('feedback_tickets').select('id, status');
         const totalTickets = tickets?.length || 0;
         const newTickets = tickets?.filter((t: any) => t.status === 'new').length || 0;
 
-        // New since last visit
-        const lastVisit = localStorage.getItem('admin_last_visit');
-        const newSince = lastVisit
-          ? tickets?.filter((t: any) => t.created_at > lastVisit).length || 0
-          : totalTickets;
-        setNewSinceLastVisit(newSince);
-        localStorage.setItem('admin_last_visit', new Date().toISOString());
-
         setStats({ totalUsers, newSignups7d, totalTickets, newTickets });
+        setNotifications((notifs as AdminNotification[]) || []);
       } catch (err) {
         console.error('Admin stats error:', err);
       } finally {
         setLoading(false);
       }
     };
-    fetchStats();
+    fetchData();
   }, []);
+
+  const unreadCount = notifications.filter(n => !n.is_read).length;
+
+  const markAsRead = async (id: string) => {
+    await supabase.from('admin_notifications').update({ is_read: true }).eq('id', id);
+    setNotifications(prev => prev.map(n => n.id === id ? { ...n, is_read: true } : n));
+  };
+
+  const markAllRead = async () => {
+    const unreadIds = notifications.filter(n => !n.is_read).map(n => n.id);
+    if (unreadIds.length === 0) return;
+    await supabase.from('admin_notifications').update({ is_read: true }).in('id', unreadIds);
+    setNotifications(prev => prev.map(n => ({ ...n, is_read: true })));
+  };
 
   const cards = [
     { label: 'Total Users', value: stats.totalUsers, icon: Users, color: 'text-primary' },
     { label: 'New (7 days)', value: stats.newSignups7d, icon: Users, color: 'text-accent-foreground' },
     { label: 'Total Tickets', value: stats.totalTickets, icon: MessageSquare, color: 'text-primary' },
     { label: 'New Tickets', value: stats.newTickets, icon: MessageSquare, color: 'text-destructive' },
-    ...(newSinceLastVisit > 0 ? [{ label: 'Since Last Visit', value: newSinceLastVisit, icon: MessageSquare, color: 'text-primary' }] : []),
   ];
 
   const navItems = [
