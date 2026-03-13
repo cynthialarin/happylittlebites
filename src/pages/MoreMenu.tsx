@@ -40,6 +40,7 @@ const menuSections = (isCanada: boolean) => [
     items: [
       { path: '/caregiver-share', label: 'Caregiver Share', desc: 'Share food guide with daycare & family', emoji: '📤', color: 'bg-sage/10' },
       { path: '/more/profiles', label: 'Child Profiles', desc: 'Manage your children', emoji: '👶', color: 'bg-peach/20' },
+      { path: '/my-feedback', label: 'My Feedback', desc: 'View your tickets & replies', emoji: '📨', color: 'bg-primary/5' },
       { path: '/more/data', label: 'Data & Privacy', desc: 'Export data, manage account', emoji: '🔐', color: 'bg-muted' },
     ],
   },

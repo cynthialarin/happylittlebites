@@ -27,6 +27,14 @@ export default function AdminDashboard() {
         const totalTickets = tickets?.length || 0;
         const newTickets = tickets?.filter((t: any) => t.status === 'new').length || 0;
 
+        // New since last visit
+        const lastVisit = localStorage.getItem('admin_last_visit');
+        const newSince = lastVisit
+          ? tickets?.filter((t: any) => t.created_at > lastVisit).length || 0
+          : totalTickets;
+        setNewSinceLastVisit(newSince);
+        localStorage.setItem('admin_last_visit', new Date().toISOString());
+
         setStats({ totalUsers, newSignups7d, totalTickets, newTickets });
       } catch (err) {
         console.error('Admin stats error:', err);
