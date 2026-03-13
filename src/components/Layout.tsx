@@ -85,6 +85,24 @@ export default function Layout() {
                 variant="ghost"
                 size="sm"
                 className="text-muted-foreground h-8 w-8 p-0"
+                onClick={() => navigate('/feedback')}
+              >
+                <MessageCircle className="h-4 w-4" />
+              </Button>
+              {isAdmin && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-destructive h-8 w-8 p-0"
+                  onClick={() => navigate('/admin')}
+                >
+                  <span className="text-[10px] font-black">⚙️</span>
+                </Button>
+              )}
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-muted-foreground h-8 w-8 p-0"
                 onClick={() => setTheme(settings.theme === 'dark' ? 'light' : 'dark')}
               >
                 {settings.theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
