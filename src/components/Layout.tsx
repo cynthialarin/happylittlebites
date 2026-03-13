@@ -24,6 +24,7 @@ export default function Layout() {
   const navigate = useNavigate();
   const { activeChild, children, setActiveChild, getChildAge, settings, setTheme } = useApp();
   const { signOut } = useAuth();
+  const { isAdmin } = useAdmin();
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const genderTheme = activeChild?.gender === 'boy' ? 'theme-boy' : activeChild?.gender === 'girl' ? 'theme-girl' : '';
