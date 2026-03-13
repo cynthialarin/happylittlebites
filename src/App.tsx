@@ -48,6 +48,7 @@ import JarFoodLibrary from "@/pages/JarFoodLibrary";
 import Insights from "@/pages/Insights";
 import Community from "@/pages/Community";
 import Feedback from "@/pages/Feedback";
+import MyFeedback from "@/pages/MyFeedback";
 import AdminRoute from "@/components/AdminRoute";
 import AdminDashboard from "@/pages/admin/AdminDashboard";
 import AdminFeedback from "@/pages/admin/AdminFeedback";
