@@ -260,6 +260,7 @@ export default function Dashboard() {
               { label: 'Food Library', icon: UtensilsCrossed, path: '/foods', color: 'bg-sage/20' },
               { label: 'Recipes', icon: BookOpen, path: '/recipes', color: 'bg-peach/20' },
               { label: 'Food Diary', icon: TrendingUp, path: '/tracker', color: 'bg-sky/20' },
+              { label: 'Pantry', icon: Package, path: '/pantry', color: 'bg-sky/15' },
               { label: 'Feeding', icon: Baby, path: '/feeding', color: 'bg-peach/10' },
               { label: 'Sleep', icon: Moon, path: '/sleep', color: 'bg-lavender/20' },
               { label: 'Diapers', icon: Droplets, path: '/diapers', color: 'bg-sky/10' },
