@@ -6,6 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Globe, LogOut, FileText, Moon, Sun, Monitor } from 'lucide-react';
 import { Country } from '@/types';
+import ProductTour from '@/components/ProductTour';
 
 const menuSections = (isCanada: boolean) => [
   {
