@@ -259,17 +259,18 @@ export default function AppWalkthrough() {
   const ActiveScreen = screens[active].component;
 
   return (
-    <div className="flex flex-col items-center gap-6">
+    <div className="flex flex-col items-center gap-5">
       {/* Phone frame */}
       <div
-        className="relative w-64 h-[480px] rounded-[2rem] border-2 border-border bg-background shadow-xl overflow-hidden"
+        className="relative w-[256px] sm:w-64 h-[460px] sm:h-[480px] rounded-[2rem] border-2 border-border bg-background shadow-2xl overflow-hidden"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
+        onTouchStart={() => setPaused(true)}
       >
         {/* Notch */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-6 bg-foreground/10 rounded-b-2xl z-10" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-5 bg-foreground/10 rounded-b-2xl z-10" />
         {/* Status bar */}
-        <div className="h-10 bg-muted/40 flex items-end justify-between px-5 pb-1">
+        <div className="h-9 bg-muted/40 flex items-end justify-between px-5 pb-1">
           <span className="text-[9px] text-muted-foreground font-heading">9:41</span>
           <div className="flex gap-1 items-center">
             <TrendingUp size={9} className="text-muted-foreground" />
@@ -279,7 +280,7 @@ export default function AppWalkthrough() {
           </div>
         </div>
         {/* Screen content */}
-        <div className="relative h-[calc(100%-2.5rem)] overflow-hidden">
+        <div className="relative h-[calc(100%-2.25rem)] overflow-hidden">
           <AnimatePresence mode="wait">
             <motion.div
               key={active}
@@ -295,28 +296,28 @@ export default function AppWalkthrough() {
         </div>
         {/* Tap cursor hint */}
         <motion.div
-          className="absolute bottom-16 right-6 z-20 pointer-events-none"
-          animate={{ y: [0, -6, 0], opacity: [0.6, 1, 0.6] }}
+          className="absolute bottom-14 right-5 z-20 pointer-events-none"
+          animate={{ y: [0, -6, 0], opacity: [0.5, 1, 0.5] }}
           transition={{ duration: 2, repeat: Infinity }}
         >
-          <span className="text-lg">👆</span>
+          <span className="text-base">👆</span>
         </motion.div>
       </div>
 
-      {/* Tab navigation */}
-      <div className="flex gap-1 flex-wrap justify-center max-w-xs">
+      {/* Tab navigation — always show labels on mobile */}
+      <div className="flex gap-1.5 flex-wrap justify-center max-w-[340px] sm:max-w-xs">
         {screens.map((s, i) => (
           <button
             key={i}
             onClick={() => { setActive(i); setPaused(true); }}
-            className={`flex items-center gap-1 px-2.5 py-1.5 rounded-full text-[11px] font-bold transition-all ${
+            className={`flex items-center gap-1 px-2.5 py-1.5 rounded-full text-[10px] sm:text-[11px] font-bold transition-all ${
               i === active
                 ? 'bg-primary text-primary-foreground shadow-md scale-105'
                 : 'bg-muted/60 text-muted-foreground hover:bg-muted'
             }`}
           >
             <span>{s.emoji}</span>
-            <span className="hidden sm:inline">{s.label}</span>
+            <span>{s.label}</span>
           </button>
         ))}
       </div>
@@ -326,8 +327,8 @@ export default function AppWalkthrough() {
         animate={{ scale: [1, 1.03, 1] }}
         transition={{ duration: 2.5, repeat: Infinity }}
       >
-        <Button asChild size="lg" className="rounded-full font-bold gap-2 shadow-lg">
-          <Link to="/auth">
+        <Button asChild size="lg" className="rounded-full font-bold gap-2 shadow-lg shadow-primary/20 text-sm sm:text-base">
+          <Link to="/signup">
             ✨ Try it yourself — free for 30 days
           </Link>
         </Button>
