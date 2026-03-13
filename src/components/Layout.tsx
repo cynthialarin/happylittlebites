@@ -121,6 +121,7 @@ export default function Layout() {
       </main>
 
       <SafetyButton />
+      <SupportChatbot />
 
       {showChildBar && (
         <div className="fixed bottom-20 right-16 z-50">
