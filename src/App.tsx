@@ -108,7 +108,12 @@ function AppRoutes() {
         <Route path="/sleep" element={<SleepTracker />} />
         <Route path="/diapers" element={<DiaperTracker />} />
         <Route path="/timeline" element={<DailyTimeline />} />
+        <Route path="/feedback" element={<Feedback />} />
       </Route>
+      <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
+      <Route path="/admin/feedback" element={<AdminRoute><AdminFeedback /></AdminRoute>} />
+      <Route path="/admin/users" element={<AdminRoute><AdminUsers /></AdminRoute>} />
+      <Route path="/admin/analytics" element={<AdminRoute><AdminAnalytics /></AdminRoute>} />
       <Route path="/privacy" element={<PrivacyPolicy />} />
       <Route path="/terms" element={<TermsOfService />} />
       <Route path="*" element={<Navigate to="/" replace />} />
