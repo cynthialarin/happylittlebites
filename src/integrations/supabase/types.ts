@@ -579,6 +579,54 @@ export type Database = {
         }
         Relationships: []
       }
+      pantry_items: {
+        Row: {
+          added_via: string
+          brand: string | null
+          category: string
+          created_at: string
+          emoji: string
+          food_id: string | null
+          id: string
+          in_stock: boolean
+          location: string
+          name: string
+          quantity: string | null
+          upc_code: string | null
+          user_id: string
+        }
+        Insert: {
+          added_via?: string
+          brand?: string | null
+          category?: string
+          created_at?: string
+          emoji?: string
+          food_id?: string | null
+          id?: string
+          in_stock?: boolean
+          location?: string
+          name: string
+          quantity?: string | null
+          upc_code?: string | null
+          user_id: string
+        }
+        Update: {
+          added_via?: string
+          brand?: string | null
+          category?: string
+          created_at?: string
+          emoji?: string
+          food_id?: string | null
+          id?: string
+          in_stock?: boolean
+          location?: string
+          name?: string
+          quantity?: string | null
+          upc_code?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           active_child_id: string | null
