@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Baby, Moon, Droplets, ShieldCheck, ShieldAlert, TrendingUp, Utensils, Calendar, Ruler } from 'lucide-react';
+import { Baby, Moon, Droplets, ShieldCheck, ShieldAlert, TrendingUp, Utensils, Calendar, Ruler, Check } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -237,6 +237,75 @@ function Screen6() {
   );
 }
 
+function Screen7() {
+  const fridgeItems = [
+    { emoji: '🥕', name: 'Carrots', delay: 0.2 },
+    { emoji: '🥦', name: 'Broccoli', delay: 0.5 },
+    { emoji: '🍠', name: 'Sweet Potato', delay: 0.8 },
+    { emoji: '🥚', name: 'Eggs', delay: 1.1 },
+    { emoji: '🧀', name: 'Cheese', delay: 1.4 },
+  ];
+
+  const suggestions = [
+    '🥣 Veggie egg muffins',
+    '🍠 Sweet potato & cheese bites',
+    '🥦 Broccoli-carrot purée',
+  ];
+
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  useEffect(() => { setTimeout(() => setShowSuggestions(true), 2200); }, []);
+
+  return (
+    <div className="p-4 space-y-3">
+      <h4 className="font-heading font-bold text-sm text-foreground">📸 AI Fridge Scanner</h4>
+      <div className="bg-muted/30 rounded-xl p-3 space-y-1.5">
+        <p className="text-[10px] text-muted-foreground font-heading font-bold mb-2">Detected items:</p>
+        {fridgeItems.map((item) => (
+          <motion.div
+            key={item.name}
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: item.delay }}
+            className="flex items-center gap-2"
+          >
+            <span className="text-sm">{item.emoji}</span>
+            <span className="text-xs font-heading flex-1">{item.name}</span>
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: item.delay + 0.2 }}
+            >
+              <Check size={14} className="text-sage-foreground" />
+            </motion.div>
+          </motion.div>
+        ))}
+      </div>
+      <AnimatePresence>
+        {showSuggestions && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="space-y-1.5"
+          >
+            <p className="text-[10px] text-primary font-heading font-bold">✨ AI Meal Ideas:</p>
+            {suggestions.map((s, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: 15 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.15 }}
+                className="text-xs bg-primary/5 border border-primary/10 rounded-lg px-2.5 py-1.5"
+              >
+                {s}
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 const screens = [
   { component: Screen1, label: 'Foods', emoji: '🥕' },
   { component: Screen2, label: 'Tracker', emoji: '📋' },
@@ -244,6 +313,7 @@ const screens = [
   { component: Screen4, label: 'Report', emoji: '📊' },
   { component: Screen5, label: 'Planner', emoji: '📅' },
   { component: Screen6, label: 'Growth', emoji: '📈' },
+  { component: Screen7, label: 'Scanner', emoji: '📸' },
 ];
 
 export default function AppWalkthrough() {
@@ -304,7 +374,7 @@ export default function AppWalkthrough() {
         </motion.div>
       </div>
 
-      {/* Tab navigation — always show labels on mobile */}
+      {/* Tab navigation */}
       <div className="flex gap-1.5 flex-wrap justify-center max-w-[340px] sm:max-w-xs">
         {screens.map((s, i) => (
           <button

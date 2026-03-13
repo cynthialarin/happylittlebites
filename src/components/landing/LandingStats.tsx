@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { BookOpen, Apple, Globe, Brain, Users, Star, Stethoscope } from 'lucide-react';
+import { BookOpen, Apple, Globe, Brain, Star, Stethoscope, LayoutGrid } from 'lucide-react';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -12,15 +12,15 @@ const stagger = {
 
 const stats = [
   { icon: BookOpen, value: '100+', label: 'Baby-Friendly Recipes', color: 'text-peach-foreground' },
-  { icon: Apple, value: '100+', label: 'Foods in Library', color: 'text-sage-foreground' },
-  { icon: Globe, value: 'US & CA', label: 'Safety Guidelines', color: 'text-sky-foreground' },
-  { icon: Brain, value: 'AI', label: 'Powered Suggestions', color: 'text-lavender-foreground' },
+  { icon: Apple, value: '150+', label: 'Foods & Cultural Dishes', color: 'text-sage-foreground' },
+  { icon: LayoutGrid, value: '6', label: 'Built-In Trackers', color: 'text-lavender-foreground' },
+  { icon: Brain, value: 'AI', label: 'Powered Scanners & Chat', color: 'text-sky-foreground' },
 ];
 
 const testimonials = [
-  { quote: "Finally, one app that does it all. I used to juggle three different trackers!", name: "Sarah M.", role: "Mom of 2", emoji: "👩‍👧‍👦" },
-  { quote: "The allergen tracker gave me so much confidence introducing peanuts.", name: "James L.", role: "First-time dad", emoji: "👨‍👧" },
-  { quote: "My pediatrician was impressed when I showed her the weekly report!", name: "Priya K.", role: "Mom of 1", emoji: "👩‍👦" },
+  { quote: "The AI scanned my fridge and suggested three perfect meals — I was blown away!", name: "Sarah M.", role: "Mom of 2", emoji: "👩‍👧‍👦" },
+  { quote: "Sleep + diaper tracking alongside food logging saved me from using three different apps.", name: "James L.", role: "First-time dad", emoji: "👨‍👧" },
+  { quote: "My pediatrician loved the weekly report — it had everything she needed in one page!", name: "Priya K.", role: "Mom of 1", emoji: "👩‍👦" },
 ];
 
 export default function LandingStats() {
@@ -33,7 +33,6 @@ export default function LandingStats() {
       >
         <div className="max-w-4xl mx-auto text-center">
           <div className="flex items-center justify-center gap-2 mb-2">
-            <Users size={18} className="text-primary" />
             <span className="font-heading text-base sm:text-lg md:text-xl font-900">We're New in Town! 🎉</span>
           </div>
           <p className="text-xs sm:text-sm text-muted-foreground max-w-md mx-auto">

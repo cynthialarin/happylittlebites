@@ -40,14 +40,14 @@ export default function LandingHero() {
         </motion.div>
 
         <motion.h1 variants={fadeUp} className="font-heading text-[2rem] leading-[1.15] sm:text-4xl md:text-6xl font-900 tracking-tight mb-4">
-          Track every bite.{' '}
-          <span className="text-primary">Stress less.</span>
+          Your baby's first year —{' '}
+          <span className="text-primary">tracked, planned</span>
           <br className="hidden sm:block" />
-          <span className="text-foreground/80"> Raise a happy eater.</span>
+          <span className="text-foreground/80"> & celebrated.</span>
         </motion.h1>
 
         <motion.p variants={fadeUp} className="font-body text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-5 leading-relaxed px-2">
-          The all-in-one app to track weaning, spot allergies early, plan meals with AI, and keep your pediatrician in the loop — from first purée to toddler plate.
+          The all-in-one app for feeding, sleep, diapers, growth, allergens, and AI-powered meal planning — from first purée to toddler plate, backed by pediatric guidelines.
         </motion.p>
 
         {/* Trust indicators */}
@@ -57,7 +57,7 @@ export default function LandingHero() {
           <span className="flex items-center gap-1"><Check size={14} className="text-primary" /> Cancel anytime</span>
         </motion.div>
 
-        {/* CTA Buttons - more prominent */}
+        {/* CTA Buttons */}
         <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 justify-center px-4 sm:px-0">
           <Button asChild size="lg" className="text-base px-8 py-6 rounded-full shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300 hover:scale-[1.02]">
             <Link to="/signup">Start Free Trial <ArrowRight className="ml-1.5" size={18} /></Link>
