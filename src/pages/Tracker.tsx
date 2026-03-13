@@ -17,6 +17,7 @@ import { toast } from '@/components/ui/sonner';
 import { supabase } from '@/integrations/supabase/client';
 import PhotoLightbox from '@/components/PhotoLightbox';
 import MealScanner from '@/components/MealScanner';
+import PageHint from '@/components/PageHint';
 
 const ACCEPTANCE_EMOJI: Record<AcceptanceLevel, string> = {
   loved: '😍',
@@ -299,6 +300,12 @@ export default function Tracker() {
 
   return (
     <div className="px-4 pt-6 pb-4 max-w-lg mx-auto">
+      <PageHint
+        id="food-diary"
+        emoji="📝"
+        title="Track Every Meal"
+        message="Log what your baby eats, add photos, and track texture stages. Use 'Scan' to auto-detect foods from a photo!"
+      />
       <div className="mb-5">
         <h1 className="text-xl font-black mb-1">Food Diary</h1>
         <p className="text-sm text-muted-foreground mb-3">{activeChild.name}'s eating log</p>

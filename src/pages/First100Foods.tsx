@@ -12,6 +12,7 @@ import { foods } from '@/data/foods';
 import { ChevronLeft, Trophy, Filter, ChevronRight, Sparkles, Info, Share2 } from 'lucide-react';
 import Confetti from '@/components/Confetti';
 import MilestoneShareCard from '@/components/MilestoneShareCard';
+import PageHint from '@/components/PageHint';
 
 export default function First100Foods() {
   const navigate = useNavigate();
@@ -106,6 +107,12 @@ export default function First100Foods() {
 
   return (
     <div className="px-4 pt-6 pb-4 max-w-lg mx-auto">
+      <PageHint
+        id="first-100-foods"
+        emoji="🗺️"
+        title="Your Baby's Food Journey"
+        message="Track progress through 100 essential foods. Foods logged in the diary are auto-checked here. Unlock milestones as you go!"
+      />
       <Confetti active={showConfetti} />
       {/* Header */}
       <div className="flex items-center gap-2 mb-4">

@@ -13,6 +13,7 @@ import { MealType, MealPlanEntry, AgeGroup } from '@/types';
 import { Sparkles, Trash2, ShoppingCart, ChevronLeft, ChevronRight, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from '@/components/ui/sonner';
+import PageHint from '@/components/PageHint';
 
 const MEAL_TYPES: MealType[] = ['breakfast', 'lunch', 'dinner', 'snack'];
 
@@ -193,6 +194,12 @@ export default function MealPlanner() {
 
   return (
     <div className="px-4 pt-6 pb-4 max-w-lg mx-auto">
+      <PageHint
+        id="meal-planner"
+        emoji="📅"
+        title="Plan Your Week"
+        message="Tap any slot to add a meal. Use 'Auto-fill' to quickly populate the week with age-appropriate recipes."
+      />
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <button onClick={() => navigate(-1)} className="p-1.5 rounded-lg hover:bg-muted">
